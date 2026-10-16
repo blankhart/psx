@@ -1,0 +1,5 @@
+print: identical
+errors:
+  6:13-6:31 Markup as a function argument must be parenthesised
+    fix: Add parentheses: insert "(" at 6:13, insert ")" at 6:31
+markup: none

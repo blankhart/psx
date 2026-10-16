@@ -1,0 +1,8 @@
+module Parse.ArgumentError where
+
+import Prelude
+import Portico.Psx
+
+view = wrap <div>content</div>
+
+ok = 1

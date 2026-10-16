@@ -1,0 +1,15 @@
+module Parse.Fragments where
+
+import Portico.Psx
+
+nothing = <></>
+
+pair = <><li>one</li><li>two</li></>
+
+nested =
+  <>
+    <h1>Title</h1>
+    <>
+      <p>inner</p>
+    </>
+  </>

@@ -1,0 +1,17 @@
+print: identical
+errors: none
+markup:
+  8:3 <div>
+    text "\n    "
+    comment "<!-- a markup comment -->"
+    text "\n    "
+    10:5 <p>
+      text "text"
+    text "\n    "
+    comment "<!--\n      a multi-line\n      markup comment\n    -->"
+    text "\n    "
+    hole {-- a comment in a hole show n {- and a block comment -}}
+    text "\n    "
+    18:5 <p>
+      text "-- not a comment, just text"
+    text "\n  "

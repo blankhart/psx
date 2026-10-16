@@ -1,0 +1,25 @@
+print: identical
+errors: none
+markup:
+  6:3 <form>
+    text "\n    "
+    7:5 <label>
+      @for="name"
+      text "Name"
+    text "\n    "
+    8:5 <input> (no close)
+      @id="name"
+      @type="text"
+    text "\n    "
+    9:5 <br> (no close)
+    text "\n    "
+    10:5 <img> (self-closing)
+      @src="logo.png"
+      @alt="Logo"
+    text "\n    "
+    11:5 <hr> (self-closing)
+    text "\n    "
+    12:5 <input> (no close)
+      @type="checkbox"
+      @checked
+    text "\n  "

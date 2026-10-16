@@ -1,0 +1,10 @@
+print: identical
+errors: none
+markup:
+  5:8 <p>
+    @title="日本語"
+    text "héllo 🎉 "
+    hole {show 1}
+    text " wörld"
+  5:53 <b>
+    text "ok"

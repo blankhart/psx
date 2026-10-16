@@ -1,0 +1,26 @@
+print: identical
+errors: none
+markup:
+  7:3 <section>
+    @class="card"
+    text "\n    "
+    8:5 <h1>
+      text "Title"
+    text "\n    "
+    9:5 <p>
+      text "Some "
+      9:13 <b>
+        text "bold"
+      text " and "
+      9:29 <i>
+        text "italic"
+      text " text."
+    text "\n    "
+    10:5 <div>
+      10:10 <span>
+        text "a"
+      10:24 <span>
+        text "b"
+    text "\n  "
+  13:15 <div> (self-closing)
+  15:9 <p>

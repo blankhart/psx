@@ -1,0 +1,33 @@
+print: identical
+errors: none
+markup:
+  6:3 <svg>
+    @viewBox="0 0 24 24"
+    @xmlns="http://www.w3.org/2000/svg"
+    text "\n    "
+    7:5 <g>
+      @fill="none"
+      @stroke-width="2"
+      text "\n      "
+      8:7 <path>
+        @d="M4 12h16"
+      text "\n      "
+      9:7 <circle> (self-closing)
+        @cx="12"
+        @cy="12"
+        @r="10"
+      text "\n      "
+      10:7 <linearGradient>
+        @id="g"
+        10:30 <stop> (self-closing)
+          @offset="0"
+      text "\n    "
+    text "\n    "
+    12:5 <foreignObject>
+      @width="10"
+      @height="10"
+      text "\n      "
+      13:7 <input> (no close)
+        @type="text"
+      text "\n    "
+    text "\n  "

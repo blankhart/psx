@@ -1,0 +1,20 @@
+print: identical
+errors: none
+markup:
+  6:3 <ul>
+    hole {map (\i -> <li>{i}</li>) items}
+      6:19 <li>
+        hole {i}
+  9:3 <div>
+    text "\n    "
+    hole {map (\x -> <p>{map (\y -> <b>{y}</b>) x}</p>) xs}
+      10:17 <p>
+        hole {map (\y -> <b>{y}</b>) x}
+          10:32 <b>
+            hole {y}
+    text "\n  "
+  13:14 <div>
+    @title={label (<b>x</b>)}
+      13:33 <b>
+        text "x"
+    text "y"

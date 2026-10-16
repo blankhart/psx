@@ -1,0 +1,6 @@
+print: identical
+errors:
+  5:29-5:29 Unexpected operator +
+markup:
+  7:8 <p>
+    text "still parsed"

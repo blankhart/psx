@@ -1,0 +1,9 @@
+module Parse.ErrorHole where
+
+import Portico.Psx
+
+view = <p>{show (}</p>
+
+attr = <p title={ = }>x</p>
+
+next = 1

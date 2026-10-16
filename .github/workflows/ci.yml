@@ -51,6 +51,17 @@ jobs:
           git status --porcelain -- packages/psx-html-data
           test -z "$(git status --porcelain -- packages/psx-html-data)"
 
+      # psx-cst must give cst-parser's tree on plain PureScript.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/psx-package-set
+          key: package-set-${{ hashFiles('spago.yaml') }}
+
+      - name: psx-cst matches cst-parser on the package set
+        run: |
+          packages/psx-cst/compare/fetch-package-set.sh ~/.cache/psx-package-set
+          npx spago run -p psx-cst-compare -- ~/.cache/psx-package-set
+
       - name: Corpus goldens regenerate unchanged
         run: |
           find test/corpus -name 'expected.*' -delete

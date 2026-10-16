@@ -1,0 +1,11 @@
+print: identical
+errors:
+  6:3-6:8 <div> is not closed
+  7:5-7:8 <p> is not closed
+markup:
+  6:3 <div>
+    text "\n    "
+    7:5 <p>
+      text "don't stop here\n\n"
+  9:8 <p>
+    text "still parsed"

@@ -1,0 +1,7 @@
+module Parse.ErrorText where
+
+import Portico.Psx
+
+view = <p>a } b < c</p>
+
+next = 1

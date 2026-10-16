@@ -23,12 +23,14 @@
             "console",
             "effect",
             "foldable-traversable",
+            "language-cst-parser",
             "maybe",
             "node-buffer",
             "node-fs",
             "node-path",
             "node-process",
             "prelude",
+            "psx-cst",
             "strings"
           ]
         },
@@ -40,14 +42,54 @@
         "path": "packages/psx-cst",
         "core": {
           "dependencies": [
-            "prelude"
+            "arrays",
+            "effect",
+            "either",
+            "foldable-traversable",
+            "functions",
+            "language-cst-parser",
+            "lists",
+            "maybe",
+            "prelude",
+            "psx-html-data",
+            "refs",
+            "strings",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "effect",
+            "exceptions",
+            "node-buffer",
+            "node-fs",
+            "node-path",
+            "node-process"
           ]
+        }
+      },
+      "psx-cst-compare": {
+        "path": "packages/psx-cst/compare",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "console",
+            "effect",
+            "foldable-traversable",
+            "language-cst-parser",
+            "maybe",
+            "node-buffer",
+            "node-fs",
+            "node-path",
+            "node-process",
+            "prelude",
+            "psx-cst",
+            "strings"
+          ]
+        },
+        "test": {
+          "dependencies": []
         }
       },
       "psx-fmt": {
@@ -961,6 +1003,20 @@
         "tuples"
       ]
     },
+    "catenable-lists": {
+      "type": "registry",
+      "version": "7.0.0",
+      "integrity": "sha256-7+i/MHBLIRh604iCNT4ENWRWE/wuHIotER4kpdX9Ve0=",
+      "dependencies": [
+        "control",
+        "foldable-traversable",
+        "lists",
+        "maybe",
+        "prelude",
+        "tuples",
+        "unfoldable"
+      ]
+    },
     "console": {
       "type": "registry",
       "version": "6.1.0",
@@ -1145,6 +1201,27 @@
         "unsafe-coerce"
       ]
     },
+    "free": {
+      "type": "registry",
+      "version": "7.1.0",
+      "integrity": "sha256-tUBInfUpRQEw4u94GWcYW7EYdmSdDHSRn88a+C0eltU=",
+      "dependencies": [
+        "catenable-lists",
+        "control",
+        "distributive",
+        "either",
+        "exists",
+        "foldable-traversable",
+        "invariant",
+        "lazy",
+        "maybe",
+        "prelude",
+        "tailrec",
+        "transformers",
+        "tuples",
+        "unsafe-coerce"
+      ]
+    },
     "functions": {
       "type": "registry",
       "version": "6.0.0",
@@ -1233,6 +1310,39 @@
         "integers",
         "maybe",
         "prelude"
+      ]
+    },
+    "language-cst-parser": {
+      "type": "registry",
+      "version": "0.14.1",
+      "integrity": "sha256-tnue0oM2/EmyNJmLoJDnmUDfinKLJHi2fcSGt7d6ewU=",
+      "dependencies": [
+        "arrays",
+        "const",
+        "control",
+        "either",
+        "enums",
+        "foldable-traversable",
+        "free",
+        "functions",
+        "functors",
+        "identity",
+        "integers",
+        "lazy",
+        "lists",
+        "maybe",
+        "newtype",
+        "numbers",
+        "ordered-collections",
+        "partial",
+        "prelude",
+        "st",
+        "strings",
+        "transformers",
+        "tuples",
+        "typelevel-prelude",
+        "unfoldable",
+        "unsafe-coerce"
       ]
     },
     "lazy": {

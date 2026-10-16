@@ -1,0 +1,7 @@
+print: identical
+errors:
+  5:13-5:20 <Button> is a capitalised tag. PSX has no component tags: call the function in a hole, as in {button ...}
+markup:
+  5:8 <div>
+    5:13 <Button> (self-closing)
+      @label="x"
