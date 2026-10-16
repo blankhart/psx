@@ -1,0 +1,7 @@
+print: identical
+errors:
+  7:8-7:44 Markup as a function argument must be parenthesised
+    fix: Add parentheses: insert "(" at 7:8, insert ")" at 7:44
+  9:20-9:25 Markup as a function argument must be parenthesised
+    fix: Add parentheses: insert "(" at 9:20, insert ")" at 9:25
+markup: none

@@ -1,5 +1,0 @@
-module Dummy where
-
-import Portico.Psx
-
-view = <p>Placeholder case for the corpus runner.</p>

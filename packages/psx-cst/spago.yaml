@@ -1,9 +1,26 @@
 package:
   name: psx-cst
   dependencies:
+    - arrays
+    - effect
+    - either
+    - foldable-traversable
+    - functions
+    - language-cst-parser
+    - lists
+    - maybe
     - prelude
+    - psx-html-data
+    - refs
+    - strings
+    - tuples
   test:
     main: Test.Psx.Cst
     dependencies:
       - console
       - effect
+      - exceptions
+      - node-buffer
+      - node-fs
+      - node-path
+      - node-process

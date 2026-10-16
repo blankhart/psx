@@ -1,0 +1,15 @@
+print: identical
+errors: none
+markup:
+  6:3 <p>
+    hole {label}
+    text ": "
+    hole {show n}
+  8:21 <p>
+    hole {first}
+    hole {" "}
+    hole {last}
+  11:3 <p>
+    text "\n    "
+    hole {show n}
+    text "\n  "

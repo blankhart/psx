@@ -1,0 +1,25 @@
+print: identical
+errors: none
+markup:
+  12:15 <p> (self-closing)
+  13:22 <p> (self-closing)
+  14:15 <p> (self-closing)
+  15:12 <li> (self-closing)
+  15:19 <li> (self-closing)
+  16:23 <p> (self-closing)
+  17:20 <p> (self-closing)
+  18:29 <p> (self-closing)
+  18:39 <hr> (self-closing)
+  20:8 <p> (self-closing)
+  21:24 <p>
+    hole {show x}
+  22:17 <b> (self-closing)
+  22:25 <i> (self-closing)
+  25:8 <p> (self-closing)
+  26:3 <p> (self-closing)
+  31:12 <>
+    31:14 <li> (self-closing)
+  34:13 <ul>
+    hole {[<li/>, <li/>]}
+      34:19 <li> (self-closing)
+      34:26 <li> (self-closing)

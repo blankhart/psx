@@ -1,0 +1,29 @@
+print: identical
+errors: none
+markup:
+  6:3 <div>
+    text "\n    "
+    hole {if n == 0 then <></> else <button onclick={Reset}>Reset</button>}
+      9:9 <>
+      11:9 <button>
+        @onclick={Reset}
+        text "Reset"
+    text "\n    "
+    hole {case items of [] -> <p>No items</p> _ -> <ul>{map (\i -> <li key={i}>{i}</li>) items}</ul>}
+      14:13 <p>
+        text "No items"
+      15:12 <ul>
+        hole {map (\i -> <li key={i}>{i}</li>) items}
+          15:28 <li>
+            @key={i}
+            hole {i}
+    text "\n    "
+    hole {map (\i -> <li key={i} class={if i <= n then "pip filled" else "pip"}></li>) (1 .. n)}
+      18:16 <li>
+        @key={i}
+        @class={if i <= n then "pip filled" else "pip"}
+    text "\n  "
+  23:10 <div>
+    hole {do let x = 1 show x}
+  27:11 <p>
+    hole {let y = 2 in show y}

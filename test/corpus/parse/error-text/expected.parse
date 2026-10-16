@@ -1,0 +1,11 @@
+print: identical
+errors:
+  5:13-5:14 A } in text must be written {"}"}
+  5:17-5:18 A < in text must be written &lt;
+markup:
+  5:8 <p>
+    text "a "
+    raw "}"
+    text " b "
+    raw "<"
+    text " c"

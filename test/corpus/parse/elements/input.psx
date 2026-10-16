@@ -1,0 +1,15 @@
+module Parse.Elements where
+
+import Portico.Psx
+
+view :: Markup Unit
+view =
+  <section class="card">
+    <h1>Title</h1>
+    <p>Some <b>bold</b> and <i>italic</i> text.</p>
+    <div><span>a</span><span>b</span></div>
+  </section>
+
+selfClosing = <div/>
+
+empty = <p></p>

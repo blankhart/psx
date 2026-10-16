@@ -1,0 +1,5 @@
+module Parse.ErrorCapitalised where
+
+import Portico.Psx
+
+view = <div><Button label="x"/></div>

@@ -1,0 +1,8 @@
+print: identical
+errors:
+  5:23-5:27 Unexpected </b>: no element is open with that name
+markup:
+  5:8 <div>
+    5:13 <span>
+      text "text"
+      raw "</b>"

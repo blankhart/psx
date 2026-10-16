@@ -1,0 +1,15 @@
+print: identical
+errors: none
+markup:
+  6:3 <div>
+    text "\ntext at column zero\n    "
+    hole {show n}
+    text "\n  "
+  16:5 <p>
+    text "\n      in a where\n    "
+  23:9 <b>
+    hole {show 1}
+  29:13 <p>
+    text "positive"
+  30:17 <p>
+    text "other"
