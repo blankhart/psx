@@ -1,0 +1,9 @@
+package:
+  name: psx-suite
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.Suite
+    dependencies:
+      - console
+      - effect

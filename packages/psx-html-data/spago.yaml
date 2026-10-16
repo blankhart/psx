@@ -1,0 +1,9 @@
+package:
+  name: psx-html-data
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.HtmlData
+    dependencies:
+      - console
+      - effect
