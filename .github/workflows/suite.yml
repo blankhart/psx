@@ -1,0 +1,69 @@
+name: Suite
+
+# The cross-framework scenario suite: every scenario's apps in Chromium,
+# checked against the scenario's DOM contracts. It runs on main, and on pull
+# requests that touch what the apps are built from.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'test/suite/**'
+      - 'backends/**'
+      - 'packages/psx-cst/**'
+      - 'packages/psx-lower/**'
+      - 'packages/psx-cli/**'
+      - 'spago.yaml'
+      - 'spago.lock'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/suite.yml'
+  workflow_dispatch:
+
+jobs:
+  suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The checkout token would shadow PSX_DEPS_TOKEN for other github.com repositories.
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Portico and Screamer are private (see ci.yml).
+      - name: Allow reading the private framework repositories
+        env:
+          TOKEN: ${{ secrets.PSX_DEPS_TOKEN }}
+        run: |
+          if [ -n "$TOKEN" ]; then
+            git config --global url."https://x-access-token:${TOKEN}@github.com/blankhart/".insteadOf "https://github.com/blankhart/"
+          fi
+
+      - run: npm ci
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/spago-nodejs
+            .spago
+          key: spago-${{ runner.os }}-${{ hashFiles('spago.lock') }}
+          restore-keys: spago-${{ runner.os }}-
+
+      - name: Build every package
+        run: npx spago build
+
+      - name: Suite apps lower unchanged
+        run: |
+          node packages/psx-cli/bin/psx.mjs build test/suite/apps
+          git status --porcelain -- test/suite/apps
+          test -z "$(git status --porcelain -- test/suite/apps)"
+
+      # The runner's preinstalled Chrome, driven by Playwright.
+      - name: Run the scenarios
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: npx spago run -p psx-suite

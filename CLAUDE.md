@@ -36,7 +36,7 @@ Screamer implements it at `a = Effect Unit`. Each backend ships a `<Framework>.P
 
 ## Layout
 
-One spago workspace. Toolchain in `packages/` (`psx-html-data`, `psx-cst`, `psx-lower`, `psx-fmt`, `psx-cli`, `psx-language-server`); backends in `backends/` (`psx-portico`, `psx-halogen`, `psx-screamer`, `psx-static`, plus `mappings/`); editor grammars in `editors/`; examples in `examples/` (`portico/` as `psx-examples-portico`); tests in `test/` (`corpus/`, `corpus-runner/` as `psx-corpus`, `suite/` as `psx-suite`). Backends never depend on PSX packages, only on their framework. Generated code and goldens are committed.
+One spago workspace. Toolchain in `packages/` (`psx-html-data`, `psx-cst`, `psx-lower`, `psx-fmt`, `psx-cli`, `psx-language-server`); backends in `backends/` (`psx-portico`, `psx-halogen`, `psx-screamer`, `psx-static`, plus `mappings/`); editor grammars in `editors/`; examples in `examples/` (`portico/` as `psx-examples-portico`); tests in `test/` (`corpus/`, `corpus-runner/` as `psx-corpus`, `suite/` as `psx-suite`, its apps under `suite/apps/<scenario>/<framework>/<variant>/` as `psx-suite-<scenario>-<framework>-<variant>`). Backends never depend on PSX packages, only on their framework. Generated code and goldens are committed.
 
 ## Working on a step
 

@@ -11,7 +11,9 @@
     "corpus": "spago run -p psx-corpus --",
     "corpus:accept": "spago run -p psx-corpus -- --accept",
     "psx": "node packages/psx-cli/bin/psx.mjs",
-    "examples:portico": "node packages/psx-cli/bin/psx.mjs build examples/portico/src && spago build -p psx-examples-portico && node examples/portico/scripts/build-examples.mjs && node examples/portico/scripts/smoke-test.mjs"
+    "examples:portico": "node packages/psx-cli/bin/psx.mjs build examples/portico/src && spago build -p psx-examples-portico && node examples/portico/scripts/build-examples.mjs && node examples/portico/scripts/smoke-test.mjs",
+    "suite": "spago run -p psx-suite --",
+    "suite:accept": "spago run -p psx-suite -- --accept"
   },
   "devDependencies": {
     "@webref/events": "1.27.1",
@@ -20,6 +22,7 @@
     "html-element-attributes": "3.5.0",
     "html-tag-names": "2.1.0",
     "html-void-elements": "3.0.0",
+    "playwright-core": "1.56.1",
     "property-information": "7.2.0",
     "puppeteer-core": "25.13.0",
     "purescript": "0.15.15",
