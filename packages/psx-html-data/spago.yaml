@@ -1,9 +1,15 @@
 package:
   name: psx-html-data
   dependencies:
+    - arrays
+    - foreign-object
+    - maybe
     - prelude
+    - strings
   test:
     main: Test.Psx.HtmlData
     dependencies:
       - console
       - effect
+      - exceptions
+      - foldable-traversable
