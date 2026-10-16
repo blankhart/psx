@@ -1,3 +1,6 @@
 node_modules/
 .spago/
 output/
+examples/portico/examples/dist/
+test/check/actual.txt
+test/check/positions.txt

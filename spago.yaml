@@ -9,6 +9,10 @@ workspace:
     portico:
       git: https://github.com/blankhart/purescript-portico.git
       ref: 734f177437f77a22616028b4cf38c5065348ac90
+    # The Portico examples' router (examples/portico).
+    windrose-router:
+      git: https://github.com/blankhart/purescript-windrose-router.git
+      ref: 6199237cf42d35b8ca3d89ceaba40efb83966ac3
     screamer:
       git: https://github.com/blankhart/purescript-screamer.git
       ref: 103ce5c3b395a19f8221c28af25dde67dec7bba2

@@ -1,0 +1,170 @@
+module Examples.Router where
+
+import Prelude
+
+import Data.Array as Array
+import Data.Either (Either, hush)
+import Data.Maybe (Maybe(..), maybe)
+import Data.String as String
+import Data.Tuple (Tuple(..), fst, snd)
+import Effect (Effect)
+import Portico ((:>))
+import Portico as P
+import Portico.Psx (Markup, root)
+import Portico.Router as Router
+import Windrose.Router (type (:<|>), type (:>), C, P, Q, V)
+import Windrose.Router as W
+
+data Route
+  = Index
+  | PostIndex { sortBy :: Maybe String }
+  | PostEdit Int
+
+derive instance eqRoute :: Eq Route
+
+-- The routes are a type, from which the parser and the printer both derive,
+-- so they cannot disagree. Each endpoint ends in a named `V`.
+type Api =
+  V "index"
+    :<|> P "posts"
+    :>
+      ( Q (sortBy :: Maybe String) :> V "postIndex"
+          :<|> C "id" Int
+          :> P "edit"
+          :> V "postEdit"
+      )
+
+api :: forall api. W.Canonicalize Api api => W.Routable api
+api = W.mkRoutable (W.RouteProxy :: W.RouteProxy Api)
+
+-- Parsing: one handler per endpoint, taking what the endpoint captures.
+handlers
+  :: { index :: Route
+     , postIndex :: { sortBy :: Maybe String } -> Route
+     , postEdit :: Int -> Route
+     }
+handlers = { index: Index, postIndex: PostIndex, postEdit: PostEdit }
+
+-- `W.route api handlers` builds the router, so it is bound once.
+match :: String -> Either W.RoutingError Route
+match = W.route api handlers
+
+-- Printing: one link per endpoint, taking the same arguments.
+links
+  :: forall api links
+   . W.Canonicalize Api api
+  => W.HasLinks api String links
+  => links
+links = W.allLinks api
+
+print :: Route -> String
+print = case _ of
+  Index -> links.index
+  PostIndex query -> links.postIndex query
+  PostEdit id -> links.postEdit id
+
+type Model = { url :: String, route :: Maybe Route, unsaved :: Boolean, refused :: String }
+
+data Msg
+  = LocationChanged String
+  | Navigate Route
+  | LinkClicked Router.Request
+  | Unsaved Boolean
+
+init :: P.Init Model Msg
+init = { url: "", route: Nothing, unsaved: false, refused: "" } :> []
+
+subscriptions :: Router.Mode -> P.Subscriptions Model Msg
+subscriptions mode _ =
+  [ P.Subscription "locations" (Router.locations mode LocationChanged)
+  , P.Subscription "requests" (Router.requests mode LinkClicked)
+  ]
+
+update :: Router.Mode -> P.Update Model Msg
+update mode model = case _ of
+  -- The description slides from the old route's text to the new one's, but
+  -- not on the first location. (A page in a view transition does not take
+  -- clicks, and there is nothing to slide from.)
+  LocationChanged url ->
+    Tuple model { url = url, route = parseRoute url }
+      if model.url == "" then [] else [ P.viewTransition ]
+  Navigate route ->
+    Tuple model [ P.run $ Router.navigate mode (print route) ]
+  -- Links go nowhere while there are unsaved changes.
+  LinkClicked (Router.Internal url)
+    | model.unsaved -> model { refused = url } :> []
+    | otherwise -> Tuple model { refused = "" } [ P.run $ Router.navigate mode url ]
+  LinkClicked (Router.External href) ->
+    Tuple model [ P.run $ Router.load href ]
+  Unsaved unsaved ->
+    model { unsaved = unsaved } :> []
+
+parseRoute :: String -> Maybe Route
+parseRoute = hush <<< match
+
+describe :: Route -> String
+describe = case _ of
+  Index -> "index"
+  PostIndex { sortBy } -> "all posts (" <> maybe "unsorted" ("sorting on " <> _) sortBy <> ")"
+  PostEdit n -> "edit post #" <> show n
+
+-- Some sample routes to play with.
+routes :: Array Route
+routes =
+  [ Index
+  , PostIndex { sortBy: Nothing }
+  , PostIndex { sortBy: Just "id" }
+  , PostIndex { sortBy: Just "title" }
+  , PostEdit 1
+  , PostEdit 2
+  ]
+
+-- | The class attribute from names that are on or off.
+classes :: Array (Tuple String Boolean) -> String
+classes = String.joinWith " " <<< map fst <<< Array.filter snd
+
+-- The checkbox reads the event (`P.onCheck`), which no HTML attribute says,
+-- so it is Portico's own function in a hole.
+view :: Router.Mode -> Model -> Markup Msg
+view mode model =
+  <main>
+    <h2 id="url">{"Url: {" <> model.url <> "}"}</h2>
+    <h2 id="description" style="view-transition-name: description">
+      {"Description: " <> maybe "Error 404" describe model.route}
+    </h2>
+    <label>
+      {P.input [ P.id "unsaved", P.type' "checkbox", P.checked model.unsaved, P.onCheck Unsaved ] []}
+      Unsaved changes
+    </label>
+    <p id="refused">{if model.refused == "" then "" else "Refused: " <> model.refused}</p>
+    <div>{viewRoute <$> routes}</div>
+    <h3>
+      Not a route: <a id="nonsense" href={href "/nonsense, but try me anyway"}>Link</a>
+    </h3>
+  </main>
+  where
+  href url = case mode of
+    Router.Hash -> "#" <> url
+    Router.History -> url
+
+  viewRoute route =
+    let
+      url = print route
+    in
+      <h3
+        class={classes
+          [ Tuple "route" true
+          , Tuple "active" (model.route == Just route)
+          , Tuple "round-trips" (parseRoute url == Just route)
+          ]}
+      >
+        {"Sample URL: {" <> url <> "} "}<a href={href url}>Link</a> <button onclick={Navigate route}>Navigate</button>
+      </h3>
+
+app :: Router.Mode -> P.Application Model Msg
+app mode = { init, update: update mode, subscriptions: subscriptions mode, view: root <<< view mode }
+
+-- Hash routing works from a file opened straight off the disk. See
+-- RouterHistory.purs for the same application on real paths.
+main :: Effect Unit
+main = void $ P.mount "main" $ app Router.Hash

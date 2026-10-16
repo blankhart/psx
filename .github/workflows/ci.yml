@@ -45,6 +45,24 @@ jobs:
       - name: Test every package
         run: npx spago test
 
+      - name: Portico examples lower unchanged
+        run: |
+          node packages/psx-cli/bin/psx.mjs build examples/portico/src
+          git status --porcelain -- examples/portico/src
+          test -z "$(git status --porcelain -- examples/portico/src)"
+
+      # The smoke test is a verbatim copy of the one at the pinned Portico
+      # commit, which spago has checked out under .spago.
+      - name: Portico examples pass Portico's own smoke test
+        run: |
+          ref=$(awk '/^    portico:/ { found = 1 } found && /ref:/ { print $2; exit }' spago.yaml)
+          cmp examples/portico/scripts/smoke-test.mjs ".spago/p/portico/$ref/scripts/smoke-test.mjs"
+          node examples/portico/scripts/build-examples.mjs
+          node examples/portico/scripts/smoke-test.mjs
+
+      - name: psx check reports type errors in holes at their .psx positions
+        run: sh test/check/run.sh
+
       - name: HTML table regenerates unchanged
         run: |
           npx spago run -p psx-html-data-generate

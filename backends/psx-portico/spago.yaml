@@ -1,9 +1,15 @@
 package:
   name: psx-portico
   dependencies:
+    - arrays
+    - functions
+    - maybe
+    - portico
     - prelude
+    - tuples
   test:
     main: Test.Portico.Psx
     dependencies:
       - console
       - effect
+      - exceptions

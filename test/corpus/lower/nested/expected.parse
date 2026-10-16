@@ -1,0 +1,16 @@
+print: identical
+errors: none
+markup:
+  11:3 <section>
+    text "\n    "
+    hole {case user of Just name -> <p>Signed in as <b>{name}</b></p> Nothing -> <p>{map (\n -> <span title={n}>{n}</span>) names}</p>}
+      13:20 <p>
+        text "Signed in as "
+        13:36 <b>
+          hole {name}
+      14:18 <p>
+        hole {map (\n -> <span title={n}>{n}</span>) names}
+          14:33 <span>
+            @title={n}
+            hole {n}
+    text "\n  "

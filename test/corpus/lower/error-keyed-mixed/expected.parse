@@ -1,0 +1,10 @@
+print: identical
+errors: none
+markup:
+  6:8 <ul>
+    6:12 <li>
+      @key="a"
+      text "A"
+    6:30 <li>
+      text "B"
+    text "loose text"
