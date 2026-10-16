@@ -1,0 +1,9 @@
+package:
+  name: psx-static
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.Static
+    dependencies:
+      - console
+      - effect

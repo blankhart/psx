@@ -1,0 +1,9 @@
+package:
+  name: psx-halogen
+  dependencies:
+    - prelude
+  test:
+    main: Test.Halogen.Psx
+    dependencies:
+      - console
+      - effect

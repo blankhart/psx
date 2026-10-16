@@ -1,0 +1,9 @@
+package:
+  name: psx-cst
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.Cst
+    dependencies:
+      - console
+      - effect

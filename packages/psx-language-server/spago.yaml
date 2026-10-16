@@ -1,0 +1,9 @@
+package:
+  name: psx-language-server
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.LanguageServer
+    dependencies:
+      - console
+      - effect

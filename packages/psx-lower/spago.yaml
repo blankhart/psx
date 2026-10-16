@@ -1,0 +1,9 @@
+package:
+  name: psx-lower
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.Lower
+    dependencies:
+      - console
+      - effect

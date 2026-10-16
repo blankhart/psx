@@ -1,0 +1,9 @@
+package:
+  name: psx-cli
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.Cli
+    dependencies:
+      - console
+      - effect
