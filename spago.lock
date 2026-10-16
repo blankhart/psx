@@ -82,14 +82,46 @@
         "path": "packages/psx-html-data",
         "core": {
           "dependencies": [
-            "prelude"
+            "arrays",
+            "foreign-object",
+            "maybe",
+            "prelude",
+            "strings"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "effect",
+            "exceptions",
+            "foldable-traversable"
           ]
+        }
+      },
+      "psx-html-data-generate": {
+        "path": "packages/psx-html-data/generate",
+        "core": {
+          "dependencies": [
+            "argonaut-core",
+            "arrays",
+            "console",
+            "effect",
+            "either",
+            "exceptions",
+            "foldable-traversable",
+            "foreign-object",
+            "maybe",
+            "node-buffer",
+            "node-fs",
+            "ordered-collections",
+            "prelude",
+            "psx-html-data",
+            "strings",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
         }
       },
       "psx-language-server": {
@@ -846,7 +878,7 @@
       },
       "screamer": {
         "git": "https://github.com/blankhart/purescript-screamer.git",
-        "ref": "b595c01848653d34ba096845fec4c103ce4212a5"
+        "ref": "103ce5c3b395a19f8221c28af25dde67dec7bba2"
       }
     }
   },
@@ -870,6 +902,24 @@
         "tailrec",
         "transformers",
         "unsafe-coerce"
+      ]
+    },
+    "argonaut-core": {
+      "type": "registry",
+      "version": "7.0.0",
+      "integrity": "sha256-gYZihtBIKthVuXXoiPphMookSf8M5aHyFYkcIWqlxTM=",
+      "dependencies": [
+        "arrays",
+        "control",
+        "either",
+        "foreign-object",
+        "functions",
+        "gen",
+        "maybe",
+        "nonempty",
+        "prelude",
+        "strings",
+        "tailrec"
       ]
     },
     "arraybuffer-types": {

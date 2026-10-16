@@ -45,6 +45,12 @@ jobs:
       - name: Test every package
         run: npx spago test
 
+      - name: HTML table regenerates unchanged
+        run: |
+          npx spago run -p psx-html-data-generate
+          git status --porcelain -- packages/psx-html-data
+          test -z "$(git status --porcelain -- packages/psx-html-data)"
+
       - name: Corpus goldens regenerate unchanged
         run: |
           find test/corpus -name 'expected.*' -delete

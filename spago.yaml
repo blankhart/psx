@@ -11,4 +11,4 @@ workspace:
       ref: 734f177437f77a22616028b4cf38c5065348ac90
     screamer:
       git: https://github.com/blankhart/purescript-screamer.git
-      ref: b595c01848653d34ba096845fec4c103ce4212a5
+      ref: 103ce5c3b395a19f8221c28af25dde67dec7bba2

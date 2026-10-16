@@ -1,0 +1,22 @@
+# Regenerates the HTML table: spago run -p psx-html-data-generate
+package:
+  name: psx-html-data-generate
+  dependencies:
+    - argonaut-core
+    - arrays
+    - console
+    - effect
+    - either
+    - exceptions
+    - foldable-traversable
+    - foreign-object
+    - maybe
+    - node-buffer
+    - node-fs
+    - ordered-collections
+    - prelude
+    - psx-html-data
+    - strings
+    - tuples
+  run:
+    main: Psx.HtmlData.Generate
