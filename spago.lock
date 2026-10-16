@@ -324,14 +324,88 @@
         "path": "test/suite",
         "core": {
           "dependencies": [
+            "aff",
+            "arrays",
+            "console",
+            "effect",
+            "either",
+            "foldable-traversable",
+            "foreign",
+            "maybe",
+            "node-buffer",
+            "node-fs",
+            "node-path",
+            "node-process",
+            "numbers",
+            "ordered-collections",
+            "prelude",
+            "refs",
+            "strings",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-counter-portico-psx": {
+        "path": "test/suite/apps/counter/portico/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "portico",
+            "prelude",
+            "psx-portico"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-counter-portico-purs": {
+        "path": "test/suite/apps/counter/portico/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "portico",
             "prelude"
           ]
         },
         "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-todo-portico-psx": {
+        "path": "test/suite/apps/todo/portico/psx",
+        "core": {
           "dependencies": [
-            "console",
-            "effect"
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "portico",
+            "prelude",
+            "psx-portico"
           ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-todo-portico-purs": {
+        "path": "test/suite/apps/todo/portico/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "portico",
+            "prelude"
+          ]
+        },
+        "test": {
+          "dependencies": []
         }
       }
     },

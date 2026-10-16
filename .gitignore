@@ -4,3 +4,4 @@ output/
 examples/portico/examples/dist/
 test/check/actual.txt
 test/check/positions.txt
+test/suite/dist/
