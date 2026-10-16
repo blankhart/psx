@@ -1,0 +1,18 @@
+{
+  "name": "psx-workspace",
+  "private": true,
+  "description": "PSX: mixed markup and PureScript",
+  "workspaces": [
+    "editors/*"
+  ],
+  "scripts": {
+    "build": "spago build",
+    "test": "spago test",
+    "corpus": "spago run -p psx-corpus --",
+    "corpus:accept": "spago run -p psx-corpus -- --accept"
+  },
+  "devDependencies": {
+    "purescript": "0.15.15",
+    "spago": "1.0.5"
+  }
+}

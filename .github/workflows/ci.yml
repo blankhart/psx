@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The checkout token would shadow PSX_DEPS_TOKEN for other github.com repositories.
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Portico and Screamer are private. Once a package depends on them, spago
+      # clones them with a token that can read both (a repository secret).
+      - name: Allow reading the private framework repositories
+        env:
+          TOKEN: ${{ secrets.PSX_DEPS_TOKEN }}
+        run: |
+          if [ -n "$TOKEN" ]; then
+            git config --global url."https://x-access-token:${TOKEN}@github.com/blankhart/".insteadOf "https://github.com/blankhart/"
+          fi
+
+      - run: npm ci
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/spago-nodejs
+            .spago
+          key: spago-${{ runner.os }}-${{ hashFiles('spago.lock') }}
+          restore-keys: spago-${{ runner.os }}-
+
+      - name: Build every package
+        run: npx spago build
+
+      - name: Test every package
+        run: npx spago test
+
+      - name: Corpus goldens regenerate unchanged
+        run: |
+          find test/corpus -name 'expected.*' -delete
+          npx spago run -p psx-corpus -- --accept
+          git status --porcelain -- test/corpus
+          test -z "$(git status --porcelain -- test/corpus)"

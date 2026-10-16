@@ -1,0 +1,9 @@
+package:
+  name: psx-screamer
+  dependencies:
+    - prelude
+  test:
+    main: Test.Screamer.Psx
+    dependencies:
+      - console
+      - effect

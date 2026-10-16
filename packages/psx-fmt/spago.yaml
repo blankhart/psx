@@ -1,0 +1,9 @@
+package:
+  name: psx-fmt
+  dependencies:
+    - prelude
+  test:
+    main: Test.Psx.Fmt
+    dependencies:
+      - console
+      - effect

@@ -1,0 +1,9 @@
+package:
+  name: psx-portico
+  dependencies:
+    - prelude
+  test:
+    main: Test.Portico.Psx
+    dependencies:
+      - console
+      - effect
