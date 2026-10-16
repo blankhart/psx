@@ -1,0 +1,8 @@
+package:
+  name: psx-suite-todo-portico-purs
+  dependencies:
+    - arrays
+    - effect
+    - foldable-traversable
+    - portico
+    - prelude

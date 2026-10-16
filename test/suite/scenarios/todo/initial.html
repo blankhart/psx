@@ -1,0 +1,45 @@
+<section class="todo" data-testid="todo">
+  <h1>
+    "Todos"
+  </h1>
+  <div class="new">
+    <input data-testid="draft" type="text" value>
+    <button data-testid="add" disabled>
+      "Add"
+    </button>
+  </div>
+  <ul class="items">
+    <li class="item done">
+      <input checked data-testid="toggle-1" type="checkbox">
+      <span>
+        "Parse markup"
+      </span>
+      <button data-testid="remove-1">
+        "Remove"
+      </button>
+    </li>
+    <li class="item">
+      <input data-testid="toggle-2" type="checkbox">
+      <span>
+        "Lower to PureScript"
+      </span>
+      <button data-testid="remove-2">
+        "Remove"
+      </button>
+    </li>
+  </ul>
+  <p data-testid="left">
+    "1 left"
+  </p>
+  <div class="filters">
+    <button data-testid="all" disabled>
+      "All"
+    </button>
+    <button data-testid="active">
+      "Active"
+    </button>
+    <button data-testid="completed">
+      "Completed"
+    </button>
+  </div>
+</section>

@@ -1,0 +1,8 @@
+package:
+  name: psx-suite-counter-portico-psx
+  dependencies:
+    - arrays
+    - effect
+    - portico
+    - prelude
+    - psx-portico

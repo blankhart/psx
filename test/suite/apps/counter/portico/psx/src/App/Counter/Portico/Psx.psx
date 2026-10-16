@@ -1,0 +1,52 @@
+-- | The counter scenario on Portico, in PSX: `App.Counter` from the design
+-- | doc, without its `<style>` until scoped styles land.
+module App.Counter.Portico.Psx (main) where
+
+import Prelude
+
+import Data.Array ((..))
+import Effect (Effect)
+import Portico ((:>))
+import Portico as P
+import Portico.Psx (Markup, root)
+
+type Props = { label :: String, max :: Int }
+
+data Msg = Increment | Decrement | Reset
+
+update :: Int -> Msg -> Int
+update n = case _ of
+  Increment -> n + 1
+  Decrement -> n - 1
+  Reset -> 0
+
+view :: Props -> Int -> Markup Msg
+view props n =
+  <section class="counter" data-testid="counter">
+    <h2 data-testid="label">{props.label}: {show n}</h2>
+    <button data-testid="decrement" onclick={Decrement} disabled={n <= 0}>-</button>
+    <button data-testid="increment" onclick={Increment} disabled={n >= props.max}>+</button>
+    {
+      if n == 0 then
+        <></>
+      else
+        <button data-testid="reset" onclick={Reset}>Reset</button>
+    }
+    <ol class="pips">
+      {
+        map
+          (\i -> <li key={i} class={if i <= n then "pip filled" else "pip"}></li>)
+          (1 .. props.max)
+      }
+    </ol>
+  </section>
+
+-- | Mounts on `#app`, with the scenario's fixture as the props.
+main :: Props -> Effect Unit
+main props =
+  void $ P.mount "#app"
+    { init: 0 :> []
+    , update: \n msg -> update n msg :> []
+    , subscriptions: P.noSubscriptions
+    , view: root <<< view props
+    }
