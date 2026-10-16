@@ -197,8 +197,9 @@ diff expected actual =
 -- | PSX stamps, which cannot hold as stated: the `psx/` bundle also carries
 -- | the backend's `Children` and `KeyedChildren` dispatch, `keyed` and
 -- | `root`, and purs writes each module's name and line numbers into its
--- | pattern-match errors. Until psx#8 restates that gate, the comparison is
--- | reported and does not fail the run.
+-- | pattern-match errors. So, as decided on psx#8, the comparison is
+-- | reported and does not fail the run; bundle size is judged in step 13,
+-- | against measured noise.
 compareBundles :: Env -> Scenario -> String -> Aff Int
 compareBundles env scenario framework = liftEffect do
   let
