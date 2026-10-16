@@ -1,0 +1,8 @@
+print: identical
+errors: none
+markup:
+  8:8 <my-widget>
+    @size="3"
+    @class="w"
+    8:38 <x-slot>
+      text "content"

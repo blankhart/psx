@@ -5,13 +5,32 @@
         "path": "packages/psx-cli",
         "core": {
           "dependencies": [
-            "prelude"
+            "argonaut-core",
+            "arrays",
+            "console",
+            "effect",
+            "either",
+            "foldable-traversable",
+            "foreign-object",
+            "functions",
+            "integers",
+            "language-cst-parser",
+            "maybe",
+            "node-buffer",
+            "node-fs",
+            "node-path",
+            "node-process",
+            "prelude",
+            "psx-cst",
+            "psx-lower",
+            "strings",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "exceptions"
           ]
         }
       },
@@ -22,6 +41,7 @@
             "arrays",
             "console",
             "effect",
+            "either",
             "foldable-traversable",
             "language-cst-parser",
             "maybe",
@@ -31,6 +51,7 @@
             "node-process",
             "prelude",
             "psx-cst",
+            "psx-lower",
             "strings"
           ]
         },
@@ -90,6 +111,43 @@
         },
         "test": {
           "dependencies": []
+        }
+      },
+      "psx-examples-portico": {
+        "path": "examples/portico",
+        "core": {
+          "dependencies": [
+            "aff",
+            "affjax",
+            "affjax-web",
+            "arrays",
+            "effect",
+            "either",
+            "foldable-traversable",
+            "foreign",
+            "integers",
+            "maybe",
+            "portico",
+            "prelude",
+            "psx-portico",
+            "random",
+            "strings",
+            "tailrec",
+            "transformers",
+            "tuples",
+            "unfoldable",
+            "web-dom",
+            "web-events",
+            "web-html",
+            "web-socket",
+            "windrose-router"
+          ]
+        },
+        "test": {
+          "dependencies": [
+            "assert",
+            "console"
+          ]
         }
       },
       "psx-fmt": {
@@ -184,13 +242,33 @@
         "path": "packages/psx-lower",
         "core": {
           "dependencies": [
-            "prelude"
+            "arrays",
+            "either",
+            "enums",
+            "foldable-traversable",
+            "foreign-object",
+            "integers",
+            "language-cst-parser",
+            "lists",
+            "maybe",
+            "newtype",
+            "prelude",
+            "psx-cst",
+            "psx-html-data",
+            "strings",
+            "transformers",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "effect",
+            "exceptions",
+            "node-buffer",
+            "node-fs",
+            "node-path",
+            "node-process"
           ]
         }
       },
@@ -198,13 +276,19 @@
         "path": "backends/psx-portico",
         "core": {
           "dependencies": [
-            "prelude"
+            "arrays",
+            "functions",
+            "maybe",
+            "portico",
+            "prelude",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "effect",
+            "exceptions"
           ]
         }
       },
@@ -921,6 +1005,10 @@
       "screamer": {
         "git": "https://github.com/blankhart/purescript-screamer.git",
         "ref": "103ce5c3b395a19f8221c28af25dde67dec7bba2"
+      },
+      "windrose-router": {
+        "git": "https://github.com/blankhart/purescript-windrose-router.git",
+        "ref": "6199237cf42d35b8ca3d89ceaba40efb83966ac3"
       }
     }
   },
@@ -944,6 +1032,48 @@
         "tailrec",
         "transformers",
         "unsafe-coerce"
+      ]
+    },
+    "affjax": {
+      "type": "registry",
+      "version": "13.0.0",
+      "integrity": "sha256-dpOV8ELNqUVBwxE6eKFdnFky+sLwPFANrFUzIxQablk=",
+      "dependencies": [
+        "aff",
+        "argonaut-core",
+        "arraybuffer-types",
+        "arrays",
+        "control",
+        "datetime",
+        "either",
+        "exceptions",
+        "foldable-traversable",
+        "foreign",
+        "form-urlencoded",
+        "functions",
+        "http-methods",
+        "lists",
+        "maybe",
+        "media-types",
+        "newtype",
+        "nullable",
+        "prelude",
+        "transformers",
+        "web-dom",
+        "web-file",
+        "web-xhr"
+      ]
+    },
+    "affjax-web": {
+      "type": "registry",
+      "version": "1.0.0",
+      "integrity": "sha256-sHg+G50LDoZYG6UHvUiH1ZLT/UHIXaEF5DUBaPXxtxM=",
+      "dependencies": [
+        "aff",
+        "affjax",
+        "either",
+        "maybe",
+        "prelude"
       ]
     },
     "argonaut-core": {
@@ -989,6 +1119,16 @@
         "tuples",
         "unfoldable",
         "unsafe-coerce"
+      ]
+    },
+    "assert": {
+      "type": "registry",
+      "version": "6.0.0",
+      "integrity": "sha256-hCZ1J8/71nQiRwsSV2j7iicppScOegBFZrLI6sPf9F8=",
+      "dependencies": [
+        "console",
+        "effect",
+        "prelude"
       ]
     },
     "bifunctors": {
@@ -1201,6 +1341,20 @@
         "unsafe-coerce"
       ]
     },
+    "form-urlencoded": {
+      "type": "registry",
+      "version": "7.0.0",
+      "integrity": "sha256-+8F0S6thSLsC1GfQiTdTt6jyTMuhsgKLciBUzde9aFU=",
+      "dependencies": [
+        "foldable-traversable",
+        "js-uri",
+        "maybe",
+        "newtype",
+        "prelude",
+        "strings",
+        "tuples"
+      ]
+    },
     "free": {
       "type": "registry",
       "version": "7.1.0",
@@ -1267,6 +1421,30 @@
         "unfoldable"
       ]
     },
+    "heterogeneous": {
+      "type": "registry",
+      "version": "0.7.0",
+      "integrity": "sha256-pQwcFvhWL8noktxaoD7FlLs2F2lYf3QHoyO0VOWO3I0=",
+      "dependencies": [
+        "either",
+        "foldable-traversable",
+        "functors",
+        "prelude",
+        "record",
+        "tuples",
+        "variant"
+      ]
+    },
+    "http-methods": {
+      "type": "registry",
+      "version": "6.1.0",
+      "integrity": "sha256-WbjEmCv6rysY/aKwlrcspyzShi5bIQy+AFpDzPMnSP4=",
+      "dependencies": [
+        "either",
+        "prelude",
+        "strings"
+      ]
+    },
     "identity": {
       "type": "registry",
       "version": "6.0.0",
@@ -1308,6 +1486,16 @@
         "foreign",
         "functions",
         "integers",
+        "maybe",
+        "prelude"
+      ]
+    },
+    "js-uri": {
+      "type": "registry",
+      "version": "3.1.0",
+      "integrity": "sha256-7waHOctAfqhhw540FNJ7C/YsDMQW9TmA+SpHhduH6Uw=",
+      "dependencies": [
+        "functions",
         "maybe",
         "prelude"
       ]
@@ -1382,6 +1570,15 @@
       "dependencies": [
         "control",
         "invariant",
+        "newtype",
+        "prelude"
+      ]
+    },
+    "media-types": {
+      "type": "registry",
+      "version": "6.0.0",
+      "integrity": "sha256-3Wyq+vfqJFTmy1k6DGVnXStxtZxgK631wusDPzlFVxg=",
+      "dependencies": [
         "newtype",
         "prelude"
       ]
@@ -1583,6 +1780,28 @@
       "integrity": "sha256-mdrlJBAgFMh79hNRW39uv7c+BwnnaOrAMmdh7+VhEhs=",
       "dependencies": []
     },
+    "portico": {
+      "type": "git",
+      "url": "https://github.com/blankhart/purescript-portico.git",
+      "rev": "734f177437f77a22616028b4cf38c5065348ac90",
+      "dependencies": [
+        "aff",
+        "arrays",
+        "effect",
+        "foldable-traversable",
+        "functions",
+        "maybe",
+        "nullable",
+        "prelude",
+        "refs",
+        "strings",
+        "tuples",
+        "unsafe-coerce",
+        "web-dom",
+        "web-events",
+        "web-html"
+      ]
+    },
     "posix-types": {
       "type": "registry",
       "version": "6.0.1",
@@ -1612,6 +1831,26 @@
         "newtype",
         "prelude",
         "tuples"
+      ]
+    },
+    "random": {
+      "type": "registry",
+      "version": "6.0.0",
+      "integrity": "sha256-7sZRo6P9UIiXDZ9s2QL9T8h3wlIwLdQrR4+oZKOijQw=",
+      "dependencies": [
+        "effect",
+        "integers",
+        "prelude"
+      ]
+    },
+    "record": {
+      "type": "registry",
+      "version": "4.0.0",
+      "integrity": "sha256-WQ8fqp4X1wTA70J4qUcPW4Z7DCwx6e5KJnT/EuTdWSc=",
+      "dependencies": [
+        "functions",
+        "prelude",
+        "unsafe-coerce"
       ]
     },
     "refs": {
@@ -1745,6 +1984,172 @@
       "version": "6.0.0",
       "integrity": "sha256-0L1QsaY20OILjfU5TV72d3U/tSjhmL9hJ32WMp857Lk=",
       "dependencies": []
+    },
+    "variant": {
+      "type": "registry",
+      "version": "8.0.0",
+      "integrity": "sha256-Ydrgl8liWEwYQOWW76PdZtg3vxKpoKgsnmFyTLgZkoU=",
+      "dependencies": [
+        "control",
+        "enums",
+        "foldable-traversable",
+        "lists",
+        "maybe",
+        "partial",
+        "prelude",
+        "type-equality",
+        "unsafe-coerce"
+      ]
+    },
+    "web-dom": {
+      "type": "registry",
+      "version": "6.0.0",
+      "integrity": "sha256-rVeqkxChkjqisDvOujy9BMEgGqJkwX3t6g21bXfiG5o=",
+      "dependencies": [
+        "effect",
+        "enums",
+        "maybe",
+        "newtype",
+        "nullable",
+        "prelude",
+        "unsafe-coerce",
+        "web-events"
+      ]
+    },
+    "web-events": {
+      "type": "registry",
+      "version": "4.0.0",
+      "integrity": "sha256-wZNeldG0OU+8qGycUJ9e6vxf1/GC4Ep4OlRMhvjs9LA=",
+      "dependencies": [
+        "datetime",
+        "effect",
+        "enums",
+        "foreign",
+        "functions",
+        "maybe",
+        "newtype",
+        "nullable",
+        "prelude",
+        "unsafe-coerce"
+      ]
+    },
+    "web-file": {
+      "type": "registry",
+      "version": "4.0.0",
+      "integrity": "sha256-txsdkeWBKU/+5v9m5c6kysgJQSDyV1r7MHaeT4STpjQ=",
+      "dependencies": [
+        "datetime",
+        "effect",
+        "enums",
+        "foreign",
+        "integers",
+        "maybe",
+        "media-types",
+        "nullable",
+        "numbers",
+        "partial",
+        "prelude",
+        "tuples",
+        "unfoldable",
+        "unsafe-coerce",
+        "web-events"
+      ]
+    },
+    "web-html": {
+      "type": "registry",
+      "version": "4.1.1",
+      "integrity": "sha256-yOuZJGUxFrivHKpo/jKuKzFZaq6PPPE64ftSysXFssk=",
+      "dependencies": [
+        "effect",
+        "enums",
+        "foreign",
+        "functions",
+        "js-date",
+        "maybe",
+        "media-types",
+        "newtype",
+        "nullable",
+        "prelude",
+        "unsafe-coerce",
+        "web-dom",
+        "web-events",
+        "web-file",
+        "web-storage"
+      ]
+    },
+    "web-socket": {
+      "type": "registry",
+      "version": "4.0.1",
+      "integrity": "sha256-oyGnpS7dy3qdhyJ5s/XBEWhClFYxtVDrP8/bA521jtI=",
+      "dependencies": [
+        "arraybuffer-types",
+        "effect",
+        "enums",
+        "foreign",
+        "maybe",
+        "newtype",
+        "partial",
+        "prelude",
+        "unsafe-coerce",
+        "web-events",
+        "web-file"
+      ]
+    },
+    "web-storage": {
+      "type": "registry",
+      "version": "5.0.0",
+      "integrity": "sha256-YJfos55oeKtBStNfoWfeflSy8j+4IDym5eaZtIY7YM4=",
+      "dependencies": [
+        "effect",
+        "maybe",
+        "nullable",
+        "prelude",
+        "unsafe-coerce",
+        "web-events"
+      ]
+    },
+    "web-xhr": {
+      "type": "registry",
+      "version": "5.0.2",
+      "integrity": "sha256-VRZe4dFkjH4esoV2FB/Jg9FgRH7LMSzn8/brGIGOwAo=",
+      "dependencies": [
+        "arraybuffer-types",
+        "datetime",
+        "effect",
+        "either",
+        "enums",
+        "foreign",
+        "http-methods",
+        "maybe",
+        "media-types",
+        "newtype",
+        "nullable",
+        "prelude",
+        "unsafe-coerce",
+        "web-dom",
+        "web-events",
+        "web-file",
+        "web-html"
+      ]
+    },
+    "windrose-router": {
+      "type": "git",
+      "url": "https://github.com/blankhart/purescript-windrose-router.git",
+      "rev": "6199237cf42d35b8ca3d89ceaba40efb83966ac3",
+      "dependencies": [
+        "arrays",
+        "control",
+        "either",
+        "foldable-traversable",
+        "heterogeneous",
+        "integers",
+        "maybe",
+        "numbers",
+        "prelude",
+        "record",
+        "strings",
+        "tuples"
+      ]
     }
   }
 }

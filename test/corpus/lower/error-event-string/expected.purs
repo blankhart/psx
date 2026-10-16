@@ -1,0 +1,3 @@
+-- psx lower failed
+-- 6:16 An event handler is a hole: onclick={...}
+-- 6:35 An event handler is a hole: onkeydown={...}

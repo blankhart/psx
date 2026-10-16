@@ -1,0 +1,6 @@
+module Lower.ErrorEventString where
+
+import Portico.Psx (Markup)
+
+-- An event handler is a PureScript value, so it is always a hole.
+view = <button onclick="alert(1)" onkeydown>Go</button>

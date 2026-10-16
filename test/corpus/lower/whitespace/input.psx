@@ -1,0 +1,30 @@
+module Lower.Whitespace where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+-- Leading whitespace goes on every line but the first, trailing on every line
+-- but the last; empty lines go; the rest are joined by one space.
+paragraph :: String -> Markup Unit
+paragraph name =
+  <p>
+    Hello,
+      {name}!   How
+    are you?
+
+    Fine.
+    <b> bold </b> <i>italic</i>
+  </p>
+
+-- Text that is only indentation between tags makes no node.
+list :: Markup Unit
+list =
+  <ul>
+    <li>one</li>
+    <li>two</li>
+  </ul>
+
+-- Text in <pre> follows the same policy; a hole keeps a string as it is.
+pre :: Markup Unit
+pre = <pre>{"  two\n  lines"}</pre>

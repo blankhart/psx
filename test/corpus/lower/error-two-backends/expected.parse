@@ -1,0 +1,5 @@
+print: identical
+errors: none
+markup:
+  6:8 <p>
+    text "both"

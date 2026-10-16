@@ -1,0 +1,28 @@
+module Lower.Keyed where
+
+import Prelude
+
+import Data.Tuple (Tuple)
+import Portico.Psx (Key, Markup, Node)
+
+type Item = { id :: Int, name :: String }
+
+-- A hole whose literals carry `key` makes its parent a keyed element.
+list :: Array Item -> Markup Unit
+list items =
+  <ul class="items">
+    {map (\item -> <li key={item.id}>{item.name}</li>) items}
+  </ul>
+
+-- Children that carry `key` themselves.
+fixed :: Markup Unit
+fixed =
+  <ol>
+    <li key="a">A</li>
+    <li key="b">B</li>
+  </ol>
+
+-- A literal whose root carries `key` is keyed children, for a keyed parent
+-- elsewhere.
+pair :: Array (Tuple Key (Node Unit))
+pair = <><li key="x">X</li><li key="y">Y</li></>

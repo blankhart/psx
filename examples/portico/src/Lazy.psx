@@ -1,0 +1,59 @@
+module Examples.Lazy
+  ( ChildMsg(..)
+  , Model
+  , Msg(..)
+  , child
+  , init
+  , main
+  , rendered
+  , update
+  , view
+  ) where
+
+import Prelude
+
+import Effect (Effect)
+import Portico ((:>))
+import Portico as P
+import Portico.Psx (Markup, root)
+
+-- A lazy view below `map`, whose tagger changes while its argument does not.
+
+type Model = { count :: Int, tag :: Int, other :: Int, last :: String }
+
+data Msg = Count | Retag | Other | Child Int ChildMsg
+
+data ChildMsg = Clicked
+
+init :: P.Init Model Msg
+init = { count: 0, tag: 0, other: 0, last: "" } :> []
+
+update :: P.Update Model Msg
+update model = case _ of
+  Count -> model { count = model.count + 1 } :> []
+  Retag -> model { tag = model.tag + 1 } :> []
+  Other -> model { other = model.other + 1 } :> []
+  Child tag Clicked -> model { last = "clicked under tag " <> show tag } :> []
+
+-- | Counts its own calls, so the test can tell when it runs.
+foreign import rendered :: Int -> Int
+
+child :: Int -> P.Html ChildMsg
+child count = root
+  ( <div>
+      <button id="inner" onclick={Clicked}>{show (rendered count)}</button>
+    </div>
+  )
+
+view :: Model -> Markup Msg
+view model =
+  <main>
+    <button id="count" onclick={Count}>Count</button>
+    <button id="retag" onclick={Retag}>Retag</button>
+    <button id="other" onclick={Other}>Other {show model.other}</button>
+    {Child model.tag <$> P.lazy "div" "child" child model.count}
+    <p id="last">{model.last}</p>
+  </main>
+
+main :: Effect Unit
+main = void $ P.mount "main" { init, update, subscriptions: P.noSubscriptions, view: root <<< view }

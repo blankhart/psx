@@ -1,0 +1,12 @@
+print: identical
+errors: none
+markup:
+  15:7 <main>
+    text "\n        "
+    16:9 <p>
+      text "one"
+    text "\n      "
+  21:16 <div>
+    text "\n    "
+    hole {"two"}
+    text "\n  "

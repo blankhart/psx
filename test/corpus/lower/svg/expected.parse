@@ -1,0 +1,28 @@
+print: identical
+errors: none
+markup:
+  11:3 <svg>
+    @viewBox="0 0 10 10"
+    @width="10"
+    text "\n    "
+    12:5 <circle> (self-closing)
+      @cx="5"
+      @cy="5"
+      @r="4"
+      @fill={if on then "green" else "gray"}
+    text "\n    "
+    13:5 <text>
+      @x="1"
+      @y="9"
+      @font-size="2"
+      text "label"
+    text "\n    "
+    hole {if on then <path d="M 0 0 L 10 10"/> else <></>}
+      14:17 <path> (self-closing)
+        @d="M 0 0 L 10 10"
+      14:48 <>
+    text "\n    "
+    15:5 <foreignObject>
+      15:20 <p>
+        text "html again"
+    text "\n  "

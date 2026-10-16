@@ -1,0 +1,6 @@
+module Lower.ErrorNoBackend where
+
+import Prelude
+
+view :: Unit
+view = unit

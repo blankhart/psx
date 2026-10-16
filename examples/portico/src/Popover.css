@@ -1,0 +1,4 @@
+#progress {
+  height: 4px;
+  background: linear-gradient(to right, teal calc(var(--progress) * 100%), #ddd 0);
+}

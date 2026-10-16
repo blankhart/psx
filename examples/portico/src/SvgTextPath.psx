@@ -1,0 +1,40 @@
+module Examples.SvgTextPath where
+
+import Prelude
+
+import Effect (Effect)
+import Portico ((:>))
+import Portico as P
+import Portico.Psx (Markup, root)
+import Portico.Svg as S
+
+type Model = { visible :: Boolean }
+
+init :: P.Init Model Msg
+init = { visible: true } :> []
+
+data Msg = Toggle
+
+update :: P.Update Model Msg
+update model = case _ of
+  Toggle -> model { visible = not model.visible } :> []
+
+-- The fading text carries a Portico transition, which no attribute says, so
+-- it is Portico's own element in a hole.
+view :: Model -> Markup Msg
+view model =
+  <main>
+    <button onclick={Toggle}>{if model.visible then "Hide" else "Show"}</button>
+    <svg viewBox="0 0 500 200" width="500" height="200">
+      <path id="curve" d="M 20 150 C 120 20, 380 20, 480 150" fill="none" stroke="lightgray"/>
+      {if model.visible then
+          [ P.element "text" [ P.key "text", P.transition "fade", S.fontSize "24" ]
+              (<textPath href="#curve" startOffset="5%">Text set on a path, fading in and out</textPath>)
+          ]
+        else []
+      }
+    </svg>
+  </main>
+
+main :: Effect Unit
+main = void $ P.mount "main" { init, update, subscriptions: P.noSubscriptions, view: root <<< view }
