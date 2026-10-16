@@ -1,0 +1,7 @@
+print: identical
+errors:
+  5:13-5:16 <p> is not closed before </div>
+markup:
+  5:8 <div>
+    5:13 <p>
+      text "never closed"

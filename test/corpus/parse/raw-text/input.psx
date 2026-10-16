@@ -1,0 +1,13 @@
+module Parse.RawText where
+
+import Portico.Psx
+
+view =
+  <section class="counter">
+    <p>hello</p>
+    <style>
+      .counter { display: grid; gap: 0.75rem; }
+      .pip.filled { background: seagreen; }
+    </style>
+    <script>if (a < b) { run() }</script>
+  </section>

@@ -1,0 +1,7 @@
+module Parse.ErrorUnclosed where
+
+import Portico.Psx
+
+view = <div><p>never closed</div>
+
+next = 1

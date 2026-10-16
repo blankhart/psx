@@ -1,0 +1,15 @@
+module Parse.ChildHoles where
+
+import Portico.Psx
+
+counter label n =
+  <p>{label}: {show n}</p>
+
+spaced first last = <p>{first}{" "}{last}</p>
+
+multiline n =
+  <p>
+    {
+      show n
+    }
+  </p>

@@ -1,0 +1,22 @@
+print: identical
+errors: none
+markup:
+  6:3 <button>
+    @type="button"
+    @class="primary"
+    @title='single quoted'
+    @disabled
+    @aria-label={label}
+    @onclick={Increment}
+    @data-count={show (n + 1)}
+    text "\n    "
+    hole {label}
+    text "\n  "
+  18:20 <li>
+    @key={i}
+    @hidden
+    @class={if i > 1 then "a" else "b"}
+    text "x"
+  20:9 <input> (no close)
+    @value=""
+    @placeholder=""

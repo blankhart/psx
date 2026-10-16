@@ -2,22 +2,12 @@
 -- | (the CST printer, the lowering, the position map, the formatter).
 module Psx.Corpus.Stages (stages) where
 
-import Prelude
+
 
 import Psx.Corpus (Stage)
+import Psx.Corpus.Parse (parse)
 
 stages :: Array Stage
 stages =
-  [ echo
+  [ parse
   ]
-
--- | Placeholder until the first real stage lands: copies the input of the
--- | cases in the `dummy` area, so the runner and `--accept` have something
--- | to check.
-echo :: Stage
-echo =
-  { name: "echo"
-  , golden: "expected.echo"
-  , applies: \c -> c.area == "dummy"
-  , run: \c -> pure c.input
-  }

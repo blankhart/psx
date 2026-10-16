@@ -1,0 +1,15 @@
+print: identical
+errors: none
+markup:
+  6:3 <section>
+    @class="counter"
+    text "\n    "
+    7:5 <p>
+      text "hello"
+    text "\n    "
+    8:5 <style>
+      text "\n      .counter { display: grid; gap: 0.75rem; }\n      .pip.filled { background: seagreen; }\n    "
+    text "\n    "
+    12:5 <script>
+      text "if (a < b) { run() }"
+    text "\n  "

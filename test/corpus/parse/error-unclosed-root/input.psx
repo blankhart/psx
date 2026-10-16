@@ -1,0 +1,9 @@
+module Parse.ErrorUnclosedRoot where
+
+import Portico.Psx
+
+view =
+  <div>
+    <p>don't stop here
+
+next = <p>still parsed</p>

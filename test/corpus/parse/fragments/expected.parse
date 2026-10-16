@@ -1,0 +1,20 @@
+print: identical
+errors: none
+markup:
+  5:11 <>
+  7:8 <>
+    7:10 <li>
+      text "one"
+    7:22 <li>
+      text "two"
+  10:3 <>
+    text "\n    "
+    11:5 <h1>
+      text "Title"
+    text "\n    "
+    12:5 <>
+      text "\n      "
+      13:7 <p>
+        text "inner"
+      text "\n    "
+    text "\n  "

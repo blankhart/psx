@@ -1,0 +1,7 @@
+module Parse.ErrorMismatched where
+
+import Portico.Psx
+
+view = <div><span>text</b></span></div>
+
+next = 1

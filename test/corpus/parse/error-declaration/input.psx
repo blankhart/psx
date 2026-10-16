@@ -1,0 +1,7 @@
+module Parse.ErrorDeclaration where
+
+import Portico.Psx
+
+view = <p>don't panic</p> + + 1
+
+next = <p>still parsed</p>

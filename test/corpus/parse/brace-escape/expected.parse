@@ -1,0 +1,9 @@
+print: identical
+errors: none
+markup:
+  5:10 <code>
+    hole {"{"}
+    text " x "
+    hole {"}"}
+  7:10 <p>
+    hole {show { a: 1 }}

@@ -1,0 +1,34 @@
+module Parse.Disambiguation where
+
+import Prelude
+import Portico.Psx
+
+-- `<` after a token that can end an expression is the operator.
+less a b = a <b
+lessSpaced a b = a < b
+lessParen a b = (a) <(b)
+
+-- `<` followed by a name or `>` at expression start opens markup.
+afterEquals = <p/>
+afterDollar = pure $ <p/>
+afterParen = (<p/>)
+inArray = [<li/>, <li/>]
+afterComma = Tuple 1 (<p/>)
+afterArrow = \_ -> <p/>
+afterThenElse b = if b then <p/> else <hr/>
+afterOf x = case x of
+  _ -> <p/>
+afterIn = let x = 1 in <p>{show x}</p>
+afterOperator = <b/> <> <i/>
+
+inDo = do
+  x <- <p/>
+  <p/>
+
+-- `<>` keeps its meaning except at expression start.
+append a b = a <> b
+appendSection = (<>)
+fragment = <><li/></>
+
+-- A hole holding an array.
+arrayHole = <ul>{[<li/>, <li/>]}</ul>

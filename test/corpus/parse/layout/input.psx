@@ -1,0 +1,30 @@
+module Parse.Layout where
+
+import Portico.Psx
+
+view n =
+  <div>
+text at column zero
+    {show n}
+  </div>
+
+next = 1
+
+inWhere = x
+  where
+  x =
+    <p>
+      in a where
+    </p>
+  y = 2
+
+inLet =
+  let
+    a = <b>{show 1}</b>
+    b = 2
+  in
+    a
+
+guards n
+  | n > 0 = <p>positive</p>
+  | otherwise = <p>other</p>
