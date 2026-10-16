@@ -1,0 +1,19 @@
+module Lower.Fragments where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+-- A fragment is its children, with no wrapper; the empty fragment is [].
+both :: Boolean -> Markup Unit
+both flag =
+  <>
+    <h1>Title</h1>
+    {if flag then <p>On</p> else <></>}
+    <>
+      <span>nested</span>
+    </>
+  </>
+
+empty :: Markup Unit
+empty = <></>

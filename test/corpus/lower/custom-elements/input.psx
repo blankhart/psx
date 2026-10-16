@@ -1,0 +1,8 @@
+module Lower.CustomElements where
+
+import Portico.Psx (Markup)
+
+-- A name the HTML table does not have is B.element, with its attributes
+-- through B.attribute.
+view :: Markup Unit
+view = <my-widget size="3" class="w"><x-slot>content</x-slot></my-widget>

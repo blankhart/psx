@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "source": "input.psx",
+  "generated": "input.purs",
+  "segments": [
+    { "kind": "copy", "generated": [2, 1, 3, 1], "source": [1, 1, 2, 1] },
+    { "kind": "copy", "generated": [3, 1, 3, 28], "source": [3, 1, 3, 28] },
+    { "kind": "copy", "generated": [4, 24, 5, 1], "source": [3, 28, 4, 1] },
+    { "kind": "copy", "generated": [5, 1, 8, 8], "source": [5, 1, 8, 8] },
+    { "kind": "generated", "generated": [8, 10, 8, 31], "source": [8, 8, 8, 18] },
+    { "kind": "generated", "generated": [8, 34, 8, 56], "source": [8, 19, 8, 27] },
+    { "kind": "generated", "generated": [8, 58, 8, 81], "source": [8, 28, 8, 37] },
+    { "kind": "generated", "generated": [8, 87, 8, 105], "source": [8, 38, 8, 45] },
+    { "kind": "generated", "generated": [8, 112, 8, 128], "source": [8, 46, 8, 53] },
+    { "kind": "copy", "generated": [8, 136, 9, 1], "source": [8, 74, 9, 1] }
+  ]
+}

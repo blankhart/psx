@@ -1,0 +1,7 @@
+print: identical
+errors: none
+markup:
+  6:8 <button>
+    @onclick="alert(1)"
+    @onkeydown
+    text "Go"

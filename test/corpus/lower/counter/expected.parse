@@ -1,0 +1,39 @@
+print: identical
+errors: none
+markup:
+  13:3 <section>
+    @class="counter"
+    text "\n    "
+    14:5 <h2>
+      hole {props.label}
+      text ": "
+      hole {show n}
+    text "\n    "
+    15:5 <button>
+      @onclick={Decrement}
+      @disabled={n <= 0}
+      text "-"
+    text "\n    "
+    16:5 <button>
+      @onclick={Increment}
+      @disabled={n >= props.max}
+      text "+"
+    text "\n    "
+    hole {if n == 0 then <></> else <button onclick={Reset}>Reset</button>}
+      19:9 <>
+      21:9 <button>
+        @onclick={Reset}
+        text "Reset"
+    text "\n    "
+    23:5 <ol>
+      @class="pips"
+      text "\n      "
+      hole {map (\i -> <li key={i} class={if i <= n then "pip filled" else "pip"}></li>) (1 .. props.max)}
+        26:18 <li>
+          @key={i}
+          @class={if i <= n then "pip filled" else "pip"}
+      text "\n    "
+    text "\n    "
+    30:5 <style>
+      text "\n      .counter { display: grid; gap: 0.75rem; }\n      .pip { width: 1rem; height: 0.25rem; background: silver; }\n      .pip.filled { background: seagreen; }\n    "
+    text "\n  "

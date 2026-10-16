@@ -1,0 +1,28 @@
+print: identical
+errors: none
+markup:
+  11:3 <form>
+    text "\n    "
+    12:5 <input> (no close)
+      @type="text"
+      @required
+      @disabled={busy}
+      @tabindex="2"
+      @maxlength="-1"
+      @oninput={Typed}
+    text "\n    "
+    13:5 <button>
+      @class="primary"
+      @data-state="idle"
+      @aria-label="Send"
+      @onclick={Clicked}
+      text "Send"
+    text "\n    "
+    14:5 <label>
+      @for="name"
+      @title
+      text "Name"
+    text "\n    "
+    15:5 <div>
+      @my-attribute={show busy}
+    text "\n  "

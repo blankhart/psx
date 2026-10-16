@@ -1,0 +1,229 @@
+module Examples.JsFrameworkBenchmark where
+
+-- https://github.com/krausest/js-framework-benchmark
+
+import Prelude
+import Prim hiding (Row)
+
+import Data.Array as Array
+import Data.Int as Int
+import Data.Maybe (Maybe(..))
+import Data.Maybe as Maybe
+import Data.Unfoldable (replicateA)
+import Effect (Effect)
+import Effect.Random as Random
+import Portico ((:>))
+import Portico as P
+import Portico.Psx (Markup, root)
+import Web.DOM.Element as Element
+import Web.DOM.Node as Node
+import Web.Event.Event (Event)
+import Web.Event.Event as Event
+
+main :: Effect Unit
+main = void $ P.mount "main" { init, update, subscriptions: P.noSubscriptions, view: root <<< view }
+
+type Row = { id :: Int, label :: String, selected :: Boolean }
+
+type Model = { rows :: Array Row, nextId :: Int }
+
+init :: P.Init Model Msg
+init = { rows: [], nextId: 1 } :> []
+
+data Msg
+  = Create Int
+  | Append Int
+  | UpdateEvery Int
+  | Clear
+  | Swap
+  | Select Int
+  | Remove Int
+  | Push (Array Row)
+
+update :: P.Update Model Msg
+update model = case _ of
+  Create count ->
+    update (model { rows = [] }) (Append count)
+  Append count ->
+    model :>
+      [ do
+          rows <- P.sync $ randomRows model.nextId count
+          pure $ Push rows
+      ]
+  UpdateEvery count ->
+    let
+      f index row | mod index count == 0 = row { label = row.label <> " !!!" }
+      f _ row = row
+    in
+      model { rows = Array.mapWithIndex f model.rows } :> []
+  Clear ->
+    model { rows = [] } :> []
+  Swap ->
+    case Array.index model.rows 1, Array.index model.rows 998 of
+      Just first, Just second ->
+        let
+          f 1 _ = second
+          f 998 _ = first
+          f _ row = row
+        in
+          model { rows = Array.mapWithIndex f model.rows } :> []
+      _, _ -> model :> []
+  Select id ->
+    let
+      f row | row.id == id = row { selected = true }
+      f row | row.selected = row { selected = false }
+      f row = row
+    in
+      model { rows = f <$> model.rows } :> []
+  Remove id ->
+    model { rows = Array.filter (\row -> row.id /= id) model.rows } :> []
+  Push rows ->
+    model { rows = model.rows <> rows, nextId = model.nextId + Array.length rows } :> []
+
+choose :: Array String -> Effect String
+choose array = do
+  index <- Random.randomInt 0 (Array.length array)
+  pure $ Maybe.fromMaybe "" $ Array.index array index
+
+randomRows :: Int -> Int -> Effect (Array Row)
+randomRows lastId length = Array.mapWithIndex f <$> replicateA length row
+  where
+  row = do
+    adjective <- choose adjectives
+    color <- choose colors
+    noun <- choose nouns
+    pure $ adjective <> " " <> color <> " " <> noun
+  f index label = { id: lastId + index, label, selected: false }
+
+adjectives :: Array String
+adjectives =
+  [ "pretty"
+  , "large"
+  , "big"
+  , "small"
+  , "tall"
+  , "short"
+  , "long"
+  , "handsome"
+  , "plain"
+  , "quaint"
+  , "clean"
+  , "elegant"
+  , "easy"
+  , "angry"
+  , "crazy"
+  , "helpful"
+  , "mushy"
+  , "odd"
+  , "unsightly"
+  , "adorable"
+  , "important"
+  , "inexpensive"
+  , "cheap"
+  , "expensive"
+  , "fancy"
+  ]
+
+colors :: Array String
+colors =
+  [ "red"
+  , "yellow"
+  , "blue"
+  , "green"
+  , "pink"
+  , "brown"
+  , "purple"
+  , "brown"
+  , "white"
+  , "black"
+  , "orange"
+  ]
+
+nouns :: Array String
+nouns =
+  [ "table"
+  , "chair"
+  , "house"
+  , "bbq"
+  , "desk"
+  , "car"
+  , "pony"
+  , "cookie"
+  , "sandwich"
+  , "burger"
+  , "pizza"
+  , "mouse"
+  , "keyboard"
+  ]
+
+-- The table's click handler reads the event (`P.onMaybe`), which no HTML
+-- attribute says, so the table is Portico's own function in a hole. The rows
+-- are lazy and keyed by `P.keyedLazy`.
+view :: Model -> Markup Msg
+view model =
+  <main class="container">
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>Portico</h1>
+        </div>
+        <div class="col-md-6">{buttons}</div>
+      </div>
+    </div>
+    {P.table
+      [ P.class' "table table-hover table-striped test-data"
+      , P.onMaybe "click" handleTableClick
+      ]
+      (<tbody>{P.keyedLazy "tr" (show <<< _.id) viewRow <$> model.rows}</tbody>)
+    }
+    <span class="preloadicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+  </main>
+
+handleTableClick :: Event -> Effect (Maybe Msg)
+handleTableClick event = do
+  let maybeElement = event # Event.target >>= Node.fromEventTarget >>= Element.fromNode
+  case maybeElement of
+    Just element -> do
+      action <- Element.getAttribute "data-action" element
+      id <- map Int.fromString <$> Element.getAttribute "data-id" element
+      case action, id of
+        Just "Select", Just (Just id') -> pure $ Just $ Select id'
+        Just "Remove", Just (Just id') -> pure $ Just $ Remove id'
+        _, _ -> pure Nothing
+    Nothing -> pure Nothing
+
+viewRow :: Row -> P.Html Msg
+viewRow { id, label, selected } = root
+  ( <tr class={if selected then "danger" else ""}>
+      <td class="col-md-1">{show id}</td>
+      <td class="col-md-4">
+        <a href="#" data-action="Select" data-id={show id}>{label}</a>
+      </td>
+      <td class="col-md-1">
+        <a href="#">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true" data-action="Remove" data-id={show id}></span>
+        </a>
+      </td>
+      <td class="col-md-6"></td>
+    </tr>
+  )
+
+buttons :: Array (P.Html Msg)
+buttons =
+  button <$>
+    [ { id: "run", description: "Create 1,000 rows", msg: Create 1000 }
+    , { id: "runlots", description: "Create 10,000 rows", msg: Create 10000 }
+    , { id: "add", description: "Append 1,000 rows", msg: Append 1000 }
+    , { id: "update", description: "Update every 10th row", msg: UpdateEvery 10 }
+    , { id: "clear", description: "Clear", msg: Clear }
+    , { id: "swaprows", description: "Swap Rows", msg: Swap }
+    ]
+
+button :: { id :: String, msg :: Msg, description :: String } -> P.Html Msg
+button { id, msg, description } = root
+  ( <div class="col-sm-6 smallpad">
+      <button type="button" class="btn btn-primary btn-block" id={id} onclick={msg} ref="text">
+        {description}
+      </button>
+    </div>
+  )

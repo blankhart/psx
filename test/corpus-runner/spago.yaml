@@ -3,6 +3,7 @@ package:
   dependencies:
     - arrays
     - console
+    - either
     - effect
     - foldable-traversable
     - language-cst-parser
@@ -13,6 +14,7 @@ package:
     - node-process
     - prelude
     - psx-cst
+    - psx-lower
     - strings
   run:
     main: Psx.Corpus.Main

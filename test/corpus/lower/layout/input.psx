@@ -1,0 +1,23 @@
+module Lower.Layout where
+
+import Prelude
+
+import Effect (Effect)
+import Effect.Console (log)
+import Portico.Psx (Markup, root)
+
+-- Literals inside let, do and case blocks keep each generated line indented
+-- past the block's column.
+main :: Effect Unit
+main = do
+  let
+    page =
+      <main>
+        <p>one</p>
+      </main>
+  log "start"
+  case root page of
+    _ -> pure unit
+  void $ pure (<div>
+    {"two"}
+  </div>)

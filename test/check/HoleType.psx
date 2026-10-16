@@ -1,0 +1,15 @@
+module Examples.CheckHoleType where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+data Msg = Increment
+
+-- A child hole takes a string, a node or markup, not an Int.
+counter :: Int -> Markup Msg
+counter count =
+  <main>
+    <p>Count: {count}</p>
+    <button onclick={Increment}>+</button>
+  </main>

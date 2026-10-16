@@ -1,0 +1,28 @@
+print: identical
+errors: none
+markup:
+  13:3 <ul>
+    @class="items"
+    text "\n    "
+    hole {map (\item -> <li key={item.id}>{item.name}</li>) items}
+      14:20 <li>
+        @key={item.id}
+        hole {item.name}
+    text "\n  "
+  20:3 <ol>
+    text "\n    "
+    21:5 <li>
+      @key="a"
+      text "A"
+    text "\n    "
+    22:5 <li>
+      @key="b"
+      text "B"
+    text "\n  "
+  28:8 <>
+    28:10 <li>
+      @key="x"
+      text "X"
+    28:28 <li>
+      @key="y"
+      text "Y"

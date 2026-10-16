@@ -1,0 +1,20 @@
+print: identical
+errors: none
+markup:
+  10:3 <>
+    text "\n    "
+    11:5 <h1>
+      text "Title"
+    text "\n    "
+    hole {if flag then <p>On</p> else <></>}
+      12:19 <p>
+        text "On"
+      12:34 <>
+    text "\n    "
+    13:5 <>
+      text "\n      "
+      14:7 <span>
+        text "nested"
+      text "\n    "
+    text "\n  "
+  19:9 <>

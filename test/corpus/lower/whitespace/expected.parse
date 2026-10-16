@@ -1,0 +1,23 @@
+print: identical
+errors: none
+markup:
+  11:3 <p>
+    text "\n    Hello,\n      "
+    hole {name}
+    text "!   How\n    are you?\n\n    Fine.\n    "
+    17:5 <b>
+      text " bold "
+    text " "
+    17:19 <i>
+      text "italic"
+    text "\n  "
+  23:3 <ul>
+    text "\n    "
+    24:5 <li>
+      text "one"
+    text "\n    "
+    25:5 <li>
+      text "two"
+    text "\n  "
+  30:7 <pre>
+    hole {"  two\n  lines"}
