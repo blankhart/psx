@@ -10,7 +10,11 @@ module Suite.Driver
   , closePage
   , pageErrors
   , click
+  , clickNth
   , fill
+  , press
+  , TimedStep(..)
+  , timed
   , settle
   , snapshot
   , now
@@ -37,7 +41,10 @@ foreign import openImpl :: Browser -> String -> EffectFnAff Page
 foreign import closePageImpl :: Page -> EffectFnAff Unit
 foreign import errors :: Page -> Effect (Array String)
 foreign import clickImpl :: Page -> TestId -> EffectFnAff Unit
+foreign import clickNthImpl :: Page -> TestId -> Int -> EffectFnAff Unit
 foreign import fillImpl :: Page -> TestId -> String -> EffectFnAff Unit
+foreign import pressImpl :: Page -> TestId -> String -> EffectFnAff Unit
+foreign import timedImpl :: Page -> String -> TestId -> String -> EffectFnAff Number
 foreign import settleImpl :: Page -> EffectFnAff Unit
 foreign import snapshotImpl :: Page -> EffectFnAff Foreign
 foreign import toNodes
@@ -75,6 +82,30 @@ click page testId = fromEffectFnAff (clickImpl page testId)
 
 fill :: Page -> TestId -> String -> Aff Unit
 fill page testId text = fromEffectFnAff (fillImpl page testId text)
+
+-- | Clicks the element at the index among those whose `data-testid` starts
+-- | with the prefix.
+clickNth :: Page -> TestId -> Int -> Aff Unit
+clickNth page prefix index = fromEffectFnAff (clickNthImpl page prefix index)
+
+press :: Page -> TestId -> String -> Aff Unit
+press page testId key = fromEffectFnAff (pressImpl page testId key)
+
+-- | The steps that can be timed inside the page.
+data TimedStep
+  = TimedClick TestId
+  | TimedClickNth TestId Int
+  | TimedType TestId String
+  | TimedPress TestId String
+
+-- | Does the step inside the page and gives its time in milliseconds: from
+-- | the event to the last change it makes to the DOM, with layout.
+timed :: Page -> TimedStep -> Aff Number
+timed page = fromEffectFnAff <<< case _ of
+  TimedClick testId -> timedImpl page "click" testId ""
+  TimedClickNth prefix index -> timedImpl page "clickNth" prefix (show index)
+  TimedType testId text -> timedImpl page "type" testId text
+  TimedPress testId key -> timedImpl page "press" testId key
 
 -- | Waits until the framework has rendered what the last step caused.
 settle :: Page -> Aff Unit

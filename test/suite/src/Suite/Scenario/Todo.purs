@@ -28,8 +28,12 @@ todo =
       , Click "all"
       , Click "remove-1"
       , Expect "removed"
-      , Measure "add and remove"
-          [ Type "draft" "Measure", Click "add", Click "remove-4" ]
+      , Measure
+          { name: "filter"
+          , runs: 5
+          , setup: []
+          , steps: [ Click "active", Click "completed", Click "all" ]
+          }
       , Expect "removed"
       ]
   }
