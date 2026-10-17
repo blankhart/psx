@@ -18,7 +18,8 @@ module Screamer.Psx.Core
   , toKey
   , text
   , element
-  , keyedElement
+  , keyedHtmlElement
+  , keyedSvgElement
   , keyed
   , attribute
   , class Children
@@ -74,8 +75,12 @@ element = S.element_
 -- | A view runs once, so a literal's keyed children are created once and
 -- | never reordered: the keys need nothing from Screamer. A list that changes
 -- | is Screamer's own `each` in a hole.
-keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedElement tag attrs kids = S.element_ tag attrs (map snd kids)
+-- | `Screamer.Psx.keyedElement` picks this or `keyedSvgElement` by the tag.
+keyedHtmlElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedHtmlElement tag attrs kids = S.element_ tag attrs (map snd kids)
+
+keyedSvgElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedSvgElement tag attrs kids = S.svgElement_ tag attrs (map snd kids)
 
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) node

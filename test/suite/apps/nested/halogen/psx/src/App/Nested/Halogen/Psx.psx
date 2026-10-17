@@ -1,0 +1,93 @@
+-- | The nested scenario on Halogen, in PSX: each counter is a child
+-- | component in a slot, and the parent keeps the counts they report.
+module App.Nested.Halogen.Psx (main) where
+
+import Prelude
+
+import Data.Array as Array
+import Data.Const (Const)
+import Data.Foldable (foldl, for_, sum)
+import Data.Map (Map)
+import Data.Map as Map
+import Data.Tuple (Tuple(..))
+import Effect (Effect)
+import Type.Proxy (Proxy(..))
+import Effect.Class (liftEffect)
+import Halogen as H
+import Halogen.Aff as HA
+import Halogen.VDom.Driver (runUI)
+import Web.DOM.Node (removeChild)
+import Web.DOM.ParentNode (QuerySelector(..))
+import Web.HTML.HTMLElement (toNode)
+import Halogen.HTML as HH
+import Halogen.Psx (Markup, root)
+import App.Nested.Halogen.Psx.Counter as Counter
+
+type Fixture = { counters :: Array Counter.Input }
+
+type State =
+  { children :: Array Counter.Input
+  -- | What each child last reported.
+  , counts :: Map Int Int
+  , next :: Int
+  }
+
+data Action = Add | Remove Int | Changed Int Int
+
+type Slots = (counter :: H.Slot (Const Void) Counter.Output Int)
+
+_counter :: Proxy "counter"
+_counter = Proxy
+
+initial :: Fixture -> State
+initial fixture =
+  { children: fixture.counters
+  , counts: Map.fromFoldable (map (\c -> Tuple c.id c.start) fixture.counters)
+  , next: 1 + foldl (\n c -> max n c.id) 0 fixture.counters
+  }
+
+update :: State -> Action -> State
+update state = case _ of
+  Add ->
+    state
+      { children = Array.snoc state.children { id: state.next, label: "Counter " <> show state.next, start: 0 }
+      , counts = Map.insert state.next 0 state.counts
+      , next = state.next + 1
+      }
+  Remove id -> state { children = Array.filter (\c -> c.id /= id) state.children, counts = Map.delete id state.counts }
+  Changed id n -> state { counts = Map.insert id n state.counts }
+
+view :: forall m. State -> Markup (H.ComponentSlot Slots m Action) Action
+view state =
+  <section class="nested" data-testid="nested">
+    <p data-testid="total">Total: {show (sum state.counts)}</p>
+    <ul class="counters">
+      {
+        map
+          ( \c ->
+              <li key={c.id} class="child">
+                {HH.slot _counter c.id Counter.counter c (Changed c.id)}
+                <button data-testid={"remove-" <> show c.id} onclick={Remove c.id}>Remove</button>
+              </li>
+          )
+          state.children
+      }
+    </ul>
+    <button data-testid="add" onclick={Add}>Add a counter</button>
+  </section>
+
+component :: forall q o m. Fixture -> H.Component q Unit o m
+component fixture = H.mkComponent
+  { initialState: const (initial fixture)
+  , render: root <<< view
+  , eval: H.mkEval H.defaultEval { handleAction = \action -> H.modify_ (\state -> update state action) }
+  }
+
+-- | Mounts in place of `#app`, with the scenario's fixture.
+main :: Fixture -> Effect Unit
+main fixture = HA.runHalogenAff do
+  app <- HA.selectElement (QuerySelector "#app")
+  parent <- HA.selectElement (QuerySelector "#root")
+  for_ parent \p -> do
+    for_ app \a -> liftEffect (removeChild (toNode a) (toNode p))
+    runUI (component fixture) unit p

@@ -15,7 +15,6 @@
     "element",
     "keyed",
     "keyedChildren",
-    "keyedElement",
     "root",
     "sink",
     "text",
@@ -33,13 +32,19 @@
   ],
   "imports": [
     "Prelude (show, (<<<))",
+    "Data.Array as Array",
+    "Data.Tuple (Tuple)",
     "Prelude as Prelude",
     "Screamer.Core as S",
-    "Screamer.Psx.Sink.Core (Attr, Markup, Node)",
+    "Screamer.Psx.Sink.Core (Attr, Key, Markup, Node, keyedHtmlElement, keyedSvgElement)",
     "Screamer.Psx.Sink.Core (constant, element, handler, keyHandler, svgElement, valueHandler) as Impl",
     "Web.UIEvent.KeyboardEvent (KeyboardEvent)"
   ],
   "templates": {
+    "keyedElement": {
+      "type": "forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a",
+      "code": "\\tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag"
+    },
     "element": {
       "type": "forall a. Array (Attr a) -> Markup a -> Node a",
       "code": "Impl.element {name}"

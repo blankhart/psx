@@ -3199,7 +3199,7 @@ onInvalid msg =
 
 onKeyDown :: forall w a. a -> Array (B.Node w a)
 onKeyDown msg =
-  [ B.div [ B.onKeyDown msg ] []
+  [ B.div [ B.onKeyDown (\_ -> msg) ] []
   ]
 
 onKeyPress :: forall w a. a -> Array (B.Node w a)
@@ -3209,7 +3209,7 @@ onKeyPress msg =
 
 onKeyUp :: forall w a. a -> Array (B.Node w a)
 onKeyUp msg =
-  [ B.div [ B.onKeyUp msg ] []
+  [ B.div [ B.onKeyUp (\_ -> msg) ] []
   ]
 
 onLanguageChange :: forall w a. a -> Array (B.Node w a)

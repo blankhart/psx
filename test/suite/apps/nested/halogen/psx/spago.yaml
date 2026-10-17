@@ -1,0 +1,16 @@
+package:
+  name: psx-suite-nested-halogen-psx
+  dependencies:
+    - aff
+    - arrays
+    - const
+    - effect
+    - foldable-traversable
+    - halogen
+    - maybe
+    - ordered-collections
+    - prelude
+    - psx-halogen
+    - tuples
+    - web-dom
+    - web-html

@@ -1,0 +1,101 @@
+-- | The typeahead scenario on Halogen, in PSX.
+module App.Typeahead.Halogen.Psx (main) where
+
+import Prelude
+
+import Data.Array as Array
+import Data.Foldable (for_, traverse_)
+import Data.Maybe (Maybe(..), fromMaybe)
+import Data.String as String
+import Data.Time.Duration (Milliseconds(..))
+import Effect (Effect)
+import Effect.Aff (delay)
+import Effect.Aff.Class (class MonadAff)
+import Effect.Class (liftEffect)
+import Halogen as H
+import Halogen.Aff as HA
+import Halogen.VDom.Driver (runUI)
+import Web.DOM.Node (removeChild)
+import Web.DOM.ParentNode (QuerySelector(..))
+import Web.HTML.HTMLElement (toNode)
+import Halogen.Psx (Markup, root)
+import Suite.Shared.Typeahead (Fixture, search)
+import Web.UIEvent.KeyboardEvent as KE
+
+type State =
+  { query :: String
+  -- | The query the results answer.
+  , answered :: String
+  , results :: Array String
+  , selected :: Int
+  , chosen :: String
+  -- | The search waiting for its answer.
+  , pending :: Maybe H.ForkId
+  }
+
+data Action = Query String | Key String
+
+initial :: State
+initial = { query: "", answered: "", results: [], selected: 0, chosen: "", pending: Nothing }
+
+-- | Each query is forked, and a newer one kills the one still waiting.
+handle :: forall o m. MonadAff m => Fixture -> Action -> H.HalogenM State Action () o m Unit
+handle fixture = case _ of
+  Query query -> do
+    H.gets _.pending >>= traverse_ H.kill
+    if String.length query < 3 then
+      H.modify_ _ { query = query, answered = query, results = [], pending = Nothing }
+    else do
+      H.modify_ _ { query = query }
+      pending <- H.fork do
+        H.liftAff (delay (Milliseconds fixture.debounce))
+        results <- H.liftAff (search fixture query)
+        H.modify_ _ { answered = query, results = results, selected = 0, pending = Nothing }
+      H.modify_ _ { pending = Just pending }
+  Key key -> case key of
+    "ArrowDown" -> move 1
+    "ArrowUp" -> move (-1)
+    "Enter" -> H.modify_ \s -> s { chosen = fromMaybe s.chosen (Array.index s.results s.selected) }
+    _ -> pure unit
+  where
+  move by = H.modify_ \s -> s { selected = clamp 0 (Array.length s.results - 1) (s.selected + by) }
+
+status :: State -> String
+status state
+  | String.length state.query < 3 = "Type at least three letters"
+  | state.answered /= state.query = "Searching…"
+  | Array.length state.results == 1 = "1 result"
+  | otherwise = show (Array.length state.results) <> " results"
+
+view :: forall w. State -> Markup w Action
+view state =
+  <div class="typeahead" data-testid="typeahead">
+    <input type="text" data-testid="search" placeholder="Search fruit" oninput={Query} onkeydown={Key <<< KE.key}>
+    <p data-testid="status">{status state}</p>
+    <ul class="results">
+      {
+        Array.mapWithIndex
+          ( \i name ->
+              <li key={name} data-testid={"result-" <> show i} class={if i == state.selected then "result selected" else "result"}>{name}</li>
+          )
+          state.results
+      }
+    </ul>
+    <p data-testid="chosen">{if state.chosen == "" then "" else "Chosen: " <> state.chosen}</p>
+  </div>
+
+component :: forall q o m. MonadAff m => Fixture -> H.Component q Unit o m
+component fixture = H.mkComponent
+  { initialState: const initial
+  , render: root <<< view
+  , eval: H.mkEval H.defaultEval { handleAction = handle fixture }
+  }
+
+-- | Mounts in place of `#app`, with the scenario's fixture.
+main :: Fixture -> Effect Unit
+main fixture = HA.runHalogenAff do
+  app <- HA.selectElement (QuerySelector "#app")
+  parent <- HA.selectElement (QuerySelector "#root")
+  for_ parent \p -> do
+    for_ app \a -> liftEffect (removeChild (toNode a) (toNode p))
+    runUI (component fixture) unit p
