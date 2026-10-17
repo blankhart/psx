@@ -1,0 +1,17 @@
+package:
+  name: psx-suite-typeahead-halogen-purs
+  dependencies:
+    - aff
+    - arrays
+    - datetime
+    - effect
+    - foldable-traversable
+    - halogen
+    - maybe
+    - prelude
+    - psx-suite-shared
+    - strings
+    - tuples
+    - web-dom
+    - web-html
+    - web-uievents

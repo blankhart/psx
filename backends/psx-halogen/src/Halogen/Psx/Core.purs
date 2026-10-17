@@ -16,7 +16,8 @@ module Halogen.Psx.Core
   , toKey
   , text
   , element
-  , keyedElement
+  , keyedHtmlElement
+  , keyedSvgElement
   , keyed
   , attribute
   , class Children
@@ -68,8 +69,13 @@ element :: forall r w a. String -> Array (Attr r a) -> Markup w a -> Node w a
 element tag = HH.element (HH.ElemName tag)
 
 -- | Halogen's own keyed element, which halogen-vdom diffs by key.
-keyedElement :: forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a
-keyedElement tag = HH.keyed (HH.ElemName tag)
+-- | `Halogen.Psx.keyedElement` picks this or `keyedSvgElement` by the tag.
+keyedHtmlElement :: forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a
+keyedHtmlElement tag = HH.keyed (HH.ElemName tag)
+
+-- | A keyed element in SVG's namespace.
+keyedSvgElement :: forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a
+keyedSvgElement tag = HH.keyedNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName tag)
 
 keyed :: forall k w a. ToKey k => k -> Node w a -> Tuple Key (Node w a)
 keyed k node = Tuple (toKey k) node

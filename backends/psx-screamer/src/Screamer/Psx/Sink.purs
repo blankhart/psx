@@ -877,15 +877,18 @@ module Screamer.Psx.Sink
   , onVolumeChange
   , onWaiting
   , onWheel
+  , keyedElement
   ) where
 
 import Prelude (show, (<<<))
+import Data.Array as Array
+import Data.Tuple (Tuple)
 import Prelude as Prelude
 import Screamer.Core as S
-import Screamer.Psx.Sink.Core (Attr, Markup, Node)
+import Screamer.Psx.Sink.Core (Attr, Key, Markup, Node, keyedHtmlElement, keyedSvgElement)
 import Screamer.Psx.Sink.Core (constant, element, handler, keyHandler, svgElement, valueHandler) as Impl
 import Web.UIEvent.KeyboardEvent (KeyboardEvent)
-import Screamer.Psx.Sink.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, keyedElement, root, sink, text, toKey) as Core
+import Screamer.Psx.Sink.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, root, sink, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
 
@@ -1584,6 +1587,98 @@ view = Impl.svgElement "view"
 
 vkern :: forall a. Array (Attr a) -> Markup a -> Node a
 vkern = Impl.svgElement "vkern"
+
+-- | The elements created in SVG's namespace.
+svgElements :: Array String
+svgElements =
+  [ "svg"
+  , "altGlyph"
+  , "altGlyphDef"
+  , "altGlyphItem"
+  , "animate"
+  , "animateColor"
+  , "animateMotion"
+  , "animateTransform"
+  , "animation"
+  , "circle"
+  , "clipPath"
+  , "color-profile"
+  , "cursor"
+  , "defs"
+  , "desc"
+  , "discard"
+  , "ellipse"
+  , "feBlend"
+  , "feColorMatrix"
+  , "feComponentTransfer"
+  , "feComposite"
+  , "feConvolveMatrix"
+  , "feDiffuseLighting"
+  , "feDisplacementMap"
+  , "feDistantLight"
+  , "feDropShadow"
+  , "feFlood"
+  , "feFuncA"
+  , "feFuncB"
+  , "feFuncG"
+  , "feFuncR"
+  , "feGaussianBlur"
+  , "feImage"
+  , "feMerge"
+  , "feMergeNode"
+  , "feMorphology"
+  , "feOffset"
+  , "fePointLight"
+  , "feSpecularLighting"
+  , "feSpotLight"
+  , "feTile"
+  , "feTurbulence"
+  , "filter"
+  , "font-face"
+  , "font-face-format"
+  , "font-face-name"
+  , "font-face-src"
+  , "font-face-uri"
+  , "foreignObject"
+  , "g"
+  , "glyph"
+  , "glyphRef"
+  , "handler"
+  , "hkern"
+  , "line"
+  , "linearGradient"
+  , "listener"
+  , "marker"
+  , "mask"
+  , "metadata"
+  , "missing-glyph"
+  , "mpath"
+  , "path"
+  , "pattern"
+  , "polygon"
+  , "polyline"
+  , "prefetch"
+  , "radialGradient"
+  , "rect"
+  , "set"
+  , "solidColor"
+  , "stop"
+  , "switch"
+  , "symbol"
+  , "tbreak"
+  , "text"
+  , "textArea"
+  , "textPath"
+  , "tref"
+  , "tspan"
+  , "unknown"
+  , "use"
+  , "view"
+  , "vkern"
+  ]
+
+keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedElement = \tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag
 
 -- Attributes ------------------------------------------------------------------
 

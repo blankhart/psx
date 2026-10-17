@@ -1,0 +1,13 @@
+package:
+  name: psx-suite-todo-halogen-psx
+  dependencies:
+    - aff
+    - arrays
+    - effect
+    - foldable-traversable
+    - halogen
+    - maybe
+    - prelude
+    - psx-halogen
+    - web-dom
+    - web-html

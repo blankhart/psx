@@ -5,9 +5,9 @@ package:
     - arrays
     - effect
     - foldable-traversable
-    - tuples
     - halogen
     - maybe
     - prelude
+    - tuples
     - web-dom
     - web-html

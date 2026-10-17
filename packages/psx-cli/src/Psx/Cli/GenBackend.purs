@@ -33,7 +33,7 @@ import Data.Argonaut.Core (Json)
 import Data.Argonaut.Core as Json
 import Data.Array as Array
 import Data.Either (Either(..), note)
-import Data.Maybe (Maybe(..), fromMaybe, maybe)
+import Data.Maybe (Maybe(..), fromMaybe, isJust, maybe)
 import Data.String as String
 import Data.Traversable (traverse)
 import Data.Tuple (Tuple(..))
@@ -63,6 +63,11 @@ type Mapping =
   , element :: Template
   , voidElement :: Maybe Template
   , svgElement :: Maybe Template
+  -- | When given, the generated module defines `keyedElement` itself, in
+  -- | place of the core's: its code can test the tag against
+  -- | `svgElements`, the SVG elements, for a framework that must be told
+  -- | the namespace.
+  , keyedElement :: Maybe Template
   , boolean :: Template
   , string :: Template
   , number :: Template
@@ -102,6 +107,7 @@ decodeMapping json = do
   , element: _
   , voidElement: _
   , svgElement: _
+  , keyedElement: _
   , boolean: _
   , string: _
   , number: _
@@ -119,6 +125,7 @@ decodeMapping json = do
     <*> template "element" ts
     <*> optionalTemplate "voidElement" ts
     <*> optionalTemplate "svgElement" ts
+    <*> optionalTemplate "keyedElement" ts
     <*> template "boolean" ts
     <*> template "string" ts
     <*> template "number" ts
@@ -311,10 +318,12 @@ backendModule source m names defs = lines
       , "  ( module Core"
       ]
       <> map (\n -> "  , " <> n.ident) names
+      <> (if isJust m.keyedElement then [ "  , keyedElement" ] else [])
       <> [ "  ) where", "" ]
       <> map ("import " <> _) m.imports
       <> [ "import " <> m.core <> " (" <> String.joinWith ", " m.coreExports <> ") as Core" ]
       <> section "Elements" ElementKind
+      <> keyed
       <> section "Attributes" AttributeKind
       <> section "Events" EventKind
   )
@@ -323,6 +332,16 @@ backendModule source m names defs = lines
     [ "", "-- " <> title <> " " <> String.joinWith "" (Array.replicate (76 - String.length title) "-") ]
       <> Array.concatMap def (Array.filter (sameKind kind <<< _.name) defs)
   def d = [ "", d.name.ident <> " :: " <> d.type, d.name.ident <> " = " <> d.code ]
+  keyed = case m.keyedElement of
+    Nothing -> []
+    Just t ->
+      [ ""
+      , "-- | The elements created in SVG's namespace."
+      , "svgElements :: Array String"
+      , "svgElements ="
+      ]
+        <> list (map (show <<< _.html) (Array.filter (\n -> sameKind ElementKind n && n.namespace == Svg) names))
+        <> [ "", "keyedElement :: " <> t.type, "keyedElement = " <> t.code ]
 
 sameKind :: Kind -> Name -> Boolean
 sameKind k n = case k, n.kind of
@@ -369,9 +388,12 @@ conformanceModule source m els attrs evs = lines
   declaration lhs type_ uses =
     let ident = String.takeWhile (_ /= String.codePointFromChar ' ') lhs
     in [ "", ident <> " :: " <> type_, lhs <> " =" ] <> list uses
-  list items = case Array.uncons items of
-    Nothing -> [ "  []" ]
-    Just { head, tail } -> [ "  [ " <> head ] <> map ("  , " <> _) tail <> [ "  ]" ]
+
+-- | An array literal, one item a line.
+list :: Array String -> Array String
+list items = case Array.uncons items of
+  Nothing -> [ "  []" ]
+  Just { head, tail } -> [ "  [ " <> head ] <> map ("  , " <> _) tail <> [ "  ]" ]
 
 lines :: Array String -> String
 lines ls = String.joinWith "\n" ls <> "\n"

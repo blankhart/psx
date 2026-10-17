@@ -490,6 +490,51 @@
           "dependencies": []
         }
       },
+      "psx-suite-nested-halogen-psx": {
+        "path": "test/suite/apps/nested/halogen/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "const",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "ordered-collections",
+            "prelude",
+            "psx-halogen",
+            "tuples",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-nested-halogen-purs": {
+        "path": "test/suite/apps/nested/halogen/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "const",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "ordered-collections",
+            "prelude",
+            "tuples",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-nested-portico-psx": {
         "path": "test/suite/apps/nested/portico/psx",
         "core": {
@@ -542,6 +587,48 @@
           "dependencies": []
         }
       },
+      "psx-suite-svg-halogen-psx": {
+        "path": "test/suite/apps/svg/halogen/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "psx-halogen",
+            "strings",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-svg-halogen-purs": {
+        "path": "test/suite/apps/svg/halogen/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "strings",
+            "tuples",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-svg-portico-psx": {
         "path": "test/suite/apps/svg/portico/psx",
         "core": {
@@ -569,6 +656,48 @@
             "portico",
             "prelude",
             "strings"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-table-halogen-psx": {
+        "path": "test/suite/apps/table/halogen/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "psx-halogen",
+            "psx-suite-shared",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-table-halogen-purs": {
+        "path": "test/suite/apps/table/halogen/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "psx-suite-shared",
+            "tuples",
+            "web-dom",
+            "web-html"
           ]
         },
         "test": {
@@ -608,6 +737,46 @@
           "dependencies": []
         }
       },
+      "psx-suite-todo-halogen-psx": {
+        "path": "test/suite/apps/todo/halogen/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "psx-halogen",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-todo-halogen-purs": {
+        "path": "test/suite/apps/todo/halogen/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "tuples",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-todo-portico-psx": {
         "path": "test/suite/apps/todo/portico/psx",
         "core": {
@@ -633,6 +802,54 @@
             "foldable-traversable",
             "portico",
             "prelude"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-typeahead-halogen-psx": {
+        "path": "test/suite/apps/typeahead/halogen/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "datetime",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "psx-halogen",
+            "psx-suite-shared",
+            "strings",
+            "web-dom",
+            "web-html",
+            "web-uievents"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-typeahead-halogen-purs": {
+        "path": "test/suite/apps/typeahead/halogen/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "datetime",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "psx-suite-shared",
+            "strings",
+            "tuples",
+            "web-dom",
+            "web-html",
+            "web-uievents"
           ]
         },
         "test": {

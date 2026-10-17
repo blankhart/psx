@@ -1,0 +1,94 @@
+-- | The svg scenario on Halogen, in PSX.
+module App.Svg.Halogen.Psx (main) where
+
+import Prelude
+
+import Data.Array as Array
+import Data.Foldable (for_)
+import Data.Maybe (Maybe(..), fromMaybe)
+import Data.String as String
+import Effect (Effect)
+import Effect.Class (liftEffect)
+import Halogen as H
+import Halogen.Aff as HA
+import Halogen.VDom.Driver (runUI)
+import Web.DOM.Node (removeChild)
+import Web.DOM.ParentNode (QuerySelector(..))
+import Web.HTML.HTMLElement (toNode)
+import Halogen.Psx (Markup, root)
+
+type Fixture = { values :: Array Int, max :: Int }
+
+type State = { values :: Array Int, max :: Int, selected :: Maybe Int }
+
+data Action = Select Int | Grow
+
+update :: State -> Action -> State
+update state = case _ of
+  Select i -> state { selected = Just i }
+  Grow -> case state.selected of
+    Just i -> state { values = fromMaybe state.values (Array.modifyAt i (\v -> min state.max (v + 1)) state.values) }
+    Nothing -> state
+
+-- | A bar's left edge and top, in the chart's coordinates.
+left :: Int -> Int
+left i = 10 + 20 * i
+
+barTop :: Int -> Int
+barTop v = 55 - 4 * v
+
+-- | The line through the tops of the bars.
+trend :: Array Int -> String
+trend values = String.joinWith " " (Array.mapWithIndex point values)
+  where
+  point i v = (if i == 0 then "M " else "L ") <> show (left i + 8) <> " " <> show (barTop v)
+
+view :: forall w. State -> Markup w Action
+view state =
+  <figure class="chart" data-testid="chart">
+    <svg viewBox="0 0 120 60" width="360" height="180">
+      <g class="bars">
+        {
+          Array.mapWithIndex
+            ( \i v ->
+                <rect key={i} data-testid={"bar-" <> show i} x={show (left i)} y={show (barTop v)} width="16" height={show (4 * v)} fill={if state.selected == Just i then "orange" else "steelblue"} onclick={Select i}/>
+            )
+            state.values
+        }
+      </g>
+      <path class="trend" d={trend state.values} fill="none" stroke="gray"/>
+      <line x1="5" y1="55" x2="115" y2="55" stroke="black"/>
+      {
+        case state.selected of
+          Just i -> <circle cx={show (left i + 8)} cy={show (barTop (value i))} r="2" fill="orange"/>
+          Nothing -> <></>
+      }
+      <text x="5" y="8">Values</text>
+    </svg>
+    <figcaption data-testid="caption">
+      {
+        case state.selected of
+          Just i -> "Bar " <> show i <> ": " <> show (value i)
+          Nothing -> "Click a bar"
+      }
+    </figcaption>
+    <button data-testid="grow" onclick={Grow} disabled={state.selected == Nothing}>Grow</button>
+  </figure>
+  where
+  value i = fromMaybe 0 (Array.index state.values i)
+
+component :: forall q o m. Fixture -> H.Component q Unit o m
+component fixture = H.mkComponent
+  { initialState: const { values: fixture.values, max: fixture.max, selected: Nothing }
+  , render: root <<< view
+  , eval: H.mkEval H.defaultEval { handleAction = \action -> H.modify_ (\state -> update state action) }
+  }
+
+-- | Mounts in place of `#app`, with the scenario's fixture.
+main :: Fixture -> Effect Unit
+main fixture = HA.runHalogenAff do
+  app <- HA.selectElement (QuerySelector "#app")
+  parent <- HA.selectElement (QuerySelector "#root")
+  for_ parent \p -> do
+    for_ app \a -> liftEffect (removeChild (toNode a) (toNode p))
+    runUI (component fixture) unit p
