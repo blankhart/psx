@@ -1,0 +1,8 @@
+print: identical
+errors:
+  6:18-6:18 In a hole: Unexpected '}'
+markup:
+  6:8 <p>
+    @{show (}
+    @class="a"
+    text "x"

@@ -4,7 +4,7 @@
   "core": "Halogen.Psx.Core",
   "coreExports": [
     "class Children",
-    "class KeyedChildren",
+    "class Content",
     "class ToKey",
     "Attr",
     "Key",
@@ -14,7 +14,7 @@
     "children",
     "element",
     "keyed",
-    "keyedChildren",
+    "none",
     "root",
     "text",
     "toKey"
@@ -32,8 +32,6 @@
   ],
   "imports": [
     "Prelude (const, show, (<<<))",
-    "Data.Array as Array",
-    "Data.Tuple (Tuple)",
     "Data.MediaType (MediaType)",
     "DOM.HTML.Indexed as I",
     "DOM.HTML.Indexed.AutocompleteType (AutocompleteType) as T",
@@ -45,7 +43,7 @@
     "Halogen.HTML as HH",
     "Halogen.HTML.Events as HE",
     "Halogen.HTML.Properties as HP",
-    "Halogen.Psx.Core (Attr, Key, Markup, Node, attribute, keyedHtmlElement, keyedSvgElement, onValueInput)",
+    "Halogen.Psx.Core (class Content, Attr, Node, attribute, elementOf, keyedHtmlElement, keyedSvgElement, onValueInput, svgNamespace)",
     "Web.Clipboard.ClipboardEvent (ClipboardEvent)",
     "Web.Event.Event (Event, EventType(..))",
     "Web.HTML.Event.DragEvent (DragEvent)",
@@ -56,17 +54,13 @@
     "Web.UIEvent.WheelEvent (WheelEvent)"
   ],
   "templates": {
-    "keyedElement": {
-      "type": "forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a",
-      "code": "\\tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag"
-    },
     "element": {
-      "type": "forall r w a. Array (Attr r a) -> Markup w a -> Node w a",
-      "code": "HH.element (HH.ElemName {name})"
+      "type": "forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a",
+      "code": "elementOf (HH.element (HH.ElemName {name})) (keyedHtmlElement {name})"
     },
     "svgElement": {
-      "type": "forall r w a. Array (Attr r a) -> Markup w a -> Node w a",
-      "code": "HH.elementNS (HH.Namespace \"http://www.w3.org/2000/svg\") (HH.ElemName {name})"
+      "type": "forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a",
+      "code": "elementOf (HH.elementNS svgNamespace (HH.ElemName {name})) (keyedSvgElement {name})"
     },
     "boolean": {
       "type": "forall r a. Boolean -> Attr r a",
@@ -180,8 +174,8 @@
         "var",
         "video"
       ],
-      "type": "forall w a. Array (Attr I.HTML{raw} a) -> Markup w a -> Node w a",
-      "code": "HH.{raw}"
+      "type": "forall c w a. Content c w a => Array (Attr I.HTML{raw} a) -> c -> Node w a",
+      "code": "elementOf HH.{raw} (keyedHtmlElement {name})"
     },
     {
       "names": [
@@ -203,8 +197,8 @@
         "track",
         "wbr"
       ],
-      "type": "forall w a. Array (Attr I.HTML{raw} a) -> Markup w a -> Node w a",
-      "code": "\\props _ -> HH.{raw} props"
+      "type": "forall c w a. Content c w a => Array (Attr I.HTML{raw} a) -> c -> Node w a",
+      "code": "elementOf (\\props _ -> HH.{raw} props) (\\props _ -> HH.{raw} props)"
     }
   ],
   "names": {
@@ -574,7 +568,7 @@
       "Prelude ((<>))",
       "Data.Maybe (Maybe(..))",
       "Data.Tuple (Tuple)",
-      "Halogen.Psx (class Children, class KeyedChildren, class ToKey)"
+      "Halogen.Psx (class Children, class Content, class ToKey)"
     ],
     "core": [
       [
@@ -583,11 +577,11 @@
       ],
       [
         "element",
-        "forall r w a. String -> Array (B.Attr r a) -> B.Markup w a -> B.Node w a"
+        "forall r c w a. Content c w a => String -> Array (B.Attr r a) -> c -> B.Node w a"
       ],
       [
-        "keyedElement",
-        "forall r w a. String -> Array (B.Attr r a) -> Array (Tuple B.Key (B.Node w a)) -> B.Node w a"
+        "none",
+        "forall w a. B.Markup w a"
       ],
       [
         "keyed",
@@ -599,11 +593,7 @@
       ],
       [
         "children",
-        "forall c w a. Children c w a => c -> B.Markup w a"
-      ],
-      [
-        "keyedChildren",
-        "forall c w a. KeyedChildren c w a => c -> Array (Tuple B.Key (B.Node w a))"
+        "forall c r. Children c r => c -> r"
       ],
       [
         "root",
@@ -622,14 +612,22 @@
       "    <> B.children (Just node)",
       "    <> B.children (Nothing :: Maybe String)",
       "",
-      "-- | What a child hole of a keyed parent takes: keyed literals and arrays of",
-      "-- | them, keyed by strings or by integers.",
+      "-- | What a child hole takes to make keyed children: keyed literals and",
+      "-- | arrays of them, keyed by strings or by integers.",
       "keyedChildHoles :: forall w a. B.Node w a -> Array (Tuple B.Key (B.Node w a))",
       "keyedChildHoles node =",
-      "  B.keyedChildren (B.keyed \"a\" node)",
-      "    <> B.keyedChildren [ B.keyed 1 node ]",
-      "    <> B.keyedChildren [ [ B.keyed 2 node ] ]",
-      "    <> B.keyedChildren (Just (B.keyed 3.0 node))"
+      "  B.children (B.keyed \"a\" node)",
+      "    <> B.children [ B.keyed 1 node ]",
+      "    <> B.children [ [ B.keyed 2 node ] ]",
+      "    <> B.children (Just (B.keyed 3.0 node))",
+      "",
+      "-- | An element takes keyed children as it takes plain ones.",
+      "keyedContent :: forall w a. B.Node w a -> Array (B.Node w a)",
+      "keyedContent node =",
+      "  [ B.ul [] [ B.keyed \"a\" node, B.keyed \"b\" node ]",
+      "  , B.element \"x-list\" [] (B.children [ B.keyed 1 node ])",
+      "  , B.g [] [ B.keyed \"c\" node ]",
+      "  ]"
     ],
     "nodes": "forall w a. Array (B.Node w a)",
     "handlers": "forall w a. a -> Array (B.Node w a)"

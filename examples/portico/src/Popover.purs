@@ -26,7 +26,7 @@ view _ =
       B.button [ B.id "close-dialog", B.commandfor "dialog", B.commandAttr "close" ] ([ B.text "Close" ]) ]
    ),
     B.div [ B.id "outside", B.inert true ] ([ B.button [] ([ B.text "Unreachable" ]) ]),
-    B.div [ B.id "progress", B.styleAttr "--progress:0.4" ] [] ]
+    B.div [ B.id "progress", B.styleAttr "--progress:0.4" ] B.none ]
    ) ]
 
 main :: Effect Unit

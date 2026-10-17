@@ -877,808 +877,713 @@ module Screamer.Psx
   , onVolumeChange
   , onWaiting
   , onWheel
-  , keyedElement
   ) where
 
 import Prelude (Unit, show, (<<<))
-import Data.Array as Array
-import Data.Tuple (Tuple)
 import Prelude as Prelude
 import Effect (Effect)
 import Screamer.Core as S
-import Screamer.Psx.Core (Attr, Key, Markup, Node, keyedHtmlElement, keyedSvgElement, onValueInput)
+import Screamer.Psx.Core (class Content, Attr, Node, elementOf, onValueInput)
 import Web.UIEvent.KeyboardEvent (KeyboardEvent)
-import Screamer.Psx.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, root, text, toKey) as Core
+import Screamer.Psx.Core (class Children, class Content, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, none, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
 
-a :: forall a. Array (Attr a) -> Markup a -> Node a
-a = S.element_ "a"
+a :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+a = elementOf (S.element_ "a")
 
-abbr :: forall a. Array (Attr a) -> Markup a -> Node a
-abbr = S.element_ "abbr"
+abbr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+abbr = elementOf (S.element_ "abbr")
 
-acronym :: forall a. Array (Attr a) -> Markup a -> Node a
-acronym = S.element_ "acronym"
+acronym :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+acronym = elementOf (S.element_ "acronym")
 
-address :: forall a. Array (Attr a) -> Markup a -> Node a
-address = S.element_ "address"
+address :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+address = elementOf (S.element_ "address")
 
-applet :: forall a. Array (Attr a) -> Markup a -> Node a
-applet = S.element_ "applet"
+applet :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+applet = elementOf (S.element_ "applet")
 
-area :: forall a. Array (Attr a) -> Markup a -> Node a
-area = S.element_ "area"
+area :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+area = elementOf (S.element_ "area")
 
-article :: forall a. Array (Attr a) -> Markup a -> Node a
-article = S.element_ "article"
+article :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+article = elementOf (S.element_ "article")
 
-aside :: forall a. Array (Attr a) -> Markup a -> Node a
-aside = S.element_ "aside"
+aside :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+aside = elementOf (S.element_ "aside")
 
-audio :: forall a. Array (Attr a) -> Markup a -> Node a
-audio = S.element_ "audio"
+audio :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+audio = elementOf (S.element_ "audio")
 
-b :: forall a. Array (Attr a) -> Markup a -> Node a
-b = S.element_ "b"
+b :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+b = elementOf (S.element_ "b")
 
-base :: forall a. Array (Attr a) -> Markup a -> Node a
-base = S.element_ "base"
+base :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+base = elementOf (S.element_ "base")
 
-basefont :: forall a. Array (Attr a) -> Markup a -> Node a
-basefont = S.element_ "basefont"
+basefont :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+basefont = elementOf (S.element_ "basefont")
 
-bdi :: forall a. Array (Attr a) -> Markup a -> Node a
-bdi = S.element_ "bdi"
+bdi :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+bdi = elementOf (S.element_ "bdi")
 
-bdo :: forall a. Array (Attr a) -> Markup a -> Node a
-bdo = S.element_ "bdo"
+bdo :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+bdo = elementOf (S.element_ "bdo")
 
-bgsound :: forall a. Array (Attr a) -> Markup a -> Node a
-bgsound = S.element_ "bgsound"
+bgsound :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+bgsound = elementOf (S.element_ "bgsound")
 
-big :: forall a. Array (Attr a) -> Markup a -> Node a
-big = S.element_ "big"
+big :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+big = elementOf (S.element_ "big")
 
-blink :: forall a. Array (Attr a) -> Markup a -> Node a
-blink = S.element_ "blink"
+blink :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+blink = elementOf (S.element_ "blink")
 
-blockquote :: forall a. Array (Attr a) -> Markup a -> Node a
-blockquote = S.element_ "blockquote"
+blockquote :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+blockquote = elementOf (S.element_ "blockquote")
 
-body :: forall a. Array (Attr a) -> Markup a -> Node a
-body = S.element_ "body"
+body :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+body = elementOf (S.element_ "body")
 
-br :: forall a. Array (Attr a) -> Markup a -> Node a
-br = S.element_ "br"
+br :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+br = elementOf (S.element_ "br")
 
-button :: forall a. Array (Attr a) -> Markup a -> Node a
-button = S.element_ "button"
+button :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+button = elementOf (S.element_ "button")
 
-canvas :: forall a. Array (Attr a) -> Markup a -> Node a
-canvas = S.element_ "canvas"
+canvas :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+canvas = elementOf (S.element_ "canvas")
 
-caption :: forall a. Array (Attr a) -> Markup a -> Node a
-caption = S.element_ "caption"
+caption :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+caption = elementOf (S.element_ "caption")
 
-center :: forall a. Array (Attr a) -> Markup a -> Node a
-center = S.element_ "center"
+center :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+center = elementOf (S.element_ "center")
 
-cite :: forall a. Array (Attr a) -> Markup a -> Node a
-cite = S.element_ "cite"
+cite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+cite = elementOf (S.element_ "cite")
 
-code :: forall a. Array (Attr a) -> Markup a -> Node a
-code = S.element_ "code"
+code :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+code = elementOf (S.element_ "code")
 
-col :: forall a. Array (Attr a) -> Markup a -> Node a
-col = S.element_ "col"
+col :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+col = elementOf (S.element_ "col")
 
-colgroup :: forall a. Array (Attr a) -> Markup a -> Node a
-colgroup = S.element_ "colgroup"
+colgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+colgroup = elementOf (S.element_ "colgroup")
 
-command :: forall a. Array (Attr a) -> Markup a -> Node a
-command = S.element_ "command"
+command :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+command = elementOf (S.element_ "command")
 
-content :: forall a. Array (Attr a) -> Markup a -> Node a
-content = S.element_ "content"
+content :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+content = elementOf (S.element_ "content")
 
-data' :: forall a. Array (Attr a) -> Markup a -> Node a
-data' = S.element_ "data"
+data' :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+data' = elementOf (S.element_ "data")
 
-datalist :: forall a. Array (Attr a) -> Markup a -> Node a
-datalist = S.element_ "datalist"
+datalist :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+datalist = elementOf (S.element_ "datalist")
 
-dd :: forall a. Array (Attr a) -> Markup a -> Node a
-dd = S.element_ "dd"
+dd :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dd = elementOf (S.element_ "dd")
 
-del :: forall a. Array (Attr a) -> Markup a -> Node a
-del = S.element_ "del"
+del :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+del = elementOf (S.element_ "del")
 
-details :: forall a. Array (Attr a) -> Markup a -> Node a
-details = S.element_ "details"
+details :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+details = elementOf (S.element_ "details")
 
-dfn :: forall a. Array (Attr a) -> Markup a -> Node a
-dfn = S.element_ "dfn"
+dfn :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dfn = elementOf (S.element_ "dfn")
 
-dialog :: forall a. Array (Attr a) -> Markup a -> Node a
-dialog = S.element_ "dialog"
+dialog :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dialog = elementOf (S.element_ "dialog")
 
-dir :: forall a. Array (Attr a) -> Markup a -> Node a
-dir = S.element_ "dir"
+dir :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dir = elementOf (S.element_ "dir")
 
-div :: forall a. Array (Attr a) -> Markup a -> Node a
-div = S.element_ "div"
+div :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+div = elementOf (S.element_ "div")
 
-dl :: forall a. Array (Attr a) -> Markup a -> Node a
-dl = S.element_ "dl"
+dl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dl = elementOf (S.element_ "dl")
 
-dt :: forall a. Array (Attr a) -> Markup a -> Node a
-dt = S.element_ "dt"
+dt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dt = elementOf (S.element_ "dt")
 
-elementEl :: forall a. Array (Attr a) -> Markup a -> Node a
-elementEl = S.element_ "element"
+elementEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+elementEl = elementOf (S.element_ "element")
 
-em :: forall a. Array (Attr a) -> Markup a -> Node a
-em = S.element_ "em"
+em :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+em = elementOf (S.element_ "em")
 
-embed :: forall a. Array (Attr a) -> Markup a -> Node a
-embed = S.element_ "embed"
+embed :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+embed = elementOf (S.element_ "embed")
 
-fieldset :: forall a. Array (Attr a) -> Markup a -> Node a
-fieldset = S.element_ "fieldset"
+fieldset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fieldset = elementOf (S.element_ "fieldset")
 
-figcaption :: forall a. Array (Attr a) -> Markup a -> Node a
-figcaption = S.element_ "figcaption"
+figcaption :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+figcaption = elementOf (S.element_ "figcaption")
 
-figure :: forall a. Array (Attr a) -> Markup a -> Node a
-figure = S.element_ "figure"
+figure :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+figure = elementOf (S.element_ "figure")
 
-font :: forall a. Array (Attr a) -> Markup a -> Node a
-font = S.element_ "font"
+font :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+font = elementOf (S.element_ "font")
 
-footer :: forall a. Array (Attr a) -> Markup a -> Node a
-footer = S.element_ "footer"
+footer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+footer = elementOf (S.element_ "footer")
 
-form :: forall a. Array (Attr a) -> Markup a -> Node a
-form = S.element_ "form"
+form :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+form = elementOf (S.element_ "form")
 
-frame :: forall a. Array (Attr a) -> Markup a -> Node a
-frame = S.element_ "frame"
+frame :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+frame = elementOf (S.element_ "frame")
 
-frameset :: forall a. Array (Attr a) -> Markup a -> Node a
-frameset = S.element_ "frameset"
+frameset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+frameset = elementOf (S.element_ "frameset")
 
-h1 :: forall a. Array (Attr a) -> Markup a -> Node a
-h1 = S.element_ "h1"
+h1 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h1 = elementOf (S.element_ "h1")
 
-h2 :: forall a. Array (Attr a) -> Markup a -> Node a
-h2 = S.element_ "h2"
+h2 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h2 = elementOf (S.element_ "h2")
 
-h3 :: forall a. Array (Attr a) -> Markup a -> Node a
-h3 = S.element_ "h3"
+h3 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h3 = elementOf (S.element_ "h3")
 
-h4 :: forall a. Array (Attr a) -> Markup a -> Node a
-h4 = S.element_ "h4"
+h4 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h4 = elementOf (S.element_ "h4")
 
-h5 :: forall a. Array (Attr a) -> Markup a -> Node a
-h5 = S.element_ "h5"
+h5 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h5 = elementOf (S.element_ "h5")
 
-h6 :: forall a. Array (Attr a) -> Markup a -> Node a
-h6 = S.element_ "h6"
+h6 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h6 = elementOf (S.element_ "h6")
 
-head :: forall a. Array (Attr a) -> Markup a -> Node a
-head = S.element_ "head"
+head :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+head = elementOf (S.element_ "head")
 
-header :: forall a. Array (Attr a) -> Markup a -> Node a
-header = S.element_ "header"
+header :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+header = elementOf (S.element_ "header")
 
-hgroup :: forall a. Array (Attr a) -> Markup a -> Node a
-hgroup = S.element_ "hgroup"
+hgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+hgroup = elementOf (S.element_ "hgroup")
 
-hr :: forall a. Array (Attr a) -> Markup a -> Node a
-hr = S.element_ "hr"
+hr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+hr = elementOf (S.element_ "hr")
 
-html :: forall a. Array (Attr a) -> Markup a -> Node a
-html = S.element_ "html"
+html :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+html = elementOf (S.element_ "html")
 
-i :: forall a. Array (Attr a) -> Markup a -> Node a
-i = S.element_ "i"
+i :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+i = elementOf (S.element_ "i")
 
-iframe :: forall a. Array (Attr a) -> Markup a -> Node a
-iframe = S.element_ "iframe"
+iframe :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+iframe = elementOf (S.element_ "iframe")
 
-image :: forall a. Array (Attr a) -> Markup a -> Node a
-image = S.element_ "image"
+image :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+image = elementOf (S.element_ "image")
 
-img :: forall a. Array (Attr a) -> Markup a -> Node a
-img = S.element_ "img"
+img :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+img = elementOf (S.element_ "img")
 
-input :: forall a. Array (Attr a) -> Markup a -> Node a
-input = S.element_ "input"
+input :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+input = elementOf (S.element_ "input")
 
-ins :: forall a. Array (Attr a) -> Markup a -> Node a
-ins = S.element_ "ins"
+ins :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ins = elementOf (S.element_ "ins")
 
-isindex :: forall a. Array (Attr a) -> Markup a -> Node a
-isindex = S.element_ "isindex"
+isindex :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+isindex = elementOf (S.element_ "isindex")
 
-kbd :: forall a. Array (Attr a) -> Markup a -> Node a
-kbd = S.element_ "kbd"
+kbd :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+kbd = elementOf (S.element_ "kbd")
 
-keygen :: forall a. Array (Attr a) -> Markup a -> Node a
-keygen = S.element_ "keygen"
+keygen :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+keygen = elementOf (S.element_ "keygen")
 
-label :: forall a. Array (Attr a) -> Markup a -> Node a
-label = S.element_ "label"
+label :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+label = elementOf (S.element_ "label")
 
-legend :: forall a. Array (Attr a) -> Markup a -> Node a
-legend = S.element_ "legend"
+legend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+legend = elementOf (S.element_ "legend")
 
-li :: forall a. Array (Attr a) -> Markup a -> Node a
-li = S.element_ "li"
+li :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+li = elementOf (S.element_ "li")
 
-link :: forall a. Array (Attr a) -> Markup a -> Node a
-link = S.element_ "link"
+link :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+link = elementOf (S.element_ "link")
 
-listing :: forall a. Array (Attr a) -> Markup a -> Node a
-listing = S.element_ "listing"
+listing :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+listing = elementOf (S.element_ "listing")
 
-main :: forall a. Array (Attr a) -> Markup a -> Node a
-main = S.element_ "main"
+main :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+main = elementOf (S.element_ "main")
 
-map :: forall a. Array (Attr a) -> Markup a -> Node a
-map = S.element_ "map"
+map :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+map = elementOf (S.element_ "map")
 
-mark :: forall a. Array (Attr a) -> Markup a -> Node a
-mark = S.element_ "mark"
+mark :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+mark = elementOf (S.element_ "mark")
 
-marquee :: forall a. Array (Attr a) -> Markup a -> Node a
-marquee = S.element_ "marquee"
+marquee :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+marquee = elementOf (S.element_ "marquee")
 
-math :: forall a. Array (Attr a) -> Markup a -> Node a
-math = S.element_ "math"
+math :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+math = elementOf (S.element_ "math")
 
-menu :: forall a. Array (Attr a) -> Markup a -> Node a
-menu = S.element_ "menu"
+menu :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+menu = elementOf (S.element_ "menu")
 
-menuitem :: forall a. Array (Attr a) -> Markup a -> Node a
-menuitem = S.element_ "menuitem"
+menuitem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+menuitem = elementOf (S.element_ "menuitem")
 
-meta :: forall a. Array (Attr a) -> Markup a -> Node a
-meta = S.element_ "meta"
+meta :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+meta = elementOf (S.element_ "meta")
 
-meter :: forall a. Array (Attr a) -> Markup a -> Node a
-meter = S.element_ "meter"
+meter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+meter = elementOf (S.element_ "meter")
 
-multicol :: forall a. Array (Attr a) -> Markup a -> Node a
-multicol = S.element_ "multicol"
+multicol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+multicol = elementOf (S.element_ "multicol")
 
-nav :: forall a. Array (Attr a) -> Markup a -> Node a
-nav = S.element_ "nav"
+nav :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+nav = elementOf (S.element_ "nav")
 
-nextid :: forall a. Array (Attr a) -> Markup a -> Node a
-nextid = S.element_ "nextid"
+nextid :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+nextid = elementOf (S.element_ "nextid")
 
-nobr :: forall a. Array (Attr a) -> Markup a -> Node a
-nobr = S.element_ "nobr"
+nobr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+nobr = elementOf (S.element_ "nobr")
 
-noembed :: forall a. Array (Attr a) -> Markup a -> Node a
-noembed = S.element_ "noembed"
+noembed :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+noembed = elementOf (S.element_ "noembed")
 
-noframes :: forall a. Array (Attr a) -> Markup a -> Node a
-noframes = S.element_ "noframes"
+noframes :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+noframes = elementOf (S.element_ "noframes")
 
-noscript :: forall a. Array (Attr a) -> Markup a -> Node a
-noscript = S.element_ "noscript"
+noscript :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+noscript = elementOf (S.element_ "noscript")
 
-object :: forall a. Array (Attr a) -> Markup a -> Node a
-object = S.element_ "object"
+object :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+object = elementOf (S.element_ "object")
 
-ol :: forall a. Array (Attr a) -> Markup a -> Node a
-ol = S.element_ "ol"
+ol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ol = elementOf (S.element_ "ol")
 
-optgroup :: forall a. Array (Attr a) -> Markup a -> Node a
-optgroup = S.element_ "optgroup"
+optgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+optgroup = elementOf (S.element_ "optgroup")
 
-option :: forall a. Array (Attr a) -> Markup a -> Node a
-option = S.element_ "option"
+option :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+option = elementOf (S.element_ "option")
 
-output :: forall a. Array (Attr a) -> Markup a -> Node a
-output = S.element_ "output"
+output :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+output = elementOf (S.element_ "output")
 
-p :: forall a. Array (Attr a) -> Markup a -> Node a
-p = S.element_ "p"
+p :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+p = elementOf (S.element_ "p")
 
-param :: forall a. Array (Attr a) -> Markup a -> Node a
-param = S.element_ "param"
+param :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+param = elementOf (S.element_ "param")
 
-picture :: forall a. Array (Attr a) -> Markup a -> Node a
-picture = S.element_ "picture"
+picture :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+picture = elementOf (S.element_ "picture")
 
-plaintext :: forall a. Array (Attr a) -> Markup a -> Node a
-plaintext = S.element_ "plaintext"
+plaintext :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+plaintext = elementOf (S.element_ "plaintext")
 
-pre :: forall a. Array (Attr a) -> Markup a -> Node a
-pre = S.element_ "pre"
+pre :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+pre = elementOf (S.element_ "pre")
 
-progress :: forall a. Array (Attr a) -> Markup a -> Node a
-progress = S.element_ "progress"
+progress :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+progress = elementOf (S.element_ "progress")
 
-q :: forall a. Array (Attr a) -> Markup a -> Node a
-q = S.element_ "q"
+q :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+q = elementOf (S.element_ "q")
 
-rb :: forall a. Array (Attr a) -> Markup a -> Node a
-rb = S.element_ "rb"
+rb :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rb = elementOf (S.element_ "rb")
 
-rbc :: forall a. Array (Attr a) -> Markup a -> Node a
-rbc = S.element_ "rbc"
+rbc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rbc = elementOf (S.element_ "rbc")
 
-rp :: forall a. Array (Attr a) -> Markup a -> Node a
-rp = S.element_ "rp"
+rp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rp = elementOf (S.element_ "rp")
 
-rt :: forall a. Array (Attr a) -> Markup a -> Node a
-rt = S.element_ "rt"
+rt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rt = elementOf (S.element_ "rt")
 
-rtc :: forall a. Array (Attr a) -> Markup a -> Node a
-rtc = S.element_ "rtc"
+rtc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rtc = elementOf (S.element_ "rtc")
 
-ruby :: forall a. Array (Attr a) -> Markup a -> Node a
-ruby = S.element_ "ruby"
+ruby :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ruby = elementOf (S.element_ "ruby")
 
-s :: forall a. Array (Attr a) -> Markup a -> Node a
-s = S.element_ "s"
+s :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+s = elementOf (S.element_ "s")
 
-samp :: forall a. Array (Attr a) -> Markup a -> Node a
-samp = S.element_ "samp"
+samp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+samp = elementOf (S.element_ "samp")
 
-script :: forall a. Array (Attr a) -> Markup a -> Node a
-script = S.element_ "script"
+script :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+script = elementOf (S.element_ "script")
 
-search :: forall a. Array (Attr a) -> Markup a -> Node a
-search = S.element_ "search"
+search :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+search = elementOf (S.element_ "search")
 
-section :: forall a. Array (Attr a) -> Markup a -> Node a
-section = S.element_ "section"
+section :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+section = elementOf (S.element_ "section")
 
-select :: forall a. Array (Attr a) -> Markup a -> Node a
-select = S.element_ "select"
+select :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+select = elementOf (S.element_ "select")
 
-shadow :: forall a. Array (Attr a) -> Markup a -> Node a
-shadow = S.element_ "shadow"
+shadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+shadow = elementOf (S.element_ "shadow")
 
-slot :: forall a. Array (Attr a) -> Markup a -> Node a
-slot = S.element_ "slot"
+slot :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+slot = elementOf (S.element_ "slot")
 
-small :: forall a. Array (Attr a) -> Markup a -> Node a
-small = S.element_ "small"
+small :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+small = elementOf (S.element_ "small")
 
-source :: forall a. Array (Attr a) -> Markup a -> Node a
-source = S.element_ "source"
+source :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+source = elementOf (S.element_ "source")
 
-spacer :: forall a. Array (Attr a) -> Markup a -> Node a
-spacer = S.element_ "spacer"
+spacer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+spacer = elementOf (S.element_ "spacer")
 
-span :: forall a. Array (Attr a) -> Markup a -> Node a
-span = S.element_ "span"
+span :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+span = elementOf (S.element_ "span")
 
-strike :: forall a. Array (Attr a) -> Markup a -> Node a
-strike = S.element_ "strike"
+strike :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+strike = elementOf (S.element_ "strike")
 
-strong :: forall a. Array (Attr a) -> Markup a -> Node a
-strong = S.element_ "strong"
+strong :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+strong = elementOf (S.element_ "strong")
 
-style :: forall a. Array (Attr a) -> Markup a -> Node a
-style = S.element_ "style"
+style :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+style = elementOf (S.element_ "style")
 
-sub :: forall a. Array (Attr a) -> Markup a -> Node a
-sub = S.element_ "sub"
+sub :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+sub = elementOf (S.element_ "sub")
 
-summary :: forall a. Array (Attr a) -> Markup a -> Node a
-summary = S.element_ "summary"
+summary :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+summary = elementOf (S.element_ "summary")
 
-sup :: forall a. Array (Attr a) -> Markup a -> Node a
-sup = S.element_ "sup"
+sup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+sup = elementOf (S.element_ "sup")
 
-svg :: forall a. Array (Attr a) -> Markup a -> Node a
-svg = S.svgElement_ "svg"
+svg :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+svg = elementOf (S.svgElement_ "svg")
 
-table :: forall a. Array (Attr a) -> Markup a -> Node a
-table = S.element_ "table"
+table :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+table = elementOf (S.element_ "table")
 
-tbody :: forall a. Array (Attr a) -> Markup a -> Node a
-tbody = S.element_ "tbody"
+tbody :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tbody = elementOf (S.element_ "tbody")
 
-td :: forall a. Array (Attr a) -> Markup a -> Node a
-td = S.element_ "td"
+td :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+td = elementOf (S.element_ "td")
 
-template :: forall a. Array (Attr a) -> Markup a -> Node a
-template = S.element_ "template"
+template :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+template = elementOf (S.element_ "template")
 
-textarea :: forall a. Array (Attr a) -> Markup a -> Node a
-textarea = S.element_ "textarea"
+textarea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+textarea = elementOf (S.element_ "textarea")
 
-tfoot :: forall a. Array (Attr a) -> Markup a -> Node a
-tfoot = S.element_ "tfoot"
+tfoot :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tfoot = elementOf (S.element_ "tfoot")
 
-th :: forall a. Array (Attr a) -> Markup a -> Node a
-th = S.element_ "th"
+th :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+th = elementOf (S.element_ "th")
 
-thead :: forall a. Array (Attr a) -> Markup a -> Node a
-thead = S.element_ "thead"
+thead :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+thead = elementOf (S.element_ "thead")
 
-time :: forall a. Array (Attr a) -> Markup a -> Node a
-time = S.element_ "time"
+time :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+time = elementOf (S.element_ "time")
 
-title :: forall a. Array (Attr a) -> Markup a -> Node a
-title = S.element_ "title"
+title :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+title = elementOf (S.element_ "title")
 
-tr :: forall a. Array (Attr a) -> Markup a -> Node a
-tr = S.element_ "tr"
+tr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tr = elementOf (S.element_ "tr")
 
-track :: forall a. Array (Attr a) -> Markup a -> Node a
-track = S.element_ "track"
+track :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+track = elementOf (S.element_ "track")
 
-tt :: forall a. Array (Attr a) -> Markup a -> Node a
-tt = S.element_ "tt"
+tt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tt = elementOf (S.element_ "tt")
 
-u :: forall a. Array (Attr a) -> Markup a -> Node a
-u = S.element_ "u"
+u :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+u = elementOf (S.element_ "u")
 
-ul :: forall a. Array (Attr a) -> Markup a -> Node a
-ul = S.element_ "ul"
+ul :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ul = elementOf (S.element_ "ul")
 
-var :: forall a. Array (Attr a) -> Markup a -> Node a
-var = S.element_ "var"
+var :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+var = elementOf (S.element_ "var")
 
-video :: forall a. Array (Attr a) -> Markup a -> Node a
-video = S.element_ "video"
+video :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+video = elementOf (S.element_ "video")
 
-wbr :: forall a. Array (Attr a) -> Markup a -> Node a
-wbr = S.element_ "wbr"
+wbr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+wbr = elementOf (S.element_ "wbr")
 
-xmp :: forall a. Array (Attr a) -> Markup a -> Node a
-xmp = S.element_ "xmp"
+xmp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+xmp = elementOf (S.element_ "xmp")
 
-altGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
-altGlyph = S.svgElement_ "altGlyph"
+altGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+altGlyph = elementOf (S.svgElement_ "altGlyph")
 
-altGlyphDef :: forall a. Array (Attr a) -> Markup a -> Node a
-altGlyphDef = S.svgElement_ "altGlyphDef"
+altGlyphDef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+altGlyphDef = elementOf (S.svgElement_ "altGlyphDef")
 
-altGlyphItem :: forall a. Array (Attr a) -> Markup a -> Node a
-altGlyphItem = S.svgElement_ "altGlyphItem"
+altGlyphItem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+altGlyphItem = elementOf (S.svgElement_ "altGlyphItem")
 
-animate :: forall a. Array (Attr a) -> Markup a -> Node a
-animate = S.svgElement_ "animate"
+animate :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+animate = elementOf (S.svgElement_ "animate")
 
-animateColor :: forall a. Array (Attr a) -> Markup a -> Node a
-animateColor = S.svgElement_ "animateColor"
+animateColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+animateColor = elementOf (S.svgElement_ "animateColor")
 
-animateMotion :: forall a. Array (Attr a) -> Markup a -> Node a
-animateMotion = S.svgElement_ "animateMotion"
+animateMotion :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+animateMotion = elementOf (S.svgElement_ "animateMotion")
 
-animateTransform :: forall a. Array (Attr a) -> Markup a -> Node a
-animateTransform = S.svgElement_ "animateTransform"
+animateTransform :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+animateTransform = elementOf (S.svgElement_ "animateTransform")
 
-animation :: forall a. Array (Attr a) -> Markup a -> Node a
-animation = S.svgElement_ "animation"
+animation :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+animation = elementOf (S.svgElement_ "animation")
 
-circle :: forall a. Array (Attr a) -> Markup a -> Node a
-circle = S.svgElement_ "circle"
+circle :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+circle = elementOf (S.svgElement_ "circle")
 
-clipPath :: forall a. Array (Attr a) -> Markup a -> Node a
-clipPath = S.svgElement_ "clipPath"
+clipPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+clipPath = elementOf (S.svgElement_ "clipPath")
 
-colorProfile :: forall a. Array (Attr a) -> Markup a -> Node a
-colorProfile = S.svgElement_ "color-profile"
+colorProfile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+colorProfile = elementOf (S.svgElement_ "color-profile")
 
-cursor :: forall a. Array (Attr a) -> Markup a -> Node a
-cursor = S.svgElement_ "cursor"
+cursor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+cursor = elementOf (S.svgElement_ "cursor")
 
-defs :: forall a. Array (Attr a) -> Markup a -> Node a
-defs = S.svgElement_ "defs"
+defs :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+defs = elementOf (S.svgElement_ "defs")
 
-desc :: forall a. Array (Attr a) -> Markup a -> Node a
-desc = S.svgElement_ "desc"
+desc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+desc = elementOf (S.svgElement_ "desc")
 
-discard :: forall a. Array (Attr a) -> Markup a -> Node a
-discard = S.svgElement_ "discard"
+discard :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+discard = elementOf (S.svgElement_ "discard")
 
-ellipse :: forall a. Array (Attr a) -> Markup a -> Node a
-ellipse = S.svgElement_ "ellipse"
+ellipse :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ellipse = elementOf (S.svgElement_ "ellipse")
 
-feBlend :: forall a. Array (Attr a) -> Markup a -> Node a
-feBlend = S.svgElement_ "feBlend"
+feBlend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feBlend = elementOf (S.svgElement_ "feBlend")
 
-feColorMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
-feColorMatrix = S.svgElement_ "feColorMatrix"
+feColorMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feColorMatrix = elementOf (S.svgElement_ "feColorMatrix")
 
-feComponentTransfer :: forall a. Array (Attr a) -> Markup a -> Node a
-feComponentTransfer = S.svgElement_ "feComponentTransfer"
+feComponentTransfer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feComponentTransfer = elementOf (S.svgElement_ "feComponentTransfer")
 
-feComposite :: forall a. Array (Attr a) -> Markup a -> Node a
-feComposite = S.svgElement_ "feComposite"
+feComposite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feComposite = elementOf (S.svgElement_ "feComposite")
 
-feConvolveMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
-feConvolveMatrix = S.svgElement_ "feConvolveMatrix"
+feConvolveMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feConvolveMatrix = elementOf (S.svgElement_ "feConvolveMatrix")
 
-feDiffuseLighting :: forall a. Array (Attr a) -> Markup a -> Node a
-feDiffuseLighting = S.svgElement_ "feDiffuseLighting"
+feDiffuseLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feDiffuseLighting = elementOf (S.svgElement_ "feDiffuseLighting")
 
-feDisplacementMap :: forall a. Array (Attr a) -> Markup a -> Node a
-feDisplacementMap = S.svgElement_ "feDisplacementMap"
+feDisplacementMap :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feDisplacementMap = elementOf (S.svgElement_ "feDisplacementMap")
 
-feDistantLight :: forall a. Array (Attr a) -> Markup a -> Node a
-feDistantLight = S.svgElement_ "feDistantLight"
+feDistantLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feDistantLight = elementOf (S.svgElement_ "feDistantLight")
 
-feDropShadow :: forall a. Array (Attr a) -> Markup a -> Node a
-feDropShadow = S.svgElement_ "feDropShadow"
+feDropShadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feDropShadow = elementOf (S.svgElement_ "feDropShadow")
 
-feFlood :: forall a. Array (Attr a) -> Markup a -> Node a
-feFlood = S.svgElement_ "feFlood"
+feFlood :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feFlood = elementOf (S.svgElement_ "feFlood")
 
-feFuncA :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncA = S.svgElement_ "feFuncA"
+feFuncA :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feFuncA = elementOf (S.svgElement_ "feFuncA")
 
-feFuncB :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncB = S.svgElement_ "feFuncB"
+feFuncB :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feFuncB = elementOf (S.svgElement_ "feFuncB")
 
-feFuncG :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncG = S.svgElement_ "feFuncG"
+feFuncG :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feFuncG = elementOf (S.svgElement_ "feFuncG")
 
-feFuncR :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncR = S.svgElement_ "feFuncR"
+feFuncR :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feFuncR = elementOf (S.svgElement_ "feFuncR")
 
-feGaussianBlur :: forall a. Array (Attr a) -> Markup a -> Node a
-feGaussianBlur = S.svgElement_ "feGaussianBlur"
+feGaussianBlur :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feGaussianBlur = elementOf (S.svgElement_ "feGaussianBlur")
 
-feImage :: forall a. Array (Attr a) -> Markup a -> Node a
-feImage = S.svgElement_ "feImage"
+feImage :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feImage = elementOf (S.svgElement_ "feImage")
 
-feMerge :: forall a. Array (Attr a) -> Markup a -> Node a
-feMerge = S.svgElement_ "feMerge"
+feMerge :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feMerge = elementOf (S.svgElement_ "feMerge")
 
-feMergeNode :: forall a. Array (Attr a) -> Markup a -> Node a
-feMergeNode = S.svgElement_ "feMergeNode"
+feMergeNode :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feMergeNode = elementOf (S.svgElement_ "feMergeNode")
 
-feMorphology :: forall a. Array (Attr a) -> Markup a -> Node a
-feMorphology = S.svgElement_ "feMorphology"
+feMorphology :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feMorphology = elementOf (S.svgElement_ "feMorphology")
 
-feOffset :: forall a. Array (Attr a) -> Markup a -> Node a
-feOffset = S.svgElement_ "feOffset"
+feOffset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feOffset = elementOf (S.svgElement_ "feOffset")
 
-fePointLight :: forall a. Array (Attr a) -> Markup a -> Node a
-fePointLight = S.svgElement_ "fePointLight"
+fePointLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fePointLight = elementOf (S.svgElement_ "fePointLight")
 
-feSpecularLighting :: forall a. Array (Attr a) -> Markup a -> Node a
-feSpecularLighting = S.svgElement_ "feSpecularLighting"
+feSpecularLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feSpecularLighting = elementOf (S.svgElement_ "feSpecularLighting")
 
-feSpotLight :: forall a. Array (Attr a) -> Markup a -> Node a
-feSpotLight = S.svgElement_ "feSpotLight"
+feSpotLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feSpotLight = elementOf (S.svgElement_ "feSpotLight")
 
-feTile :: forall a. Array (Attr a) -> Markup a -> Node a
-feTile = S.svgElement_ "feTile"
+feTile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feTile = elementOf (S.svgElement_ "feTile")
 
-feTurbulence :: forall a. Array (Attr a) -> Markup a -> Node a
-feTurbulence = S.svgElement_ "feTurbulence"
+feTurbulence :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+feTurbulence = elementOf (S.svgElement_ "feTurbulence")
 
-filter :: forall a. Array (Attr a) -> Markup a -> Node a
-filter = S.svgElement_ "filter"
+filter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+filter = elementOf (S.svgElement_ "filter")
 
-fontFace :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFace = S.svgElement_ "font-face"
+fontFace :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fontFace = elementOf (S.svgElement_ "font-face")
 
-fontFaceFormat :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceFormat = S.svgElement_ "font-face-format"
+fontFaceFormat :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fontFaceFormat = elementOf (S.svgElement_ "font-face-format")
 
-fontFaceName :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceName = S.svgElement_ "font-face-name"
+fontFaceName :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fontFaceName = elementOf (S.svgElement_ "font-face-name")
 
-fontFaceSrc :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceSrc = S.svgElement_ "font-face-src"
+fontFaceSrc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fontFaceSrc = elementOf (S.svgElement_ "font-face-src")
 
-fontFaceUri :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceUri = S.svgElement_ "font-face-uri"
+fontFaceUri :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fontFaceUri = elementOf (S.svgElement_ "font-face-uri")
 
-foreignObject :: forall a. Array (Attr a) -> Markup a -> Node a
-foreignObject = S.svgElement_ "foreignObject"
+foreignObject :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+foreignObject = elementOf (S.svgElement_ "foreignObject")
 
-g :: forall a. Array (Attr a) -> Markup a -> Node a
-g = S.svgElement_ "g"
+g :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+g = elementOf (S.svgElement_ "g")
 
-glyph :: forall a. Array (Attr a) -> Markup a -> Node a
-glyph = S.svgElement_ "glyph"
+glyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+glyph = elementOf (S.svgElement_ "glyph")
 
-glyphRef :: forall a. Array (Attr a) -> Markup a -> Node a
-glyphRef = S.svgElement_ "glyphRef"
+glyphRef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+glyphRef = elementOf (S.svgElement_ "glyphRef")
 
-handler :: forall a. Array (Attr a) -> Markup a -> Node a
-handler = S.svgElement_ "handler"
+handler :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+handler = elementOf (S.svgElement_ "handler")
 
-hkern :: forall a. Array (Attr a) -> Markup a -> Node a
-hkern = S.svgElement_ "hkern"
+hkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+hkern = elementOf (S.svgElement_ "hkern")
 
-line :: forall a. Array (Attr a) -> Markup a -> Node a
-line = S.svgElement_ "line"
+line :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+line = elementOf (S.svgElement_ "line")
 
-linearGradient :: forall a. Array (Attr a) -> Markup a -> Node a
-linearGradient = S.svgElement_ "linearGradient"
+linearGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+linearGradient = elementOf (S.svgElement_ "linearGradient")
 
-listener :: forall a. Array (Attr a) -> Markup a -> Node a
-listener = S.svgElement_ "listener"
+listener :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+listener = elementOf (S.svgElement_ "listener")
 
-marker :: forall a. Array (Attr a) -> Markup a -> Node a
-marker = S.svgElement_ "marker"
+marker :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+marker = elementOf (S.svgElement_ "marker")
 
-mask :: forall a. Array (Attr a) -> Markup a -> Node a
-mask = S.svgElement_ "mask"
+mask :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+mask = elementOf (S.svgElement_ "mask")
 
-metadata :: forall a. Array (Attr a) -> Markup a -> Node a
-metadata = S.svgElement_ "metadata"
+metadata :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+metadata = elementOf (S.svgElement_ "metadata")
 
-missingGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
-missingGlyph = S.svgElement_ "missing-glyph"
+missingGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+missingGlyph = elementOf (S.svgElement_ "missing-glyph")
 
-mpath :: forall a. Array (Attr a) -> Markup a -> Node a
-mpath = S.svgElement_ "mpath"
+mpath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+mpath = elementOf (S.svgElement_ "mpath")
 
-path :: forall a. Array (Attr a) -> Markup a -> Node a
-path = S.svgElement_ "path"
+path :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+path = elementOf (S.svgElement_ "path")
 
-pattern :: forall a. Array (Attr a) -> Markup a -> Node a
-pattern = S.svgElement_ "pattern"
+pattern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+pattern = elementOf (S.svgElement_ "pattern")
 
-polygon :: forall a. Array (Attr a) -> Markup a -> Node a
-polygon = S.svgElement_ "polygon"
+polygon :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+polygon = elementOf (S.svgElement_ "polygon")
 
-polyline :: forall a. Array (Attr a) -> Markup a -> Node a
-polyline = S.svgElement_ "polyline"
+polyline :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+polyline = elementOf (S.svgElement_ "polyline")
 
-prefetch :: forall a. Array (Attr a) -> Markup a -> Node a
-prefetch = S.svgElement_ "prefetch"
+prefetch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+prefetch = elementOf (S.svgElement_ "prefetch")
 
-radialGradient :: forall a. Array (Attr a) -> Markup a -> Node a
-radialGradient = S.svgElement_ "radialGradient"
+radialGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+radialGradient = elementOf (S.svgElement_ "radialGradient")
 
-rect :: forall a. Array (Attr a) -> Markup a -> Node a
-rect = S.svgElement_ "rect"
+rect :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rect = elementOf (S.svgElement_ "rect")
 
-set :: forall a. Array (Attr a) -> Markup a -> Node a
-set = S.svgElement_ "set"
+set :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+set = elementOf (S.svgElement_ "set")
 
-solidColor :: forall a. Array (Attr a) -> Markup a -> Node a
-solidColor = S.svgElement_ "solidColor"
+solidColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+solidColor = elementOf (S.svgElement_ "solidColor")
 
-stop :: forall a. Array (Attr a) -> Markup a -> Node a
-stop = S.svgElement_ "stop"
+stop :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+stop = elementOf (S.svgElement_ "stop")
 
-switch :: forall a. Array (Attr a) -> Markup a -> Node a
-switch = S.svgElement_ "switch"
+switch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+switch = elementOf (S.svgElement_ "switch")
 
-symbol :: forall a. Array (Attr a) -> Markup a -> Node a
-symbol = S.svgElement_ "symbol"
+symbol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+symbol = elementOf (S.svgElement_ "symbol")
 
-tbreak :: forall a. Array (Attr a) -> Markup a -> Node a
-tbreak = S.svgElement_ "tbreak"
+tbreak :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tbreak = elementOf (S.svgElement_ "tbreak")
 
-textEl :: forall a. Array (Attr a) -> Markup a -> Node a
-textEl = S.svgElement_ "text"
+textEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+textEl = elementOf (S.svgElement_ "text")
 
-textArea :: forall a. Array (Attr a) -> Markup a -> Node a
-textArea = S.svgElement_ "textArea"
+textArea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+textArea = elementOf (S.svgElement_ "textArea")
 
-textPath :: forall a. Array (Attr a) -> Markup a -> Node a
-textPath = S.svgElement_ "textPath"
+textPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+textPath = elementOf (S.svgElement_ "textPath")
 
-tref :: forall a. Array (Attr a) -> Markup a -> Node a
-tref = S.svgElement_ "tref"
+tref :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tref = elementOf (S.svgElement_ "tref")
 
-tspan :: forall a. Array (Attr a) -> Markup a -> Node a
-tspan = S.svgElement_ "tspan"
+tspan :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tspan = elementOf (S.svgElement_ "tspan")
 
-unknown :: forall a. Array (Attr a) -> Markup a -> Node a
-unknown = S.svgElement_ "unknown"
+unknown :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+unknown = elementOf (S.svgElement_ "unknown")
 
-use :: forall a. Array (Attr a) -> Markup a -> Node a
-use = S.svgElement_ "use"
+use :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+use = elementOf (S.svgElement_ "use")
 
-view :: forall a. Array (Attr a) -> Markup a -> Node a
-view = S.svgElement_ "view"
+view :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+view = elementOf (S.svgElement_ "view")
 
-vkern :: forall a. Array (Attr a) -> Markup a -> Node a
-vkern = S.svgElement_ "vkern"
-
--- | The elements created in SVG's namespace.
-svgElements :: Array String
-svgElements =
-  [ "svg"
-  , "altGlyph"
-  , "altGlyphDef"
-  , "altGlyphItem"
-  , "animate"
-  , "animateColor"
-  , "animateMotion"
-  , "animateTransform"
-  , "animation"
-  , "circle"
-  , "clipPath"
-  , "color-profile"
-  , "cursor"
-  , "defs"
-  , "desc"
-  , "discard"
-  , "ellipse"
-  , "feBlend"
-  , "feColorMatrix"
-  , "feComponentTransfer"
-  , "feComposite"
-  , "feConvolveMatrix"
-  , "feDiffuseLighting"
-  , "feDisplacementMap"
-  , "feDistantLight"
-  , "feDropShadow"
-  , "feFlood"
-  , "feFuncA"
-  , "feFuncB"
-  , "feFuncG"
-  , "feFuncR"
-  , "feGaussianBlur"
-  , "feImage"
-  , "feMerge"
-  , "feMergeNode"
-  , "feMorphology"
-  , "feOffset"
-  , "fePointLight"
-  , "feSpecularLighting"
-  , "feSpotLight"
-  , "feTile"
-  , "feTurbulence"
-  , "filter"
-  , "font-face"
-  , "font-face-format"
-  , "font-face-name"
-  , "font-face-src"
-  , "font-face-uri"
-  , "foreignObject"
-  , "g"
-  , "glyph"
-  , "glyphRef"
-  , "handler"
-  , "hkern"
-  , "line"
-  , "linearGradient"
-  , "listener"
-  , "marker"
-  , "mask"
-  , "metadata"
-  , "missing-glyph"
-  , "mpath"
-  , "path"
-  , "pattern"
-  , "polygon"
-  , "polyline"
-  , "prefetch"
-  , "radialGradient"
-  , "rect"
-  , "set"
-  , "solidColor"
-  , "stop"
-  , "switch"
-  , "symbol"
-  , "tbreak"
-  , "text"
-  , "textArea"
-  , "textPath"
-  , "tref"
-  , "tspan"
-  , "unknown"
-  , "use"
-  , "view"
-  , "vkern"
-  ]
-
-keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedElement = \tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag
+vkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+vkern = elementOf (S.svgElement_ "vkern")
 
 -- Attributes ------------------------------------------------------------------
 

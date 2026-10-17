@@ -151,7 +151,7 @@ chosenText c = if c == "" then "" else "Chosen: " <> c
 view :: Props -> Markup (Effect Unit)
 view props =
   [ B.div [] ([
-    B.input [ B.id "search", B.type' "text", B.placeholder "Search fruit", B.autocomplete "off", B.onInput (props.onQuery), B.onKeyDown (props.onKey) ] [],
+    B.input [ B.id "search", B.type' "text", B.placeholder "Search fruit", B.autocomplete "off", B.onInput (props.onQuery), B.onKeyDown (props.onKey) ] B.none,
     B.p [ B.id "status" ] (B.children (props.status)),
     B.ul [ B.id "results" ] (B.children (
        each _.name props.rows \row -> root ([ B.li [ B.class_ (selected <$> row <*> props.selection) ] (B.children (_.name <$> row)) ]))

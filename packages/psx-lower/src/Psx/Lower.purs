@@ -5,12 +5,17 @@
 -- | backend module the file imports, under the alias `B`:
 -- |
 -- | - an element is `B.<name> [ attrs ] (children)`, or `B.element "<name>"`
--- |   for a name the HTML table does not have, and `B.keyedElement` when its
--- |   children carry `key`;
--- | - a child hole is `B.children (e)`, or `B.keyedChildren (e)` under a
--- |   keyed parent;
+-- |   for a name the HTML table does not have, and `B.none` stands for no
+-- |   children;
+-- | - a child hole is `B.children (e)`. Whether the children are keyed is
+-- |   their type's business: the backend's `Children` instances say what a
+-- |   hole's value makes, keyed or not, and its element functions take either
+-- |   (decision 3 on #23);
 -- | - an attribute is the table's function for it (`B.class_`, `B.onClick`),
 -- |   or `B.attribute "<name>"` for one the table does not have;
+-- | - a trait hole `{e}` among the attributes is `(e)`, one element of the
+-- |   attribute array. Attributes are always one array literal, never a
+-- |   concatenation, so purs holds a trait hole to exactly one `Attr`;
 -- | - text is `B.text "..."` after the whitespace policy
 -- |   (`Psx.Lower.Whitespace`) and character references;
 -- | - a literal denotes `Markup a`, an array of nodes, and a literal whose
@@ -51,7 +56,7 @@ import Data.String.Regex (replace, test) as Regex
 import Data.String.Regex.Flags (global, noFlags) as Regex
 import Data.String.Regex.Unsafe (unsafeRegex) as Regex
 import Data.Tuple (Tuple(..))
-import Psx.Cst (Attr, AttrValue(..), Child(..), Element, Hole, MToken, Markup(..), MarkupRoot, Psx(..), PsxError, foldMapHoles, foldMapMarkupRoots, foldMapMarkupRootsExpr, parseModule)
+import Psx.Cst (Attr(..), AttrValue(..), Child(..), Element, Hole, MToken, Markup(..), MarkupRoot, NamedAttr, Psx(..), PsxError, foldMapHoles, foldMapMarkupRoots, foldMapMarkupRootsExpr, namedAttrs, parseModule)
 import Psx.Cst.Psxt (Psxt, Template, parsePsxt)
 import Psx.Cst.Source (Source, offsetOf, posOf, source)
 import Psx.HtmlData (Namespace(..), ValueType(..))
@@ -671,11 +676,12 @@ rootKeyed src ctx root = case root.markup of
   MarkupElement el -> isJust (keyOf el)
   MarkupFragment fr -> keyedItems src ctx (items src ctx fr.children)
 
-keyOf :: Element Psx -> Maybe (Attr Psx)
-keyOf el = Array.find (\a -> a.name.text == "key") el.attrs
+keyOf :: Element Psx -> Maybe (NamedAttr Psx)
+keyOf el = Array.find (\a -> a.name.text == "key") (namedAttrs el.attrs)
 
 -- | Children as one expression: runs of nodes in array literals, holes
--- | through `B.children`, joined with `<>`.
+-- | through `B.children`, joined with `<>`. Whether they are keyed decides
+-- | nothing here but the checks that keyed siblings all carry `key`.
 emitChildren :: Source -> Context -> Array Item -> M Unit
 emitChildren src ctx children = do
   let keyedList = keyedItems src ctx children
@@ -690,7 +696,7 @@ emitChildren src ctx children = do
       when (open == Just true) (emit " ]")
       when (isJust open) (emit " <>")
       emit (if isJust open then " " else "")
-      emitFor (holeRange h) (if keyedList then "B.keyedChildren (" else "B.children (")
+      emitFor (holeRange h) "B.children ("
       emitHole src ctx h
       emit ")"
       pure (Just false)
@@ -718,7 +724,7 @@ emitChildren src ctx children = do
 holeRange :: Hole Psx -> SourceRange
 holeRange h = { start: h.open.range.start, end: h.close.range.end }
 
-emitKeyed :: Source -> Context -> Attr Psx -> Element Psx -> M Unit
+emitKeyed :: Source -> Context -> NamedAttr Psx -> Element Psx -> M Unit
 emitKeyed src ctx k el = do
   emitFor k.name.range "B.keyed "
   case k.value of
@@ -747,7 +753,6 @@ emitElement src ctx el = do
       , stamp = Nothing
       }
     children = items src childCtx el.children
-    keyedList = keyedItems src childCtx children
     tagRange = { start: el.open.range.start, end: el.name.range.end }
     -- The scopes this element roots: its own `<style>`'s, and in a
     -- template, the file's.
@@ -755,14 +760,13 @@ emitElement src ctx el = do
       { code: Css.companionAlias <> "." <> Css.scopeName sc.index, range: sc.range }
     stamps = Array.fromFoldable ctx.stamp <> Array.fromFoldable own
   emitFor tagRange case found of
-    _ | keyedList -> "B.keyedElement " <> stringLiteral tag
     Just e -> "B." <> e.purescript
     Nothing -> "B.element " <> stringLiteral tag
   emit " "
-  emitAttrs src (ctx { stamp = Nothing }) namespace (tag <$ found) (Array.filter (\a -> a.name.text /= "key") el.attrs) stamps
+  emitAttrs src (ctx { stamp = Nothing }) namespace (tag <$ found) (Array.filter (not <<< isKey) el.attrs) stamps
   emit " "
   if Array.null children then do
-    emit "[]"
+    emit "B.none"
     for_ el.close \c -> padTo ctx { line: c.open.range.start.line, column: 0 }
   else do
     emit "("
@@ -773,6 +777,10 @@ emitElement src ctx el = do
   other Html = Svg
   other Svg = Html
 
+  isKey = case _ of
+    AttrNamed a -> a.name.text == "key"
+    AttrTrait _ -> false
+
 -- | `tag` is the element's name if the table has it. A custom element's
 -- | attributes are all `B.attribute`. `stamps` are the scopes the element
 -- | roots, each stamped as `data-psx`.
@@ -781,16 +789,24 @@ emitAttrs src ctx ns tag attrs stamps
   | Array.null attrs && Array.null stamps = emit "[]"
   | otherwise = do
       emit "["
-      forWithIndex_ attrs \i a -> do
+      forWithIndex_ attrs \i attr -> do
         emit (if i == 0 then " " else ", ")
-        padTo ctx a.name.range.start
-        emitAttr src ctx ns tag a
+        case attr of
+          AttrNamed a -> do
+            padTo ctx a.name.range.start
+            emitAttr src ctx ns tag a
+          -- One element of the array literal, so purs holds it to one `Attr`.
+          AttrTrait h -> do
+            padTo ctx h.open.range.start
+            emitFor (holeRange h) "("
+            emitHole src ctx h
+            emit ")"
       forWithIndex_ stamps \i st -> do
         emit (if i == 0 && Array.null attrs then " " else ", ")
         emitFor st.range ("B.attribute \"data-psx\" " <> st.code)
       emit " ]"
 
-emitAttr :: Source -> Context -> Namespace -> Maybe String -> Attr Psx -> M Unit
+emitAttr :: Source -> Context -> Namespace -> Maybe String -> NamedAttr Psx -> M Unit
 emitAttr src ctx ns tag a = do
   let
     name = a.name.text
@@ -830,7 +846,7 @@ emitAttr src ctx ns tag a = do
         | otherwise -> failAt t.range ("`" <> a.name.text <> "` takes a number, not " <> show value)
       _ -> emitFor range ("B." <> attr.purescript <> " " <> stringLiteral value)
 
-attrRange :: Attr Psx -> SourceRange
+attrRange :: NamedAttr Psx -> SourceRange
 attrRange a =
   { start: a.name.range.start
   , end: case a.value of

@@ -11,7 +11,7 @@ import Prelude
 import Prim hiding (Type)
 
 import Data.Foldable (foldMap)
-import Psx.Cst.Types (AttrValue(..), Child(..), Hole, Markup(..), MarkupRoot, Psx(..), PsxError)
+import Psx.Cst.Types (Attr(..), AttrValue(..), Child(..), Hole, Markup(..), MarkupRoot, Psx(..), PsxError)
 import PureScript.CST.Traversal (defaultMonoidalVisitor, foldMapExpr, foldMapModule)
 import PureScript.CST.Types (Binder, Declaration, Expr(..), Module, Type)
 
@@ -40,9 +40,11 @@ foldMapHoles k = case _ of
   MarkupElement el -> foldMap attr el.attrs <> foldMap child el.children
   MarkupFragment fr -> foldMap child fr.children
   where
-  attr a = a.value # foldMap \v -> case v.value of
-    AttrHole h -> k h
-    _ -> mempty
+  attr = case _ of
+    AttrNamed a -> a.value # foldMap \v -> case v.value of
+      AttrHole h -> k h
+      _ -> mempty
+    AttrTrait h -> k h
   child = case _ of
     ChildHole h -> k h
     ChildMarkup m -> foldMapHoles k m

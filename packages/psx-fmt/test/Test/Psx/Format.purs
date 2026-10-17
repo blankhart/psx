@@ -20,7 +20,7 @@ import Node.FS.Sync as FS
 import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Process as Process
-import Psx.Cst (AttrValue(..), Child(..), Markup(..), MarkupRoot, Psx, foldMapMarkupRoots, parseModule, printModule)
+import Psx.Cst (Attr(..), AttrValue(..), Child(..), Markup(..), MarkupRoot, Psx, foldMapMarkupRoots, parseModule, printModule)
 import Psx.Cst.Psxt (TopItem(..), parsePsxt, printPsxt)
 import Psx.Format (formatPsx, formatPsxt)
 import Psx.Lower (lower, lowerPsxt)
@@ -134,11 +134,14 @@ markupOutline :: Markup Psx -> Array String
 markupOutline = case _ of
   MarkupElement el ->
     [ "<" <> el.name.text ]
-      <> map (\a -> "@" <> a.name.text <> foldMap value a.value) el.attrs
+      <> map attr el.attrs
       <> (if el.name.text == "style" then [] else foldMap child el.children)
       <> [ ">" ]
   MarkupFragment fr -> [ "<>" ] <> foldMap child fr.children <> [ "</>" ]
   where
+  attr = case _ of
+    AttrNamed a -> "@" <> a.name.text <> foldMap value a.value
+    AttrTrait _ -> "@{}"
   value v = case v.value of
     AttrString t -> "=" <> t.text
     AttrHole _ -> "={}"

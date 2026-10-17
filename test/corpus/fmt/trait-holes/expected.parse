@@ -1,0 +1,16 @@
+print: identical
+errors: none
+markup:
+  12:14 <input> (no close)
+    @type="checkbox"
+    @trait {P.onCheck  Open}
+    @checked={open}
+  16:8 <form>
+    @id="order"
+    @class="form form-horizontal"
+    @trait {P.onSubmitWith (const Submitted)}
+    @trait {P.transition "fade"}
+    text "Go"
+  20:10 <button>
+    @trait {P.onWith "click" { capture: true, passive: true } \_ -> pure (Just (Open true))}
+    text "Go"

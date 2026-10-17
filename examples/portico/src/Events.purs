@@ -52,7 +52,7 @@ arrowKey = case _ of
   _ -> Nothing
 
 -- Listener options and handlers that read the event are Portico's own
--- functions, so those elements are Portico calls in holes.
+-- functions, so they are trait holes.
 view :: Model -> Markup Msg
 view model =
   [ B.main [] ([
@@ -64,35 +64,35 @@ view model =
       B.onKeyDown (case _ of
         "Enter" -> Just Add
         "Escape" -> Just Discard
-        _ -> Nothing) ] [],
+        _ -> Nothing) ] B.none,
 
     B.ul [ B.id "items" ] (B.children (model.items <#> \item -> [ B.li [] (B.children (item)) ])),
     B.div [ B.id "pad", B.tabindex 0, B.onKeyDown (map Move <<< arrowKey) ] (B.children (
        show model.x <> "," <> show model.y)
-   ) ] <> B.children (
+   ),
 
-     P.div [ P.id "outer", P.onWith "click" { capture: true, passive: false } \_ -> pure (Just (Clicked "outer")) ]
-      ([ B.button [ B.id "inner", B.onClick (Clicked "inner") ] ([ B.text "Inner" ]) ])) <> B.children (
+    B.div [ B.id "outer", (P.onWith "click" { capture: true, passive: false } \_ -> pure (Just (Clicked "outer"))) ] ([
+      B.button [ B.id "inner", B.onClick (Clicked "inner") ] ([ B.text "Inner" ]) ]
+   ),
 
+    B.a [
+      B.id "passive",
+      B.href "#passive",
+      (P.onWith "click" { capture: false, passive: true } \event -> do
+        Event.preventDefault event
+        pure (Just (Clicked "passive"))) ] ([
 
-     P.a
-      [ P.id "passive"
-      , P.href "#passive"
-      , P.onWith "click" { capture: false, passive: true } \event -> do
-          Event.preventDefault event
-          pure (Just (Clicked "passive"))
-      ]
-      ([ B.text "Passive" ])) <> B.children (
+      B.text "Passive" ]
+   ),
+    B.a [
+      B.id "active",
+      B.href "#active",
+      (P.onMaybe "click" \event -> do
+        Event.preventDefault event
+        pure (Just (Clicked "active"))) ] ([
 
-     P.a
-      [ P.id "active"
-      , P.href "#active"
-      , P.onMaybe "click" \event -> do
-          Event.preventDefault event
-          pure (Just (Clicked "active"))
-      ]
-      ([ B.text "Active" ])) <> [
-
+      B.text "Active" ]
+   ),
     B.p [ B.id "clicks" ] (B.children (String.joinWith " " model.clicks)) ]
    ) ]
 

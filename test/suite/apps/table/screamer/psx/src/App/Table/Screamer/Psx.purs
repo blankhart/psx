@@ -72,7 +72,7 @@ view props =
          each _.id props.rows (row props))
    ) ]
    ),
-    B.span [ B.class_ "preloadicon glyphicon glyphicon-remove", B.ariaHidden "true" ] [] ]
+    B.span [ B.class_ "preloadicon glyphicon glyphicon-remove", B.ariaHidden "true" ] B.none ]
    ) ]
 
 row :: Props -> Signal TableRow -> Element
@@ -83,9 +83,9 @@ row props r = component do
         B.td [ B.class_ "col-md-1" ] (B.children (show id)),
         B.td [ B.class_ "col-md-4" ] ([ B.a [ B.attribute "data-testid" ("select-" <> show id), B.onClick (props.select id) ] (B.children (_.label <$> r)) ]),
         B.td [ B.class_ "col-md-1" ] ([
-          B.a [ B.attribute "data-testid" ("remove-" <> show id), B.onClick (props.remove id) ] ([ B.span [ B.class_ "glyphicon glyphicon-remove", B.ariaHidden "true" ] [] ]) ]
+          B.a [ B.attribute "data-testid" ("remove-" <> show id), B.onClick (props.remove id) ] ([ B.span [ B.class_ "glyphicon glyphicon-remove", B.ariaHidden "true" ] B.none ]) ]
      ),
-        B.td [ B.class_ "col-md-6" ] [] ]
+        B.td [ B.class_ "col-md-6" ] B.none ]
      ) ]
     )
 

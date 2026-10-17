@@ -41,20 +41,20 @@ view :: Model -> Markup Msg
 view model =
   [ B.figure [ B.class_ "chart", B.attribute "data-testid" "chart" ] ([
     B.svg [ B.viewBox "0 0 120 60", B.width "360", B.height "180" ] ([
-      B.keyedElement "g" [ B.class_ "bars" ] (B.keyedChildren (
+      B.g [ B.class_ "bars" ] (B.children (
 
           Array.mapWithIndex
             ( \i v ->
-                [ B.keyed (i) (B.rect [ B.attribute "data-testid" ("bar-" <> show i), B.x (show (left i)), B.y (show (barTop v)), B.width "16", B.height (show (4 * v)), B.fill (if model.selected == Just i then "orange" else "steelblue"), B.onClick (Select i) ] []) ]
+                [ B.keyed (i) (B.rect [ B.attribute "data-testid" ("bar-" <> show i), B.x (show (left i)), B.y (show (barTop v)), B.width "16", B.height (show (4 * v)), B.fill (if model.selected == Just i then "orange" else "steelblue"), B.onClick (Select i) ] B.none) ]
             )
             model.values)
 
    ),
-      B.path [ B.class_ "trend", B.d (trend model.values), B.fill "none", B.stroke "gray" ] [],
-      B.line [ B.x1 "5", B.y1 "55", B.x2 "115", B.y2 "55", B.stroke "black" ] [] ] <> B.children (
+      B.path [ B.class_ "trend", B.d (trend model.values), B.fill "none", B.stroke "gray" ] B.none,
+      B.line [ B.x1 "5", B.y1 "55", B.x2 "115", B.y2 "55", B.stroke "black" ] B.none ] <> B.children (
 
         case model.selected of
-          Just i -> [ B.circle [ B.cx (show (left i + 8)), B.cy (show (barTop (value i))), B.r "2", B.fill "orange" ] [] ]
+          Just i -> [ B.circle [ B.cx (show (left i + 8)), B.cy (show (barTop (value i))), B.r "2", B.fill "orange" ] B.none ]
           Nothing -> []) <> [
 
       B.textEl [ B.x "5", B.y "8" ] ([ B.text "Values" ]) ]

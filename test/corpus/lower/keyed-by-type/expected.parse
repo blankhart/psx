@@ -1,0 +1,12 @@
+print: identical
+errors: none
+markup:
+  12:3 <div>
+    @class="list"
+    hole {Array.mapWithIndex item values}
+  14:22 <div>
+    @key={show value}
+    hole {show index}
+  18:9 <div>
+    18:14 <input> (no close)
+      @type="text"

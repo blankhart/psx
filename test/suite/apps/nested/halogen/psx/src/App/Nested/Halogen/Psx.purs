@@ -61,7 +61,7 @@ view :: forall m. State -> Markup (H.ComponentSlot Slots m Action) Action
 view state =
   [ B.section [ B.class_ "nested", B.attribute "data-testid" "nested" ] ([
     B.p [ B.attribute "data-testid" "total" ] ([ B.text "Total: " ] <> B.children (show (sum state.counts))),
-    B.keyedElement "ul" [ B.class_ "counters" ] (B.keyedChildren (
+    B.ul [ B.class_ "counters" ] (B.children (
 
         map
           ( \c ->

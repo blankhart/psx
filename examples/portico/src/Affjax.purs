@@ -50,7 +50,7 @@ update model = case _ of
 view :: Model -> Markup Msg
 view model =
   [ B.main [ B.id "main" ] ([
-    B.input [ B.onInput (UpdateUrl), B.value (model.url) ] [],
+    B.input [ B.onInput (UpdateUrl), B.value (model.url) ] B.none,
     B.button [ B.onClick (Fetch), B.disabled (model.result == Fetching) ] ([ B.text "Fetch" ]) ] <> B.children (
      case model.result of
       NotFetched ->

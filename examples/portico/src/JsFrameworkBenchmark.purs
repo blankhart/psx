@@ -157,8 +157,8 @@ nouns =
   ]
 
 -- The table's click handler reads the event (`P.onMaybe`), which no HTML
--- attribute says, so the table is Portico's own function in a hole. The rows
--- are lazy and keyed by `P.keyedLazy`.
+-- attribute says, so it is a trait hole. The rows are lazy and keyed by
+-- `P.keyedLazy`.
 view :: Model -> Markup Msg
 view model =
   [ B.main [ B.class_ "container" ] ([
@@ -169,14 +169,11 @@ view model =
    ),
         B.div [ B.class_ "col-md-6" ] (B.children (buttons)) ]
    ) ]
-   ) ] <> B.children (
-     P.table
-      [ P.class' "table table-hover table-striped test-data"
-      , P.onMaybe "click" handleTableClick
-      ]
-      ([ B.tbody [] (B.children (P.keyedLazy "tr" (show <<< _.id) viewRow <$> model.rows)) ])) <> [
-
-    B.span [ B.class_ "preloadicon glyphicon glyphicon-remove", B.ariaHidden "true" ] [] ]
+   ),
+    B.table [ B.class_ "table table-hover table-striped test-data", (P.onMaybe "click" handleTableClick) ] ([
+      B.tbody [] (B.children (P.keyedLazy "tr" (show <<< _.id) viewRow <$> model.rows)) ]
+   ),
+    B.span [ B.class_ "preloadicon glyphicon glyphicon-remove", B.ariaHidden "true" ] B.none ]
    ) ]
 
 handleTableClick :: Event -> Effect (Maybe Msg)
@@ -201,10 +198,10 @@ viewRow { id, label, selected } = root
    ),
       B.td [ B.class_ "col-md-1" ] ([
         B.a [ B.href "#" ] ([
-          B.span [ B.class_ "glyphicon glyphicon-remove", B.ariaHidden "true", B.attribute "data-action" "Remove", B.attribute "data-id" (show id) ] [] ]
+          B.span [ B.class_ "glyphicon glyphicon-remove", B.ariaHidden "true", B.attribute "data-action" "Remove", B.attribute "data-id" (show id) ] B.none ]
    ) ]
    ),
-      B.td [ B.class_ "col-md-6" ] [] ]
+      B.td [ B.class_ "col-md-6" ] B.none ]
    ) ]
   )
 

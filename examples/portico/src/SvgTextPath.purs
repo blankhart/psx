@@ -7,7 +7,6 @@ import Portico ((:>))
 import Portico as P
 import Portico.Psx (Markup, root)
 import Portico.Psx as B
-import Portico.Svg as S
 type Model = { visible :: Boolean }
 
 init :: P.Init Model Msg
@@ -20,17 +19,18 @@ update model = case _ of
   Toggle -> model { visible = not model.visible } :> []
 
 -- The fading text carries a Portico transition, which no attribute says, so
--- it is Portico's own element in a hole.
+-- it is a trait hole. The text is keyed for the transition, so the path
+-- beside it is keyed too.
 view :: Model -> Markup Msg
 view model =
   [ B.main [] ([
     B.button [ B.onClick (Toggle) ] (B.children (if model.visible then "Hide" else "Show")),
     B.svg [ B.viewBox "0 0 500 200", B.width "500", B.height "200" ] ([
-      B.path [ B.id "curve", B.d "M 20 150 C 120 20, 380 20, 480 150", B.fill "none", B.stroke "lightgray" ] [] ] <> B.children (
+      B.keyed "curve" (B.path [ B.id "curve", B.d "M 20 150 C 120 20, 380 20, 480 150", B.fill "none", B.stroke "lightgray" ] B.none) ] <> B.children (
        if model.visible then
-          [ P.element "text" [ P.key "text", P.transition "fade", S.fontSize "24" ]
-              ([ B.textPath [ B.href "#curve", B.startOffset "5%" ] ([ B.text "Text set on a path, fading in and out" ]) ])
-          ]
+          [ B.keyed "text" (B.textEl [ (P.transition "fade"), B.fontSize "24" ] ([
+            B.textPath [ B.href "#curve", B.startOffset "5%" ] ([ B.text "Text set on a path, fading in and out" ]) ]
+           )) ]
         else [])
 
    ) ]

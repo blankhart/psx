@@ -32,10 +32,10 @@ view props n =
       else
         [ B.button [ B.attribute "data-testid" "reset", B.onClick (Reset) ] ([ B.text "Reset" ]) ]) <> [
 
-    B.keyedElement "ol" [ B.class_ "pips" ] (B.keyedChildren (
+    B.ol [ B.class_ "pips" ] (B.children (
 
         map
-          (\i -> [ B.keyed (i) (B.li [ B.class_ (if i <= n then "pip filled" else "pip") ] []) ])
+          (\i -> [ B.keyed (i) (B.li [ B.class_ (if i <= n then "pip filled" else "pip") ] B.none) ])
           (1 .. props.max))
 
    ) ]

@@ -15,7 +15,7 @@ import Data.String.Regex (replace) as Regex
 import Data.String.Regex.Flags (global) as Regex
 import Data.String.Regex.Unsafe (unsafeRegex) as Regex
 import Psx.Corpus (Stage)
-import Psx.Cst (AttrValue(..), Child(..), Hole, Markup(..), MarkupRoot, Psx, PsxError, foldMapHoles, foldMapMarkupRootsExpr, parseModule, printExpr, printModule)
+import Psx.Cst (Attr(..), AttrValue(..), Child(..), Hole, Markup(..), MarkupRoot, Psx, PsxError, foldMapHoles, foldMapMarkupRootsExpr, parseModule, printExpr, printModule)
 import Psx.Cst.Psxt as Psxt
 import Psx.Cst.Traversal (foldMapMarkupRoots)
 import PureScript.CST.Types (Module, SourcePos, SourceRange)
@@ -129,7 +129,8 @@ node depth = case _ of
     [ indent depth <> pos fr.open.range.start <> " <>" <> if fr.close == Nothing then " (no close)" else "" ]
       <> foldMap (child (depth + 1)) fr.children
   where
-  attr a = [ indent (depth + 1) <> "@" <> a.name.text <> foldMap value a.value ] <> foldMap nested a.value
+  attr (AttrTrait h) = [ indent (depth + 1) <> "@trait " <> holeText h ] <> holeRoots (depth + 2) h
+  attr (AttrNamed a) = [ indent (depth + 1) <> "@" <> a.name.text <> foldMap value a.value ] <> foldMap nested a.value
     where
     value v = "=" <> case v.value of
       AttrString t -> t.text

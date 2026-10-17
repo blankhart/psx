@@ -18,12 +18,14 @@ module Halogen.Psx.Core
   , element
   , keyedHtmlElement
   , keyedSvgElement
+  , svgNamespace
+  , class Content
+  , elementOf
+  , none
   , keyed
   , attribute
   , class Children
   , children
-  , class KeyedChildren
-  , keyedChildren
   , root
   , onValueInput
   ) where
@@ -65,17 +67,42 @@ instance ToKey Char where
 text :: forall w a. String -> Node w a
 text = HH.text
 
-element :: forall r w a. String -> Array (Attr r a) -> Markup w a -> Node w a
-element tag = HH.element (HH.ElemName tag)
+element :: forall r c w a. Content c w a => String -> Array (Attr r a) -> c -> Node w a
+element tag = elementOf (HH.element (HH.ElemName tag)) (keyedHtmlElement tag)
 
 -- | Halogen's own keyed element, which halogen-vdom diffs by key.
--- | `Halogen.Psx.keyedElement` picks this or `keyedSvgElement` by the tag.
 keyedHtmlElement :: forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a
 keyedHtmlElement tag = HH.keyed (HH.ElemName tag)
 
 -- | A keyed element in SVG's namespace.
 keyedSvgElement :: forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a
-keyedSvgElement tag = HH.keyedNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName tag)
+keyedSvgElement tag = HH.keyedNS svgNamespace (HH.ElemName tag)
+
+svgNamespace :: HH.Namespace
+svgNamespace = HH.Namespace "http://www.w3.org/2000/svg"
+
+-- | What an element's children are: nodes, or keyed nodes. Which one is the
+-- | type's business, so a list keyed in a function a hole calls is keyed
+-- | too. Halogen keys at the parent, so an element function is given both
+-- | ways to build its element and this picks one.
+class Content c w a | c -> w a where
+  elementOf
+    :: forall r
+     . (Array (Attr r a) -> Markup w a -> Node w a)
+    -> (Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a)
+    -> Array (Attr r a)
+    -> c
+    -> Node w a
+
+instance Content (Array (HH.HTML w a)) w a where
+  elementOf build _ = build
+
+instance Content (Array (Tuple String (HH.HTML w a))) w a where
+  elementOf _ build = build
+
+-- | No children.
+none :: forall w a. Markup w a
+none = []
 
 keyed :: forall k w a. ToKey k => k -> Node w a -> Tuple Key (Node w a)
 keyed k node = Tuple (toKey k) node
@@ -83,36 +110,28 @@ keyed k node = Tuple (toKey k) node
 attribute :: forall r a. String -> String -> Attr r a
 attribute name = HH.attr (HH.AttrName name)
 
--- | What a child hole may hold. The dependency lets a hole's nodes fix the
--- | slot and action types, as an annotation would.
-class Children c w a | c -> w a where
-  children :: c -> Markup w a
+-- | What a child hole may hold, and the children it makes: nodes from a
+-- | string, a node or markup, keyed nodes from keyed literals, and arrays
+-- | and `Maybe`s of those. The dependency lets a hole's nodes fix the slot
+-- | and action types, as an annotation would, and whether the parent is
+-- | keyed.
+class Children c r | c -> r where
+  children :: c -> r
 
-instance Children String w a where
+instance Children String (Array (HH.HTML w a)) where
   children s = [ HH.text s ]
 
-instance Children (HH.HTML w a) w a where
+instance Children (HH.HTML w a) (Array (HH.HTML w a)) where
   children n = [ n ]
 
-instance Children c w a => Children (Array c) w a where
+instance Children (Tuple String (HH.HTML w a)) (Array (Tuple String (HH.HTML w a))) where
+  children kid = [ kid ]
+
+instance Children c (Array x) => Children (Array c) (Array x) where
   children = Array.concatMap children
 
-instance Children c w a => Children (Maybe c) w a where
+instance Children c (Array x) => Children (Maybe c) (Array x) where
   children = maybe [] children
-
--- | What a child hole of a keyed parent may hold: keyed literals, or arrays
--- | of them.
-class KeyedChildren c w a | c -> w a where
-  keyedChildren :: c -> Array (Tuple Key (Node w a))
-
-instance KeyedChildren (Tuple String (HH.HTML w a)) w a where
-  keyedChildren kid = [ kid ]
-
-instance KeyedChildren c w a => KeyedChildren (Array c) w a where
-  keyedChildren = Array.concatMap keyedChildren
-
-instance KeyedChildren c w a => KeyedChildren (Maybe c) w a where
-  keyedChildren = maybe [] keyedChildren
 
 -- | The one node a `render` returns: the literal's only node, or a `div`
 -- | around several.

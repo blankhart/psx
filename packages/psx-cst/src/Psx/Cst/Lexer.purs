@@ -23,7 +23,7 @@ import Data.Maybe (Maybe(..), maybe)
 import Data.String as String
 import Data.String.CodeUnits as SCU
 import Psx.Cst.Source (Source, charAt, posOf, slice, startsWith)
-import Psx.Cst.Types (Attr, AttrValue(..), Child(..), Element, ElementClose, Fragment, Hole, MToken, Markup(..), PsxError)
+import Psx.Cst.Types (Attr(..), AttrValue(..), Child(..), Element, ElementClose, Fragment, Hole, MToken, Markup(..), PsxError)
 import Psx.HtmlData as HtmlData
 import PureScript.CST.Parser.Monad (PositionedError)
 import PureScript.CST.Errors (printParseError)
@@ -258,6 +258,14 @@ attrs ctx acc i done = do
           { attrs: done, endToken: token src ws j (j + 2), ending: SelfClosed, end: j + 2, acc }
     Just '<' ->
       { attrs: done, endToken: emptyToken src ws j, ending: Unterminated, end: j, acc: addError (errorAt src j j "Expected > or /> to end the tag") acc }
+    -- A trait hole. One that doesn't parse is kept as an attribute name.
+    Just '{' -> do
+      let
+        h = hole ctx acc ws j
+        attr = case h.value of
+          Right r -> AttrTrait r
+          Left raw -> AttrNamed { name: raw, value: Nothing }
+      attrs ctx h.acc h.end (Array.snoc done attr)
     Just c
       | isAttrNameChar c -> do
           let
@@ -268,12 +276,12 @@ attrs ctx acc i done = do
             let
               equals = token src (slice src nameEnd k) k (k + 1)
               v = attrValue ctx acc (k + 1)
-            attrs ctx v.acc v.end (Array.snoc done { name, value: Just { equals, value: v.value } })
-          else attrs ctx acc nameEnd (Array.snoc done { name, value: Nothing })
+            attrs ctx v.acc v.end (Array.snoc done (AttrNamed { name, value: Just { equals, value: v.value } }))
+          else attrs ctx acc nameEnd (Array.snoc done (AttrNamed { name, value: Nothing }))
       | otherwise -> do
           -- A stray character: keep it as an attribute name, with an error.
           let name = token src ws j (j + 1)
-          attrs ctx (addError (errorAt src j (j + 1) ("Unexpected " <> SCU.singleton c <> " in a tag")) acc) (j + 1) (Array.snoc done { name, value: Nothing })
+          attrs ctx (addError (errorAt src j (j + 1) ("Unexpected " <> SCU.singleton c <> " in a tag")) acc) (j + 1) (Array.snoc done (AttrNamed { name, value: Nothing }))
 
 attrValue :: forall e. Ctx e -> Acc -> Int -> Step (AttrValue e)
 attrValue ctx acc i = do
