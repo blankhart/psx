@@ -25,7 +25,7 @@ keys :: Effect Unit
 keys = do
   let Tuple k node = B.keyed 7 (B.li [ B.class_ "row" ] [ B.text "seven" ])
   assert "the key is the ToKey string" (k == "7")
-  assert ("the element carries the key: " <> describe node) (describe node == "li[property className=row, key 7](seven)")
+  assert ("the element carries the key: " <> describe node) (describe node == "li[attribute class=row, key 7](seven)")
   let Tuple _ mapped = B.keyed "m" (map (_ + 1) (B.li [] [] :: B.Node Int))
   assert ("the key goes below map: " <> describe mapped) (describe mapped == "map(li[key m]())")
   let parent = B.keyedElement "ul" [] [ B.keyed "a" (B.li [] []), B.keyed "b" (B.li [] []) ] :: B.Node Unit

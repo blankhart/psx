@@ -599,6 +599,45 @@
           "dependencies": []
         }
       },
+      "psx-suite-nested-screamer-psx": {
+        "path": "test/suite/apps/nested/screamer/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "ordered-collections",
+            "prelude",
+            "psx-screamer",
+            "psx-suite-shared",
+            "refs",
+            "screamer",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-nested-screamer-purs": {
+        "path": "test/suite/apps/nested/screamer/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "ordered-collections",
+            "prelude",
+            "psx-suite-shared",
+            "refs",
+            "screamer",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-shared": {
         "path": "test/suite/shared",
         "core": {
@@ -697,6 +736,43 @@
           "dependencies": []
         }
       },
+      "psx-suite-svg-screamer-psx": {
+        "path": "test/suite/apps/svg/screamer/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "control",
+            "effect",
+            "maybe",
+            "prelude",
+            "psx-screamer",
+            "psx-suite-shared",
+            "screamer",
+            "strings"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-svg-screamer-purs": {
+        "path": "test/suite/apps/svg/screamer/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "control",
+            "effect",
+            "maybe",
+            "prelude",
+            "psx-suite-shared",
+            "screamer",
+            "strings"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-table-halogen-psx": {
         "path": "test/suite/apps/table/halogen/psx",
         "core": {
@@ -766,6 +842,41 @@
             "portico",
             "prelude",
             "psx-suite-shared"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-table-screamer-psx": {
+        "path": "test/suite/apps/table/screamer/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "maybe",
+            "prelude",
+            "psx-screamer",
+            "psx-suite-shared",
+            "refs",
+            "screamer"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-table-screamer-purs": {
+        "path": "test/suite/apps/table/screamer/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "maybe",
+            "prelude",
+            "psx-suite-shared",
+            "refs",
+            "screamer"
           ]
         },
         "test": {
