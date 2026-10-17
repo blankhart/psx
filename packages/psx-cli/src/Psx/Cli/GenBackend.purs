@@ -46,7 +46,7 @@ import Psx.HtmlData.Table (table)
 type Template = { type :: String, code :: String }
 
 -- | A name's own entry; `sample` is the handler the conformance module
--- | passes an event, written with `x` for the message.
+-- | passes an event, written with `msg` for the message.
 type NameEntry = { type :: Maybe String, code :: String, sample :: Maybe String }
 
 type Group = { names :: Array String, type :: Maybe String, code :: String }
@@ -345,13 +345,14 @@ conformanceModule source m els attrs evs = lines
       <> (if Array.null m.conformance.extra then [] else [ "" ] <> m.conformance.extra)
       <> [ "", "-- | Every element, empty.", "elements :: " <> m.conformance.nodes, "elements =" ]
       <> list (map (\e -> "B." <> e.ident <> " [] []") els)
-      <> [ "", "-- | Every attribute, with a literal value, on an element that takes it."
-         , "attributes :: " <> m.conformance.nodes
-         , "attributes ="
-         ]
-      <> list (Array.concatMap (\a -> map (\u -> on u ("B." <> a.ident <> " " <> u.literal)) a.uses) attrs)
-      <> [ "", "-- | Every event, handled by `x`.", "events :: " <> m.conformance.handlers, "events x =" ]
-      <> list (Array.concatMap (\e -> map (\u -> on u ("B." <> e.ident <> " " <> sample e)) e.uses) evs)
+      <> [ "", "-- Attributes, each with a literal value on an element that takes it" ]
+      <> Array.concatMap
+        (\a -> declaration a.ident m.conformance.nodes (map (\u -> on u ("B." <> a.ident <> " " <> u.literal)) a.uses))
+        attrs
+      <> [ "", "-- Events, each handled by `msg`" ]
+      <> Array.concatMap
+        (\e -> declaration (e.ident <> " msg") m.conformance.handlers (map (\u -> on u ("B." <> e.ident <> " " <> sample e)) e.uses))
+        evs
   )
   where
   identOf tag namespace = fromMaybe tag do
@@ -360,8 +361,12 @@ conformanceModule source m els attrs evs = lines
   on u attr = "B." <> identOf u.tag u.namespace <> " [ " <> attr <> " ] []"
   sample e = case Object.lookup e.ident m.names >>= _.sample of
     Just s -> parenthesise s
-    Nothing -> "x"
+    Nothing -> "msg"
   parenthesise s = if String.contains (String.Pattern " ") s then "(" <> s <> ")" else s
+  -- One declaration per name, so that each disagreement is its own error.
+  declaration lhs type_ uses =
+    let ident = String.takeWhile (_ /= String.codePointFromChar ' ') lhs
+    in [ "", ident <> " :: " <> type_, lhs <> " =" ] <> list uses
   list items = case Array.uncons items of
     Nothing -> [ "  []" ]
     Just { head, tail } -> [ "  [ " <> head ] <> map ("  , " <> _) tail <> [ "  ]" ]
