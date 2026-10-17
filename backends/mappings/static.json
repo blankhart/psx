@@ -1,0 +1,144 @@
+{
+  "module": "Psx.Static",
+  "directory": "backends/psx-static/src",
+  "core": "Psx.Static.Core",
+  "coreExports": [
+    "class Children",
+    "class KeyedChildren",
+    "class ToKey",
+    "Attr",
+    "Key",
+    "Markup",
+    "Node",
+    "attribute",
+    "children",
+    "element",
+    "keyed",
+    "keyedChildren",
+    "keyedElement",
+    "render",
+    "renderMarkup",
+    "root",
+    "text",
+    "toKey"
+  ],
+  "doc": [
+    "-- | The PSX backend that renders markup to an HTML string, for pages built",
+    "-- | ahead of time. Lowered `.psx` code calls it through the alias `B`.",
+    "-- |",
+    "-- | The core is hand-written in `Psx.Static.Core`. Every element below",
+    "-- | renders as itself (a void element with no end tag), every attribute as",
+    "-- | itself, and every handler as nothing."
+  ],
+  "imports": [
+    "Prelude (const, show, (<<<))",
+    "Psx.Static.Core (Attr, Markup, Node)",
+    "Psx.Static.Core (booleanAttribute, element, noAttribute, voidElement) as Impl"
+  ],
+  "templates": {
+    "element": {
+      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "code": "Impl.element {name}"
+    },
+    "voidElement": {
+      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "code": "Impl.voidElement {name}"
+    },
+    "boolean": {
+      "type": "forall a. Boolean -> Attr a",
+      "code": "Impl.booleanAttribute {name}"
+    },
+    "string": {
+      "type": "forall a. String -> Attr a",
+      "code": "Core.attribute {name}"
+    },
+    "number": {
+      "type": "forall a. Int -> Attr a",
+      "code": "Core.attribute {name} <<< show"
+    },
+    "event": {
+      "type": "forall a. a -> Attr a",
+      "code": "const Impl.noAttribute"
+    }
+  },
+  "names": {
+    "onInput": {
+      "type": "forall a. (String -> a) -> Attr a",
+      "code": "const Impl.noAttribute",
+      "sample": "\\_ -> msg"
+    }
+  },
+  "conformance": {
+    "imports": [
+      "Prelude ((<>))",
+      "Data.Maybe (Maybe(..))",
+      "Data.Tuple (Tuple)",
+      "Psx.Static (class Children, class KeyedChildren, class ToKey)"
+    ],
+    "core": [
+      [
+        "text",
+        "forall a. String -> B.Node a"
+      ],
+      [
+        "element",
+        "forall a. String -> Array (B.Attr a) -> B.Markup a -> B.Node a"
+      ],
+      [
+        "keyedElement",
+        "forall a. String -> Array (B.Attr a) -> Array (Tuple B.Key (B.Node a)) -> B.Node a"
+      ],
+      [
+        "keyed",
+        "forall k a. ToKey k => k -> B.Node a -> Tuple B.Key (B.Node a)"
+      ],
+      [
+        "attribute",
+        "forall a. String -> String -> B.Attr a"
+      ],
+      [
+        "children",
+        "forall c a. Children c a => c -> B.Markup a"
+      ],
+      [
+        "keyedChildren",
+        "forall c a. KeyedChildren c a => c -> Array (Tuple B.Key (B.Node a))"
+      ],
+      [
+        "root",
+        "forall a. B.Markup a -> B.Node a"
+      ],
+      [
+        "render",
+        "forall a. B.Node a -> String"
+      ],
+      [
+        "renderMarkup",
+        "forall a. B.Markup a -> String"
+      ]
+    ],
+    "extra": [
+      "-- | What a child hole takes: a string, a node, markup, and arrays and",
+      "-- | `Maybe`s of those.",
+      "childHoles :: forall a. B.Node a -> B.Markup a",
+      "childHoles node =",
+      "  B.children \"text\"",
+      "    <> B.children node",
+      "    <> B.children [ node ]",
+      "    <> B.children [ [ node ] ]",
+      "    <> B.children (Just node)",
+      "    <> B.children (Nothing :: Maybe String)",
+      "",
+      "-- | What a child hole of a keyed parent takes: keyed literals and arrays of",
+      "-- | them, keyed by strings or by integers.",
+      "keyedChildHoles :: forall a. B.Node a -> Array (Tuple B.Key (B.Node a))",
+      "keyedChildHoles node =",
+      "  B.keyedChildren (B.keyed \"a\" node)",
+      "    <> B.keyedChildren [ B.keyed 1 node ]",
+      "    <> B.keyedChildren [ [ B.keyed 2 node ] ]",
+      "    <> B.keyedChildren (Just (B.keyed 3.0 node))"
+    ],
+    "nodes": "forall a. Array (B.Node a)",
+    "handlers": "forall a. a -> Array (B.Node a)"
+  }
+}
