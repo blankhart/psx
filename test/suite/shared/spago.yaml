@@ -1,0 +1,12 @@
+package:
+  name: psx-suite-shared
+  dependencies:
+    - aff
+    - arrays
+    - datetime
+    - integers
+    - maybe
+    - numbers
+    - prelude
+    - strings
+    - tuples

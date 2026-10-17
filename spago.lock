@@ -393,12 +393,17 @@
         "core": {
           "dependencies": [
             "aff",
+            "argonaut-core",
             "arrays",
             "console",
+            "datetime",
             "effect",
             "either",
             "foldable-traversable",
             "foreign",
+            "foreign-object",
+            "integers",
+            "lists",
             "maybe",
             "node-buffer",
             "node-fs",
@@ -485,6 +490,25 @@
           "dependencies": []
         }
       },
+      "psx-suite-shared": {
+        "path": "test/suite/shared",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "datetime",
+            "integers",
+            "maybe",
+            "numbers",
+            "prelude",
+            "strings",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-todo-portico-psx": {
         "path": "test/suite/apps/todo/portico/psx",
         "core": {
@@ -510,6 +534,45 @@
             "foldable-traversable",
             "portico",
             "prelude"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-typeahead-portico-psx": {
+        "path": "test/suite/apps/typeahead/portico/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "maybe",
+            "portico",
+            "prelude",
+            "psx-portico",
+            "psx-suite-shared",
+            "strings",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-typeahead-portico-purs": {
+        "path": "test/suite/apps/typeahead/portico/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "maybe",
+            "portico",
+            "prelude",
+            "psx-suite-shared",
+            "strings",
+            "tuples"
           ]
         },
         "test": {

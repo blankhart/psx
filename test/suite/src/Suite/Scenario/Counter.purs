@@ -20,8 +20,12 @@ counter =
       , Expect "two"
       , Click "reset"
       , Expect "initial"
-      , Measure "count up and reset"
-          [ Click "increment", Click "increment", Click "increment", Click "reset" ]
+      , Measure
+          { name: "count up and reset"
+          , runs: 5
+          , setup: []
+          , steps: [ Click "increment", Click "increment", Click "increment", Click "reset" ]
+          }
       , Expect "initial"
       ]
   }
