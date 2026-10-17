@@ -878,13 +878,16 @@ module Portico.Psx
   , onVolumeChange
   , onWaiting
   , onWheel
+  , keyedElement
   ) where
 
 import Prelude (pure, show, (<<<))
+import Data.Array as Array
 import Data.Maybe (Maybe)
+import Data.Tuple (Tuple)
 import Portico as P
-import Portico.Psx.Core (Attr, Markup, Node, booleanAttribute)
-import Portico.Psx.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, keyedElement, root, text, toKey) as Core
+import Portico.Psx.Core (Attr, Key, Markup, Node, booleanAttribute, keyedHtmlElement, keyedSvgElement, svgElement)
+import Portico.Psx.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
 
@@ -1276,7 +1279,7 @@ sup :: forall a. Array (Attr a) -> Markup a -> Node a
 sup = P.element "sup"
 
 svg :: forall a. Array (Attr a) -> Markup a -> Node a
-svg = P.element "svg"
+svg = svgElement "svg"
 
 table :: forall a. Array (Attr a) -> Markup a -> Node a
 table = P.element "table"
@@ -1336,253 +1339,345 @@ xmp :: forall a. Array (Attr a) -> Markup a -> Node a
 xmp = P.element "xmp"
 
 altGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
-altGlyph = P.element "altGlyph"
+altGlyph = svgElement "altGlyph"
 
 altGlyphDef :: forall a. Array (Attr a) -> Markup a -> Node a
-altGlyphDef = P.element "altGlyphDef"
+altGlyphDef = svgElement "altGlyphDef"
 
 altGlyphItem :: forall a. Array (Attr a) -> Markup a -> Node a
-altGlyphItem = P.element "altGlyphItem"
+altGlyphItem = svgElement "altGlyphItem"
 
 animate :: forall a. Array (Attr a) -> Markup a -> Node a
-animate = P.element "animate"
+animate = svgElement "animate"
 
 animateColor :: forall a. Array (Attr a) -> Markup a -> Node a
-animateColor = P.element "animateColor"
+animateColor = svgElement "animateColor"
 
 animateMotion :: forall a. Array (Attr a) -> Markup a -> Node a
-animateMotion = P.element "animateMotion"
+animateMotion = svgElement "animateMotion"
 
 animateTransform :: forall a. Array (Attr a) -> Markup a -> Node a
-animateTransform = P.element "animateTransform"
+animateTransform = svgElement "animateTransform"
 
 animation :: forall a. Array (Attr a) -> Markup a -> Node a
-animation = P.element "animation"
+animation = svgElement "animation"
 
 circle :: forall a. Array (Attr a) -> Markup a -> Node a
-circle = P.element "circle"
+circle = svgElement "circle"
 
 clipPath :: forall a. Array (Attr a) -> Markup a -> Node a
-clipPath = P.element "clipPath"
+clipPath = svgElement "clipPath"
 
 colorProfile :: forall a. Array (Attr a) -> Markup a -> Node a
-colorProfile = P.element "color-profile"
+colorProfile = svgElement "color-profile"
 
 cursor :: forall a. Array (Attr a) -> Markup a -> Node a
-cursor = P.element "cursor"
+cursor = svgElement "cursor"
 
 defs :: forall a. Array (Attr a) -> Markup a -> Node a
-defs = P.element "defs"
+defs = svgElement "defs"
 
 desc :: forall a. Array (Attr a) -> Markup a -> Node a
-desc = P.element "desc"
+desc = svgElement "desc"
 
 discard :: forall a. Array (Attr a) -> Markup a -> Node a
-discard = P.element "discard"
+discard = svgElement "discard"
 
 ellipse :: forall a. Array (Attr a) -> Markup a -> Node a
-ellipse = P.element "ellipse"
+ellipse = svgElement "ellipse"
 
 feBlend :: forall a. Array (Attr a) -> Markup a -> Node a
-feBlend = P.element "feBlend"
+feBlend = svgElement "feBlend"
 
 feColorMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
-feColorMatrix = P.element "feColorMatrix"
+feColorMatrix = svgElement "feColorMatrix"
 
 feComponentTransfer :: forall a. Array (Attr a) -> Markup a -> Node a
-feComponentTransfer = P.element "feComponentTransfer"
+feComponentTransfer = svgElement "feComponentTransfer"
 
 feComposite :: forall a. Array (Attr a) -> Markup a -> Node a
-feComposite = P.element "feComposite"
+feComposite = svgElement "feComposite"
 
 feConvolveMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
-feConvolveMatrix = P.element "feConvolveMatrix"
+feConvolveMatrix = svgElement "feConvolveMatrix"
 
 feDiffuseLighting :: forall a. Array (Attr a) -> Markup a -> Node a
-feDiffuseLighting = P.element "feDiffuseLighting"
+feDiffuseLighting = svgElement "feDiffuseLighting"
 
 feDisplacementMap :: forall a. Array (Attr a) -> Markup a -> Node a
-feDisplacementMap = P.element "feDisplacementMap"
+feDisplacementMap = svgElement "feDisplacementMap"
 
 feDistantLight :: forall a. Array (Attr a) -> Markup a -> Node a
-feDistantLight = P.element "feDistantLight"
+feDistantLight = svgElement "feDistantLight"
 
 feDropShadow :: forall a. Array (Attr a) -> Markup a -> Node a
-feDropShadow = P.element "feDropShadow"
+feDropShadow = svgElement "feDropShadow"
 
 feFlood :: forall a. Array (Attr a) -> Markup a -> Node a
-feFlood = P.element "feFlood"
+feFlood = svgElement "feFlood"
 
 feFuncA :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncA = P.element "feFuncA"
+feFuncA = svgElement "feFuncA"
 
 feFuncB :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncB = P.element "feFuncB"
+feFuncB = svgElement "feFuncB"
 
 feFuncG :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncG = P.element "feFuncG"
+feFuncG = svgElement "feFuncG"
 
 feFuncR :: forall a. Array (Attr a) -> Markup a -> Node a
-feFuncR = P.element "feFuncR"
+feFuncR = svgElement "feFuncR"
 
 feGaussianBlur :: forall a. Array (Attr a) -> Markup a -> Node a
-feGaussianBlur = P.element "feGaussianBlur"
+feGaussianBlur = svgElement "feGaussianBlur"
 
 feImage :: forall a. Array (Attr a) -> Markup a -> Node a
-feImage = P.element "feImage"
+feImage = svgElement "feImage"
 
 feMerge :: forall a. Array (Attr a) -> Markup a -> Node a
-feMerge = P.element "feMerge"
+feMerge = svgElement "feMerge"
 
 feMergeNode :: forall a. Array (Attr a) -> Markup a -> Node a
-feMergeNode = P.element "feMergeNode"
+feMergeNode = svgElement "feMergeNode"
 
 feMorphology :: forall a. Array (Attr a) -> Markup a -> Node a
-feMorphology = P.element "feMorphology"
+feMorphology = svgElement "feMorphology"
 
 feOffset :: forall a. Array (Attr a) -> Markup a -> Node a
-feOffset = P.element "feOffset"
+feOffset = svgElement "feOffset"
 
 fePointLight :: forall a. Array (Attr a) -> Markup a -> Node a
-fePointLight = P.element "fePointLight"
+fePointLight = svgElement "fePointLight"
 
 feSpecularLighting :: forall a. Array (Attr a) -> Markup a -> Node a
-feSpecularLighting = P.element "feSpecularLighting"
+feSpecularLighting = svgElement "feSpecularLighting"
 
 feSpotLight :: forall a. Array (Attr a) -> Markup a -> Node a
-feSpotLight = P.element "feSpotLight"
+feSpotLight = svgElement "feSpotLight"
 
 feTile :: forall a. Array (Attr a) -> Markup a -> Node a
-feTile = P.element "feTile"
+feTile = svgElement "feTile"
 
 feTurbulence :: forall a. Array (Attr a) -> Markup a -> Node a
-feTurbulence = P.element "feTurbulence"
+feTurbulence = svgElement "feTurbulence"
 
 filter :: forall a. Array (Attr a) -> Markup a -> Node a
-filter = P.element "filter"
+filter = svgElement "filter"
 
 fontFace :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFace = P.element "font-face"
+fontFace = svgElement "font-face"
 
 fontFaceFormat :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceFormat = P.element "font-face-format"
+fontFaceFormat = svgElement "font-face-format"
 
 fontFaceName :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceName = P.element "font-face-name"
+fontFaceName = svgElement "font-face-name"
 
 fontFaceSrc :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceSrc = P.element "font-face-src"
+fontFaceSrc = svgElement "font-face-src"
 
 fontFaceUri :: forall a. Array (Attr a) -> Markup a -> Node a
-fontFaceUri = P.element "font-face-uri"
+fontFaceUri = svgElement "font-face-uri"
 
 foreignObject :: forall a. Array (Attr a) -> Markup a -> Node a
-foreignObject = P.element "foreignObject"
+foreignObject = svgElement "foreignObject"
 
 g :: forall a. Array (Attr a) -> Markup a -> Node a
-g = P.element "g"
+g = svgElement "g"
 
 glyph :: forall a. Array (Attr a) -> Markup a -> Node a
-glyph = P.element "glyph"
+glyph = svgElement "glyph"
 
 glyphRef :: forall a. Array (Attr a) -> Markup a -> Node a
-glyphRef = P.element "glyphRef"
+glyphRef = svgElement "glyphRef"
 
 handler :: forall a. Array (Attr a) -> Markup a -> Node a
-handler = P.element "handler"
+handler = svgElement "handler"
 
 hkern :: forall a. Array (Attr a) -> Markup a -> Node a
-hkern = P.element "hkern"
+hkern = svgElement "hkern"
 
 line :: forall a. Array (Attr a) -> Markup a -> Node a
-line = P.element "line"
+line = svgElement "line"
 
 linearGradient :: forall a. Array (Attr a) -> Markup a -> Node a
-linearGradient = P.element "linearGradient"
+linearGradient = svgElement "linearGradient"
 
 listener :: forall a. Array (Attr a) -> Markup a -> Node a
-listener = P.element "listener"
+listener = svgElement "listener"
 
 marker :: forall a. Array (Attr a) -> Markup a -> Node a
-marker = P.element "marker"
+marker = svgElement "marker"
 
 mask :: forall a. Array (Attr a) -> Markup a -> Node a
-mask = P.element "mask"
+mask = svgElement "mask"
 
 metadata :: forall a. Array (Attr a) -> Markup a -> Node a
-metadata = P.element "metadata"
+metadata = svgElement "metadata"
 
 missingGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
-missingGlyph = P.element "missing-glyph"
+missingGlyph = svgElement "missing-glyph"
 
 mpath :: forall a. Array (Attr a) -> Markup a -> Node a
-mpath = P.element "mpath"
+mpath = svgElement "mpath"
 
 path :: forall a. Array (Attr a) -> Markup a -> Node a
-path = P.element "path"
+path = svgElement "path"
 
 pattern :: forall a. Array (Attr a) -> Markup a -> Node a
-pattern = P.element "pattern"
+pattern = svgElement "pattern"
 
 polygon :: forall a. Array (Attr a) -> Markup a -> Node a
-polygon = P.element "polygon"
+polygon = svgElement "polygon"
 
 polyline :: forall a. Array (Attr a) -> Markup a -> Node a
-polyline = P.element "polyline"
+polyline = svgElement "polyline"
 
 prefetch :: forall a. Array (Attr a) -> Markup a -> Node a
-prefetch = P.element "prefetch"
+prefetch = svgElement "prefetch"
 
 radialGradient :: forall a. Array (Attr a) -> Markup a -> Node a
-radialGradient = P.element "radialGradient"
+radialGradient = svgElement "radialGradient"
 
 rect :: forall a. Array (Attr a) -> Markup a -> Node a
-rect = P.element "rect"
+rect = svgElement "rect"
 
 set :: forall a. Array (Attr a) -> Markup a -> Node a
-set = P.element "set"
+set = svgElement "set"
 
 solidColor :: forall a. Array (Attr a) -> Markup a -> Node a
-solidColor = P.element "solidColor"
+solidColor = svgElement "solidColor"
 
 stop :: forall a. Array (Attr a) -> Markup a -> Node a
-stop = P.element "stop"
+stop = svgElement "stop"
 
 switch :: forall a. Array (Attr a) -> Markup a -> Node a
-switch = P.element "switch"
+switch = svgElement "switch"
 
 symbol :: forall a. Array (Attr a) -> Markup a -> Node a
-symbol = P.element "symbol"
+symbol = svgElement "symbol"
 
 tbreak :: forall a. Array (Attr a) -> Markup a -> Node a
-tbreak = P.element "tbreak"
+tbreak = svgElement "tbreak"
 
 textEl :: forall a. Array (Attr a) -> Markup a -> Node a
-textEl = P.element "text"
+textEl = svgElement "text"
 
 textArea :: forall a. Array (Attr a) -> Markup a -> Node a
-textArea = P.element "textArea"
+textArea = svgElement "textArea"
 
 textPath :: forall a. Array (Attr a) -> Markup a -> Node a
-textPath = P.element "textPath"
+textPath = svgElement "textPath"
 
 tref :: forall a. Array (Attr a) -> Markup a -> Node a
-tref = P.element "tref"
+tref = svgElement "tref"
 
 tspan :: forall a. Array (Attr a) -> Markup a -> Node a
-tspan = P.element "tspan"
+tspan = svgElement "tspan"
 
 unknown :: forall a. Array (Attr a) -> Markup a -> Node a
-unknown = P.element "unknown"
+unknown = svgElement "unknown"
 
 use :: forall a. Array (Attr a) -> Markup a -> Node a
-use = P.element "use"
+use = svgElement "use"
 
 view :: forall a. Array (Attr a) -> Markup a -> Node a
-view = P.element "view"
+view = svgElement "view"
 
 vkern :: forall a. Array (Attr a) -> Markup a -> Node a
-vkern = P.element "vkern"
+vkern = svgElement "vkern"
+
+-- | The elements created in SVG's namespace.
+svgElements :: Array String
+svgElements =
+  [ "svg"
+  , "altGlyph"
+  , "altGlyphDef"
+  , "altGlyphItem"
+  , "animate"
+  , "animateColor"
+  , "animateMotion"
+  , "animateTransform"
+  , "animation"
+  , "circle"
+  , "clipPath"
+  , "color-profile"
+  , "cursor"
+  , "defs"
+  , "desc"
+  , "discard"
+  , "ellipse"
+  , "feBlend"
+  , "feColorMatrix"
+  , "feComponentTransfer"
+  , "feComposite"
+  , "feConvolveMatrix"
+  , "feDiffuseLighting"
+  , "feDisplacementMap"
+  , "feDistantLight"
+  , "feDropShadow"
+  , "feFlood"
+  , "feFuncA"
+  , "feFuncB"
+  , "feFuncG"
+  , "feFuncR"
+  , "feGaussianBlur"
+  , "feImage"
+  , "feMerge"
+  , "feMergeNode"
+  , "feMorphology"
+  , "feOffset"
+  , "fePointLight"
+  , "feSpecularLighting"
+  , "feSpotLight"
+  , "feTile"
+  , "feTurbulence"
+  , "filter"
+  , "font-face"
+  , "font-face-format"
+  , "font-face-name"
+  , "font-face-src"
+  , "font-face-uri"
+  , "foreignObject"
+  , "g"
+  , "glyph"
+  , "glyphRef"
+  , "handler"
+  , "hkern"
+  , "line"
+  , "linearGradient"
+  , "listener"
+  , "marker"
+  , "mask"
+  , "metadata"
+  , "missing-glyph"
+  , "mpath"
+  , "path"
+  , "pattern"
+  , "polygon"
+  , "polyline"
+  , "prefetch"
+  , "radialGradient"
+  , "rect"
+  , "set"
+  , "solidColor"
+  , "stop"
+  , "switch"
+  , "symbol"
+  , "tbreak"
+  , "text"
+  , "textArea"
+  , "textPath"
+  , "tref"
+  , "tspan"
+  , "unknown"
+  , "use"
+  , "view"
+  , "vkern"
+  ]
+
+keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedElement = \tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag
 
 -- Attributes ------------------------------------------------------------------
 
@@ -1896,7 +1991,7 @@ citeAttr :: forall a. String -> Attr a
 citeAttr = P.attribute "cite"
 
 class_ :: forall a. String -> Attr a
-class_ = P.attribute "class"
+class_ = P.class'
 
 classid :: forall a. String -> Attr a
 classid = P.attribute "classid"
