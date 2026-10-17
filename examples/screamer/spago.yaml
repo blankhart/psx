@@ -1,0 +1,19 @@
+package:
+  name: psx-examples-screamer
+  dependencies:
+    - aff
+    - arrays
+    - control
+    - datetime
+    - effect
+    - filterable
+    - integers
+    - maybe
+    - prelude
+    - psx-screamer
+    - random
+    - refs
+    - screamer
+    - strings
+    - web-events
+    - web-uievents

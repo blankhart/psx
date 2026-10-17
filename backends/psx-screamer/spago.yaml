@@ -13,4 +13,3 @@ package:
     main: Test.Screamer.Psx
     dependencies:
       - console
-      - effect

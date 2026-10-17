@@ -11,7 +11,9 @@
     "corpus": "spago run -p psx-corpus --",
     "corpus:accept": "spago run -p psx-corpus -- --accept",
     "psx": "node packages/psx-cli/bin/psx.mjs",
+    "gen-backend": "node packages/psx-cli/bin/psx.mjs gen-backend",
     "examples:portico": "node packages/psx-cli/bin/psx.mjs build examples/portico/src && spago build -p psx-examples-portico && node examples/portico/scripts/build-examples.mjs && node examples/portico/scripts/smoke-test.mjs",
+    "examples:screamer": "node packages/psx-cli/bin/psx.mjs build examples/screamer/src && spago build -p psx-examples-screamer && node examples/screamer/scripts/build-examples.mjs && node examples/screamer/scripts/smoke-test.mjs",
     "suite": "spago run -p psx-suite --",
     "suite:accept": "spago run -p psx-suite -- --accept"
   },
