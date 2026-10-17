@@ -15,7 +15,6 @@
     "element",
     "keyed",
     "keyedChildren",
-    "keyedElement",
     "root",
     "text",
     "toKey"
@@ -33,14 +32,24 @@
   ],
   "imports": [
     "Prelude (pure, show, (<<<))",
+    "Data.Array as Array",
     "Data.Maybe (Maybe)",
+    "Data.Tuple (Tuple)",
     "Portico as P",
-    "Portico.Psx.Core (Attr, Markup, Node, booleanAttribute)"
+    "Portico.Psx.Core (Attr, Key, Markup, Node, booleanAttribute, keyedHtmlElement, keyedSvgElement, svgElement)"
   ],
   "templates": {
+    "keyedElement": {
+      "type": "forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a",
+      "code": "\\tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag"
+    },
     "element": {
       "type": "forall a. Array (Attr a) -> Markup a -> Node a",
       "code": "P.element {name}"
+    },
+    "svgElement": {
+      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "code": "svgElement {name}"
     },
     "boolean": {
       "type": "forall a. Boolean -> Attr a",
@@ -132,6 +141,9 @@
     }
   ],
   "names": {
+    "class_": {
+      "code": "P.class'"
+    },
     "commandAttr": {
       "code": "P.command"
     },

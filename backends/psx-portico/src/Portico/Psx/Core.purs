@@ -11,7 +11,9 @@ module Portico.Psx.Core
   , toKey
   , text
   , element
-  , keyedElement
+  , keyedHtmlElement
+  , keyedSvgElement
+  , svgElement
   , keyed
   , attribute
   , class Children
@@ -61,10 +63,20 @@ text = P.text
 element :: forall a. String -> Array (Attr a) -> Markup a -> Node a
 element = P.element
 
+-- | An SVG element. Portico sets `class` as the `className` property, which
+-- | does nothing on SVG, so here it is the `class` attribute.
+svgElement :: forall a. String -> Array (Attr a) -> Markup a -> Node a
+svgElement tag attrs = P.element tag (svgTraits_ attrs)
+
+foreign import svgTraits_ :: forall a. Array (Attr a) -> Array (Attr a)
+
 -- | Portico keys a list through its children, so the keys are already on
 -- | the nodes (see `keyed`) and the parent is an ordinary element.
-keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedElement tag attrs kids = P.element tag attrs (map snd kids)
+keyedHtmlElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedHtmlElement tag attrs kids = P.element tag attrs (map snd kids)
+
+keyedSvgElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedSvgElement tag attrs kids = svgElement tag attrs (map snd kids)
 
 -- | The node with the key added to its traits, as `P.key` would have put it
 -- | there.

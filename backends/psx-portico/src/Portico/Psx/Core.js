@@ -6,6 +6,10 @@
 const ELEMENT = 0;
 const MAP = 1;
 
+// Traits are [kind, name, value] (see Portico.Foreign).
+const ATTRIBUTE = 0;
+const PROPERTY = 1;
+
 export const withKey_ = function withKey(keyTrait, node) {
   if (!Array.isArray(node)) return node;
   switch (node[0]) {
@@ -16,4 +20,16 @@ export const withKey_ = function withKey(keyTrait, node) {
     default:
       return node;
   }
+};
+
+// The `className` properties among an SVG element's traits, as one `class`
+// attribute (Portico joins several `className` traits with spaces).
+export const svgTraits_ = function (traits) {
+  const classes = [];
+  const rest = [];
+  for (const t of traits) {
+    if (t[0] === PROPERTY && t[1] === 'className') classes.push(t[2]);
+    else rest.push(t);
+  }
+  return classes.length === 0 ? traits : rest.concat([[ATTRIBUTE, 'class', classes.join(' ')]]);
 };
