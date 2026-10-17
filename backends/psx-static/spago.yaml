@@ -1,9 +1,14 @@
 package:
   name: psx-static
   dependencies:
+    - arrays
+    - maybe
     - prelude
+    - strings
+    - tuples
   test:
     main: Test.Psx.Static
     dependencies:
       - console
       - effect
+      - exceptions
