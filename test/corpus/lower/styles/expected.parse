@@ -1,0 +1,26 @@
+print: identical
+errors: none
+markup:
+  9:3 <main>
+    @class="page"
+    text "\n    "
+    10:5 <style>
+      text "\n      .page { max-width: 40rem; }\n    "
+    text "\n    "
+    13:5 <ul>
+      @class="list"
+      text "\n      "
+      hole {map item [ 1, 2, n ]}
+      text "\n      "
+      15:7 <style>
+        text ".list > li:first-child { font-weight: bold; }"
+      text "\n    "
+    text "\n  "
+  20:5 <li>
+    20:9 <>
+      text "\n      "
+      hole {show i}
+      text "\n      "
+      22:7 <style>
+        text "\n        li::marker, :scope:hover { color: crimson; }\n      "
+      text "\n    "

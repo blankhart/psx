@@ -4,13 +4,14 @@ import Prelude
 import Data.Array ((..))
 import Portico.Psx (Markup)
 import Portico.Psx as B
+import App.Counter.PsxStyle as B.Style
 type Props = { label :: String, max :: Int }
 
 data Msg = Increment | Decrement | Reset
 
 view :: Props -> Int -> Markup Msg
 view props n =
-  [ B.section [ B.class_ "counter" ] ([
+  [ B.section [ B.class_ "counter", B.attribute "data-psx" B.Style.scope ] ([
     B.h2 [] (B.children (props.label) <> [ B.text ": " ] <> B.children (show n)),
     B.button [ B.onClick (Decrement), B.disabled (n <= 0) ] ([ B.text "-" ]),
     B.button [ B.onClick (Increment), B.disabled (n >= props.max) ] ([ B.text "+" ]) ] <> B.children (
@@ -26,10 +27,10 @@ view props n =
           (\i -> [ B.keyed (i) (B.li [ B.class_ (if i <= n then "pip filled" else "pip") ] []) ])
           (1 .. props.max))
 
-   ),
-    B.style [] ([ B.text "\n      .counter { display: grid; gap: 0.75rem; }\n      .pip { width: 1rem; height: 0.25rem; background: silver; }\n      .pip.filled { background: seagreen; }\n    " ]
-
-
-
    ) ]
+
+
+
+
+
    ) ]

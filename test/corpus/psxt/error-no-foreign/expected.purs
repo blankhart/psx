@@ -1,0 +1,2 @@
+-- psx lower failed
+-- 10:11 <template name="hidden"> has no foreign import hidden :: T in the script to define

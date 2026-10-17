@@ -1,7 +1,9 @@
 -- | The parse stage: `expected.parse` records whether printing the parsed
 -- | module gives back the input, the errors with their fixes, and an outline
--- | of every markup literal. Positions are `line:column`, counted from 1.
-module Psx.Corpus.Parse (parse, outline) where
+-- | of every markup literal. For a `.psxt` file it outlines the script, each
+-- | template with the foreign import it defines, and the styles. Positions
+-- | are `line:column`, counted from 1.
+module Psx.Corpus.Parse (parse, parsePsxt, outline, outlinePsxt) where
 
 import Prelude
 
@@ -14,6 +16,7 @@ import Data.String.Regex.Flags (global) as Regex
 import Data.String.Regex.Unsafe (unsafeRegex) as Regex
 import Psx.Corpus (Stage)
 import Psx.Cst (AttrValue(..), Child(..), Hole, Markup(..), MarkupRoot, Psx, PsxError, foldMapHoles, foldMapMarkupRootsExpr, parseModule, printExpr, printModule)
+import Psx.Cst.Psxt as Psxt
 import Psx.Cst.Traversal (foldMapMarkupRoots)
 import PureScript.CST.Types (Module, SourcePos, SourceRange)
 
@@ -24,6 +27,44 @@ parse =
   , applies: \c -> c.inputFile == "input.psx"
   , run: \c -> pure (outline c.input)
   }
+
+parsePsxt :: Stage
+parsePsxt =
+  { name: "parse"
+  , golden: "expected.parse"
+  , applies: \c -> c.inputFile == "input.psxt"
+  , run: \c -> pure (outlinePsxt c.input)
+  }
+
+outlinePsxt :: String -> String
+outlinePsxt input = do
+  let result = Psxt.parsePsxt input
+  unlines $
+    [ if Psxt.printPsxt result.items == input then "print: identical" else "print: DIFFERS" ]
+      <> errors result.errors
+      <> case result.file of
+        Nothing -> [ "file: none" ]
+        Just file ->
+          [ "script: " <> pos file.script.element.open.range.start <> "-" <> pos (endOf file.script.element)
+              <> ", module "
+              <> String.trim (String.takeWhile (_ /= String.codePointFromChar '\n') (String.drop 7 (moduleText file)))
+          ]
+            <> foldMap template file.templates
+            <> map (\st -> "style " <> pos st.open.range.start) file.styles
+  where
+  moduleText file = String.trim (String.drop file.script.contentStart (String.take file.script.contentEnd input))
+    # \t -> String.drop (maybe 0 identity (String.indexOf (String.Pattern "module") t)) t
+  endOf el = case el.close of
+    Just c -> maybe c.name.range.end _.range.end c.end
+    Nothing -> el.end.range.end
+  template t =
+    [ "template " <> show t.name <> " at " <> pos t.element.open.range.start
+        <> foldMap (\a -> ", args " <> show a.text <> " (" <> show a.binders <> " binders)") t.args
+        <> case t.declaration of
+          Just d -> ", defines the foreign import at " <> pos d.range.start <> " (" <> show (Psxt.typeArrows d.type) <> " arrows)"
+          Nothing -> ", no foreign import"
+    ]
+      <> foldMap (child 1) t.element.children
 
 outline :: String -> String
 outline input = do

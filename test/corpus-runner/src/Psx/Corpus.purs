@@ -1,6 +1,8 @@
 -- | The corpus runner. A case is a directory `test/corpus/<area>/<case>/`
 -- | holding `input.psx` or `input.psxt`. Each stage that applies to a case
--- | produces one golden file, `expected.<ext>`, beside the input.
+-- | produces one golden file, `expected.<ext>`, beside the input. A case
+-- | may also hold `same-as`, naming another case (`<area>/<case>`) whose
+-- | input must lower to the same code.
 module Psx.Corpus
   ( Case
   , Stage
@@ -33,6 +35,8 @@ type Case =
   -- | `input.psx` or `input.psxt`
   , inputFile :: String
   , input :: String
+  -- | The case named in `same-as`, if there is one.
+  , sameAs :: Maybe { name :: String, inputFile :: String, input :: String }
   }
 
 -- | `golden` is the file the stage writes in the case directory, such as
@@ -83,7 +87,16 @@ discover corpus = do
         Nothing -> pure Nothing
         Just inputFile -> do
           input <- FS.readTextFile UTF8 (Path.concat [ dir, inputFile ])
-          pure (Just { area, name, dir, inputFile, input })
+          sameAs <-
+            if Array.elem "same-as" files then do
+              other <- String.trim <$> FS.readTextFile UTF8 (Path.concat [ dir, "same-as" ])
+              let otherDir = Path.concat [ corpus, other ]
+              otherFiles <- FS.readdir otherDir
+              for (Array.find (_ `Array.elem` otherFiles) [ "input.psx", "input.psxt" ]) \f -> do
+                text <- FS.readTextFile UTF8 (Path.concat [ otherDir, f ])
+                pure { name: other, inputFile: f, input: text }
+            else pure Nothing
+          pure (Just { area, name, dir, inputFile, input, sameAs })
 
 selected :: Options -> Case -> Boolean
 selected { only } c = Array.null only || Array.elem c.area only || Array.elem (c.area <> "/" <> c.name) only

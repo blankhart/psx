@@ -1,9 +1,12 @@
 -- | The psx command line.
 -- |
--- | - `psx build [dir...]` lowers every `.psx` file under the directories
--- |   (default `src`) to a `.purs` file beside it, writing only files whose
--- |   text changes. It never overwrites a `.purs` file psx did not write.
--- | - `psx lower <file.psx> [-o <out.purs>] [--map <out.map.json>]` lowers one
+-- | - `psx build [dir...]` lowers every `.psx` and `.psxt` file under the
+-- |   directories (default `src`) to a `.purs` file beside it, writing only
+-- |   files whose text changes. A file with styles also gets its stylesheet
+-- |   (`Counter.css`) and companion module (`Counter/PsxStyle.purs` and
+-- |   `.js`). It never overwrites a file psx did not write, and removes the
+-- |   stylesheet and companion it wrote once a file has no styles.
+-- | - `psx lower <file> [-o <out.purs>] [--map <out.map.json>]` lowers one
 -- |   file, to standard output unless `-o` is given.
 -- | - `psx check [dir...] [--json] [-- <spago build arguments>]` builds, then
 -- |   compiles with `spago build --json-errors` and reports the compiler's
@@ -27,6 +30,7 @@ import Data.Traversable (for, traverse)
 import Effect (Effect)
 import Effect.Console (error, log)
 import Node.Encoding (Encoding(..))
+import Node.FS.Perms (permsAll)
 import Node.FS.Stats as Stats
 import Node.FS.Sync as FS
 import Node.Path (FilePath)
@@ -35,7 +39,8 @@ import Node.Process as Process
 import Psx.Cli.Check (Diagnostic, Severity(..), diagnosticJson, parseCompilerOutput, printDiagnostic, remap)
 import Psx.Cli.Process (runSync)
 import Psx.Cst (PsxError)
-import Psx.Lower (Lowered, isGenerated, lower)
+import Psx.Lower (Lowered, isGenerated, lower, lowerPsxt)
+import Psx.Lower.Css as Css
 import Psx.Lower.PositionMap (printJson)
 
 main :: Effect Unit
@@ -47,7 +52,7 @@ main = do
 usage :: String
 usage = String.joinWith "\n"
   [ "usage: psx build [dir...]"
-  , "       psx lower <file.psx> [-o <out.purs>] [--map <out.map.json>]"
+  , "       psx lower <file.psx|file.psxt> [-o <out.purs>] [--map <out.map.json>]"
   , "       psx check [dir...] [--json] [-- <spago build arguments>]"
   ]
 
@@ -74,24 +79,36 @@ splitDashes args = case Array.elemIndex "--" args of
 
 -- Lowering files ---------------------------------------------------------------
 
--- | The generated file for a source: `Counter.psx` gives `Counter.purs`.
+-- | The generated file for a source: `Counter.psx` and `Counter.psxt` give
+-- | `Counter.purs`.
 generatedPath :: FilePath -> FilePath
-generatedPath file = Path.concat [ Path.dirname file, Path.basenameWithoutExt file ".psx" <> ".purs" ]
+generatedPath file = sibling file ".purs"
+
+-- | A file beside the source with the same base name.
+sibling :: FilePath -> String -> FilePath
+sibling file ext = Path.concat [ Path.dirname file, Path.basenameWithoutExt file (Path.extname file) <> ext ]
+
+-- | The companion module's files: `Counter.psx` gives `Counter/PsxStyle.purs`
+-- | and `Counter/PsxStyle.js`.
+companionPath :: FilePath -> String -> FilePath
+companionPath file ext = Path.concat [ Path.dirname file, Path.basenameWithoutExt file (Path.extname file), "PsxStyle" <> ext ]
+
+isSource :: FilePath -> Boolean
+isSource path = Path.extname path == ".psx" || Path.extname path == ".psxt"
 
 lowerFile :: FilePath -> Effect (Either (Array PsxError) Lowered)
 lowerFile file = do
   text <- FS.readTextFile UTF8 file
-  pure $ lower
-    { sourceName: Path.basename file, generatedName: Path.basename (generatedPath file) }
-    text
+  let names = { sourceName: Path.basename file, generatedName: Path.basename (generatedPath file) }
+  pure if Path.extname file == ".psxt" then lowerPsxt names text else lower names text
 
 printErrors :: FilePath -> Array PsxError -> Effect Unit
 printErrors file errors = for_ errors \e ->
   error $ file <> ":" <> show (e.range.start.line + 1) <> ":" <> show (e.range.start.column + 1) <> ": error: "
     <> e.message
 
--- | Every `.psx` file under the directories, skipping dependencies, build
--- | output and hidden directories.
+-- | Every `.psx` and `.psxt` file under the directories, skipping
+-- | dependencies, build output and hidden directories.
 findSources :: Array FilePath -> Effect (Array FilePath)
 findSources roots = Array.sort <<< Array.concat <$> traverse walk roots
   where
@@ -104,7 +121,7 @@ findSources roots = Array.sort <<< Array.concat <$> traverse walk roots
         names <- FS.readdir path
         let keep n = not (String.take 1 n == "." || Array.elem n [ "node_modules", "output", ".spago" ])
         Array.concat <$> for (Array.filter keep names) \n -> walk (Path.concat [ path, n ])
-      else pure (if Path.extname path == ".psx" then [ path ] else [])
+      else pure (if isSource path then [ path ] else [])
 
 -- | Lowers the sources under the directories and writes what changed.
 -- | Returns the number of files that failed.
@@ -118,20 +135,101 @@ build roots = do
         printErrors file errors
         pure 1
       Right lowered -> do
-        let out = generatedPath file
-        exists <- FS.exists out
-        current <- if exists then Just <$> FS.readTextFile UTF8 out else pure Nothing
-        case current of
-          Just text | not (isGenerated text) -> do
-            error $ out <> ": error: not written by psx, so psx build leaves it alone; move it to lower " <> file
-            pure 1
-          Just text | text == lowered.purs -> pure 0
-          _ -> do
-            FS.writeTextFile UTF8 out lowered.purs
-            log $ "lowered " <> file
-            pure 0
+        outputs <- generatedFiles file lowered
+        -- Nothing is written if a file psx did not write is in the way.
+        blocked <- Array.filterA (inTheWay file) outputs
+        if Array.null blocked then do
+          for_ outputs (writeGenerated file)
+          pure 0
+        else pure 1
   let failed = Array.foldl (+) 0 failures
   pure (if failed > 0 then 1 else 0)
+
+-- | A file psx writes for a source: its text, or `Nothing` if psx's copy
+-- | should be removed.
+type Output = { path :: FilePath, text :: Maybe String, marker :: String }
+
+generatedFiles :: FilePath -> Lowered -> Effect (Array Output)
+generatedFiles file lowered = do
+  let
+    purs = { path: generatedPath file, text: Just lowered.purs, marker: "-- Generated by psx from " }
+    cssPath = sibling file ".css"
+    companionPurs = companionPath file ".purs"
+    companionJs = companionPath file ".js"
+  case lowered.style of
+    Nothing -> pure
+      [ purs
+      , { path: cssPath, text: Nothing, marker: "/* Generated by psx from " }
+      , { path: companionPurs, text: Nothing, marker: "-- Generated by psx from " }
+      , { path: companionJs, text: Nothing, marker: "// Generated by psx from " }
+      ]
+    Just style -> do
+      cssImport <- importPath cssPath style.companion
+      let names = { sourceName: Path.basename file, moduleName: style.moduleName, cssImport }
+      pure
+        [ purs
+        , { path: cssPath, text: Just style.css, marker: "/* Generated by psx from " }
+        , { path: companionPurs, text: Just style.companionPurs, marker: "-- Generated by psx from " }
+        , { path: companionJs, text: Just (Css.companionForeign names style.scopes), marker: "// Generated by psx from " }
+        ]
+
+-- | Whether a file psx did not write is where it would write one; if so,
+-- | says so.
+inTheWay :: FilePath -> Output -> Effect Boolean
+inTheWay source o = case o.text of
+  Nothing -> pure false
+  Just _ -> do
+    exists <- FS.exists o.path
+    current <- if exists then Just <$> FS.readTextFile UTF8 o.path else pure Nothing
+    case current of
+      Just text | String.take (String.length o.marker) text /= o.marker -> do
+        error $ o.path <> ": error: not written by psx, so psx build leaves it alone; move it to lower " <> source
+        pure true
+      _ -> pure false
+
+-- | Writes a generated file if it changed, or removes psx's copy of one
+-- | that is no longer generated.
+writeGenerated :: FilePath -> Output -> Effect Unit
+writeGenerated source o = do
+  exists <- FS.exists o.path
+  current <- if exists then Just <$> FS.readTextFile UTF8 o.path else pure Nothing
+  case current, o.text of
+    Just text, Nothing
+      | String.take (String.length o.marker) text == o.marker -> do
+          FS.unlink o.path
+          log $ "removed " <> o.path
+    _, Just text
+      | current /= Just text -> do
+          FS.mkdir' (Path.dirname o.path) { recursive: true, mode: permsAll }
+          FS.writeTextFile UTF8 o.path text
+          log $ "wrote " <> o.path <> " from " <> source
+    _, _ -> pure unit
+
+-- | The stylesheet's path as the companion's compiled foreign file imports
+-- | it: from `output/<companion>/foreign.js` in the spago workspace that
+-- | holds the source.
+importPath :: FilePath -> String -> Effect String
+importPath cssPath companion = do
+  cwd <- Process.cwd
+  absolute <- Path.resolve [ cwd ] cssPath
+  root <- workspaceRoot (Path.dirname absolute)
+  let
+    from = Path.concat [ root, "output", companion ]
+    relative = Path.relative from absolute
+  pure (String.replaceAll (String.Pattern "\\") (String.Replacement "/") relative)
+
+-- | The nearest directory at or above this one whose `spago.yaml` declares
+-- | a workspace, or the current directory.
+workspaceRoot :: FilePath -> Effect FilePath
+workspaceRoot dir = do
+  let config = Path.concat [ dir, "spago.yaml" ]
+  exists <- FS.exists config
+  isWorkspace <-
+    if exists then String.contains (String.Pattern "\nworkspace:") <<< ("\n" <> _) <$> FS.readTextFile UTF8 config
+    else pure false
+  if isWorkspace then pure dir
+  else if Path.dirname dir == dir then Process.cwd
+  else workspaceRoot (Path.dirname dir)
 
 lowerCommand :: Array String -> Effect Int
 lowerCommand args = case args of

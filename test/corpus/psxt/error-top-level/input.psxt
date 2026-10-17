@@ -1,0 +1,13 @@
+<script type="text/purescript">
+module App.Top where
+
+import Portico.Psx (Markup)
+
+foreign import view :: Markup Unit
+</script>
+stray text
+<div>not a template</div>
+<script>console.log("not PureScript")</script>
+<template name="view"><p>one</p></template>
+<template name="view"><p>two</p></template>
+<template args="x"><p>{x}</p></template>

@@ -1,0 +1,17 @@
+print: identical
+errors:
+  8:1-9:1 Text at the top of a .psxt file belongs in a <template>
+  9:1-9:5 <div> cannot stand at the top of a .psxt file: it belongs in a <template>
+  10:1-10:8 A .psxt file's only <script> is its module: <script type="text/purescript">
+  12:1-12:10 A second <template name="view">: a name has one template
+  13:1-13:10 A <template> needs a name: <template name="f">, for its module's foreign import f
+script: 1:1-7:10, module App.Top where
+template "view" at 11:1, defines the foreign import at 6:1 (0 arrows)
+  11:23 <p>
+    text "one"
+template "view" at 12:1, defines the foreign import at 6:1 (0 arrows)
+  12:23 <p>
+    text "two"
+template "" at 13:1, args "x" (1 binders), no foreign import
+  13:20 <p>
+    hole {x}

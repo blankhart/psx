@@ -1,0 +1,13 @@
+print: identical
+errors: none
+markup:
+  6:7 <style>
+    text "p { color: red; }"
+  10:3 <>
+    text "\n    "
+    11:5 <p>
+      text "Hi"
+    text "\n    "
+    12:5 <style>
+      text "p { color: red; }"
+    text "\n  "
