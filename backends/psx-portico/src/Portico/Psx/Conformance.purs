@@ -293,723 +293,3261 @@ elements =
   , B.vkern [] []
   ]
 
--- | Every attribute, with a literal value, on an element that takes it.
-attributes :: forall a. Array (B.Node a)
-attributes =
+-- Attributes, each with a literal value on an element that takes it
+
+abbrAttr :: forall a. Array (B.Node a)
+abbrAttr =
   [ B.td [ B.abbrAttr "" ] []
-  , B.g [ B.about "" ] []
-  , B.fontFace [ B.accentHeight 0 ] []
-  , B.form [ B.accept "" ] []
-  , B.form [ B.acceptCharset "" ] []
-  , B.div [ B.accesskey "" ] []
-  , B.animate [ B.accumulate "" ] []
-  , B.form [ B.action "" ] []
-  , B.animate [ B.additive "" ] []
-  , B.applet [ B.align "" ] []
-  , B.g [ B.alignmentBaseline "" ] []
-  , B.body [ B.alink "" ] []
-  , B.iframe [ B.allow "" ] []
-  , B.iframe [ B.allowfullscreen true ] []
-  , B.iframe [ B.allowpaymentrequest true ] []
-  , B.iframe [ B.allowusermedia true ] []
-  , B.input [ B.alpha true ] []
-  , B.fontFace [ B.alphabetic 0 ] []
-  , B.applet [ B.alt "" ] []
-  , B.feFuncA [ B.amplitude 0 ] []
-  , B.glyph [ B.arabicForm "" ] []
-  , B.applet [ B.archive "" ] []
-  , B.div [ B.ariaActivedescendant "" ] []
-  , B.g [ B.ariaActivedescendant "" ] []
-  , B.div [ B.ariaAtomic "false" ] []
-  , B.g [ B.ariaAtomic "false" ] []
-  , B.div [ B.ariaAutocomplete "" ] []
-  , B.g [ B.ariaAutocomplete "" ] []
-  , B.div [ B.ariaBusy "false" ] []
-  , B.g [ B.ariaBusy "false" ] []
-  , B.div [ B.ariaChecked "false" ] []
-  , B.g [ B.ariaChecked "false" ] []
-  , B.div [ B.ariaColcount 0 ] []
-  , B.g [ B.ariaColcount 0 ] []
-  , B.div [ B.ariaColindex 0 ] []
-  , B.g [ B.ariaColindex 0 ] []
-  , B.div [ B.ariaColspan 0 ] []
-  , B.g [ B.ariaColspan 0 ] []
-  , B.div [ B.ariaControls "" ] []
-  , B.g [ B.ariaControls "" ] []
-  , B.div [ B.ariaCurrent "" ] []
-  , B.g [ B.ariaCurrent "" ] []
-  , B.div [ B.ariaDescribedby "" ] []
-  , B.g [ B.ariaDescribedby "" ] []
-  , B.div [ B.ariaDetails "" ] []
-  , B.g [ B.ariaDetails "" ] []
-  , B.div [ B.ariaDisabled "false" ] []
-  , B.g [ B.ariaDisabled "false" ] []
-  , B.div [ B.ariaDropeffect "" ] []
-  , B.g [ B.ariaDropeffect "" ] []
-  , B.div [ B.ariaErrormessage "" ] []
-  , B.g [ B.ariaErrormessage "" ] []
-  , B.div [ B.ariaExpanded "false" ] []
-  , B.g [ B.ariaExpanded "false" ] []
-  , B.div [ B.ariaFlowto "" ] []
-  , B.g [ B.ariaFlowto "" ] []
-  , B.div [ B.ariaGrabbed "false" ] []
-  , B.g [ B.ariaGrabbed "false" ] []
-  , B.div [ B.ariaHaspopup "" ] []
-  , B.g [ B.ariaHaspopup "" ] []
-  , B.div [ B.ariaHidden "false" ] []
-  , B.g [ B.ariaHidden "false" ] []
-  , B.div [ B.ariaInvalid "" ] []
-  , B.g [ B.ariaInvalid "" ] []
-  , B.div [ B.ariaKeyshortcuts "" ] []
-  , B.g [ B.ariaKeyshortcuts "" ] []
-  , B.div [ B.ariaLabel "" ] []
-  , B.g [ B.ariaLabel "" ] []
-  , B.div [ B.ariaLabelledby "" ] []
-  , B.g [ B.ariaLabelledby "" ] []
-  , B.div [ B.ariaLevel 0 ] []
-  , B.g [ B.ariaLevel 0 ] []
-  , B.div [ B.ariaLive "" ] []
-  , B.g [ B.ariaLive "" ] []
-  , B.div [ B.ariaModal "false" ] []
-  , B.g [ B.ariaModal "false" ] []
-  , B.div [ B.ariaMultiline "false" ] []
-  , B.g [ B.ariaMultiline "false" ] []
-  , B.div [ B.ariaMultiselectable "false" ] []
-  , B.g [ B.ariaMultiselectable "false" ] []
-  , B.div [ B.ariaOrientation "" ] []
-  , B.g [ B.ariaOrientation "" ] []
-  , B.div [ B.ariaOwns "" ] []
-  , B.g [ B.ariaOwns "" ] []
-  , B.div [ B.ariaPlaceholder "" ] []
-  , B.g [ B.ariaPlaceholder "" ] []
-  , B.div [ B.ariaPosinset 0 ] []
-  , B.g [ B.ariaPosinset 0 ] []
-  , B.div [ B.ariaPressed "false" ] []
-  , B.g [ B.ariaPressed "false" ] []
-  , B.div [ B.ariaReadonly "false" ] []
-  , B.g [ B.ariaReadonly "false" ] []
-  , B.div [ B.ariaRelevant "" ] []
-  , B.g [ B.ariaRelevant "" ] []
-  , B.div [ B.ariaRequired "false" ] []
-  , B.g [ B.ariaRequired "false" ] []
-  , B.div [ B.ariaRoledescription "" ] []
-  , B.g [ B.ariaRoledescription "" ] []
-  , B.div [ B.ariaRowcount 0 ] []
-  , B.g [ B.ariaRowcount 0 ] []
-  , B.div [ B.ariaRowindex 0 ] []
-  , B.g [ B.ariaRowindex 0 ] []
-  , B.div [ B.ariaRowspan 0 ] []
-  , B.g [ B.ariaRowspan 0 ] []
-  , B.div [ B.ariaSelected "false" ] []
-  , B.g [ B.ariaSelected "false" ] []
-  , B.div [ B.ariaSetsize 0 ] []
-  , B.g [ B.ariaSetsize 0 ] []
-  , B.div [ B.ariaSort "" ] []
-  , B.g [ B.ariaSort "" ] []
-  , B.div [ B.ariaValuemax 0 ] []
-  , B.g [ B.ariaValuemax 0 ] []
-  , B.div [ B.ariaValuemin 0 ] []
-  , B.g [ B.ariaValuemin 0 ] []
-  , B.div [ B.ariaValuenow 0 ] []
-  , B.g [ B.ariaValuenow 0 ] []
-  , B.div [ B.ariaValuetext "" ] []
-  , B.g [ B.ariaValuetext "" ] []
-  , B.link [ B.as "" ] []
-  , B.fontFace [ B.ascent 0 ] []
-  , B.script [ B.async true ] []
-  , B.animate [ B.attributeName "" ] []
-  , B.animate [ B.attributeType "" ] []
-  , B.div [ B.autocapitalize "off" ] []
-  , B.form [ B.autocomplete "on" ] []
-  , B.div [ B.autocorrect "on" ] []
-  , B.div [ B.autofocus true ] []
-  , B.audio [ B.autoplay true ] []
-  , B.td [ B.axis "" ] []
-  , B.feDistantLight [ B.azimuth 0 ] []
-  , B.body [ B.background "" ] []
-  , B.prefetch [ B.bandwidth "" ] []
-  , B.feTurbulence [ B.baseFrequency "" ] []
-  , B.svg [ B.baseProfile "" ] []
-  , B.g [ B.baselineShift "" ] []
-  , B.fontFace [ B.bbox "" ] []
-  , B.animate [ B.begin "" ] []
-  , B.body [ B.bgcolor "" ] []
-  , B.feConvolveMatrix [ B.bias 0 ] []
-  , B.link [ B.blocking "" ] []
-  , B.img [ B.border 0 ] []
-  , B.animate [ B.by "" ] []
-  , B.animate [ B.calcMode "" ] []
-  , B.fontFace [ B.capHeight 0 ] []
-  , B.table [ B.cellpadding "" ] []
-  , B.table [ B.cellspacing "" ] []
-  , B.col [ B.char "" ] []
-  , B.col [ B.charoff "" ] []
-  , B.a [ B.charset "" ] []
-  , B.input [ B.checked true ] []
-  , B.blockquote [ B.citeAttr "" ] []
-  , B.div [ B.class_ "" ] []
-  , B.g [ B.class_ "" ] []
-  , B.object [ B.classid "" ] []
-  , B.br [ B.clear "" ] []
-  , B.a [ B.clip "" ] []
-  , B.g [ B.clipPathAttr "" ] []
-  , B.clipPath [ B.clipPathUnits "" ] []
-  , B.g [ B.clipRule "" ] []
-  , B.dialog [ B.closedby "" ] []
-  , B.applet [ B.codeAttr "" ] []
-  , B.applet [ B.codebase "" ] []
-  , B.object [ B.codetype "" ] []
-  , B.basefont [ B.color "" ] []
-  , B.g [ B.color "" ] []
-  , B.g [ B.colorInterpolation "" ] []
-  , B.g [ B.colorInterpolationFilters "" ] []
-  , B.a [ B.colorProfileAttr "" ] []
-  , B.g [ B.colorRendering "" ] []
-  , B.input [ B.colorspace "" ] []
-  , B.frameset [ B.cols 0 ] []
-  , B.td [ B.colspan 0 ] []
-  , B.button [ B.commandAttr "" ] []
-  , B.button [ B.commandfor "" ] []
-  , B.dir [ B.compact true ] []
-  , B.meta [ B.contentAttr "" ] []
-  , B.g [ B.contentAttr "" ] []
-  , B.svg [ B.contentScriptType "" ] []
-  , B.svg [ B.contentStyleType "" ] []
-  , B.div [ B.contenteditable "true" ] []
-  , B.audio [ B.controls true ] []
-  , B.a [ B.coords "" ] []
-  , B.audio [ B.crossorigin "anonymous" ] []
-  , B.feImage [ B.crossorigin "" ] []
-  , B.g [ B.cursorAttr "" ] []
-  , B.circle [ B.cx "" ] []
-  , B.circle [ B.cy "" ] []
-  , B.glyph [ B.d "" ] []
-  , B.object [ B.dataAttr "" ] []
-  , B.g [ B.datatype "" ] []
-  , B.del [ B.datetime "" ] []
-  , B.object [ B.declare true ] []
-  , B.img [ B.decoding "sync" ] []
-  , B.track [ B.default true ] []
-  , B.listener [ B.defaultAction "" ] []
-  , B.script [ B.defer true ] []
-  , B.fontFace [ B.descent 0 ] []
-  , B.feDiffuseLighting [ B.diffuseConstant 0 ] []
-  , B.div [ B.dirAttr "ltr" ] []
-  , B.g [ B.direction "" ] []
-  , B.input [ B.dirname "" ] []
-  , B.button [ B.disabled true ] []
-  , B.g [ B.display "" ] []
-  , B.feConvolveMatrix [ B.divisor 0 ] []
-  , B.g [ B.dominantBaseline "" ] []
-  , B.a [ B.download "" ] []
-  , B.a [ B.download "" ] []
-  , B.div [ B.draggable "false" ] []
-  , B.animate [ B.dur "" ] []
-  , B.altGlyph [ B.dx "" ] []
-  , B.altGlyph [ B.dy "" ] []
-  , B.feConvolveMatrix [ B.edgeMode "" ] []
-  , B.textEl [ B.editable "" ] []
-  , B.feDistantLight [ B.elevation 0 ] []
-  , B.a [ B.enableBackground "" ] []
-  , B.form [ B.enctype "application/x-www-form-urlencoded" ] []
-  , B.animate [ B.end "" ] []
-  , B.div [ B.enterkeyhint "enter" ] []
-  , B.listener [ B.event "" ] []
-  , B.feFuncA [ B.exponent 0 ] []
-  , B.div [ B.exportparts "" ] []
-  , B.a [ B.externalResourcesRequired "false" ] []
-  , B.basefont [ B.face "" ] []
-  , B.img [ B.fetchpriority "high" ] []
-  , B.g [ B.fill "" ] []
-  , B.g [ B.fillOpacity 0 ] []
-  , B.g [ B.fillRule "" ] []
-  , B.g [ B.filterAttr "" ] []
-  , B.filter [ B.filterRes "" ] []
-  , B.filter [ B.filterUnits "" ] []
-  , B.g [ B.floodColor "" ] []
-  , B.g [ B.floodOpacity "" ] []
-  , B.a [ B.focusHighlight "" ] []
-  , B.a [ B.focusable "" ] []
-  , B.g [ B.fontFamily "" ] []
-  , B.g [ B.fontSize "" ] []
-  , B.g [ B.fontSizeAdjust "" ] []
-  , B.g [ B.fontStretch "" ] []
-  , B.g [ B.fontStyle "" ] []
-  , B.g [ B.fontVariant "" ] []
-  , B.g [ B.fontWeight "" ] []
-  , B.label [ B.for "" ] []
-  , B.button [ B.formAttr "" ] []
-  , B.button [ B.formaction "" ] []
-  , B.altGlyph [ B.format "" ] []
-  , B.button [ B.formenctype "application/x-www-form-urlencoded" ] []
-  , B.button [ B.formmethod "get" ] []
-  , B.button [ B.formnovalidate true ] []
-  , B.button [ B.formtarget "" ] []
-  , B.radialGradient [ B.fr "" ] []
-  , B.table [ B.frameAttr "" ] []
-  , B.frame [ B.frameborder "" ] []
-  , B.animate [ B.from "" ] []
-  , B.radialGradient [ B.fx "" ] []
-  , B.radialGradient [ B.fy "" ] []
-  , B.hkern [ B.g1 "" ] []
-  , B.hkern [ B.g2 "" ] []
-  , B.glyph [ B.glyphName "" ] []
-  , B.g [ B.glyphOrientationHorizontal "" ] []
-  , B.g [ B.glyphOrientationVertical "" ] []
-  , B.altGlyph [ B.glyphRefAttr "" ] []
-  , B.linearGradient [ B.gradientTransform "" ] []
-  , B.linearGradient [ B.gradientUnits "" ] []
-  , B.listener [ B.handlerAttr "" ] []
-  , B.fontFace [ B.hanging 0 ] []
-  , B.td [ B.headers "" ] []
-  , B.applet [ B.height "" ] []
-  , B.animation [ B.height "" ] []
-  , B.div [ B.hidden true ] []
-  , B.meter [ B.high 0 ] []
-  , B.font [ B.horizAdvX 0 ] []
-  , B.font [ B.horizOriginX 0 ] []
-  , B.font [ B.horizOriginY 0 ] []
-  , B.a [ B.href "" ] []
-  , B.a [ B.href "" ] []
-  , B.a [ B.hreflang "" ] []
-  , B.a [ B.hreflang "" ] []
-  , B.applet [ B.hspace 0 ] []
-  , B.meta [ B.httpEquiv "" ] []
-  , B.div [ B.id "" ] []
-  , B.g [ B.id "" ] []
-  , B.fontFace [ B.ideographic 0 ] []
-  , B.g [ B.imageRendering "" ] []
-  , B.link [ B.imagesizes "" ] []
-  , B.link [ B.imagesrcset "" ] []
-  , B.feBlend [ B.in' "" ] []
-  , B.feBlend [ B.in2 "" ] []
-  , B.div [ B.inert true ] []
-  , B.animation [ B.initialVisibility "" ] []
-  , B.div [ B.inputmode "none" ] []
-  , B.link [ B.integrity "" ] []
-  , B.feFuncA [ B.intercept 0 ] []
-  , B.div [ B.is "" ] []
-  , B.img [ B.ismap true ] []
-  , B.div [ B.itemid "" ] []
-  , B.div [ B.itemprop "" ] []
-  , B.div [ B.itemref "" ] []
-  , B.div [ B.itemscope true ] []
-  , B.div [ B.itemtype "" ] []
-  , B.hkern [ B.k 0 ] []
-  , B.feComposite [ B.k1 0 ] []
-  , B.feComposite [ B.k2 0 ] []
-  , B.feComposite [ B.k3 0 ] []
-  , B.feComposite [ B.k4 0 ] []
-  , B.feConvolveMatrix [ B.kernelMatrix "" ] []
-  , B.feConvolveMatrix [ B.kernelUnitLength "" ] []
-  , B.a [ B.kerning "" ] []
-  , B.animateMotion [ B.keyPoints "" ] []
-  , B.animate [ B.keySplines "" ] []
-  , B.animate [ B.keyTimes "" ] []
-  , B.track [ B.kind "subtitles" ] []
-  , B.optgroup [ B.labelAttr "" ] []
-  , B.div [ B.lang "" ] []
-  , B.g [ B.lang "" ] []
-  , B.script [ B.language "" ] []
-  , B.textEl [ B.lengthAdjust "" ] []
-  , B.g [ B.letterSpacing "" ] []
-  , B.g [ B.lightingColor "" ] []
-  , B.feSpotLight [ B.limitingConeAngle 0 ] []
-  , B.body [ B.linkAttr "" ] []
-  , B.input [ B.list "" ] []
-  , B.iframe [ B.loading "lazy" ] []
-  , B.colorProfile [ B.local "" ] []
-  , B.frame [ B.longdesc "" ] []
-  , B.audio [ B.loop true ] []
-  , B.meter [ B.low 0 ] []
-  , B.html [ B.manifest "" ] []
-  , B.frame [ B.marginheight 0 ] []
-  , B.frame [ B.marginwidth 0 ] []
-  , B.g [ B.markerEnd "" ] []
-  , B.marker [ B.markerHeight "" ] []
-  , B.g [ B.markerMid "" ] []
-  , B.g [ B.markerStart "" ] []
-  , B.marker [ B.markerUnits "" ] []
-  , B.marker [ B.markerWidth "" ] []
-  , B.g [ B.maskAttr "" ] []
-  , B.mask [ B.maskContentUnits "" ] []
-  , B.mask [ B.maskUnits "" ] []
-  , B.fontFace [ B.mathematical "" ] []
-  , B.input [ B.max "" ] []
-  , B.animate [ B.max "" ] []
-  , B.input [ B.maxlength 0 ] []
-  , B.link [ B.media "" ] []
-  , B.style [ B.media "" ] []
-  , B.prefetch [ B.mediaCharacterEncoding "" ] []
-  , B.prefetch [ B.mediaContentEncodings "" ] []
-  , B.prefetch [ B.mediaSize 0 ] []
-  , B.prefetch [ B.mediaTime "" ] []
-  , B.form [ B.method "get" ] []
-  , B.textPath [ B.method "" ] []
-  , B.input [ B.min "" ] []
-  , B.animate [ B.min "" ] []
-  , B.input [ B.minlength 0 ] []
-  , B.feBlend [ B.mode "" ] []
-  , B.input [ B.multiple true ] []
-  , B.audio [ B.muted true ] []
-  , B.a [ B.name "" ] []
-  , B.colorProfile [ B.name "" ] []
-  , B.a [ B.navDown "" ] []
-  , B.a [ B.navDownLeft "" ] []
-  , B.a [ B.navDownRight "" ] []
-  , B.a [ B.navLeft "" ] []
-  , B.a [ B.navNext "" ] []
-  , B.a [ B.navPrev "" ] []
-  , B.a [ B.navRight "" ] []
-  , B.a [ B.navUp "" ] []
-  , B.a [ B.navUpLeft "" ] []
-  , B.a [ B.navUpRight "" ] []
-  , B.area [ B.nohref true ] []
-  , B.script [ B.nomodule true ] []
-  , B.div [ B.nonce "" ] []
-  , B.frame [ B.noresize true ] []
-  , B.hr [ B.noshade true ] []
-  , B.form [ B.novalidate true ] []
-  , B.td [ B.nowrap true ] []
-  , B.feTurbulence [ B.numOctaves "" ] []
-  , B.applet [ B.objectAttr "" ] []
-  , B.listener [ B.observer "" ] []
-  , B.feFuncA [ B.offset "" ] []
-  , B.g [ B.opacity "" ] []
-  , B.details [ B.open true ] []
-  , B.feComposite [ B.operator "" ] []
-  , B.meter [ B.optimum 0 ] []
-  , B.feConvolveMatrix [ B.order "" ] []
-  , B.marker [ B.orient "" ] []
-  , B.glyph [ B.orientation "" ] []
-  , B.animateMotion [ B.origin "" ] []
-  , B.g [ B.overflow "" ] []
-  , B.video [ B.overlay "" ] []
-  , B.fontFace [ B.overlinePosition 0 ] []
-  , B.fontFace [ B.overlineThickness 0 ] []
-  , B.g [ B.paintOrder "" ] []
-  , B.fontFace [ B.panose1 "" ] []
-  , B.div [ B.part "" ] []
-  , B.animateMotion [ B.pathAttr "" ] []
-  , B.circle [ B.pathLength 0 ] []
-  , B.input [ B.patternAttr "" ] []
-  , B.pattern [ B.patternContentUnits "" ] []
-  , B.pattern [ B.patternTransform "" ] []
-  , B.pattern [ B.patternUnits "" ] []
-  , B.listener [ B.phase "" ] []
-  , B.a [ B.ping "" ] []
-  , B.a [ B.ping "" ] []
-  , B.input [ B.placeholder "" ] []
-  , B.svg [ B.playbackOrder "" ] []
-  , B.svg [ B.playbackorder "" ] []
-  , B.video [ B.playsinline true ] []
-  , B.g [ B.pointerEvents "" ] []
-  , B.polygon [ B.points "" ] []
-  , B.feSpotLight [ B.pointsAtX 0 ] []
-  , B.feSpotLight [ B.pointsAtY 0 ] []
-  , B.feSpotLight [ B.pointsAtZ 0 ] []
-  , B.div [ B.popover "auto" ] []
-  , B.button [ B.popovertarget "" ] []
-  , B.button [ B.popovertargetaction "toggle" ] []
-  , B.video [ B.poster "" ] []
-  , B.audio [ B.preload "none" ] []
-  , B.feConvolveMatrix [ B.preserveAlpha "false" ] []
-  , B.animation [ B.preserveAspectRatio "" ] []
-  , B.filter [ B.primitiveUnits "" ] []
-  , B.head [ B.profile "" ] []
-  , B.isindex [ B.prompt "" ] []
-  , B.listener [ B.propagate "" ] []
-  , B.g [ B.property "" ] []
-  , B.circle [ B.r "" ] []
-  , B.feMorphology [ B.radius "" ] []
-  , B.input [ B.readonly true ] []
-  , B.marker [ B.refX "" ] []
-  , B.marker [ B.refY "" ] []
-  , B.a [ B.referrerpolicy "no-referrer" ] []
-  , B.a [ B.referrerpolicy "" ] []
-  , B.a [ B.rel "" ] []
-  , B.g [ B.rel "" ] []
-  , B.colorProfile [ B.renderingIntent "" ] []
-  , B.animate [ B.repeatCount "" ] []
-  , B.animate [ B.repeatDur "" ] []
-  , B.input [ B.required true ] []
-  , B.a [ B.requiredExtensions "" ] []
-  , B.a [ B.requiredFeatures "" ] []
-  , B.a [ B.requiredFonts "" ] []
-  , B.a [ B.requiredFormats "" ] []
-  , B.g [ B.resource "" ] []
-  , B.animate [ B.restart "" ] []
-  , B.feBlend [ B.result "" ] []
-  , B.a [ B.rev "" ] []
-  , B.g [ B.rev "" ] []
-  , B.ol [ B.reversed true ] []
-  , B.div [ B.role "" ] []
-  , B.g [ B.role "" ] []
-  , B.altGlyph [ B.rotate "" ] []
-  , B.frameset [ B.rows 0 ] []
-  , B.td [ B.rowspan 0 ] []
-  , B.table [ B.rules "" ] []
-  , B.ellipse [ B.rx "" ] []
-  , B.ellipse [ B.ry "" ] []
-  , B.iframe [ B.sandbox "" ] []
-  , B.feDisplacementMap [ B.scale "" ] []
-  , B.meta [ B.scheme "" ] []
-  , B.td [ B.scope "" ] []
-  , B.frame [ B.scrolling "yes" ] []
-  , B.feTurbulence [ B.seed "" ] []
-  , B.option [ B.selected true ] []
-  , B.template [ B.shadowrootclonable true ] []
-  , B.template [ B.shadowrootcustomelementregistry true ] []
-  , B.template [ B.shadowrootdelegatesfocus true ] []
-  , B.template [ B.shadowrootmode "" ] []
-  , B.template [ B.shadowrootserializable true ] []
-  , B.a [ B.shape "" ] []
-  , B.g [ B.shapeRendering "" ] []
-  , B.textPath [ B.side "" ] []
-  , B.basefont [ B.size 0 ] []
-  , B.img [ B.sizes "" ] []
-  , B.feFuncA [ B.slope "" ] []
-  , B.div [ B.slotAttr "" ] []
-  , B.svg [ B.snapshotTime "" ] []
-  , B.textPath [ B.spacing "" ] []
-  , B.col [ B.spanAttr 0 ] []
-  , B.feSpecularLighting [ B.specularConstant 0 ] []
-  , B.feSpecularLighting [ B.specularExponent 0 ] []
-  , B.div [ B.spellcheck "false" ] []
-  , B.linearGradient [ B.spreadMethod "" ] []
-  , B.audio [ B.src "" ] []
-  , B.iframe [ B.srcdoc "" ] []
-  , B.track [ B.srclang "" ] []
-  , B.img [ B.srcset "" ] []
-  , B.object [ B.standby "" ] []
-  , B.ol [ B.start 0 ] []
-  , B.textPath [ B.startOffset "" ] []
-  , B.feDropShadow [ B.stdDeviation "" ] []
-  , B.fontFace [ B.stemh "" ] []
-  , B.fontFace [ B.stemv "" ] []
-  , B.input [ B.step "" ] []
-  , B.feTurbulence [ B.stitchTiles "" ] []
-  , B.g [ B.stopColor "" ] []
-  , B.g [ B.stopOpacity "" ] []
-  , B.fontFace [ B.strikethroughPosition 0 ] []
-  , B.fontFace [ B.strikethroughThickness 0 ] []
-  , B.fontFaceFormat [ B.string "" ] []
-  , B.g [ B.stroke "" ] []
-  , B.g [ B.strokeDasharray "" ] []
-  , B.g [ B.strokeDashoffset "" ] []
-  , B.g [ B.strokeLinecap "" ] []
-  , B.g [ B.strokeLinejoin "" ] []
-  , B.g [ B.strokeMiterlimit 0 ] []
-  , B.g [ B.strokeOpacity 0 ] []
-  , B.g [ B.strokeWidth "" ] []
-  , B.div [ B.styleAttr "" ] []
-  , B.g [ B.styleAttr "" ] []
-  , B.table [ B.summaryAttr "" ] []
-  , B.feDiffuseLighting [ B.surfaceScale 0 ] []
-  , B.animation [ B.syncBehavior "" ] []
-  , B.svg [ B.syncBehaviorDefault "" ] []
-  , B.animation [ B.syncMaster "" ] []
-  , B.animation [ B.syncTolerance "" ] []
-  , B.svg [ B.syncToleranceDefault "" ] []
-  , B.a [ B.systemLanguage "" ] []
-  , B.div [ B.tabindex 0 ] []
-  , B.g [ B.tabindex 0 ] []
-  , B.feFuncA [ B.tableValues "" ] []
-  , B.a [ B.target "" ] []
-  , B.a [ B.target "" ] []
-  , B.feConvolveMatrix [ B.targetX 0 ] []
-  , B.feConvolveMatrix [ B.targetY 0 ] []
-  , B.g [ B.textAnchor "" ] []
-  , B.body [ B.textAttr "" ] []
-  , B.g [ B.textDecoration "" ] []
-  , B.textEl [ B.textLength "" ] []
-  , B.g [ B.textOverflow "" ] []
-  , B.g [ B.textRendering "" ] []
-  , B.svg [ B.timelineBegin "" ] []
-  , B.svg [ B.timelinebegin "" ] []
-  , B.div [ B.titleAttr "" ] []
-  , B.style [ B.titleAttr "" ] []
-  , B.animate [ B.to "" ] []
-  , B.g [ B.transform "" ] []
-  , B.video [ B.transformBehavior "" ] []
-  , B.div [ B.translate "yes" ] []
-  , B.a [ B.type' "" ] []
-  , B.a [ B.type' "" ] []
-  , B.object [ B.typemustmatch true ] []
-  , B.g [ B.typeof "" ] []
-  , B.hkern [ B.u1 "" ] []
-  , B.hkern [ B.u2 "" ] []
-  , B.fontFace [ B.underlinePosition 0 ] []
-  , B.fontFace [ B.underlineThickness 0 ] []
-  , B.glyph [ B.unicode "" ] []
-  , B.g [ B.unicodeBidi "" ] []
-  , B.fontFace [ B.unicodeRange "" ] []
-  , B.fontFace [ B.unitsPerEm 0 ] []
-  , B.img [ B.usemap "" ] []
-  , B.fontFace [ B.vAlphabetic 0 ] []
-  , B.fontFace [ B.vHanging 0 ] []
-  , B.fontFace [ B.vIdeographic 0 ] []
-  , B.fontFace [ B.vMathematical 0 ] []
-  , B.col [ B.valign "" ] []
-  , B.button [ B.value "" ] []
-  , B.animate [ B.values "" ] []
-  , B.param [ B.valuetype "" ] []
-  , B.g [ B.vectorEffect "" ] []
-  , B.html [ B.version "" ] []
-  , B.svg [ B.version "" ] []
-  , B.font [ B.vertAdvY 0 ] []
-  , B.font [ B.vertOriginX 0 ] []
-  , B.font [ B.vertOriginY 0 ] []
-  , B.marker [ B.viewBox "" ] []
-  , B.view [ B.viewTarget "" ] []
-  , B.g [ B.visibility "" ] []
-  , B.body [ B.vlink "" ] []
-  , B.applet [ B.vspace 0 ] []
-  , B.g [ B.whiteSpace "" ] []
-  , B.applet [ B.width "" ] []
-  , B.animation [ B.width "" ] []
-  , B.fontFace [ B.widths "" ] []
-  , B.g [ B.wordSpacing "" ] []
-  , B.textarea [ B.wrap "soft" ] []
-  , B.g [ B.writingMode "" ] []
-  , B.div [ B.writingsuggestions "true" ] []
-  , B.altGlyph [ B.x "" ] []
-  , B.line [ B.x1 "" ] []
-  , B.line [ B.x2 "" ] []
-  , B.feDisplacementMap [ B.xChannelSelector "" ] []
-  , B.fontFace [ B.xHeight 0 ] []
-  , B.altGlyph [ B.y "" ] []
-  , B.line [ B.y1 "" ] []
-  , B.line [ B.y2 "" ] []
-  , B.feDisplacementMap [ B.yChannelSelector "" ] []
-  , B.fePointLight [ B.z "" ] []
-  , B.svg [ B.zoomAndPan "" ] []
   ]
 
--- | Every event, handled by `x`.
-events :: forall a. a -> Array (B.Node a)
-events x =
-  [ B.div [ B.onAbort x ] []
-  , B.body [ B.onAfterPrint x ] []
-  , B.div [ B.onAnimationCancel x ] []
-  , B.div [ B.onAnimationEnd x ] []
-  , B.div [ B.onAnimationIteration x ] []
-  , B.div [ B.onAnimationStart x ] []
-  , B.div [ B.onAuxClick x ] []
-  , B.div [ B.onBeforeInput x ] []
-  , B.div [ B.onBeforeMatch x ] []
-  , B.body [ B.onBeforePrint x ] []
-  , B.div [ B.onBeforeToggle x ] []
-  , B.body [ B.onBeforeUnload x ] []
-  , B.div [ B.onBlur x ] []
-  , B.div [ B.onCancel x ] []
-  , B.div [ B.onCanPlay x ] []
-  , B.div [ B.onCanPlayThrough x ] []
-  , B.div [ B.onChange x ] []
-  , B.div [ B.onClick x ] []
-  , B.div [ B.onClose x ] []
-  , B.div [ B.onCommand x ] []
-  , B.div [ B.onCompositionEnd x ] []
-  , B.div [ B.onCompositionStart x ] []
-  , B.div [ B.onCompositionUpdate x ] []
-  , B.div [ B.onContentVisibilityAutoStateChange x ] []
-  , B.div [ B.onContextLost x ] []
-  , B.div [ B.onContextMenu x ] []
-  , B.div [ B.onContextRestored x ] []
-  , B.div [ B.onCopy x ] []
-  , B.div [ B.onCueChange x ] []
-  , B.div [ B.onCut x ] []
-  , B.div [ B.onDblClick x ] []
-  , B.div [ B.onDrag x ] []
-  , B.div [ B.onDragEnd x ] []
-  , B.div [ B.onDragEnter x ] []
-  , B.div [ B.onDragLeave x ] []
-  , B.div [ B.onDragOver x ] []
-  , B.div [ B.onDragStart x ] []
-  , B.div [ B.onDrop x ] []
-  , B.div [ B.onDurationChange x ] []
-  , B.div [ B.onEmptied x ] []
-  , B.div [ B.onEnded x ] []
-  , B.div [ B.onError x ] []
-  , B.div [ B.onFocus x ] []
-  , B.div [ B.onFocusIn x ] []
-  , B.div [ B.onFocusOut x ] []
-  , B.div [ B.onFormData x ] []
-  , B.div [ B.onFullscreenChange x ] []
-  , B.div [ B.onFullscreenError x ] []
-  , B.div [ B.onGotPointerCapture x ] []
-  , B.body [ B.onHashChange x ] []
-  , B.div [ B.onInput (\_ -> x) ] []
-  , B.div [ B.onInvalid x ] []
-  , B.div [ B.onKeyDown (\_ -> Just x) ] []
-  , B.div [ B.onKeyPress x ] []
-  , B.div [ B.onKeyUp (\_ -> Just x) ] []
-  , B.body [ B.onLanguageChange x ] []
-  , B.div [ B.onLoad x ] []
-  , B.div [ B.onLoadedData x ] []
-  , B.div [ B.onLoadedMetadata x ] []
-  , B.div [ B.onLoadStart x ] []
-  , B.div [ B.onLostPointerCapture x ] []
-  , B.body [ B.onMessage x ] []
-  , B.body [ B.onMessageError x ] []
-  , B.div [ B.onMouseDown x ] []
-  , B.div [ B.onMouseEnter x ] []
-  , B.div [ B.onMouseLeave x ] []
-  , B.div [ B.onMouseMove x ] []
-  , B.div [ B.onMouseOut x ] []
-  , B.div [ B.onMouseOver x ] []
-  , B.div [ B.onMouseUp x ] []
-  , B.body [ B.onOffline x ] []
-  , B.body [ B.onOnline x ] []
-  , B.body [ B.onPageHide x ] []
-  , B.body [ B.onPageReveal x ] []
-  , B.body [ B.onPageShow x ] []
-  , B.body [ B.onPageSwap x ] []
-  , B.div [ B.onPaste x ] []
-  , B.div [ B.onPause x ] []
-  , B.div [ B.onPlay x ] []
-  , B.div [ B.onPlaying x ] []
-  , B.div [ B.onPointerCancel x ] []
-  , B.div [ B.onPointerDown x ] []
-  , B.div [ B.onPointerEnter x ] []
-  , B.div [ B.onPointerLeave x ] []
-  , B.div [ B.onPointerMove x ] []
-  , B.div [ B.onPointerOut x ] []
-  , B.div [ B.onPointerOver x ] []
-  , B.div [ B.onPointerRawUpdate x ] []
-  , B.div [ B.onPointerUp x ] []
-  , B.body [ B.onPopState x ] []
-  , B.div [ B.onProgress x ] []
-  , B.div [ B.onRateChange x ] []
-  , B.body [ B.onRejectionHandled x ] []
-  , B.div [ B.onReset x ] []
-  , B.div [ B.onResize x ] []
-  , B.div [ B.onScroll x ] []
-  , B.div [ B.onScrollEnd x ] []
-  , B.div [ B.onSecurityPolicyViolation x ] []
-  , B.div [ B.onSeeked x ] []
-  , B.div [ B.onSeeking x ] []
-  , B.div [ B.onSelect x ] []
-  , B.div [ B.onSelectionChange x ] []
-  , B.div [ B.onSelectStart x ] []
-  , B.div [ B.onSlotChange x ] []
-  , B.div [ B.onStalled x ] []
-  , B.body [ B.onStorage x ] []
-  , B.div [ B.onSubmit x ] []
-  , B.div [ B.onSuspend x ] []
-  , B.div [ B.onTimeUpdate x ] []
-  , B.div [ B.onToggle x ] []
-  , B.div [ B.onTouchCancel x ] []
-  , B.div [ B.onTouchEnd x ] []
-  , B.div [ B.onTouchMove x ] []
-  , B.div [ B.onTouchStart x ] []
-  , B.div [ B.onTransitionCancel x ] []
-  , B.div [ B.onTransitionEnd x ] []
-  , B.div [ B.onTransitionRun x ] []
-  , B.div [ B.onTransitionStart x ] []
-  , B.body [ B.onUnhandledRejection x ] []
-  , B.body [ B.onUnload x ] []
-  , B.div [ B.onVolumeChange x ] []
-  , B.div [ B.onWaiting x ] []
-  , B.div [ B.onWheel x ] []
+about :: forall a. Array (B.Node a)
+about =
+  [ B.g [ B.about "" ] []
+  ]
+
+accentHeight :: forall a. Array (B.Node a)
+accentHeight =
+  [ B.fontFace [ B.accentHeight 0 ] []
+  ]
+
+accept :: forall a. Array (B.Node a)
+accept =
+  [ B.form [ B.accept "" ] []
+  ]
+
+acceptCharset :: forall a. Array (B.Node a)
+acceptCharset =
+  [ B.form [ B.acceptCharset "" ] []
+  ]
+
+accesskey :: forall a. Array (B.Node a)
+accesskey =
+  [ B.div [ B.accesskey "" ] []
+  ]
+
+accumulate :: forall a. Array (B.Node a)
+accumulate =
+  [ B.animate [ B.accumulate "" ] []
+  ]
+
+action :: forall a. Array (B.Node a)
+action =
+  [ B.form [ B.action "" ] []
+  ]
+
+additive :: forall a. Array (B.Node a)
+additive =
+  [ B.animate [ B.additive "" ] []
+  ]
+
+align :: forall a. Array (B.Node a)
+align =
+  [ B.applet [ B.align "" ] []
+  ]
+
+alignmentBaseline :: forall a. Array (B.Node a)
+alignmentBaseline =
+  [ B.g [ B.alignmentBaseline "" ] []
+  ]
+
+alink :: forall a. Array (B.Node a)
+alink =
+  [ B.body [ B.alink "" ] []
+  ]
+
+allow :: forall a. Array (B.Node a)
+allow =
+  [ B.iframe [ B.allow "" ] []
+  ]
+
+allowfullscreen :: forall a. Array (B.Node a)
+allowfullscreen =
+  [ B.iframe [ B.allowfullscreen true ] []
+  ]
+
+allowpaymentrequest :: forall a. Array (B.Node a)
+allowpaymentrequest =
+  [ B.iframe [ B.allowpaymentrequest true ] []
+  ]
+
+allowusermedia :: forall a. Array (B.Node a)
+allowusermedia =
+  [ B.iframe [ B.allowusermedia true ] []
+  ]
+
+alpha :: forall a. Array (B.Node a)
+alpha =
+  [ B.input [ B.alpha true ] []
+  ]
+
+alphabetic :: forall a. Array (B.Node a)
+alphabetic =
+  [ B.fontFace [ B.alphabetic 0 ] []
+  ]
+
+alt :: forall a. Array (B.Node a)
+alt =
+  [ B.applet [ B.alt "" ] []
+  ]
+
+amplitude :: forall a. Array (B.Node a)
+amplitude =
+  [ B.feFuncA [ B.amplitude 0 ] []
+  ]
+
+arabicForm :: forall a. Array (B.Node a)
+arabicForm =
+  [ B.glyph [ B.arabicForm "" ] []
+  ]
+
+archive :: forall a. Array (B.Node a)
+archive =
+  [ B.applet [ B.archive "" ] []
+  ]
+
+ariaActivedescendant :: forall a. Array (B.Node a)
+ariaActivedescendant =
+  [ B.div [ B.ariaActivedescendant "" ] []
+  , B.g [ B.ariaActivedescendant "" ] []
+  ]
+
+ariaAtomic :: forall a. Array (B.Node a)
+ariaAtomic =
+  [ B.div [ B.ariaAtomic "false" ] []
+  , B.g [ B.ariaAtomic "false" ] []
+  ]
+
+ariaAutocomplete :: forall a. Array (B.Node a)
+ariaAutocomplete =
+  [ B.div [ B.ariaAutocomplete "" ] []
+  , B.g [ B.ariaAutocomplete "" ] []
+  ]
+
+ariaBusy :: forall a. Array (B.Node a)
+ariaBusy =
+  [ B.div [ B.ariaBusy "false" ] []
+  , B.g [ B.ariaBusy "false" ] []
+  ]
+
+ariaChecked :: forall a. Array (B.Node a)
+ariaChecked =
+  [ B.div [ B.ariaChecked "false" ] []
+  , B.g [ B.ariaChecked "false" ] []
+  ]
+
+ariaColcount :: forall a. Array (B.Node a)
+ariaColcount =
+  [ B.div [ B.ariaColcount 0 ] []
+  , B.g [ B.ariaColcount 0 ] []
+  ]
+
+ariaColindex :: forall a. Array (B.Node a)
+ariaColindex =
+  [ B.div [ B.ariaColindex 0 ] []
+  , B.g [ B.ariaColindex 0 ] []
+  ]
+
+ariaColspan :: forall a. Array (B.Node a)
+ariaColspan =
+  [ B.div [ B.ariaColspan 0 ] []
+  , B.g [ B.ariaColspan 0 ] []
+  ]
+
+ariaControls :: forall a. Array (B.Node a)
+ariaControls =
+  [ B.div [ B.ariaControls "" ] []
+  , B.g [ B.ariaControls "" ] []
+  ]
+
+ariaCurrent :: forall a. Array (B.Node a)
+ariaCurrent =
+  [ B.div [ B.ariaCurrent "" ] []
+  , B.g [ B.ariaCurrent "" ] []
+  ]
+
+ariaDescribedby :: forall a. Array (B.Node a)
+ariaDescribedby =
+  [ B.div [ B.ariaDescribedby "" ] []
+  , B.g [ B.ariaDescribedby "" ] []
+  ]
+
+ariaDetails :: forall a. Array (B.Node a)
+ariaDetails =
+  [ B.div [ B.ariaDetails "" ] []
+  , B.g [ B.ariaDetails "" ] []
+  ]
+
+ariaDisabled :: forall a. Array (B.Node a)
+ariaDisabled =
+  [ B.div [ B.ariaDisabled "false" ] []
+  , B.g [ B.ariaDisabled "false" ] []
+  ]
+
+ariaDropeffect :: forall a. Array (B.Node a)
+ariaDropeffect =
+  [ B.div [ B.ariaDropeffect "" ] []
+  , B.g [ B.ariaDropeffect "" ] []
+  ]
+
+ariaErrormessage :: forall a. Array (B.Node a)
+ariaErrormessage =
+  [ B.div [ B.ariaErrormessage "" ] []
+  , B.g [ B.ariaErrormessage "" ] []
+  ]
+
+ariaExpanded :: forall a. Array (B.Node a)
+ariaExpanded =
+  [ B.div [ B.ariaExpanded "false" ] []
+  , B.g [ B.ariaExpanded "false" ] []
+  ]
+
+ariaFlowto :: forall a. Array (B.Node a)
+ariaFlowto =
+  [ B.div [ B.ariaFlowto "" ] []
+  , B.g [ B.ariaFlowto "" ] []
+  ]
+
+ariaGrabbed :: forall a. Array (B.Node a)
+ariaGrabbed =
+  [ B.div [ B.ariaGrabbed "false" ] []
+  , B.g [ B.ariaGrabbed "false" ] []
+  ]
+
+ariaHaspopup :: forall a. Array (B.Node a)
+ariaHaspopup =
+  [ B.div [ B.ariaHaspopup "" ] []
+  , B.g [ B.ariaHaspopup "" ] []
+  ]
+
+ariaHidden :: forall a. Array (B.Node a)
+ariaHidden =
+  [ B.div [ B.ariaHidden "false" ] []
+  , B.g [ B.ariaHidden "false" ] []
+  ]
+
+ariaInvalid :: forall a. Array (B.Node a)
+ariaInvalid =
+  [ B.div [ B.ariaInvalid "" ] []
+  , B.g [ B.ariaInvalid "" ] []
+  ]
+
+ariaKeyshortcuts :: forall a. Array (B.Node a)
+ariaKeyshortcuts =
+  [ B.div [ B.ariaKeyshortcuts "" ] []
+  , B.g [ B.ariaKeyshortcuts "" ] []
+  ]
+
+ariaLabel :: forall a. Array (B.Node a)
+ariaLabel =
+  [ B.div [ B.ariaLabel "" ] []
+  , B.g [ B.ariaLabel "" ] []
+  ]
+
+ariaLabelledby :: forall a. Array (B.Node a)
+ariaLabelledby =
+  [ B.div [ B.ariaLabelledby "" ] []
+  , B.g [ B.ariaLabelledby "" ] []
+  ]
+
+ariaLevel :: forall a. Array (B.Node a)
+ariaLevel =
+  [ B.div [ B.ariaLevel 0 ] []
+  , B.g [ B.ariaLevel 0 ] []
+  ]
+
+ariaLive :: forall a. Array (B.Node a)
+ariaLive =
+  [ B.div [ B.ariaLive "" ] []
+  , B.g [ B.ariaLive "" ] []
+  ]
+
+ariaModal :: forall a. Array (B.Node a)
+ariaModal =
+  [ B.div [ B.ariaModal "false" ] []
+  , B.g [ B.ariaModal "false" ] []
+  ]
+
+ariaMultiline :: forall a. Array (B.Node a)
+ariaMultiline =
+  [ B.div [ B.ariaMultiline "false" ] []
+  , B.g [ B.ariaMultiline "false" ] []
+  ]
+
+ariaMultiselectable :: forall a. Array (B.Node a)
+ariaMultiselectable =
+  [ B.div [ B.ariaMultiselectable "false" ] []
+  , B.g [ B.ariaMultiselectable "false" ] []
+  ]
+
+ariaOrientation :: forall a. Array (B.Node a)
+ariaOrientation =
+  [ B.div [ B.ariaOrientation "" ] []
+  , B.g [ B.ariaOrientation "" ] []
+  ]
+
+ariaOwns :: forall a. Array (B.Node a)
+ariaOwns =
+  [ B.div [ B.ariaOwns "" ] []
+  , B.g [ B.ariaOwns "" ] []
+  ]
+
+ariaPlaceholder :: forall a. Array (B.Node a)
+ariaPlaceholder =
+  [ B.div [ B.ariaPlaceholder "" ] []
+  , B.g [ B.ariaPlaceholder "" ] []
+  ]
+
+ariaPosinset :: forall a. Array (B.Node a)
+ariaPosinset =
+  [ B.div [ B.ariaPosinset 0 ] []
+  , B.g [ B.ariaPosinset 0 ] []
+  ]
+
+ariaPressed :: forall a. Array (B.Node a)
+ariaPressed =
+  [ B.div [ B.ariaPressed "false" ] []
+  , B.g [ B.ariaPressed "false" ] []
+  ]
+
+ariaReadonly :: forall a. Array (B.Node a)
+ariaReadonly =
+  [ B.div [ B.ariaReadonly "false" ] []
+  , B.g [ B.ariaReadonly "false" ] []
+  ]
+
+ariaRelevant :: forall a. Array (B.Node a)
+ariaRelevant =
+  [ B.div [ B.ariaRelevant "" ] []
+  , B.g [ B.ariaRelevant "" ] []
+  ]
+
+ariaRequired :: forall a. Array (B.Node a)
+ariaRequired =
+  [ B.div [ B.ariaRequired "false" ] []
+  , B.g [ B.ariaRequired "false" ] []
+  ]
+
+ariaRoledescription :: forall a. Array (B.Node a)
+ariaRoledescription =
+  [ B.div [ B.ariaRoledescription "" ] []
+  , B.g [ B.ariaRoledescription "" ] []
+  ]
+
+ariaRowcount :: forall a. Array (B.Node a)
+ariaRowcount =
+  [ B.div [ B.ariaRowcount 0 ] []
+  , B.g [ B.ariaRowcount 0 ] []
+  ]
+
+ariaRowindex :: forall a. Array (B.Node a)
+ariaRowindex =
+  [ B.div [ B.ariaRowindex 0 ] []
+  , B.g [ B.ariaRowindex 0 ] []
+  ]
+
+ariaRowspan :: forall a. Array (B.Node a)
+ariaRowspan =
+  [ B.div [ B.ariaRowspan 0 ] []
+  , B.g [ B.ariaRowspan 0 ] []
+  ]
+
+ariaSelected :: forall a. Array (B.Node a)
+ariaSelected =
+  [ B.div [ B.ariaSelected "false" ] []
+  , B.g [ B.ariaSelected "false" ] []
+  ]
+
+ariaSetsize :: forall a. Array (B.Node a)
+ariaSetsize =
+  [ B.div [ B.ariaSetsize 0 ] []
+  , B.g [ B.ariaSetsize 0 ] []
+  ]
+
+ariaSort :: forall a. Array (B.Node a)
+ariaSort =
+  [ B.div [ B.ariaSort "" ] []
+  , B.g [ B.ariaSort "" ] []
+  ]
+
+ariaValuemax :: forall a. Array (B.Node a)
+ariaValuemax =
+  [ B.div [ B.ariaValuemax 0 ] []
+  , B.g [ B.ariaValuemax 0 ] []
+  ]
+
+ariaValuemin :: forall a. Array (B.Node a)
+ariaValuemin =
+  [ B.div [ B.ariaValuemin 0 ] []
+  , B.g [ B.ariaValuemin 0 ] []
+  ]
+
+ariaValuenow :: forall a. Array (B.Node a)
+ariaValuenow =
+  [ B.div [ B.ariaValuenow 0 ] []
+  , B.g [ B.ariaValuenow 0 ] []
+  ]
+
+ariaValuetext :: forall a. Array (B.Node a)
+ariaValuetext =
+  [ B.div [ B.ariaValuetext "" ] []
+  , B.g [ B.ariaValuetext "" ] []
+  ]
+
+as :: forall a. Array (B.Node a)
+as =
+  [ B.link [ B.as "" ] []
+  ]
+
+ascent :: forall a. Array (B.Node a)
+ascent =
+  [ B.fontFace [ B.ascent 0 ] []
+  ]
+
+async :: forall a. Array (B.Node a)
+async =
+  [ B.script [ B.async true ] []
+  ]
+
+attributeName :: forall a. Array (B.Node a)
+attributeName =
+  [ B.animate [ B.attributeName "" ] []
+  ]
+
+attributeType :: forall a. Array (B.Node a)
+attributeType =
+  [ B.animate [ B.attributeType "" ] []
+  ]
+
+autocapitalize :: forall a. Array (B.Node a)
+autocapitalize =
+  [ B.div [ B.autocapitalize "off" ] []
+  ]
+
+autocomplete :: forall a. Array (B.Node a)
+autocomplete =
+  [ B.form [ B.autocomplete "on" ] []
+  ]
+
+autocorrect :: forall a. Array (B.Node a)
+autocorrect =
+  [ B.div [ B.autocorrect "on" ] []
+  ]
+
+autofocus :: forall a. Array (B.Node a)
+autofocus =
+  [ B.div [ B.autofocus true ] []
+  ]
+
+autoplay :: forall a. Array (B.Node a)
+autoplay =
+  [ B.audio [ B.autoplay true ] []
+  ]
+
+axis :: forall a. Array (B.Node a)
+axis =
+  [ B.td [ B.axis "" ] []
+  ]
+
+azimuth :: forall a. Array (B.Node a)
+azimuth =
+  [ B.feDistantLight [ B.azimuth 0 ] []
+  ]
+
+background :: forall a. Array (B.Node a)
+background =
+  [ B.body [ B.background "" ] []
+  ]
+
+bandwidth :: forall a. Array (B.Node a)
+bandwidth =
+  [ B.prefetch [ B.bandwidth "" ] []
+  ]
+
+baseFrequency :: forall a. Array (B.Node a)
+baseFrequency =
+  [ B.feTurbulence [ B.baseFrequency "" ] []
+  ]
+
+baseProfile :: forall a. Array (B.Node a)
+baseProfile =
+  [ B.svg [ B.baseProfile "" ] []
+  ]
+
+baselineShift :: forall a. Array (B.Node a)
+baselineShift =
+  [ B.g [ B.baselineShift "" ] []
+  ]
+
+bbox :: forall a. Array (B.Node a)
+bbox =
+  [ B.fontFace [ B.bbox "" ] []
+  ]
+
+begin :: forall a. Array (B.Node a)
+begin =
+  [ B.animate [ B.begin "" ] []
+  ]
+
+bgcolor :: forall a. Array (B.Node a)
+bgcolor =
+  [ B.body [ B.bgcolor "" ] []
+  ]
+
+bias :: forall a. Array (B.Node a)
+bias =
+  [ B.feConvolveMatrix [ B.bias 0 ] []
+  ]
+
+blocking :: forall a. Array (B.Node a)
+blocking =
+  [ B.link [ B.blocking "" ] []
+  ]
+
+border :: forall a. Array (B.Node a)
+border =
+  [ B.img [ B.border 0 ] []
+  ]
+
+by :: forall a. Array (B.Node a)
+by =
+  [ B.animate [ B.by "" ] []
+  ]
+
+calcMode :: forall a. Array (B.Node a)
+calcMode =
+  [ B.animate [ B.calcMode "" ] []
+  ]
+
+capHeight :: forall a. Array (B.Node a)
+capHeight =
+  [ B.fontFace [ B.capHeight 0 ] []
+  ]
+
+cellpadding :: forall a. Array (B.Node a)
+cellpadding =
+  [ B.table [ B.cellpadding "" ] []
+  ]
+
+cellspacing :: forall a. Array (B.Node a)
+cellspacing =
+  [ B.table [ B.cellspacing "" ] []
+  ]
+
+char :: forall a. Array (B.Node a)
+char =
+  [ B.col [ B.char "" ] []
+  ]
+
+charoff :: forall a. Array (B.Node a)
+charoff =
+  [ B.col [ B.charoff "" ] []
+  ]
+
+charset :: forall a. Array (B.Node a)
+charset =
+  [ B.a [ B.charset "" ] []
+  ]
+
+checked :: forall a. Array (B.Node a)
+checked =
+  [ B.input [ B.checked true ] []
+  ]
+
+citeAttr :: forall a. Array (B.Node a)
+citeAttr =
+  [ B.blockquote [ B.citeAttr "" ] []
+  ]
+
+class_ :: forall a. Array (B.Node a)
+class_ =
+  [ B.div [ B.class_ "" ] []
+  , B.g [ B.class_ "" ] []
+  ]
+
+classid :: forall a. Array (B.Node a)
+classid =
+  [ B.object [ B.classid "" ] []
+  ]
+
+clear :: forall a. Array (B.Node a)
+clear =
+  [ B.br [ B.clear "" ] []
+  ]
+
+clip :: forall a. Array (B.Node a)
+clip =
+  [ B.a [ B.clip "" ] []
+  ]
+
+clipPathAttr :: forall a. Array (B.Node a)
+clipPathAttr =
+  [ B.g [ B.clipPathAttr "" ] []
+  ]
+
+clipPathUnits :: forall a. Array (B.Node a)
+clipPathUnits =
+  [ B.clipPath [ B.clipPathUnits "" ] []
+  ]
+
+clipRule :: forall a. Array (B.Node a)
+clipRule =
+  [ B.g [ B.clipRule "" ] []
+  ]
+
+closedby :: forall a. Array (B.Node a)
+closedby =
+  [ B.dialog [ B.closedby "" ] []
+  ]
+
+codeAttr :: forall a. Array (B.Node a)
+codeAttr =
+  [ B.applet [ B.codeAttr "" ] []
+  ]
+
+codebase :: forall a. Array (B.Node a)
+codebase =
+  [ B.applet [ B.codebase "" ] []
+  ]
+
+codetype :: forall a. Array (B.Node a)
+codetype =
+  [ B.object [ B.codetype "" ] []
+  ]
+
+color :: forall a. Array (B.Node a)
+color =
+  [ B.basefont [ B.color "" ] []
+  , B.g [ B.color "" ] []
+  ]
+
+colorInterpolation :: forall a. Array (B.Node a)
+colorInterpolation =
+  [ B.g [ B.colorInterpolation "" ] []
+  ]
+
+colorInterpolationFilters :: forall a. Array (B.Node a)
+colorInterpolationFilters =
+  [ B.g [ B.colorInterpolationFilters "" ] []
+  ]
+
+colorProfileAttr :: forall a. Array (B.Node a)
+colorProfileAttr =
+  [ B.a [ B.colorProfileAttr "" ] []
+  ]
+
+colorRendering :: forall a. Array (B.Node a)
+colorRendering =
+  [ B.g [ B.colorRendering "" ] []
+  ]
+
+colorspace :: forall a. Array (B.Node a)
+colorspace =
+  [ B.input [ B.colorspace "" ] []
+  ]
+
+cols :: forall a. Array (B.Node a)
+cols =
+  [ B.frameset [ B.cols 0 ] []
+  ]
+
+colspan :: forall a. Array (B.Node a)
+colspan =
+  [ B.td [ B.colspan 0 ] []
+  ]
+
+commandAttr :: forall a. Array (B.Node a)
+commandAttr =
+  [ B.button [ B.commandAttr "" ] []
+  ]
+
+commandfor :: forall a. Array (B.Node a)
+commandfor =
+  [ B.button [ B.commandfor "" ] []
+  ]
+
+compact :: forall a. Array (B.Node a)
+compact =
+  [ B.dir [ B.compact true ] []
+  ]
+
+contentAttr :: forall a. Array (B.Node a)
+contentAttr =
+  [ B.meta [ B.contentAttr "" ] []
+  , B.g [ B.contentAttr "" ] []
+  ]
+
+contentScriptType :: forall a. Array (B.Node a)
+contentScriptType =
+  [ B.svg [ B.contentScriptType "" ] []
+  ]
+
+contentStyleType :: forall a. Array (B.Node a)
+contentStyleType =
+  [ B.svg [ B.contentStyleType "" ] []
+  ]
+
+contenteditable :: forall a. Array (B.Node a)
+contenteditable =
+  [ B.div [ B.contenteditable "true" ] []
+  ]
+
+controls :: forall a. Array (B.Node a)
+controls =
+  [ B.audio [ B.controls true ] []
+  ]
+
+coords :: forall a. Array (B.Node a)
+coords =
+  [ B.a [ B.coords "" ] []
+  ]
+
+crossorigin :: forall a. Array (B.Node a)
+crossorigin =
+  [ B.audio [ B.crossorigin "anonymous" ] []
+  , B.feImage [ B.crossorigin "" ] []
+  ]
+
+cursorAttr :: forall a. Array (B.Node a)
+cursorAttr =
+  [ B.g [ B.cursorAttr "" ] []
+  ]
+
+cx :: forall a. Array (B.Node a)
+cx =
+  [ B.circle [ B.cx "" ] []
+  ]
+
+cy :: forall a. Array (B.Node a)
+cy =
+  [ B.circle [ B.cy "" ] []
+  ]
+
+d :: forall a. Array (B.Node a)
+d =
+  [ B.glyph [ B.d "" ] []
+  ]
+
+dataAttr :: forall a. Array (B.Node a)
+dataAttr =
+  [ B.object [ B.dataAttr "" ] []
+  ]
+
+datatype :: forall a. Array (B.Node a)
+datatype =
+  [ B.g [ B.datatype "" ] []
+  ]
+
+datetime :: forall a. Array (B.Node a)
+datetime =
+  [ B.del [ B.datetime "" ] []
+  ]
+
+declare :: forall a. Array (B.Node a)
+declare =
+  [ B.object [ B.declare true ] []
+  ]
+
+decoding :: forall a. Array (B.Node a)
+decoding =
+  [ B.img [ B.decoding "sync" ] []
+  ]
+
+default :: forall a. Array (B.Node a)
+default =
+  [ B.track [ B.default true ] []
+  ]
+
+defaultAction :: forall a. Array (B.Node a)
+defaultAction =
+  [ B.listener [ B.defaultAction "" ] []
+  ]
+
+defer :: forall a. Array (B.Node a)
+defer =
+  [ B.script [ B.defer true ] []
+  ]
+
+descent :: forall a. Array (B.Node a)
+descent =
+  [ B.fontFace [ B.descent 0 ] []
+  ]
+
+diffuseConstant :: forall a. Array (B.Node a)
+diffuseConstant =
+  [ B.feDiffuseLighting [ B.diffuseConstant 0 ] []
+  ]
+
+dirAttr :: forall a. Array (B.Node a)
+dirAttr =
+  [ B.div [ B.dirAttr "ltr" ] []
+  ]
+
+direction :: forall a. Array (B.Node a)
+direction =
+  [ B.g [ B.direction "" ] []
+  ]
+
+dirname :: forall a. Array (B.Node a)
+dirname =
+  [ B.input [ B.dirname "" ] []
+  ]
+
+disabled :: forall a. Array (B.Node a)
+disabled =
+  [ B.button [ B.disabled true ] []
+  ]
+
+display :: forall a. Array (B.Node a)
+display =
+  [ B.g [ B.display "" ] []
+  ]
+
+divisor :: forall a. Array (B.Node a)
+divisor =
+  [ B.feConvolveMatrix [ B.divisor 0 ] []
+  ]
+
+dominantBaseline :: forall a. Array (B.Node a)
+dominantBaseline =
+  [ B.g [ B.dominantBaseline "" ] []
+  ]
+
+download :: forall a. Array (B.Node a)
+download =
+  [ B.a [ B.download "" ] []
+  , B.a [ B.download "" ] []
+  ]
+
+draggable :: forall a. Array (B.Node a)
+draggable =
+  [ B.div [ B.draggable "false" ] []
+  ]
+
+dur :: forall a. Array (B.Node a)
+dur =
+  [ B.animate [ B.dur "" ] []
+  ]
+
+dx :: forall a. Array (B.Node a)
+dx =
+  [ B.altGlyph [ B.dx "" ] []
+  ]
+
+dy :: forall a. Array (B.Node a)
+dy =
+  [ B.altGlyph [ B.dy "" ] []
+  ]
+
+edgeMode :: forall a. Array (B.Node a)
+edgeMode =
+  [ B.feConvolveMatrix [ B.edgeMode "" ] []
+  ]
+
+editable :: forall a. Array (B.Node a)
+editable =
+  [ B.textEl [ B.editable "" ] []
+  ]
+
+elevation :: forall a. Array (B.Node a)
+elevation =
+  [ B.feDistantLight [ B.elevation 0 ] []
+  ]
+
+enableBackground :: forall a. Array (B.Node a)
+enableBackground =
+  [ B.a [ B.enableBackground "" ] []
+  ]
+
+enctype :: forall a. Array (B.Node a)
+enctype =
+  [ B.form [ B.enctype "application/x-www-form-urlencoded" ] []
+  ]
+
+end :: forall a. Array (B.Node a)
+end =
+  [ B.animate [ B.end "" ] []
+  ]
+
+enterkeyhint :: forall a. Array (B.Node a)
+enterkeyhint =
+  [ B.div [ B.enterkeyhint "enter" ] []
+  ]
+
+event :: forall a. Array (B.Node a)
+event =
+  [ B.listener [ B.event "" ] []
+  ]
+
+exponent :: forall a. Array (B.Node a)
+exponent =
+  [ B.feFuncA [ B.exponent 0 ] []
+  ]
+
+exportparts :: forall a. Array (B.Node a)
+exportparts =
+  [ B.div [ B.exportparts "" ] []
+  ]
+
+externalResourcesRequired :: forall a. Array (B.Node a)
+externalResourcesRequired =
+  [ B.a [ B.externalResourcesRequired "false" ] []
+  ]
+
+face :: forall a. Array (B.Node a)
+face =
+  [ B.basefont [ B.face "" ] []
+  ]
+
+fetchpriority :: forall a. Array (B.Node a)
+fetchpriority =
+  [ B.img [ B.fetchpriority "high" ] []
+  ]
+
+fill :: forall a. Array (B.Node a)
+fill =
+  [ B.g [ B.fill "" ] []
+  ]
+
+fillOpacity :: forall a. Array (B.Node a)
+fillOpacity =
+  [ B.g [ B.fillOpacity 0 ] []
+  ]
+
+fillRule :: forall a. Array (B.Node a)
+fillRule =
+  [ B.g [ B.fillRule "" ] []
+  ]
+
+filterAttr :: forall a. Array (B.Node a)
+filterAttr =
+  [ B.g [ B.filterAttr "" ] []
+  ]
+
+filterRes :: forall a. Array (B.Node a)
+filterRes =
+  [ B.filter [ B.filterRes "" ] []
+  ]
+
+filterUnits :: forall a. Array (B.Node a)
+filterUnits =
+  [ B.filter [ B.filterUnits "" ] []
+  ]
+
+floodColor :: forall a. Array (B.Node a)
+floodColor =
+  [ B.g [ B.floodColor "" ] []
+  ]
+
+floodOpacity :: forall a. Array (B.Node a)
+floodOpacity =
+  [ B.g [ B.floodOpacity "" ] []
+  ]
+
+focusHighlight :: forall a. Array (B.Node a)
+focusHighlight =
+  [ B.a [ B.focusHighlight "" ] []
+  ]
+
+focusable :: forall a. Array (B.Node a)
+focusable =
+  [ B.a [ B.focusable "" ] []
+  ]
+
+fontFamily :: forall a. Array (B.Node a)
+fontFamily =
+  [ B.g [ B.fontFamily "" ] []
+  ]
+
+fontSize :: forall a. Array (B.Node a)
+fontSize =
+  [ B.g [ B.fontSize "" ] []
+  ]
+
+fontSizeAdjust :: forall a. Array (B.Node a)
+fontSizeAdjust =
+  [ B.g [ B.fontSizeAdjust "" ] []
+  ]
+
+fontStretch :: forall a. Array (B.Node a)
+fontStretch =
+  [ B.g [ B.fontStretch "" ] []
+  ]
+
+fontStyle :: forall a. Array (B.Node a)
+fontStyle =
+  [ B.g [ B.fontStyle "" ] []
+  ]
+
+fontVariant :: forall a. Array (B.Node a)
+fontVariant =
+  [ B.g [ B.fontVariant "" ] []
+  ]
+
+fontWeight :: forall a. Array (B.Node a)
+fontWeight =
+  [ B.g [ B.fontWeight "" ] []
+  ]
+
+for :: forall a. Array (B.Node a)
+for =
+  [ B.label [ B.for "" ] []
+  ]
+
+formAttr :: forall a. Array (B.Node a)
+formAttr =
+  [ B.button [ B.formAttr "" ] []
+  ]
+
+formaction :: forall a. Array (B.Node a)
+formaction =
+  [ B.button [ B.formaction "" ] []
+  ]
+
+format :: forall a. Array (B.Node a)
+format =
+  [ B.altGlyph [ B.format "" ] []
+  ]
+
+formenctype :: forall a. Array (B.Node a)
+formenctype =
+  [ B.button [ B.formenctype "application/x-www-form-urlencoded" ] []
+  ]
+
+formmethod :: forall a. Array (B.Node a)
+formmethod =
+  [ B.button [ B.formmethod "get" ] []
+  ]
+
+formnovalidate :: forall a. Array (B.Node a)
+formnovalidate =
+  [ B.button [ B.formnovalidate true ] []
+  ]
+
+formtarget :: forall a. Array (B.Node a)
+formtarget =
+  [ B.button [ B.formtarget "" ] []
+  ]
+
+fr :: forall a. Array (B.Node a)
+fr =
+  [ B.radialGradient [ B.fr "" ] []
+  ]
+
+frameAttr :: forall a. Array (B.Node a)
+frameAttr =
+  [ B.table [ B.frameAttr "" ] []
+  ]
+
+frameborder :: forall a. Array (B.Node a)
+frameborder =
+  [ B.frame [ B.frameborder "" ] []
+  ]
+
+from :: forall a. Array (B.Node a)
+from =
+  [ B.animate [ B.from "" ] []
+  ]
+
+fx :: forall a. Array (B.Node a)
+fx =
+  [ B.radialGradient [ B.fx "" ] []
+  ]
+
+fy :: forall a. Array (B.Node a)
+fy =
+  [ B.radialGradient [ B.fy "" ] []
+  ]
+
+g1 :: forall a. Array (B.Node a)
+g1 =
+  [ B.hkern [ B.g1 "" ] []
+  ]
+
+g2 :: forall a. Array (B.Node a)
+g2 =
+  [ B.hkern [ B.g2 "" ] []
+  ]
+
+glyphName :: forall a. Array (B.Node a)
+glyphName =
+  [ B.glyph [ B.glyphName "" ] []
+  ]
+
+glyphOrientationHorizontal :: forall a. Array (B.Node a)
+glyphOrientationHorizontal =
+  [ B.g [ B.glyphOrientationHorizontal "" ] []
+  ]
+
+glyphOrientationVertical :: forall a. Array (B.Node a)
+glyphOrientationVertical =
+  [ B.g [ B.glyphOrientationVertical "" ] []
+  ]
+
+glyphRefAttr :: forall a. Array (B.Node a)
+glyphRefAttr =
+  [ B.altGlyph [ B.glyphRefAttr "" ] []
+  ]
+
+gradientTransform :: forall a. Array (B.Node a)
+gradientTransform =
+  [ B.linearGradient [ B.gradientTransform "" ] []
+  ]
+
+gradientUnits :: forall a. Array (B.Node a)
+gradientUnits =
+  [ B.linearGradient [ B.gradientUnits "" ] []
+  ]
+
+handlerAttr :: forall a. Array (B.Node a)
+handlerAttr =
+  [ B.listener [ B.handlerAttr "" ] []
+  ]
+
+hanging :: forall a. Array (B.Node a)
+hanging =
+  [ B.fontFace [ B.hanging 0 ] []
+  ]
+
+headers :: forall a. Array (B.Node a)
+headers =
+  [ B.td [ B.headers "" ] []
+  ]
+
+height :: forall a. Array (B.Node a)
+height =
+  [ B.applet [ B.height "" ] []
+  , B.animation [ B.height "" ] []
+  ]
+
+hidden :: forall a. Array (B.Node a)
+hidden =
+  [ B.div [ B.hidden true ] []
+  ]
+
+high :: forall a. Array (B.Node a)
+high =
+  [ B.meter [ B.high 0 ] []
+  ]
+
+horizAdvX :: forall a. Array (B.Node a)
+horizAdvX =
+  [ B.font [ B.horizAdvX 0 ] []
+  ]
+
+horizOriginX :: forall a. Array (B.Node a)
+horizOriginX =
+  [ B.font [ B.horizOriginX 0 ] []
+  ]
+
+horizOriginY :: forall a. Array (B.Node a)
+horizOriginY =
+  [ B.font [ B.horizOriginY 0 ] []
+  ]
+
+href :: forall a. Array (B.Node a)
+href =
+  [ B.a [ B.href "" ] []
+  , B.a [ B.href "" ] []
+  ]
+
+hreflang :: forall a. Array (B.Node a)
+hreflang =
+  [ B.a [ B.hreflang "" ] []
+  , B.a [ B.hreflang "" ] []
+  ]
+
+hspace :: forall a. Array (B.Node a)
+hspace =
+  [ B.applet [ B.hspace 0 ] []
+  ]
+
+httpEquiv :: forall a. Array (B.Node a)
+httpEquiv =
+  [ B.meta [ B.httpEquiv "" ] []
+  ]
+
+id :: forall a. Array (B.Node a)
+id =
+  [ B.div [ B.id "" ] []
+  , B.g [ B.id "" ] []
+  ]
+
+ideographic :: forall a. Array (B.Node a)
+ideographic =
+  [ B.fontFace [ B.ideographic 0 ] []
+  ]
+
+imageRendering :: forall a. Array (B.Node a)
+imageRendering =
+  [ B.g [ B.imageRendering "" ] []
+  ]
+
+imagesizes :: forall a. Array (B.Node a)
+imagesizes =
+  [ B.link [ B.imagesizes "" ] []
+  ]
+
+imagesrcset :: forall a. Array (B.Node a)
+imagesrcset =
+  [ B.link [ B.imagesrcset "" ] []
+  ]
+
+in' :: forall a. Array (B.Node a)
+in' =
+  [ B.feBlend [ B.in' "" ] []
+  ]
+
+in2 :: forall a. Array (B.Node a)
+in2 =
+  [ B.feBlend [ B.in2 "" ] []
+  ]
+
+inert :: forall a. Array (B.Node a)
+inert =
+  [ B.div [ B.inert true ] []
+  ]
+
+initialVisibility :: forall a. Array (B.Node a)
+initialVisibility =
+  [ B.animation [ B.initialVisibility "" ] []
+  ]
+
+inputmode :: forall a. Array (B.Node a)
+inputmode =
+  [ B.div [ B.inputmode "none" ] []
+  ]
+
+integrity :: forall a. Array (B.Node a)
+integrity =
+  [ B.link [ B.integrity "" ] []
+  ]
+
+intercept :: forall a. Array (B.Node a)
+intercept =
+  [ B.feFuncA [ B.intercept 0 ] []
+  ]
+
+is :: forall a. Array (B.Node a)
+is =
+  [ B.div [ B.is "" ] []
+  ]
+
+ismap :: forall a. Array (B.Node a)
+ismap =
+  [ B.img [ B.ismap true ] []
+  ]
+
+itemid :: forall a. Array (B.Node a)
+itemid =
+  [ B.div [ B.itemid "" ] []
+  ]
+
+itemprop :: forall a. Array (B.Node a)
+itemprop =
+  [ B.div [ B.itemprop "" ] []
+  ]
+
+itemref :: forall a. Array (B.Node a)
+itemref =
+  [ B.div [ B.itemref "" ] []
+  ]
+
+itemscope :: forall a. Array (B.Node a)
+itemscope =
+  [ B.div [ B.itemscope true ] []
+  ]
+
+itemtype :: forall a. Array (B.Node a)
+itemtype =
+  [ B.div [ B.itemtype "" ] []
+  ]
+
+k :: forall a. Array (B.Node a)
+k =
+  [ B.hkern [ B.k 0 ] []
+  ]
+
+k1 :: forall a. Array (B.Node a)
+k1 =
+  [ B.feComposite [ B.k1 0 ] []
+  ]
+
+k2 :: forall a. Array (B.Node a)
+k2 =
+  [ B.feComposite [ B.k2 0 ] []
+  ]
+
+k3 :: forall a. Array (B.Node a)
+k3 =
+  [ B.feComposite [ B.k3 0 ] []
+  ]
+
+k4 :: forall a. Array (B.Node a)
+k4 =
+  [ B.feComposite [ B.k4 0 ] []
+  ]
+
+kernelMatrix :: forall a. Array (B.Node a)
+kernelMatrix =
+  [ B.feConvolveMatrix [ B.kernelMatrix "" ] []
+  ]
+
+kernelUnitLength :: forall a. Array (B.Node a)
+kernelUnitLength =
+  [ B.feConvolveMatrix [ B.kernelUnitLength "" ] []
+  ]
+
+kerning :: forall a. Array (B.Node a)
+kerning =
+  [ B.a [ B.kerning "" ] []
+  ]
+
+keyPoints :: forall a. Array (B.Node a)
+keyPoints =
+  [ B.animateMotion [ B.keyPoints "" ] []
+  ]
+
+keySplines :: forall a. Array (B.Node a)
+keySplines =
+  [ B.animate [ B.keySplines "" ] []
+  ]
+
+keyTimes :: forall a. Array (B.Node a)
+keyTimes =
+  [ B.animate [ B.keyTimes "" ] []
+  ]
+
+kind :: forall a. Array (B.Node a)
+kind =
+  [ B.track [ B.kind "subtitles" ] []
+  ]
+
+labelAttr :: forall a. Array (B.Node a)
+labelAttr =
+  [ B.optgroup [ B.labelAttr "" ] []
+  ]
+
+lang :: forall a. Array (B.Node a)
+lang =
+  [ B.div [ B.lang "" ] []
+  , B.g [ B.lang "" ] []
+  ]
+
+language :: forall a. Array (B.Node a)
+language =
+  [ B.script [ B.language "" ] []
+  ]
+
+lengthAdjust :: forall a. Array (B.Node a)
+lengthAdjust =
+  [ B.textEl [ B.lengthAdjust "" ] []
+  ]
+
+letterSpacing :: forall a. Array (B.Node a)
+letterSpacing =
+  [ B.g [ B.letterSpacing "" ] []
+  ]
+
+lightingColor :: forall a. Array (B.Node a)
+lightingColor =
+  [ B.g [ B.lightingColor "" ] []
+  ]
+
+limitingConeAngle :: forall a. Array (B.Node a)
+limitingConeAngle =
+  [ B.feSpotLight [ B.limitingConeAngle 0 ] []
+  ]
+
+linkAttr :: forall a. Array (B.Node a)
+linkAttr =
+  [ B.body [ B.linkAttr "" ] []
+  ]
+
+list :: forall a. Array (B.Node a)
+list =
+  [ B.input [ B.list "" ] []
+  ]
+
+loading :: forall a. Array (B.Node a)
+loading =
+  [ B.iframe [ B.loading "lazy" ] []
+  ]
+
+local :: forall a. Array (B.Node a)
+local =
+  [ B.colorProfile [ B.local "" ] []
+  ]
+
+longdesc :: forall a. Array (B.Node a)
+longdesc =
+  [ B.frame [ B.longdesc "" ] []
+  ]
+
+loop :: forall a. Array (B.Node a)
+loop =
+  [ B.audio [ B.loop true ] []
+  ]
+
+low :: forall a. Array (B.Node a)
+low =
+  [ B.meter [ B.low 0 ] []
+  ]
+
+manifest :: forall a. Array (B.Node a)
+manifest =
+  [ B.html [ B.manifest "" ] []
+  ]
+
+marginheight :: forall a. Array (B.Node a)
+marginheight =
+  [ B.frame [ B.marginheight 0 ] []
+  ]
+
+marginwidth :: forall a. Array (B.Node a)
+marginwidth =
+  [ B.frame [ B.marginwidth 0 ] []
+  ]
+
+markerEnd :: forall a. Array (B.Node a)
+markerEnd =
+  [ B.g [ B.markerEnd "" ] []
+  ]
+
+markerHeight :: forall a. Array (B.Node a)
+markerHeight =
+  [ B.marker [ B.markerHeight "" ] []
+  ]
+
+markerMid :: forall a. Array (B.Node a)
+markerMid =
+  [ B.g [ B.markerMid "" ] []
+  ]
+
+markerStart :: forall a. Array (B.Node a)
+markerStart =
+  [ B.g [ B.markerStart "" ] []
+  ]
+
+markerUnits :: forall a. Array (B.Node a)
+markerUnits =
+  [ B.marker [ B.markerUnits "" ] []
+  ]
+
+markerWidth :: forall a. Array (B.Node a)
+markerWidth =
+  [ B.marker [ B.markerWidth "" ] []
+  ]
+
+maskAttr :: forall a. Array (B.Node a)
+maskAttr =
+  [ B.g [ B.maskAttr "" ] []
+  ]
+
+maskContentUnits :: forall a. Array (B.Node a)
+maskContentUnits =
+  [ B.mask [ B.maskContentUnits "" ] []
+  ]
+
+maskUnits :: forall a. Array (B.Node a)
+maskUnits =
+  [ B.mask [ B.maskUnits "" ] []
+  ]
+
+mathematical :: forall a. Array (B.Node a)
+mathematical =
+  [ B.fontFace [ B.mathematical "" ] []
+  ]
+
+max :: forall a. Array (B.Node a)
+max =
+  [ B.input [ B.max "" ] []
+  , B.animate [ B.max "" ] []
+  ]
+
+maxlength :: forall a. Array (B.Node a)
+maxlength =
+  [ B.input [ B.maxlength 0 ] []
+  ]
+
+media :: forall a. Array (B.Node a)
+media =
+  [ B.link [ B.media "" ] []
+  , B.style [ B.media "" ] []
+  ]
+
+mediaCharacterEncoding :: forall a. Array (B.Node a)
+mediaCharacterEncoding =
+  [ B.prefetch [ B.mediaCharacterEncoding "" ] []
+  ]
+
+mediaContentEncodings :: forall a. Array (B.Node a)
+mediaContentEncodings =
+  [ B.prefetch [ B.mediaContentEncodings "" ] []
+  ]
+
+mediaSize :: forall a. Array (B.Node a)
+mediaSize =
+  [ B.prefetch [ B.mediaSize 0 ] []
+  ]
+
+mediaTime :: forall a. Array (B.Node a)
+mediaTime =
+  [ B.prefetch [ B.mediaTime "" ] []
+  ]
+
+method :: forall a. Array (B.Node a)
+method =
+  [ B.form [ B.method "get" ] []
+  , B.textPath [ B.method "" ] []
+  ]
+
+min :: forall a. Array (B.Node a)
+min =
+  [ B.input [ B.min "" ] []
+  , B.animate [ B.min "" ] []
+  ]
+
+minlength :: forall a. Array (B.Node a)
+minlength =
+  [ B.input [ B.minlength 0 ] []
+  ]
+
+mode :: forall a. Array (B.Node a)
+mode =
+  [ B.feBlend [ B.mode "" ] []
+  ]
+
+multiple :: forall a. Array (B.Node a)
+multiple =
+  [ B.input [ B.multiple true ] []
+  ]
+
+muted :: forall a. Array (B.Node a)
+muted =
+  [ B.audio [ B.muted true ] []
+  ]
+
+name :: forall a. Array (B.Node a)
+name =
+  [ B.a [ B.name "" ] []
+  , B.colorProfile [ B.name "" ] []
+  ]
+
+navDown :: forall a. Array (B.Node a)
+navDown =
+  [ B.a [ B.navDown "" ] []
+  ]
+
+navDownLeft :: forall a. Array (B.Node a)
+navDownLeft =
+  [ B.a [ B.navDownLeft "" ] []
+  ]
+
+navDownRight :: forall a. Array (B.Node a)
+navDownRight =
+  [ B.a [ B.navDownRight "" ] []
+  ]
+
+navLeft :: forall a. Array (B.Node a)
+navLeft =
+  [ B.a [ B.navLeft "" ] []
+  ]
+
+navNext :: forall a. Array (B.Node a)
+navNext =
+  [ B.a [ B.navNext "" ] []
+  ]
+
+navPrev :: forall a. Array (B.Node a)
+navPrev =
+  [ B.a [ B.navPrev "" ] []
+  ]
+
+navRight :: forall a. Array (B.Node a)
+navRight =
+  [ B.a [ B.navRight "" ] []
+  ]
+
+navUp :: forall a. Array (B.Node a)
+navUp =
+  [ B.a [ B.navUp "" ] []
+  ]
+
+navUpLeft :: forall a. Array (B.Node a)
+navUpLeft =
+  [ B.a [ B.navUpLeft "" ] []
+  ]
+
+navUpRight :: forall a. Array (B.Node a)
+navUpRight =
+  [ B.a [ B.navUpRight "" ] []
+  ]
+
+nohref :: forall a. Array (B.Node a)
+nohref =
+  [ B.area [ B.nohref true ] []
+  ]
+
+nomodule :: forall a. Array (B.Node a)
+nomodule =
+  [ B.script [ B.nomodule true ] []
+  ]
+
+nonce :: forall a. Array (B.Node a)
+nonce =
+  [ B.div [ B.nonce "" ] []
+  ]
+
+noresize :: forall a. Array (B.Node a)
+noresize =
+  [ B.frame [ B.noresize true ] []
+  ]
+
+noshade :: forall a. Array (B.Node a)
+noshade =
+  [ B.hr [ B.noshade true ] []
+  ]
+
+novalidate :: forall a. Array (B.Node a)
+novalidate =
+  [ B.form [ B.novalidate true ] []
+  ]
+
+nowrap :: forall a. Array (B.Node a)
+nowrap =
+  [ B.td [ B.nowrap true ] []
+  ]
+
+numOctaves :: forall a. Array (B.Node a)
+numOctaves =
+  [ B.feTurbulence [ B.numOctaves "" ] []
+  ]
+
+objectAttr :: forall a. Array (B.Node a)
+objectAttr =
+  [ B.applet [ B.objectAttr "" ] []
+  ]
+
+observer :: forall a. Array (B.Node a)
+observer =
+  [ B.listener [ B.observer "" ] []
+  ]
+
+offset :: forall a. Array (B.Node a)
+offset =
+  [ B.feFuncA [ B.offset "" ] []
+  ]
+
+opacity :: forall a. Array (B.Node a)
+opacity =
+  [ B.g [ B.opacity "" ] []
+  ]
+
+open :: forall a. Array (B.Node a)
+open =
+  [ B.details [ B.open true ] []
+  ]
+
+operator :: forall a. Array (B.Node a)
+operator =
+  [ B.feComposite [ B.operator "" ] []
+  ]
+
+optimum :: forall a. Array (B.Node a)
+optimum =
+  [ B.meter [ B.optimum 0 ] []
+  ]
+
+order :: forall a. Array (B.Node a)
+order =
+  [ B.feConvolveMatrix [ B.order "" ] []
+  ]
+
+orient :: forall a. Array (B.Node a)
+orient =
+  [ B.marker [ B.orient "" ] []
+  ]
+
+orientation :: forall a. Array (B.Node a)
+orientation =
+  [ B.glyph [ B.orientation "" ] []
+  ]
+
+origin :: forall a. Array (B.Node a)
+origin =
+  [ B.animateMotion [ B.origin "" ] []
+  ]
+
+overflow :: forall a. Array (B.Node a)
+overflow =
+  [ B.g [ B.overflow "" ] []
+  ]
+
+overlay :: forall a. Array (B.Node a)
+overlay =
+  [ B.video [ B.overlay "" ] []
+  ]
+
+overlinePosition :: forall a. Array (B.Node a)
+overlinePosition =
+  [ B.fontFace [ B.overlinePosition 0 ] []
+  ]
+
+overlineThickness :: forall a. Array (B.Node a)
+overlineThickness =
+  [ B.fontFace [ B.overlineThickness 0 ] []
+  ]
+
+paintOrder :: forall a. Array (B.Node a)
+paintOrder =
+  [ B.g [ B.paintOrder "" ] []
+  ]
+
+panose1 :: forall a. Array (B.Node a)
+panose1 =
+  [ B.fontFace [ B.panose1 "" ] []
+  ]
+
+part :: forall a. Array (B.Node a)
+part =
+  [ B.div [ B.part "" ] []
+  ]
+
+pathAttr :: forall a. Array (B.Node a)
+pathAttr =
+  [ B.animateMotion [ B.pathAttr "" ] []
+  ]
+
+pathLength :: forall a. Array (B.Node a)
+pathLength =
+  [ B.circle [ B.pathLength 0 ] []
+  ]
+
+patternAttr :: forall a. Array (B.Node a)
+patternAttr =
+  [ B.input [ B.patternAttr "" ] []
+  ]
+
+patternContentUnits :: forall a. Array (B.Node a)
+patternContentUnits =
+  [ B.pattern [ B.patternContentUnits "" ] []
+  ]
+
+patternTransform :: forall a. Array (B.Node a)
+patternTransform =
+  [ B.pattern [ B.patternTransform "" ] []
+  ]
+
+patternUnits :: forall a. Array (B.Node a)
+patternUnits =
+  [ B.pattern [ B.patternUnits "" ] []
+  ]
+
+phase :: forall a. Array (B.Node a)
+phase =
+  [ B.listener [ B.phase "" ] []
+  ]
+
+ping :: forall a. Array (B.Node a)
+ping =
+  [ B.a [ B.ping "" ] []
+  , B.a [ B.ping "" ] []
+  ]
+
+placeholder :: forall a. Array (B.Node a)
+placeholder =
+  [ B.input [ B.placeholder "" ] []
+  ]
+
+playbackOrder :: forall a. Array (B.Node a)
+playbackOrder =
+  [ B.svg [ B.playbackOrder "" ] []
+  ]
+
+playbackorder :: forall a. Array (B.Node a)
+playbackorder =
+  [ B.svg [ B.playbackorder "" ] []
+  ]
+
+playsinline :: forall a. Array (B.Node a)
+playsinline =
+  [ B.video [ B.playsinline true ] []
+  ]
+
+pointerEvents :: forall a. Array (B.Node a)
+pointerEvents =
+  [ B.g [ B.pointerEvents "" ] []
+  ]
+
+points :: forall a. Array (B.Node a)
+points =
+  [ B.polygon [ B.points "" ] []
+  ]
+
+pointsAtX :: forall a. Array (B.Node a)
+pointsAtX =
+  [ B.feSpotLight [ B.pointsAtX 0 ] []
+  ]
+
+pointsAtY :: forall a. Array (B.Node a)
+pointsAtY =
+  [ B.feSpotLight [ B.pointsAtY 0 ] []
+  ]
+
+pointsAtZ :: forall a. Array (B.Node a)
+pointsAtZ =
+  [ B.feSpotLight [ B.pointsAtZ 0 ] []
+  ]
+
+popover :: forall a. Array (B.Node a)
+popover =
+  [ B.div [ B.popover "auto" ] []
+  ]
+
+popovertarget :: forall a. Array (B.Node a)
+popovertarget =
+  [ B.button [ B.popovertarget "" ] []
+  ]
+
+popovertargetaction :: forall a. Array (B.Node a)
+popovertargetaction =
+  [ B.button [ B.popovertargetaction "toggle" ] []
+  ]
+
+poster :: forall a. Array (B.Node a)
+poster =
+  [ B.video [ B.poster "" ] []
+  ]
+
+preload :: forall a. Array (B.Node a)
+preload =
+  [ B.audio [ B.preload "none" ] []
+  ]
+
+preserveAlpha :: forall a. Array (B.Node a)
+preserveAlpha =
+  [ B.feConvolveMatrix [ B.preserveAlpha "false" ] []
+  ]
+
+preserveAspectRatio :: forall a. Array (B.Node a)
+preserveAspectRatio =
+  [ B.animation [ B.preserveAspectRatio "" ] []
+  ]
+
+primitiveUnits :: forall a. Array (B.Node a)
+primitiveUnits =
+  [ B.filter [ B.primitiveUnits "" ] []
+  ]
+
+profile :: forall a. Array (B.Node a)
+profile =
+  [ B.head [ B.profile "" ] []
+  ]
+
+prompt :: forall a. Array (B.Node a)
+prompt =
+  [ B.isindex [ B.prompt "" ] []
+  ]
+
+propagate :: forall a. Array (B.Node a)
+propagate =
+  [ B.listener [ B.propagate "" ] []
+  ]
+
+property :: forall a. Array (B.Node a)
+property =
+  [ B.g [ B.property "" ] []
+  ]
+
+r :: forall a. Array (B.Node a)
+r =
+  [ B.circle [ B.r "" ] []
+  ]
+
+radius :: forall a. Array (B.Node a)
+radius =
+  [ B.feMorphology [ B.radius "" ] []
+  ]
+
+readonly :: forall a. Array (B.Node a)
+readonly =
+  [ B.input [ B.readonly true ] []
+  ]
+
+refX :: forall a. Array (B.Node a)
+refX =
+  [ B.marker [ B.refX "" ] []
+  ]
+
+refY :: forall a. Array (B.Node a)
+refY =
+  [ B.marker [ B.refY "" ] []
+  ]
+
+referrerpolicy :: forall a. Array (B.Node a)
+referrerpolicy =
+  [ B.a [ B.referrerpolicy "no-referrer" ] []
+  , B.a [ B.referrerpolicy "" ] []
+  ]
+
+rel :: forall a. Array (B.Node a)
+rel =
+  [ B.a [ B.rel "" ] []
+  , B.g [ B.rel "" ] []
+  ]
+
+renderingIntent :: forall a. Array (B.Node a)
+renderingIntent =
+  [ B.colorProfile [ B.renderingIntent "" ] []
+  ]
+
+repeatCount :: forall a. Array (B.Node a)
+repeatCount =
+  [ B.animate [ B.repeatCount "" ] []
+  ]
+
+repeatDur :: forall a. Array (B.Node a)
+repeatDur =
+  [ B.animate [ B.repeatDur "" ] []
+  ]
+
+required :: forall a. Array (B.Node a)
+required =
+  [ B.input [ B.required true ] []
+  ]
+
+requiredExtensions :: forall a. Array (B.Node a)
+requiredExtensions =
+  [ B.a [ B.requiredExtensions "" ] []
+  ]
+
+requiredFeatures :: forall a. Array (B.Node a)
+requiredFeatures =
+  [ B.a [ B.requiredFeatures "" ] []
+  ]
+
+requiredFonts :: forall a. Array (B.Node a)
+requiredFonts =
+  [ B.a [ B.requiredFonts "" ] []
+  ]
+
+requiredFormats :: forall a. Array (B.Node a)
+requiredFormats =
+  [ B.a [ B.requiredFormats "" ] []
+  ]
+
+resource :: forall a. Array (B.Node a)
+resource =
+  [ B.g [ B.resource "" ] []
+  ]
+
+restart :: forall a. Array (B.Node a)
+restart =
+  [ B.animate [ B.restart "" ] []
+  ]
+
+result :: forall a. Array (B.Node a)
+result =
+  [ B.feBlend [ B.result "" ] []
+  ]
+
+rev :: forall a. Array (B.Node a)
+rev =
+  [ B.a [ B.rev "" ] []
+  , B.g [ B.rev "" ] []
+  ]
+
+reversed :: forall a. Array (B.Node a)
+reversed =
+  [ B.ol [ B.reversed true ] []
+  ]
+
+role :: forall a. Array (B.Node a)
+role =
+  [ B.div [ B.role "" ] []
+  , B.g [ B.role "" ] []
+  ]
+
+rotate :: forall a. Array (B.Node a)
+rotate =
+  [ B.altGlyph [ B.rotate "" ] []
+  ]
+
+rows :: forall a. Array (B.Node a)
+rows =
+  [ B.frameset [ B.rows 0 ] []
+  ]
+
+rowspan :: forall a. Array (B.Node a)
+rowspan =
+  [ B.td [ B.rowspan 0 ] []
+  ]
+
+rules :: forall a. Array (B.Node a)
+rules =
+  [ B.table [ B.rules "" ] []
+  ]
+
+rx :: forall a. Array (B.Node a)
+rx =
+  [ B.ellipse [ B.rx "" ] []
+  ]
+
+ry :: forall a. Array (B.Node a)
+ry =
+  [ B.ellipse [ B.ry "" ] []
+  ]
+
+sandbox :: forall a. Array (B.Node a)
+sandbox =
+  [ B.iframe [ B.sandbox "" ] []
+  ]
+
+scale :: forall a. Array (B.Node a)
+scale =
+  [ B.feDisplacementMap [ B.scale "" ] []
+  ]
+
+scheme :: forall a. Array (B.Node a)
+scheme =
+  [ B.meta [ B.scheme "" ] []
+  ]
+
+scope :: forall a. Array (B.Node a)
+scope =
+  [ B.td [ B.scope "" ] []
+  ]
+
+scrolling :: forall a. Array (B.Node a)
+scrolling =
+  [ B.frame [ B.scrolling "yes" ] []
+  ]
+
+seed :: forall a. Array (B.Node a)
+seed =
+  [ B.feTurbulence [ B.seed "" ] []
+  ]
+
+selected :: forall a. Array (B.Node a)
+selected =
+  [ B.option [ B.selected true ] []
+  ]
+
+shadowrootclonable :: forall a. Array (B.Node a)
+shadowrootclonable =
+  [ B.template [ B.shadowrootclonable true ] []
+  ]
+
+shadowrootcustomelementregistry :: forall a. Array (B.Node a)
+shadowrootcustomelementregistry =
+  [ B.template [ B.shadowrootcustomelementregistry true ] []
+  ]
+
+shadowrootdelegatesfocus :: forall a. Array (B.Node a)
+shadowrootdelegatesfocus =
+  [ B.template [ B.shadowrootdelegatesfocus true ] []
+  ]
+
+shadowrootmode :: forall a. Array (B.Node a)
+shadowrootmode =
+  [ B.template [ B.shadowrootmode "" ] []
+  ]
+
+shadowrootserializable :: forall a. Array (B.Node a)
+shadowrootserializable =
+  [ B.template [ B.shadowrootserializable true ] []
+  ]
+
+shape :: forall a. Array (B.Node a)
+shape =
+  [ B.a [ B.shape "" ] []
+  ]
+
+shapeRendering :: forall a. Array (B.Node a)
+shapeRendering =
+  [ B.g [ B.shapeRendering "" ] []
+  ]
+
+side :: forall a. Array (B.Node a)
+side =
+  [ B.textPath [ B.side "" ] []
+  ]
+
+size :: forall a. Array (B.Node a)
+size =
+  [ B.basefont [ B.size 0 ] []
+  ]
+
+sizes :: forall a. Array (B.Node a)
+sizes =
+  [ B.img [ B.sizes "" ] []
+  ]
+
+slope :: forall a. Array (B.Node a)
+slope =
+  [ B.feFuncA [ B.slope "" ] []
+  ]
+
+slotAttr :: forall a. Array (B.Node a)
+slotAttr =
+  [ B.div [ B.slotAttr "" ] []
+  ]
+
+snapshotTime :: forall a. Array (B.Node a)
+snapshotTime =
+  [ B.svg [ B.snapshotTime "" ] []
+  ]
+
+spacing :: forall a. Array (B.Node a)
+spacing =
+  [ B.textPath [ B.spacing "" ] []
+  ]
+
+spanAttr :: forall a. Array (B.Node a)
+spanAttr =
+  [ B.col [ B.spanAttr 0 ] []
+  ]
+
+specularConstant :: forall a. Array (B.Node a)
+specularConstant =
+  [ B.feSpecularLighting [ B.specularConstant 0 ] []
+  ]
+
+specularExponent :: forall a. Array (B.Node a)
+specularExponent =
+  [ B.feSpecularLighting [ B.specularExponent 0 ] []
+  ]
+
+spellcheck :: forall a. Array (B.Node a)
+spellcheck =
+  [ B.div [ B.spellcheck "false" ] []
+  ]
+
+spreadMethod :: forall a. Array (B.Node a)
+spreadMethod =
+  [ B.linearGradient [ B.spreadMethod "" ] []
+  ]
+
+src :: forall a. Array (B.Node a)
+src =
+  [ B.audio [ B.src "" ] []
+  ]
+
+srcdoc :: forall a. Array (B.Node a)
+srcdoc =
+  [ B.iframe [ B.srcdoc "" ] []
+  ]
+
+srclang :: forall a. Array (B.Node a)
+srclang =
+  [ B.track [ B.srclang "" ] []
+  ]
+
+srcset :: forall a. Array (B.Node a)
+srcset =
+  [ B.img [ B.srcset "" ] []
+  ]
+
+standby :: forall a. Array (B.Node a)
+standby =
+  [ B.object [ B.standby "" ] []
+  ]
+
+start :: forall a. Array (B.Node a)
+start =
+  [ B.ol [ B.start 0 ] []
+  ]
+
+startOffset :: forall a. Array (B.Node a)
+startOffset =
+  [ B.textPath [ B.startOffset "" ] []
+  ]
+
+stdDeviation :: forall a. Array (B.Node a)
+stdDeviation =
+  [ B.feDropShadow [ B.stdDeviation "" ] []
+  ]
+
+stemh :: forall a. Array (B.Node a)
+stemh =
+  [ B.fontFace [ B.stemh "" ] []
+  ]
+
+stemv :: forall a. Array (B.Node a)
+stemv =
+  [ B.fontFace [ B.stemv "" ] []
+  ]
+
+step :: forall a. Array (B.Node a)
+step =
+  [ B.input [ B.step "" ] []
+  ]
+
+stitchTiles :: forall a. Array (B.Node a)
+stitchTiles =
+  [ B.feTurbulence [ B.stitchTiles "" ] []
+  ]
+
+stopColor :: forall a. Array (B.Node a)
+stopColor =
+  [ B.g [ B.stopColor "" ] []
+  ]
+
+stopOpacity :: forall a. Array (B.Node a)
+stopOpacity =
+  [ B.g [ B.stopOpacity "" ] []
+  ]
+
+strikethroughPosition :: forall a. Array (B.Node a)
+strikethroughPosition =
+  [ B.fontFace [ B.strikethroughPosition 0 ] []
+  ]
+
+strikethroughThickness :: forall a. Array (B.Node a)
+strikethroughThickness =
+  [ B.fontFace [ B.strikethroughThickness 0 ] []
+  ]
+
+string :: forall a. Array (B.Node a)
+string =
+  [ B.fontFaceFormat [ B.string "" ] []
+  ]
+
+stroke :: forall a. Array (B.Node a)
+stroke =
+  [ B.g [ B.stroke "" ] []
+  ]
+
+strokeDasharray :: forall a. Array (B.Node a)
+strokeDasharray =
+  [ B.g [ B.strokeDasharray "" ] []
+  ]
+
+strokeDashoffset :: forall a. Array (B.Node a)
+strokeDashoffset =
+  [ B.g [ B.strokeDashoffset "" ] []
+  ]
+
+strokeLinecap :: forall a. Array (B.Node a)
+strokeLinecap =
+  [ B.g [ B.strokeLinecap "" ] []
+  ]
+
+strokeLinejoin :: forall a. Array (B.Node a)
+strokeLinejoin =
+  [ B.g [ B.strokeLinejoin "" ] []
+  ]
+
+strokeMiterlimit :: forall a. Array (B.Node a)
+strokeMiterlimit =
+  [ B.g [ B.strokeMiterlimit 0 ] []
+  ]
+
+strokeOpacity :: forall a. Array (B.Node a)
+strokeOpacity =
+  [ B.g [ B.strokeOpacity 0 ] []
+  ]
+
+strokeWidth :: forall a. Array (B.Node a)
+strokeWidth =
+  [ B.g [ B.strokeWidth "" ] []
+  ]
+
+styleAttr :: forall a. Array (B.Node a)
+styleAttr =
+  [ B.div [ B.styleAttr "" ] []
+  , B.g [ B.styleAttr "" ] []
+  ]
+
+summaryAttr :: forall a. Array (B.Node a)
+summaryAttr =
+  [ B.table [ B.summaryAttr "" ] []
+  ]
+
+surfaceScale :: forall a. Array (B.Node a)
+surfaceScale =
+  [ B.feDiffuseLighting [ B.surfaceScale 0 ] []
+  ]
+
+syncBehavior :: forall a. Array (B.Node a)
+syncBehavior =
+  [ B.animation [ B.syncBehavior "" ] []
+  ]
+
+syncBehaviorDefault :: forall a. Array (B.Node a)
+syncBehaviorDefault =
+  [ B.svg [ B.syncBehaviorDefault "" ] []
+  ]
+
+syncMaster :: forall a. Array (B.Node a)
+syncMaster =
+  [ B.animation [ B.syncMaster "" ] []
+  ]
+
+syncTolerance :: forall a. Array (B.Node a)
+syncTolerance =
+  [ B.animation [ B.syncTolerance "" ] []
+  ]
+
+syncToleranceDefault :: forall a. Array (B.Node a)
+syncToleranceDefault =
+  [ B.svg [ B.syncToleranceDefault "" ] []
+  ]
+
+systemLanguage :: forall a. Array (B.Node a)
+systemLanguage =
+  [ B.a [ B.systemLanguage "" ] []
+  ]
+
+tabindex :: forall a. Array (B.Node a)
+tabindex =
+  [ B.div [ B.tabindex 0 ] []
+  , B.g [ B.tabindex 0 ] []
+  ]
+
+tableValues :: forall a. Array (B.Node a)
+tableValues =
+  [ B.feFuncA [ B.tableValues "" ] []
+  ]
+
+target :: forall a. Array (B.Node a)
+target =
+  [ B.a [ B.target "" ] []
+  , B.a [ B.target "" ] []
+  ]
+
+targetX :: forall a. Array (B.Node a)
+targetX =
+  [ B.feConvolveMatrix [ B.targetX 0 ] []
+  ]
+
+targetY :: forall a. Array (B.Node a)
+targetY =
+  [ B.feConvolveMatrix [ B.targetY 0 ] []
+  ]
+
+textAnchor :: forall a. Array (B.Node a)
+textAnchor =
+  [ B.g [ B.textAnchor "" ] []
+  ]
+
+textAttr :: forall a. Array (B.Node a)
+textAttr =
+  [ B.body [ B.textAttr "" ] []
+  ]
+
+textDecoration :: forall a. Array (B.Node a)
+textDecoration =
+  [ B.g [ B.textDecoration "" ] []
+  ]
+
+textLength :: forall a. Array (B.Node a)
+textLength =
+  [ B.textEl [ B.textLength "" ] []
+  ]
+
+textOverflow :: forall a. Array (B.Node a)
+textOverflow =
+  [ B.g [ B.textOverflow "" ] []
+  ]
+
+textRendering :: forall a. Array (B.Node a)
+textRendering =
+  [ B.g [ B.textRendering "" ] []
+  ]
+
+timelineBegin :: forall a. Array (B.Node a)
+timelineBegin =
+  [ B.svg [ B.timelineBegin "" ] []
+  ]
+
+timelinebegin :: forall a. Array (B.Node a)
+timelinebegin =
+  [ B.svg [ B.timelinebegin "" ] []
+  ]
+
+titleAttr :: forall a. Array (B.Node a)
+titleAttr =
+  [ B.div [ B.titleAttr "" ] []
+  , B.style [ B.titleAttr "" ] []
+  ]
+
+to :: forall a. Array (B.Node a)
+to =
+  [ B.animate [ B.to "" ] []
+  ]
+
+transform :: forall a. Array (B.Node a)
+transform =
+  [ B.g [ B.transform "" ] []
+  ]
+
+transformBehavior :: forall a. Array (B.Node a)
+transformBehavior =
+  [ B.video [ B.transformBehavior "" ] []
+  ]
+
+translate :: forall a. Array (B.Node a)
+translate =
+  [ B.div [ B.translate "yes" ] []
+  ]
+
+type' :: forall a. Array (B.Node a)
+type' =
+  [ B.a [ B.type' "" ] []
+  , B.a [ B.type' "" ] []
+  ]
+
+typemustmatch :: forall a. Array (B.Node a)
+typemustmatch =
+  [ B.object [ B.typemustmatch true ] []
+  ]
+
+typeof :: forall a. Array (B.Node a)
+typeof =
+  [ B.g [ B.typeof "" ] []
+  ]
+
+u1 :: forall a. Array (B.Node a)
+u1 =
+  [ B.hkern [ B.u1 "" ] []
+  ]
+
+u2 :: forall a. Array (B.Node a)
+u2 =
+  [ B.hkern [ B.u2 "" ] []
+  ]
+
+underlinePosition :: forall a. Array (B.Node a)
+underlinePosition =
+  [ B.fontFace [ B.underlinePosition 0 ] []
+  ]
+
+underlineThickness :: forall a. Array (B.Node a)
+underlineThickness =
+  [ B.fontFace [ B.underlineThickness 0 ] []
+  ]
+
+unicode :: forall a. Array (B.Node a)
+unicode =
+  [ B.glyph [ B.unicode "" ] []
+  ]
+
+unicodeBidi :: forall a. Array (B.Node a)
+unicodeBidi =
+  [ B.g [ B.unicodeBidi "" ] []
+  ]
+
+unicodeRange :: forall a. Array (B.Node a)
+unicodeRange =
+  [ B.fontFace [ B.unicodeRange "" ] []
+  ]
+
+unitsPerEm :: forall a. Array (B.Node a)
+unitsPerEm =
+  [ B.fontFace [ B.unitsPerEm 0 ] []
+  ]
+
+usemap :: forall a. Array (B.Node a)
+usemap =
+  [ B.img [ B.usemap "" ] []
+  ]
+
+vAlphabetic :: forall a. Array (B.Node a)
+vAlphabetic =
+  [ B.fontFace [ B.vAlphabetic 0 ] []
+  ]
+
+vHanging :: forall a. Array (B.Node a)
+vHanging =
+  [ B.fontFace [ B.vHanging 0 ] []
+  ]
+
+vIdeographic :: forall a. Array (B.Node a)
+vIdeographic =
+  [ B.fontFace [ B.vIdeographic 0 ] []
+  ]
+
+vMathematical :: forall a. Array (B.Node a)
+vMathematical =
+  [ B.fontFace [ B.vMathematical 0 ] []
+  ]
+
+valign :: forall a. Array (B.Node a)
+valign =
+  [ B.col [ B.valign "" ] []
+  ]
+
+value :: forall a. Array (B.Node a)
+value =
+  [ B.button [ B.value "" ] []
+  ]
+
+values :: forall a. Array (B.Node a)
+values =
+  [ B.animate [ B.values "" ] []
+  ]
+
+valuetype :: forall a. Array (B.Node a)
+valuetype =
+  [ B.param [ B.valuetype "" ] []
+  ]
+
+vectorEffect :: forall a. Array (B.Node a)
+vectorEffect =
+  [ B.g [ B.vectorEffect "" ] []
+  ]
+
+version :: forall a. Array (B.Node a)
+version =
+  [ B.html [ B.version "" ] []
+  , B.svg [ B.version "" ] []
+  ]
+
+vertAdvY :: forall a. Array (B.Node a)
+vertAdvY =
+  [ B.font [ B.vertAdvY 0 ] []
+  ]
+
+vertOriginX :: forall a. Array (B.Node a)
+vertOriginX =
+  [ B.font [ B.vertOriginX 0 ] []
+  ]
+
+vertOriginY :: forall a. Array (B.Node a)
+vertOriginY =
+  [ B.font [ B.vertOriginY 0 ] []
+  ]
+
+viewBox :: forall a. Array (B.Node a)
+viewBox =
+  [ B.marker [ B.viewBox "" ] []
+  ]
+
+viewTarget :: forall a. Array (B.Node a)
+viewTarget =
+  [ B.view [ B.viewTarget "" ] []
+  ]
+
+visibility :: forall a. Array (B.Node a)
+visibility =
+  [ B.g [ B.visibility "" ] []
+  ]
+
+vlink :: forall a. Array (B.Node a)
+vlink =
+  [ B.body [ B.vlink "" ] []
+  ]
+
+vspace :: forall a. Array (B.Node a)
+vspace =
+  [ B.applet [ B.vspace 0 ] []
+  ]
+
+whiteSpace :: forall a. Array (B.Node a)
+whiteSpace =
+  [ B.g [ B.whiteSpace "" ] []
+  ]
+
+width :: forall a. Array (B.Node a)
+width =
+  [ B.applet [ B.width "" ] []
+  , B.animation [ B.width "" ] []
+  ]
+
+widths :: forall a. Array (B.Node a)
+widths =
+  [ B.fontFace [ B.widths "" ] []
+  ]
+
+wordSpacing :: forall a. Array (B.Node a)
+wordSpacing =
+  [ B.g [ B.wordSpacing "" ] []
+  ]
+
+wrap :: forall a. Array (B.Node a)
+wrap =
+  [ B.textarea [ B.wrap "soft" ] []
+  ]
+
+writingMode :: forall a. Array (B.Node a)
+writingMode =
+  [ B.g [ B.writingMode "" ] []
+  ]
+
+writingsuggestions :: forall a. Array (B.Node a)
+writingsuggestions =
+  [ B.div [ B.writingsuggestions "true" ] []
+  ]
+
+x :: forall a. Array (B.Node a)
+x =
+  [ B.altGlyph [ B.x "" ] []
+  ]
+
+x1 :: forall a. Array (B.Node a)
+x1 =
+  [ B.line [ B.x1 "" ] []
+  ]
+
+x2 :: forall a. Array (B.Node a)
+x2 =
+  [ B.line [ B.x2 "" ] []
+  ]
+
+xChannelSelector :: forall a. Array (B.Node a)
+xChannelSelector =
+  [ B.feDisplacementMap [ B.xChannelSelector "" ] []
+  ]
+
+xHeight :: forall a. Array (B.Node a)
+xHeight =
+  [ B.fontFace [ B.xHeight 0 ] []
+  ]
+
+y :: forall a. Array (B.Node a)
+y =
+  [ B.altGlyph [ B.y "" ] []
+  ]
+
+y1 :: forall a. Array (B.Node a)
+y1 =
+  [ B.line [ B.y1 "" ] []
+  ]
+
+y2 :: forall a. Array (B.Node a)
+y2 =
+  [ B.line [ B.y2 "" ] []
+  ]
+
+yChannelSelector :: forall a. Array (B.Node a)
+yChannelSelector =
+  [ B.feDisplacementMap [ B.yChannelSelector "" ] []
+  ]
+
+z :: forall a. Array (B.Node a)
+z =
+  [ B.fePointLight [ B.z "" ] []
+  ]
+
+zoomAndPan :: forall a. Array (B.Node a)
+zoomAndPan =
+  [ B.svg [ B.zoomAndPan "" ] []
+  ]
+
+-- Events, each handled by `msg`
+
+onAbort :: forall a. a -> Array (B.Node a)
+onAbort msg =
+  [ B.div [ B.onAbort msg ] []
+  ]
+
+onAfterPrint :: forall a. a -> Array (B.Node a)
+onAfterPrint msg =
+  [ B.body [ B.onAfterPrint msg ] []
+  ]
+
+onAnimationCancel :: forall a. a -> Array (B.Node a)
+onAnimationCancel msg =
+  [ B.div [ B.onAnimationCancel msg ] []
+  ]
+
+onAnimationEnd :: forall a. a -> Array (B.Node a)
+onAnimationEnd msg =
+  [ B.div [ B.onAnimationEnd msg ] []
+  ]
+
+onAnimationIteration :: forall a. a -> Array (B.Node a)
+onAnimationIteration msg =
+  [ B.div [ B.onAnimationIteration msg ] []
+  ]
+
+onAnimationStart :: forall a. a -> Array (B.Node a)
+onAnimationStart msg =
+  [ B.div [ B.onAnimationStart msg ] []
+  ]
+
+onAuxClick :: forall a. a -> Array (B.Node a)
+onAuxClick msg =
+  [ B.div [ B.onAuxClick msg ] []
+  ]
+
+onBeforeInput :: forall a. a -> Array (B.Node a)
+onBeforeInput msg =
+  [ B.div [ B.onBeforeInput msg ] []
+  ]
+
+onBeforeMatch :: forall a. a -> Array (B.Node a)
+onBeforeMatch msg =
+  [ B.div [ B.onBeforeMatch msg ] []
+  ]
+
+onBeforePrint :: forall a. a -> Array (B.Node a)
+onBeforePrint msg =
+  [ B.body [ B.onBeforePrint msg ] []
+  ]
+
+onBeforeToggle :: forall a. a -> Array (B.Node a)
+onBeforeToggle msg =
+  [ B.div [ B.onBeforeToggle msg ] []
+  ]
+
+onBeforeUnload :: forall a. a -> Array (B.Node a)
+onBeforeUnload msg =
+  [ B.body [ B.onBeforeUnload msg ] []
+  ]
+
+onBlur :: forall a. a -> Array (B.Node a)
+onBlur msg =
+  [ B.div [ B.onBlur msg ] []
+  ]
+
+onCancel :: forall a. a -> Array (B.Node a)
+onCancel msg =
+  [ B.div [ B.onCancel msg ] []
+  ]
+
+onCanPlay :: forall a. a -> Array (B.Node a)
+onCanPlay msg =
+  [ B.div [ B.onCanPlay msg ] []
+  ]
+
+onCanPlayThrough :: forall a. a -> Array (B.Node a)
+onCanPlayThrough msg =
+  [ B.div [ B.onCanPlayThrough msg ] []
+  ]
+
+onChange :: forall a. a -> Array (B.Node a)
+onChange msg =
+  [ B.div [ B.onChange msg ] []
+  ]
+
+onClick :: forall a. a -> Array (B.Node a)
+onClick msg =
+  [ B.div [ B.onClick msg ] []
+  ]
+
+onClose :: forall a. a -> Array (B.Node a)
+onClose msg =
+  [ B.div [ B.onClose msg ] []
+  ]
+
+onCommand :: forall a. a -> Array (B.Node a)
+onCommand msg =
+  [ B.div [ B.onCommand msg ] []
+  ]
+
+onCompositionEnd :: forall a. a -> Array (B.Node a)
+onCompositionEnd msg =
+  [ B.div [ B.onCompositionEnd msg ] []
+  ]
+
+onCompositionStart :: forall a. a -> Array (B.Node a)
+onCompositionStart msg =
+  [ B.div [ B.onCompositionStart msg ] []
+  ]
+
+onCompositionUpdate :: forall a. a -> Array (B.Node a)
+onCompositionUpdate msg =
+  [ B.div [ B.onCompositionUpdate msg ] []
+  ]
+
+onContentVisibilityAutoStateChange :: forall a. a -> Array (B.Node a)
+onContentVisibilityAutoStateChange msg =
+  [ B.div [ B.onContentVisibilityAutoStateChange msg ] []
+  ]
+
+onContextLost :: forall a. a -> Array (B.Node a)
+onContextLost msg =
+  [ B.div [ B.onContextLost msg ] []
+  ]
+
+onContextMenu :: forall a. a -> Array (B.Node a)
+onContextMenu msg =
+  [ B.div [ B.onContextMenu msg ] []
+  ]
+
+onContextRestored :: forall a. a -> Array (B.Node a)
+onContextRestored msg =
+  [ B.div [ B.onContextRestored msg ] []
+  ]
+
+onCopy :: forall a. a -> Array (B.Node a)
+onCopy msg =
+  [ B.div [ B.onCopy msg ] []
+  ]
+
+onCueChange :: forall a. a -> Array (B.Node a)
+onCueChange msg =
+  [ B.div [ B.onCueChange msg ] []
+  ]
+
+onCut :: forall a. a -> Array (B.Node a)
+onCut msg =
+  [ B.div [ B.onCut msg ] []
+  ]
+
+onDblClick :: forall a. a -> Array (B.Node a)
+onDblClick msg =
+  [ B.div [ B.onDblClick msg ] []
+  ]
+
+onDrag :: forall a. a -> Array (B.Node a)
+onDrag msg =
+  [ B.div [ B.onDrag msg ] []
+  ]
+
+onDragEnd :: forall a. a -> Array (B.Node a)
+onDragEnd msg =
+  [ B.div [ B.onDragEnd msg ] []
+  ]
+
+onDragEnter :: forall a. a -> Array (B.Node a)
+onDragEnter msg =
+  [ B.div [ B.onDragEnter msg ] []
+  ]
+
+onDragLeave :: forall a. a -> Array (B.Node a)
+onDragLeave msg =
+  [ B.div [ B.onDragLeave msg ] []
+  ]
+
+onDragOver :: forall a. a -> Array (B.Node a)
+onDragOver msg =
+  [ B.div [ B.onDragOver msg ] []
+  ]
+
+onDragStart :: forall a. a -> Array (B.Node a)
+onDragStart msg =
+  [ B.div [ B.onDragStart msg ] []
+  ]
+
+onDrop :: forall a. a -> Array (B.Node a)
+onDrop msg =
+  [ B.div [ B.onDrop msg ] []
+  ]
+
+onDurationChange :: forall a. a -> Array (B.Node a)
+onDurationChange msg =
+  [ B.div [ B.onDurationChange msg ] []
+  ]
+
+onEmptied :: forall a. a -> Array (B.Node a)
+onEmptied msg =
+  [ B.div [ B.onEmptied msg ] []
+  ]
+
+onEnded :: forall a. a -> Array (B.Node a)
+onEnded msg =
+  [ B.div [ B.onEnded msg ] []
+  ]
+
+onError :: forall a. a -> Array (B.Node a)
+onError msg =
+  [ B.div [ B.onError msg ] []
+  ]
+
+onFocus :: forall a. a -> Array (B.Node a)
+onFocus msg =
+  [ B.div [ B.onFocus msg ] []
+  ]
+
+onFocusIn :: forall a. a -> Array (B.Node a)
+onFocusIn msg =
+  [ B.div [ B.onFocusIn msg ] []
+  ]
+
+onFocusOut :: forall a. a -> Array (B.Node a)
+onFocusOut msg =
+  [ B.div [ B.onFocusOut msg ] []
+  ]
+
+onFormData :: forall a. a -> Array (B.Node a)
+onFormData msg =
+  [ B.div [ B.onFormData msg ] []
+  ]
+
+onFullscreenChange :: forall a. a -> Array (B.Node a)
+onFullscreenChange msg =
+  [ B.div [ B.onFullscreenChange msg ] []
+  ]
+
+onFullscreenError :: forall a. a -> Array (B.Node a)
+onFullscreenError msg =
+  [ B.div [ B.onFullscreenError msg ] []
+  ]
+
+onGotPointerCapture :: forall a. a -> Array (B.Node a)
+onGotPointerCapture msg =
+  [ B.div [ B.onGotPointerCapture msg ] []
+  ]
+
+onHashChange :: forall a. a -> Array (B.Node a)
+onHashChange msg =
+  [ B.body [ B.onHashChange msg ] []
+  ]
+
+onInput :: forall a. a -> Array (B.Node a)
+onInput msg =
+  [ B.div [ B.onInput (\_ -> msg) ] []
+  ]
+
+onInvalid :: forall a. a -> Array (B.Node a)
+onInvalid msg =
+  [ B.div [ B.onInvalid msg ] []
+  ]
+
+onKeyDown :: forall a. a -> Array (B.Node a)
+onKeyDown msg =
+  [ B.div [ B.onKeyDown (\_ -> Just msg) ] []
+  ]
+
+onKeyPress :: forall a. a -> Array (B.Node a)
+onKeyPress msg =
+  [ B.div [ B.onKeyPress msg ] []
+  ]
+
+onKeyUp :: forall a. a -> Array (B.Node a)
+onKeyUp msg =
+  [ B.div [ B.onKeyUp (\_ -> Just msg) ] []
+  ]
+
+onLanguageChange :: forall a. a -> Array (B.Node a)
+onLanguageChange msg =
+  [ B.body [ B.onLanguageChange msg ] []
+  ]
+
+onLoad :: forall a. a -> Array (B.Node a)
+onLoad msg =
+  [ B.div [ B.onLoad msg ] []
+  ]
+
+onLoadedData :: forall a. a -> Array (B.Node a)
+onLoadedData msg =
+  [ B.div [ B.onLoadedData msg ] []
+  ]
+
+onLoadedMetadata :: forall a. a -> Array (B.Node a)
+onLoadedMetadata msg =
+  [ B.div [ B.onLoadedMetadata msg ] []
+  ]
+
+onLoadStart :: forall a. a -> Array (B.Node a)
+onLoadStart msg =
+  [ B.div [ B.onLoadStart msg ] []
+  ]
+
+onLostPointerCapture :: forall a. a -> Array (B.Node a)
+onLostPointerCapture msg =
+  [ B.div [ B.onLostPointerCapture msg ] []
+  ]
+
+onMessage :: forall a. a -> Array (B.Node a)
+onMessage msg =
+  [ B.body [ B.onMessage msg ] []
+  ]
+
+onMessageError :: forall a. a -> Array (B.Node a)
+onMessageError msg =
+  [ B.body [ B.onMessageError msg ] []
+  ]
+
+onMouseDown :: forall a. a -> Array (B.Node a)
+onMouseDown msg =
+  [ B.div [ B.onMouseDown msg ] []
+  ]
+
+onMouseEnter :: forall a. a -> Array (B.Node a)
+onMouseEnter msg =
+  [ B.div [ B.onMouseEnter msg ] []
+  ]
+
+onMouseLeave :: forall a. a -> Array (B.Node a)
+onMouseLeave msg =
+  [ B.div [ B.onMouseLeave msg ] []
+  ]
+
+onMouseMove :: forall a. a -> Array (B.Node a)
+onMouseMove msg =
+  [ B.div [ B.onMouseMove msg ] []
+  ]
+
+onMouseOut :: forall a. a -> Array (B.Node a)
+onMouseOut msg =
+  [ B.div [ B.onMouseOut msg ] []
+  ]
+
+onMouseOver :: forall a. a -> Array (B.Node a)
+onMouseOver msg =
+  [ B.div [ B.onMouseOver msg ] []
+  ]
+
+onMouseUp :: forall a. a -> Array (B.Node a)
+onMouseUp msg =
+  [ B.div [ B.onMouseUp msg ] []
+  ]
+
+onOffline :: forall a. a -> Array (B.Node a)
+onOffline msg =
+  [ B.body [ B.onOffline msg ] []
+  ]
+
+onOnline :: forall a. a -> Array (B.Node a)
+onOnline msg =
+  [ B.body [ B.onOnline msg ] []
+  ]
+
+onPageHide :: forall a. a -> Array (B.Node a)
+onPageHide msg =
+  [ B.body [ B.onPageHide msg ] []
+  ]
+
+onPageReveal :: forall a. a -> Array (B.Node a)
+onPageReveal msg =
+  [ B.body [ B.onPageReveal msg ] []
+  ]
+
+onPageShow :: forall a. a -> Array (B.Node a)
+onPageShow msg =
+  [ B.body [ B.onPageShow msg ] []
+  ]
+
+onPageSwap :: forall a. a -> Array (B.Node a)
+onPageSwap msg =
+  [ B.body [ B.onPageSwap msg ] []
+  ]
+
+onPaste :: forall a. a -> Array (B.Node a)
+onPaste msg =
+  [ B.div [ B.onPaste msg ] []
+  ]
+
+onPause :: forall a. a -> Array (B.Node a)
+onPause msg =
+  [ B.div [ B.onPause msg ] []
+  ]
+
+onPlay :: forall a. a -> Array (B.Node a)
+onPlay msg =
+  [ B.div [ B.onPlay msg ] []
+  ]
+
+onPlaying :: forall a. a -> Array (B.Node a)
+onPlaying msg =
+  [ B.div [ B.onPlaying msg ] []
+  ]
+
+onPointerCancel :: forall a. a -> Array (B.Node a)
+onPointerCancel msg =
+  [ B.div [ B.onPointerCancel msg ] []
+  ]
+
+onPointerDown :: forall a. a -> Array (B.Node a)
+onPointerDown msg =
+  [ B.div [ B.onPointerDown msg ] []
+  ]
+
+onPointerEnter :: forall a. a -> Array (B.Node a)
+onPointerEnter msg =
+  [ B.div [ B.onPointerEnter msg ] []
+  ]
+
+onPointerLeave :: forall a. a -> Array (B.Node a)
+onPointerLeave msg =
+  [ B.div [ B.onPointerLeave msg ] []
+  ]
+
+onPointerMove :: forall a. a -> Array (B.Node a)
+onPointerMove msg =
+  [ B.div [ B.onPointerMove msg ] []
+  ]
+
+onPointerOut :: forall a. a -> Array (B.Node a)
+onPointerOut msg =
+  [ B.div [ B.onPointerOut msg ] []
+  ]
+
+onPointerOver :: forall a. a -> Array (B.Node a)
+onPointerOver msg =
+  [ B.div [ B.onPointerOver msg ] []
+  ]
+
+onPointerRawUpdate :: forall a. a -> Array (B.Node a)
+onPointerRawUpdate msg =
+  [ B.div [ B.onPointerRawUpdate msg ] []
+  ]
+
+onPointerUp :: forall a. a -> Array (B.Node a)
+onPointerUp msg =
+  [ B.div [ B.onPointerUp msg ] []
+  ]
+
+onPopState :: forall a. a -> Array (B.Node a)
+onPopState msg =
+  [ B.body [ B.onPopState msg ] []
+  ]
+
+onProgress :: forall a. a -> Array (B.Node a)
+onProgress msg =
+  [ B.div [ B.onProgress msg ] []
+  ]
+
+onRateChange :: forall a. a -> Array (B.Node a)
+onRateChange msg =
+  [ B.div [ B.onRateChange msg ] []
+  ]
+
+onRejectionHandled :: forall a. a -> Array (B.Node a)
+onRejectionHandled msg =
+  [ B.body [ B.onRejectionHandled msg ] []
+  ]
+
+onReset :: forall a. a -> Array (B.Node a)
+onReset msg =
+  [ B.div [ B.onReset msg ] []
+  ]
+
+onResize :: forall a. a -> Array (B.Node a)
+onResize msg =
+  [ B.div [ B.onResize msg ] []
+  ]
+
+onScroll :: forall a. a -> Array (B.Node a)
+onScroll msg =
+  [ B.div [ B.onScroll msg ] []
+  ]
+
+onScrollEnd :: forall a. a -> Array (B.Node a)
+onScrollEnd msg =
+  [ B.div [ B.onScrollEnd msg ] []
+  ]
+
+onSecurityPolicyViolation :: forall a. a -> Array (B.Node a)
+onSecurityPolicyViolation msg =
+  [ B.div [ B.onSecurityPolicyViolation msg ] []
+  ]
+
+onSeeked :: forall a. a -> Array (B.Node a)
+onSeeked msg =
+  [ B.div [ B.onSeeked msg ] []
+  ]
+
+onSeeking :: forall a. a -> Array (B.Node a)
+onSeeking msg =
+  [ B.div [ B.onSeeking msg ] []
+  ]
+
+onSelect :: forall a. a -> Array (B.Node a)
+onSelect msg =
+  [ B.div [ B.onSelect msg ] []
+  ]
+
+onSelectionChange :: forall a. a -> Array (B.Node a)
+onSelectionChange msg =
+  [ B.div [ B.onSelectionChange msg ] []
+  ]
+
+onSelectStart :: forall a. a -> Array (B.Node a)
+onSelectStart msg =
+  [ B.div [ B.onSelectStart msg ] []
+  ]
+
+onSlotChange :: forall a. a -> Array (B.Node a)
+onSlotChange msg =
+  [ B.div [ B.onSlotChange msg ] []
+  ]
+
+onStalled :: forall a. a -> Array (B.Node a)
+onStalled msg =
+  [ B.div [ B.onStalled msg ] []
+  ]
+
+onStorage :: forall a. a -> Array (B.Node a)
+onStorage msg =
+  [ B.body [ B.onStorage msg ] []
+  ]
+
+onSubmit :: forall a. a -> Array (B.Node a)
+onSubmit msg =
+  [ B.div [ B.onSubmit msg ] []
+  ]
+
+onSuspend :: forall a. a -> Array (B.Node a)
+onSuspend msg =
+  [ B.div [ B.onSuspend msg ] []
+  ]
+
+onTimeUpdate :: forall a. a -> Array (B.Node a)
+onTimeUpdate msg =
+  [ B.div [ B.onTimeUpdate msg ] []
+  ]
+
+onToggle :: forall a. a -> Array (B.Node a)
+onToggle msg =
+  [ B.div [ B.onToggle msg ] []
+  ]
+
+onTouchCancel :: forall a. a -> Array (B.Node a)
+onTouchCancel msg =
+  [ B.div [ B.onTouchCancel msg ] []
+  ]
+
+onTouchEnd :: forall a. a -> Array (B.Node a)
+onTouchEnd msg =
+  [ B.div [ B.onTouchEnd msg ] []
+  ]
+
+onTouchMove :: forall a. a -> Array (B.Node a)
+onTouchMove msg =
+  [ B.div [ B.onTouchMove msg ] []
+  ]
+
+onTouchStart :: forall a. a -> Array (B.Node a)
+onTouchStart msg =
+  [ B.div [ B.onTouchStart msg ] []
+  ]
+
+onTransitionCancel :: forall a. a -> Array (B.Node a)
+onTransitionCancel msg =
+  [ B.div [ B.onTransitionCancel msg ] []
+  ]
+
+onTransitionEnd :: forall a. a -> Array (B.Node a)
+onTransitionEnd msg =
+  [ B.div [ B.onTransitionEnd msg ] []
+  ]
+
+onTransitionRun :: forall a. a -> Array (B.Node a)
+onTransitionRun msg =
+  [ B.div [ B.onTransitionRun msg ] []
+  ]
+
+onTransitionStart :: forall a. a -> Array (B.Node a)
+onTransitionStart msg =
+  [ B.div [ B.onTransitionStart msg ] []
+  ]
+
+onUnhandledRejection :: forall a. a -> Array (B.Node a)
+onUnhandledRejection msg =
+  [ B.body [ B.onUnhandledRejection msg ] []
+  ]
+
+onUnload :: forall a. a -> Array (B.Node a)
+onUnload msg =
+  [ B.body [ B.onUnload msg ] []
+  ]
+
+onVolumeChange :: forall a. a -> Array (B.Node a)
+onVolumeChange msg =
+  [ B.div [ B.onVolumeChange msg ] []
+  ]
+
+onWaiting :: forall a. a -> Array (B.Node a)
+onWaiting msg =
+  [ B.div [ B.onWaiting msg ] []
+  ]
+
+onWheel :: forall a. a -> Array (B.Node a)
+onWheel msg =
+  [ B.div [ B.onWheel msg ] []
   ]

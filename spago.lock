@@ -191,11 +191,13 @@
             "dom-indexed",
             "halogen",
             "maybe",
+            "media-types",
             "prelude",
             "tuples",
-            "unsafe-coerce",
+            "web-clipboard",
             "web-events",
             "web-html",
+            "web-touchevents",
             "web-uievents"
           ]
         },
@@ -378,6 +380,46 @@
             "refs",
             "strings",
             "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-counter-halogen-psx": {
+        "path": "test/suite/apps/counter/halogen/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "psx-halogen",
+            "web-dom",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-counter-halogen-purs": {
+        "path": "test/suite/apps/counter/halogen/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "halogen",
+            "maybe",
+            "prelude",
+            "tuples",
+            "web-dom",
+            "web-html"
           ]
         },
         "test": {
