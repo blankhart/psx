@@ -2,12 +2,17 @@ package:
   name: psx-suite
   dependencies:
     - aff
+    - argonaut-core
     - arrays
     - console
+    - datetime
     - effect
     - either
     - foldable-traversable
     - foreign
+    - foreign-object
+    - integers
+    - lists
     - maybe
     - node-buffer
     - node-fs

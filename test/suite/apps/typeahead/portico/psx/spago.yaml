@@ -1,0 +1,13 @@
+package:
+  name: psx-suite-typeahead-portico-psx
+  dependencies:
+    - aff
+    - arrays
+    - effect
+    - maybe
+    - portico
+    - prelude
+    - psx-portico
+    - psx-suite-shared
+    - strings
+    - tuples
