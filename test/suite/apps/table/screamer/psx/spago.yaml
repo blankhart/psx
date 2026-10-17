@@ -1,0 +1,11 @@
+package:
+  name: psx-suite-table-screamer-psx
+  dependencies:
+    - arrays
+    - effect
+    - maybe
+    - prelude
+    - psx-screamer
+    - psx-suite-shared
+    - refs
+    - screamer

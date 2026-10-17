@@ -2,7 +2,13 @@ name: Suite
 
 # The cross-framework scenario suite: every scenario's apps in Chromium,
 # checked against the scenario's DOM contracts. It runs on main, and on pull
-# requests that touch what the apps are built from.
+# requests that touch what the apps are built from, and publishes the report
+# (test/suite/dist/report) as the job summary and an artifact.
+#
+# Nightly, the `timings` job runs the table scenario's measures many times
+# with the purs/ apps run twice, so the report can tell psx/ apart from
+# run-to-run noise. It appends the medians to history.jsonl on the
+# `suite-history` branch and reports the change since the last night.
 on:
   push:
     branches: [main]
@@ -18,10 +24,13 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/suite.yml'
+  schedule:
+    - cron: '17 3 * * *'
   workflow_dispatch:
 
 jobs:
   suite:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -66,4 +75,106 @@ jobs:
       - name: Run the scenarios
         env:
           CHROME_PATH: /usr/bin/google-chrome
-        run: npx spago run -p psx-suite
+        run: npx spago run -p psx-suite -- --build-time
+
+      - name: Publish the report
+        if: always()
+        run: |
+          if [ -f test/suite/dist/report/report.md ]; then
+            cat test/suite/dist/report/report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: suite-report
+          path: test/suite/dist/report
+          if-no-files-found: ignore
+
+  timings:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The checkout token would shadow PSX_DEPS_TOKEN for other github.com repositories.
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Portico and Screamer are private (see ci.yml).
+      - name: Allow reading the private framework repositories
+        env:
+          TOKEN: ${{ secrets.PSX_DEPS_TOKEN }}
+        run: |
+          if [ -n "$TOKEN" ]; then
+            git config --global url."https://x-access-token:${TOKEN}@github.com/blankhart/".insteadOf "https://github.com/blankhart/"
+          fi
+
+      - run: npm ci
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/spago-nodejs
+            .spago
+          key: spago-${{ runner.os }}-${{ hashFiles('spago.lock') }}
+          restore-keys: spago-${{ runner.os }}-
+
+      - name: Build every package
+        run: npx spago build
+
+      - name: Fetch the history
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p history
+          if git fetch -q --depth 1 "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}" suite-history 2>/dev/null; then
+            git show FETCH_HEAD:history.jsonl > history/history.jsonl || true
+          fi
+          touch history/history.jsonl
+
+      - name: Time the table
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: npx spago run -p psx-suite -- --runs 15 --control --history history/history.jsonl table
+
+      - name: Publish the report
+        if: always()
+        run: |
+          if [ -f test/suite/dist/report/report.md ]; then
+            cat test/suite/dist/report/report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: suite-timings
+          path: test/suite/dist/report
+          if-no-files-found: ignore
+
+      # Kept even when a timing is outside noise: that night is history too.
+      - name: Record the history
+        if: always() && hashFiles('test/suite/dist/report/history.jsonl') != ''
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          dir=$(mktemp -d)
+          cp test/suite/dist/report/history.jsonl "$dir/"
+          cd "$dir"
+          git init -q -b suite-history
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          remote="https://x-access-token:${TOKEN}@github.com/${{ github.repository }}"
+          if git fetch -q --depth 1 "$remote" suite-history 2>/dev/null; then
+            git reset -q --soft FETCH_HEAD
+          fi
+          git add history.jsonl
+          git commit -qm "Table timings for ${GITHUB_SHA}"
+          git push -q "$remote" HEAD:suite-history

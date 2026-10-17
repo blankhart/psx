@@ -16,7 +16,10 @@
 -- | With `--control`, each framework's `purs/` app runs twice, and the
 -- | timings section checks every `psx/` median against that run-to-run
 -- | noise: the difference between the two `purs/` medians, or the pooled
--- | `purs/` interquartile range, whichever is larger. With `--history`, it
+-- | `purs/` interquartile range, whichever is larger. A `psx/` median is
+-- | within noise unless it is slower than `purs/` by more than that; one
+-- | faster by more says the noise was underestimated, not that `psx/`
+-- | costs anything. With `--history`, it
 -- | gives each median's change from the last recorded run.
 -- |
 -- | It writes `report.json`, `report.md` (the job summary in CI) and
@@ -350,7 +353,7 @@ timingsOf results previous = do
     , psx: q
     , control: c
     , noise
-    , within: (\n -> abs (q.median - p.median) <= n) <$> noise
+    , within: (\n -> q.median - p.median <= n) <$> noise
     , previous: { purs: prior "purs", psx: prior "psx" }
     }
   where
