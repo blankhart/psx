@@ -1,0 +1,10 @@
+package:
+  name: psx-suite-svg-portico-psx
+  dependencies:
+    - arrays
+    - effect
+    - maybe
+    - portico
+    - prelude
+    - psx-portico
+    - strings

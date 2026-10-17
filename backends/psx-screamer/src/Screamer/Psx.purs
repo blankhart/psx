@@ -1277,7 +1277,7 @@ sup :: forall a. Array (Attr a) -> Markup a -> Node a
 sup = S.element_ "sup"
 
 svg :: forall a. Array (Attr a) -> Markup a -> Node a
-svg = S.element_ "svg"
+svg = S.svgElement_ "svg"
 
 table :: forall a. Array (Attr a) -> Markup a -> Node a
 table = S.element_ "table"
