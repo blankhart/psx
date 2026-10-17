@@ -7,6 +7,7 @@ package:
     - portico
     - prelude
     - tuples
+    - unsafe-coerce
   test:
     main: Test.Portico.Psx
     dependencies:

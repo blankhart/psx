@@ -1,0 +1,225 @@
+{
+  "module": "Portico.Psx",
+  "directory": "backends/psx-portico/src",
+  "core": "Portico.Psx.Core",
+  "coreExports": [
+    "class Children",
+    "class KeyedChildren",
+    "class ToKey",
+    "Attr",
+    "Key",
+    "Markup",
+    "Node",
+    "attribute",
+    "children",
+    "element",
+    "keyed",
+    "keyedChildren",
+    "keyedElement",
+    "root",
+    "text",
+    "toKey"
+  ],
+  "doc": [
+    "-- | The PSX backend for Portico. Lowered `.psx` code calls it through the",
+    "-- | alias `B`.",
+    "-- |",
+    "-- | The core (`text`, `element`, `keyed`, the `Children` classes, `root`) is",
+    "-- | hand-written in `Portico.Psx.Core`. Every element, attribute and event",
+    "-- | below is Portico's own function where Portico's suits both HTML and SVG,",
+    "-- | and otherwise an attribute or a listener: a string attribute is set as",
+    "-- | an attribute because the properties behind some (`href`) are read-only",
+    "-- | on SVG elements."
+  ],
+  "imports": [
+    "Prelude (pure, show, (<<<))",
+    "Data.Maybe (Maybe)",
+    "Portico as P",
+    "Portico.Psx.Core (Attr, Markup, Node, booleanAttribute)"
+  ],
+  "templates": {
+    "element": {
+      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "code": "P.element {name}"
+    },
+    "boolean": {
+      "type": "forall a. Boolean -> Attr a",
+      "code": "booleanAttribute {name}"
+    },
+    "string": {
+      "type": "forall a. String -> Attr a",
+      "code": "P.attribute {name}"
+    },
+    "number": {
+      "type": "forall a. Int -> Attr a",
+      "code": "P.attribute {name} <<< show"
+    },
+    "event": {
+      "type": "forall a. a -> Attr a",
+      "code": "\\msg -> P.on {name} \\_ -> pure msg"
+    }
+  },
+  "groups": [
+    {
+      "names": [
+        "checked",
+        "disabled",
+        "for",
+        "id",
+        "inert",
+        "name",
+        "popover",
+        "popovertarget",
+        "required",
+        "selected",
+        "tabindex",
+        "value"
+      ],
+      "code": "P.{ident}"
+    },
+    {
+      "names": [
+        "onSubmit",
+        "onAuxClick",
+        "onBeforeToggle",
+        "onBlur",
+        "onCancel",
+        "onChange",
+        "onClick",
+        "onClose",
+        "onCompositionEnd",
+        "onCompositionStart",
+        "onCompositionUpdate",
+        "onContextMenu",
+        "onCopy",
+        "onCut",
+        "onDrag",
+        "onDragEnd",
+        "onDragEnter",
+        "onDragLeave",
+        "onDragOver",
+        "onDragStart",
+        "onDrop",
+        "onFocus",
+        "onFocusIn",
+        "onFocusOut",
+        "onGotPointerCapture",
+        "onInvalid",
+        "onLostPointerCapture",
+        "onMouseDown",
+        "onMouseEnter",
+        "onMouseLeave",
+        "onMouseMove",
+        "onMouseOut",
+        "onMouseOver",
+        "onMouseUp",
+        "onPaste",
+        "onPointerCancel",
+        "onPointerDown",
+        "onPointerEnter",
+        "onPointerLeave",
+        "onPointerMove",
+        "onPointerOut",
+        "onPointerOver",
+        "onPointerUp",
+        "onReset",
+        "onScroll",
+        "onScrollEnd",
+        "onToggle",
+        "onWheel"
+      ],
+      "code": "P.{ident}"
+    }
+  ],
+  "names": {
+    "class_": {
+      "code": "P.class'"
+    },
+    "commandAttr": {
+      "code": "P.command"
+    },
+    "commandfor": {
+      "code": "P.commandfor"
+    },
+    "onInput": {
+      "type": "forall a. (String -> a) -> Attr a",
+      "code": "P.onInput",
+      "sample": "\\_ -> x"
+    },
+    "onKeyDown": {
+      "type": "forall a. (String -> Maybe a) -> Attr a",
+      "code": "P.onKeyDown",
+      "sample": "\\_ -> Just x"
+    },
+    "onKeyUp": {
+      "type": "forall a. (String -> Maybe a) -> Attr a",
+      "code": "P.onKeyUp",
+      "sample": "\\_ -> Just x"
+    }
+  },
+  "conformance": {
+    "imports": [
+      "Prelude ((<>))",
+      "Data.Maybe (Maybe(..))",
+      "Data.Tuple (Tuple)",
+      "Portico.Psx (class Children, class KeyedChildren, class ToKey)"
+    ],
+    "core": [
+      [
+        "text",
+        "forall a. String -> B.Node a"
+      ],
+      [
+        "element",
+        "forall a. String -> Array (B.Attr a) -> B.Markup a -> B.Node a"
+      ],
+      [
+        "keyedElement",
+        "forall a. String -> Array (B.Attr a) -> Array (Tuple B.Key (B.Node a)) -> B.Node a"
+      ],
+      [
+        "keyed",
+        "forall k a. ToKey k => k -> B.Node a -> Tuple B.Key (B.Node a)"
+      ],
+      [
+        "attribute",
+        "forall a. String -> String -> B.Attr a"
+      ],
+      [
+        "children",
+        "forall c a. Children c a => c -> B.Markup a"
+      ],
+      [
+        "keyedChildren",
+        "forall c a. KeyedChildren c a => c -> Array (Tuple B.Key (B.Node a))"
+      ],
+      [
+        "root",
+        "forall a. B.Markup a -> B.Node a"
+      ]
+    ],
+    "extra": [
+      "-- | What a child hole takes: a string, a node, markup, and arrays and",
+      "-- | `Maybe`s of those.",
+      "childHoles :: forall a. B.Node a -> B.Markup a",
+      "childHoles node =",
+      "  B.children \"text\"",
+      "    <> B.children node",
+      "    <> B.children [ node ]",
+      "    <> B.children [ [ node ] ]",
+      "    <> B.children (Just node)",
+      "    <> B.children (Nothing :: Maybe String)",
+      "",
+      "-- | What a child hole of a keyed parent takes: keyed literals and arrays of",
+      "-- | them, keyed by strings or by integers.",
+      "keyedChildHoles :: forall a. B.Node a -> Array (Tuple B.Key (B.Node a))",
+      "keyedChildHoles node =",
+      "  B.keyedChildren (B.keyed \"a\" node)",
+      "    <> B.keyedChildren [ B.keyed 1 node ]",
+      "    <> B.keyedChildren [ [ B.keyed 2 node ] ]",
+      "    <> B.keyedChildren (Just (B.keyed 3.0 node))"
+    ],
+    "nodes": "forall a. Array (B.Node a)",
+    "handlers": "forall a. a -> Array (B.Node a)"
+  }
+}

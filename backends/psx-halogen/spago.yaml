@@ -1,7 +1,16 @@
 package:
   name: psx-halogen
   dependencies:
+    - arrays
+    - dom-indexed
+    - halogen
+    - maybe
     - prelude
+    - tuples
+    - unsafe-coerce
+    - web-events
+    - web-html
+    - web-uievents
   test:
     main: Test.Halogen.Psx
     dependencies:
