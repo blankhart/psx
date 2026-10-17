@@ -490,6 +490,37 @@
           "dependencies": []
         }
       },
+      "psx-suite-counter-screamer-psx": {
+        "path": "test/suite/apps/counter/screamer/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "prelude",
+            "psx-screamer",
+            "psx-suite-shared",
+            "screamer"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-counter-screamer-purs": {
+        "path": "test/suite/apps/counter/screamer/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "prelude",
+            "psx-suite-shared",
+            "screamer"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-nested-halogen-psx": {
         "path": "test/suite/apps/nested/halogen/psx",
         "core": {
@@ -575,12 +606,16 @@
             "aff",
             "arrays",
             "datetime",
+            "effect",
+            "foldable-traversable",
             "integers",
             "maybe",
             "numbers",
             "prelude",
             "strings",
-            "tuples"
+            "tuples",
+            "web-dom",
+            "web-html"
           ]
         },
         "test": {
@@ -808,6 +843,44 @@
           "dependencies": []
         }
       },
+      "psx-suite-todo-screamer-psx": {
+        "path": "test/suite/apps/todo/screamer/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "prelude",
+            "psx-screamer",
+            "psx-suite-shared",
+            "refs",
+            "screamer"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-todo-screamer-purs": {
+        "path": "test/suite/apps/todo/screamer/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "maybe",
+            "prelude",
+            "psx-suite-shared",
+            "refs",
+            "screamer",
+            "web-events",
+            "web-html"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-typeahead-halogen-psx": {
         "path": "test/suite/apps/typeahead/halogen/psx",
         "core": {
@@ -889,6 +962,53 @@
             "psx-suite-shared",
             "strings",
             "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-typeahead-screamer-psx": {
+        "path": "test/suite/apps/typeahead/screamer/psx",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "control",
+            "datetime",
+            "effect",
+            "filterable",
+            "maybe",
+            "prelude",
+            "psx-screamer",
+            "psx-suite-shared",
+            "screamer",
+            "strings",
+            "web-uievents"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-typeahead-screamer-purs": {
+        "path": "test/suite/apps/typeahead/screamer/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "control",
+            "datetime",
+            "effect",
+            "filterable",
+            "maybe",
+            "prelude",
+            "psx-suite-shared",
+            "screamer",
+            "strings",
+            "web-events",
+            "web-html",
+            "web-uievents"
           ]
         },
         "test": {

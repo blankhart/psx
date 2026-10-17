@@ -4,9 +4,13 @@ package:
     - aff
     - arrays
     - datetime
+    - effect
+    - foldable-traversable
     - integers
     - maybe
     - numbers
     - prelude
     - strings
     - tuples
+    - web-dom
+    - web-html
