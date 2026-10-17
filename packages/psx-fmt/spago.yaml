@@ -1,9 +1,25 @@
 package:
   name: psx-fmt
   dependencies:
+    - arrays
+    - dodo-printer
+    - either
+    - foldable-traversable
+    - language-cst-parser
+    - maybe
     - prelude
+    - psx-cst
+    - psx-lower
+    - strings
+    - tidy
+    - tuples
   test:
-    main: Test.Psx.Fmt
+    main: Test.Psx.Format
     dependencies:
       - console
       - effect
+      - exceptions
+      - node-buffer
+      - node-fs
+      - node-path
+      - node-process

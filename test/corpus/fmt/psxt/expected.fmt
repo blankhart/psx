@@ -1,0 +1,28 @@
+<!-- A file's top-level items are separated by one blank line; a comment just
+     above an item stays with it. -->
+<script type="text/purescript">
+module Fmt.Psxt where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+foreign import card :: String -> Markup Unit
+foreign import badge :: Int -> Markup Unit
+</script>
+
+<template name="card" args="title">
+  <article class="card">
+    <h2>{title}</h2>{badge 3}
+  </article>
+</template>
+
+<!-- The badge. -->
+<template name="badge" args="n">
+  <span class="badge">{show n}</span>
+</template>
+
+<style>
+  .card { padding: 1rem; }
+    .badge { color: red; }
+</style>

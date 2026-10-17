@@ -1,0 +1,34 @@
+module Fmt.Holes where
+
+import Prelude
+
+import Data.Array as Array
+import Portico.Psx (Markup)
+
+-- A hole's expression is laid out by purs-tidy.
+count :: Int -> Markup Unit
+count n = <p>{  show   n  } items</p>
+
+-- Markup in a hole is laid out in turn, and a hole that takes several lines
+-- closes on a line of its own.
+items :: Array String -> Markup Unit
+items xs =
+  <ul>
+    {map (\x -> <li class="item">{x}</li>) xs}
+    {if Array.null xs then <li class="empty">Nothing here yet, add something to get started</li> else <></>}
+  </ul>
+
+-- Comments in a hole stay.
+commented :: Int -> Markup Unit
+commented n =
+  <p>{ -- the count
+       show n
+     }</p>
+
+-- Holes as attribute values.
+attrs :: Boolean -> Markup Unit
+attrs open = <div class={if open then "open" else "closed"} hidden={not open}></div>
+
+-- `{-` would open a comment, so a hole that starts with `-` keeps a space.
+negated :: Int -> Markup Unit
+negated n = <p>{ -n} and { {- a block comment -} n }</p>

@@ -1,0 +1,20 @@
+module Parse.Attributes where
+
+import Portico.Psx
+
+button label n =
+  <button
+    type="button"
+    class="primary"
+    title='single quoted'
+    disabled
+    aria-label={label}
+    onclick={Increment}
+    data-count={show (n + 1)}
+  >
+    {label}
+  </button>
+
+items = map (\i -> <li key={i} hidden class={if i > 1 then "a" else "b"}>x</li>) [ 1, 2 ]
+
+empty = <input value="" placeholder="">

@@ -1,0 +1,26 @@
+module Fmt.Layout where
+
+import Prelude
+
+import Data.Maybe (Maybe(..))
+import Portico.Psx (Markup)
+
+-- Markup is an expression: purs-tidy places it as it places any other.
+greet :: Maybe String -> Markup Unit
+greet = case _ of
+  Just name -> <p>Hello, {name}</p>
+  Nothing -> <p>Hello, stranger. Nice to meet you, whoever you turn out to be.</p>
+
+both :: Markup Unit
+both = <p>One</p> <> <p>Two</p>
+
+local :: Markup Unit
+local =
+  let
+    title = <h1>Title</h1>
+  in
+    <article>{title}<p>Body</p></article>
+
+-- A fragment lays out as an element does.
+fragment :: Markup Unit
+fragment = <><li>a</li><li>b</li></>

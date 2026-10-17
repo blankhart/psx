@@ -1,0 +1,13 @@
+module Parse.VoidElements where
+
+import Portico.Psx
+
+form =
+  <form>
+    <label for="name">Name</label>
+    <input id="name" type="text">
+    <br>
+    <img src="logo.png" alt="Logo"/>
+    <hr/>
+    <input type="checkbox" checked>
+  </form>

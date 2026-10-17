@@ -1,0 +1,20 @@
+module Lower.Nested where
+
+import Prelude
+
+import Data.Maybe (Maybe(..))
+import Portico.Psx (Markup)
+
+-- Holes hold PureScript, which holds markup again, to any depth.
+view :: Maybe String -> Array String -> Markup Unit
+view user names =
+  <section>
+    {
+      case user of
+        Just name ->
+          <p>
+            Signed in as <b>{name}</b>
+          </p>
+        Nothing -> <p>{map (\n -> <span title={n}>{n}</span>) names}</p>
+    }
+  </section>

@@ -1,0 +1,37 @@
+<!-- A template may come before the script; it is defined after the others. -->
+<template name="footer">
+  <footer>Rows: {"many"}</footer>
+</template>
+
+<script type="text/purescript">
+module App.Table where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+type Row = { id :: Int, label :: String }
+
+-- | Each template is the body of one of these.
+foreign import table :: forall a. Show a => { title :: String, rows :: Array Row } -> a -> Markup Unit
+foreign import row :: Row -> Markup Unit
+foreign import footer :: Markup Unit
+
+-- | No template: real FFI, from App/Table.js.
+foreign import now :: Int
+</script>
+
+<template name="table" args="{ title, rows } extra">
+  <table>
+    <caption>{title} ({show extra})</caption>
+    {map row rows}
+  </table>
+  {footer}
+</template>
+
+<template name="row" args="r">
+  <tr>
+    <td>{show r.id}</td>
+    <td>{r.label}</td>
+  </tr>
+</template>

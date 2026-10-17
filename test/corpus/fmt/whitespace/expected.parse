@@ -1,0 +1,43 @@
+print: identical
+errors: none
+markup:
+  10:17 <p>
+    text "  Hello, "
+    10:29 <b>
+      hole {name}
+    text "! "
+    10:44 <i>
+      text "Welcome"
+    text "   back.   "
+  14:14 <p>
+    text "Dear "
+    hole {name}
+    text ", "
+    14:30 <a>
+      @href="/"
+      text "home"
+    text ","
+    hole {name}
+    14:57 <br> (self-closing)
+    text "again"
+  19:8 <ul>
+    text "\n           "
+    20:12 <li>
+      text "one"
+    text "    "
+    20:28 <li>
+      text "two"
+    text "\n  "
+    21:3 <li>
+      text "three"
+    21:17 <li>
+      text "four"
+  26:3 <div>
+    26:8 <span>
+      text "a"
+    text " "
+    26:23 <span>
+      text "b"
+    hole {" "}
+    26:42 <span>
+      text "c"

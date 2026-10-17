@@ -1,0 +1,3 @@
+-- psx fmt failed
+-- 10:27 args has 2 binders but the type of one has 1 arrow
+-- 11:27 args holds PureScript binders, as a function's arguments: args="props n"

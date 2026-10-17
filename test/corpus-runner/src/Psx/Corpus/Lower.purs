@@ -2,7 +2,8 @@
 -- | errors that stopped it, `expected.map.json` its position map and
 -- | `expected.css` its stylesheet. A case with `same-as` also gets
 -- | `expected.same`, which records whether it lowers to the same code as the
--- | case it names. Corpus cases under `parse/` are left to the parse stage.
+-- | case it names. Corpus cases under `parse/` are left to the parse stage,
+-- | and those under `fmt/` to the format stage.
 module Psx.Corpus.Lower (lower, positionMap, css, same, lowerCase) where
 
 import Prelude
@@ -25,7 +26,7 @@ import PureScript.CST.TokenStream as TokenStream
 import PureScript.CST.Types (Token(..))
 
 applies :: Case -> Boolean
-applies c = c.area /= "parse"
+applies c = c.area /= "parse" && c.area /= "fmt"
 
 lowerCase :: { inputFile :: String, input :: String } -> Either (Array PsxError) Lowered
 lowerCase c

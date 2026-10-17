@@ -11,6 +11,7 @@ npx spago test                          # every package's tests, including the c
 npx spago run -p psx-corpus -- --accept # rewrite corpus goldens (optionally: area or area/case)
 npm run psx -- build examples/portico/src # lower .psx files to .purs beside them (after spago build)
 npm run psx -- check examples/portico/src -- -p psx-examples-portico # compile, errors at .psx positions
+npm run psx -- fmt src/View.psx         # format in place (--check: report, write nothing)
 npm run examples:portico                # lower, compile and bundle the Portico examples, then run Portico's smoke test
 ```
 
