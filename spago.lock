@@ -373,13 +373,18 @@
         "path": "backends/psx-static",
         "core": {
           "dependencies": [
-            "prelude"
+            "arrays",
+            "maybe",
+            "prelude",
+            "strings",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "effect",
+            "exceptions"
           ]
         }
       },
