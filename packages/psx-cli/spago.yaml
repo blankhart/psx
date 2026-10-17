@@ -19,6 +19,7 @@ package:
     - prelude
     - psx-cst
     - psx-fmt
+    - psx-html-data
     - psx-lower
     - strings
     - tuples
