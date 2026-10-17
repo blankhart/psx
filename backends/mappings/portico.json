@@ -144,17 +144,17 @@
     "onInput": {
       "type": "forall a. (String -> a) -> Attr a",
       "code": "P.onInput",
-      "sample": "\\_ -> x"
+      "sample": "\\_ -> msg"
     },
     "onKeyDown": {
       "type": "forall a. (String -> Maybe a) -> Attr a",
       "code": "P.onKeyDown",
-      "sample": "\\_ -> Just x"
+      "sample": "\\_ -> Just msg"
     },
     "onKeyUp": {
       "type": "forall a. (String -> Maybe a) -> Attr a",
       "code": "P.onKeyUp",
-      "sample": "\\_ -> Just x"
+      "sample": "\\_ -> Just msg"
     }
   },
   "conformance": {

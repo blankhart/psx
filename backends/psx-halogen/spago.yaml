@@ -5,11 +5,13 @@ package:
     - dom-indexed
     - halogen
     - maybe
+    - media-types
     - prelude
     - tuples
-    - unsafe-coerce
+    - web-clipboard
     - web-events
     - web-html
+    - web-touchevents
     - web-uievents
   test:
     main: Test.Halogen.Psx

@@ -1,0 +1,630 @@
+{
+  "module": "Halogen.Psx",
+  "directory": "backends/psx-halogen/src",
+  "core": "Halogen.Psx.Core",
+  "coreExports": [
+    "class Children",
+    "class KeyedChildren",
+    "class ToKey",
+    "Attr",
+    "Key",
+    "Markup",
+    "Node",
+    "attribute",
+    "children",
+    "element",
+    "keyed",
+    "keyedChildren",
+    "keyedElement",
+    "root",
+    "text",
+    "toKey"
+  ],
+  "doc": [
+    "-- | The PSX backend for Halogen. Lowered `.psx` code calls it through the",
+    "-- | alias `B`.",
+    "-- |",
+    "-- | The core is hand-written in `Halogen.Psx.Core`. The elements and",
+    "-- | properties below keep Halogen's typed rows: an element Halogen defines is",
+    "-- | Halogen's own (`HH.button`), and a property Halogen types is typed by its",
+    "-- | row, so Halogen still rejects `<button viewBox=\"...\">`. Everything else",
+    "-- | is an untyped attribute, property or handler, as in `HH.element`.",
+    "-- | Halogen's leaf elements (`textarea`, `canvas`, `iframe`) take no children."
+  ],
+  "imports": [
+    "Prelude (const, show, (<<<))",
+    "Data.MediaType (MediaType)",
+    "DOM.HTML.Indexed as I",
+    "DOM.HTML.Indexed.AutocompleteType (AutocompleteType) as T",
+    "DOM.HTML.Indexed.FormMethod (FormMethod) as T",
+    "DOM.HTML.Indexed.InputAcceptType (InputAcceptType) as T",
+    "DOM.HTML.Indexed.PreloadValue (PreloadValue) as T",
+    "DOM.HTML.Indexed.ScopeValue (ScopeValue) as T",
+    "DOM.HTML.Indexed.StepValue (StepValue) as T",
+    "Halogen.HTML as HH",
+    "Halogen.HTML.Events as HE",
+    "Halogen.HTML.Properties as HP",
+    "Halogen.Psx.Core (Attr, Markup, Node, attribute, onValueInput)",
+    "Web.Clipboard.ClipboardEvent (ClipboardEvent)",
+    "Web.Event.Event (Event, EventType(..))",
+    "Web.HTML.Event.DragEvent (DragEvent)",
+    "Web.TouchEvent.TouchEvent (TouchEvent)",
+    "Web.UIEvent.FocusEvent (FocusEvent)",
+    "Web.UIEvent.KeyboardEvent (KeyboardEvent)",
+    "Web.UIEvent.MouseEvent (MouseEvent)",
+    "Web.UIEvent.WheelEvent (WheelEvent)"
+  ],
+  "templates": {
+    "element": {
+      "type": "forall r w a. Array (Attr r a) -> Markup w a -> Node w a",
+      "code": "HH.element (HH.ElemName {name})"
+    },
+    "svgElement": {
+      "type": "forall r w a. Array (Attr r a) -> Markup w a -> Node w a",
+      "code": "HH.elementNS (HH.Namespace \"http://www.w3.org/2000/svg\") (HH.ElemName {name})"
+    },
+    "boolean": {
+      "type": "forall r a. Boolean -> Attr r a",
+      "code": "HH.prop (HH.PropName {name})"
+    },
+    "string": {
+      "type": "forall r a. String -> Attr r a",
+      "code": "attribute {name}"
+    },
+    "number": {
+      "type": "forall r a. Int -> Attr r a",
+      "code": "attribute {name} <<< show"
+    },
+    "event": {
+      "type": "forall r a. a -> Attr r a",
+      "code": "HE.handler (EventType {name}) <<< const"
+    }
+  },
+  "groups": [
+    {
+      "names": [
+        "a",
+        "abbr",
+        "address",
+        "article",
+        "aside",
+        "audio",
+        "b",
+        "bdi",
+        "bdo",
+        "blockquote",
+        "body",
+        "button",
+        "caption",
+        "cite",
+        "code",
+        "colgroup",
+        "datalist",
+        "dd",
+        "del",
+        "details",
+        "dfn",
+        "dialog",
+        "div",
+        "dl",
+        "dt",
+        "em",
+        "embed",
+        "fieldset",
+        "figcaption",
+        "figure",
+        "footer",
+        "form",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "head",
+        "header",
+        "html",
+        "i",
+        "ins",
+        "kbd",
+        "label",
+        "legend",
+        "li",
+        "main",
+        "map",
+        "mark",
+        "menu",
+        "menuitem",
+        "meter",
+        "nav",
+        "noscript",
+        "object",
+        "ol",
+        "optgroup",
+        "option",
+        "output",
+        "p",
+        "pre",
+        "progress",
+        "q",
+        "rp",
+        "rt",
+        "ruby",
+        "samp",
+        "script",
+        "section",
+        "select",
+        "small",
+        "span",
+        "strong",
+        "style",
+        "sub",
+        "summary",
+        "sup",
+        "table",
+        "tbody",
+        "td",
+        "tfoot",
+        "th",
+        "thead",
+        "time",
+        "title",
+        "tr",
+        "u",
+        "ul",
+        "var",
+        "video"
+      ],
+      "type": "forall w a. Array (Attr I.HTML{raw} a) -> Markup w a -> Node w a",
+      "code": "HH.{raw}"
+    },
+    {
+      "names": [
+        "area",
+        "base",
+        "br",
+        "canvas",
+        "col",
+        "command",
+        "hr",
+        "iframe",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "textarea",
+        "track",
+        "wbr"
+      ],
+      "type": "forall w a. Array (Attr I.HTML{raw} a) -> Markup w a -> Node w a",
+      "code": "\\props _ -> HH.{raw} props"
+    }
+  ],
+  "names": {
+    "action": {
+      "type": "forall r a. {value} -> Attr (action :: String | r) a",
+      "code": "HP.action"
+    },
+    "allowfullscreen": {
+      "code": "HH.prop (HH.PropName \"allowFullscreen\")"
+    },
+    "alt": {
+      "type": "forall r a. {value} -> Attr (alt :: String | r) a",
+      "code": "HP.alt"
+    },
+    "autocomplete": {
+      "type": "forall r a. {value} -> Attr (autocomplete :: T.AutocompleteType | r) a",
+      "code": "attribute {name}"
+    },
+    "autoplay": {
+      "type": "forall r a. {value} -> Attr (autoplay :: Boolean | r) a",
+      "code": "HP.autoplay"
+    },
+    "checked": {
+      "type": "forall r a. {value} -> Attr (checked :: Boolean | r) a",
+      "code": "HP.checked"
+    },
+    "class_": {
+      "type": "forall r a. {value} -> Attr (class :: String | r) a",
+      "code": "attribute {name}"
+    },
+    "cols": {
+      "type": "forall r a. {value} -> Attr (cols :: Int | r) a",
+      "code": "HP.cols"
+    },
+    "colspan": {
+      "type": "forall r a. {value} -> Attr (colSpan :: Int | r) a",
+      "code": "HP.colSpan"
+    },
+    "controls": {
+      "type": "forall r a. {value} -> Attr (controls :: Boolean | r) a",
+      "code": "HP.controls"
+    },
+    "disabled": {
+      "type": "forall r a. {value} -> Attr (disabled :: Boolean | r) a",
+      "code": "HP.disabled"
+    },
+    "download": {
+      "type": "forall r a. {value} -> Attr (download :: String | r) a",
+      "code": "HP.download"
+    },
+    "draggable": {
+      "type": "forall r a. {value} -> Attr (draggable :: Boolean | r) a",
+      "code": "attribute {name}"
+    },
+    "enctype": {
+      "type": "forall r a. {value} -> Attr (enctype :: MediaType | r) a",
+      "code": "attribute {name}"
+    },
+    "for": {
+      "type": "forall r a. {value} -> Attr (for :: String | r) a",
+      "code": "HP.for"
+    },
+    "formnovalidate": {
+      "code": "HH.prop (HH.PropName \"formNoValidate\")"
+    },
+    "height": {
+      "type": "forall r a. {value} -> Attr (height :: I.CSSPixel | r) a",
+      "code": "attribute {name}"
+    },
+    "href": {
+      "type": "forall r a. {value} -> Attr (href :: String | r) a",
+      "code": "HP.href"
+    },
+    "id": {
+      "type": "forall r a. {value} -> Attr (id :: String | r) a",
+      "code": "HP.id"
+    },
+    "ismap": {
+      "code": "HH.prop (HH.PropName \"isMap\")"
+    },
+    "list": {
+      "type": "forall r a. {value} -> Attr (list :: String | r) a",
+      "code": "HP.list"
+    },
+    "loop": {
+      "type": "forall r a. {value} -> Attr (loop :: Boolean | r) a",
+      "code": "HP.loop"
+    },
+    "max": {
+      "type": "forall r a. {value} -> Attr (max :: Number | r) a",
+      "code": "attribute {name}"
+    },
+    "method": {
+      "type": "forall r a. {value} -> Attr (method :: T.FormMethod | r) a",
+      "code": "attribute {name}"
+    },
+    "min": {
+      "type": "forall r a. {value} -> Attr (min :: Number | r) a",
+      "code": "attribute {name}"
+    },
+    "multiple": {
+      "type": "forall r a. {value} -> Attr (multiple :: Boolean | r) a",
+      "code": "HP.multiple"
+    },
+    "muted": {
+      "type": "forall r a. {value} -> Attr (muted :: Boolean | r) a",
+      "code": "HP.muted"
+    },
+    "nohref": {
+      "code": "HH.prop (HH.PropName \"noHref\")"
+    },
+    "nomodule": {
+      "code": "HH.prop (HH.PropName \"noModule\")"
+    },
+    "noresize": {
+      "code": "HH.prop (HH.PropName \"noResize\")"
+    },
+    "noshade": {
+      "code": "HH.prop (HH.PropName \"noShade\")"
+    },
+    "novalidate": {
+      "type": "forall r a. {value} -> Attr (noValidate :: Boolean | r) a",
+      "code": "HP.noValidate"
+    },
+    "nowrap": {
+      "code": "HH.prop (HH.PropName \"noWrap\")"
+    },
+    "onAuxClick": {
+      "type": "forall r a. a -> Attr (onAuxClick :: MouseEvent | r) a",
+      "code": "HE.onAuxClick <<< const"
+    },
+    "onBlur": {
+      "type": "forall r a. a -> Attr (onBlur :: FocusEvent | r) a",
+      "code": "HE.onBlur <<< const"
+    },
+    "onClick": {
+      "type": "forall r a. a -> Attr (onClick :: MouseEvent | r) a",
+      "code": "HE.onClick <<< const"
+    },
+    "onCopy": {
+      "type": "forall r a. a -> Attr (onCopy :: ClipboardEvent | r) a",
+      "code": "HE.onCopy <<< const"
+    },
+    "onCut": {
+      "type": "forall r a. a -> Attr (onCut :: ClipboardEvent | r) a",
+      "code": "HE.onCut <<< const"
+    },
+    "onDblClick": {
+      "type": "forall r a. a -> Attr (onDoubleClick :: MouseEvent | r) a",
+      "code": "HE.onDoubleClick <<< const"
+    },
+    "onDrag": {
+      "type": "forall r a. a -> Attr (onDrag :: DragEvent | r) a",
+      "code": "HE.onDrag <<< const"
+    },
+    "onDragEnd": {
+      "type": "forall r a. a -> Attr (onDragEnd :: DragEvent | r) a",
+      "code": "HE.onDragEnd <<< const"
+    },
+    "onDragEnter": {
+      "type": "forall r a. a -> Attr (onDragEnter :: DragEvent | r) a",
+      "code": "HE.onDragEnter <<< const"
+    },
+    "onDragLeave": {
+      "type": "forall r a. a -> Attr (onDragLeave :: DragEvent | r) a",
+      "code": "HE.onDragLeave <<< const"
+    },
+    "onDragOver": {
+      "type": "forall r a. a -> Attr (onDragOver :: DragEvent | r) a",
+      "code": "HE.onDragOver <<< const"
+    },
+    "onDragStart": {
+      "type": "forall r a. a -> Attr (onDragStart :: DragEvent | r) a",
+      "code": "HE.onDragStart <<< const"
+    },
+    "onDrop": {
+      "type": "forall r a. a -> Attr (onDrop :: DragEvent | r) a",
+      "code": "HE.onDrop <<< const"
+    },
+    "onFocus": {
+      "type": "forall r a. a -> Attr (onFocus :: FocusEvent | r) a",
+      "code": "HE.onFocus <<< const"
+    },
+    "onFocusIn": {
+      "type": "forall r a. a -> Attr (onFocusIn :: FocusEvent | r) a",
+      "code": "HE.onFocusIn <<< const"
+    },
+    "onFocusOut": {
+      "type": "forall r a. a -> Attr (onFocusOut :: FocusEvent | r) a",
+      "code": "HE.onFocusOut <<< const"
+    },
+    "onInput": {
+      "type": "forall r a. (String -> a) -> Attr (onInput :: Event | r) a",
+      "code": "onValueInput",
+      "sample": "\\_ -> msg"
+    },
+    "onKeyDown": {
+      "type": "forall r a. a -> Attr (onKeyDown :: KeyboardEvent | r) a",
+      "code": "HE.onKeyDown <<< const"
+    },
+    "onKeyUp": {
+      "type": "forall r a. a -> Attr (onKeyUp :: KeyboardEvent | r) a",
+      "code": "HE.onKeyUp <<< const"
+    },
+    "onMouseDown": {
+      "type": "forall r a. a -> Attr (onMouseDown :: MouseEvent | r) a",
+      "code": "HE.onMouseDown <<< const"
+    },
+    "onMouseEnter": {
+      "type": "forall r a. a -> Attr (onMouseEnter :: MouseEvent | r) a",
+      "code": "HE.onMouseEnter <<< const"
+    },
+    "onMouseLeave": {
+      "type": "forall r a. a -> Attr (onMouseLeave :: MouseEvent | r) a",
+      "code": "HE.onMouseLeave <<< const"
+    },
+    "onMouseMove": {
+      "type": "forall r a. a -> Attr (onMouseMove :: MouseEvent | r) a",
+      "code": "HE.onMouseMove <<< const"
+    },
+    "onMouseOut": {
+      "type": "forall r a. a -> Attr (onMouseOut :: MouseEvent | r) a",
+      "code": "HE.onMouseOut <<< const"
+    },
+    "onMouseOver": {
+      "type": "forall r a. a -> Attr (onMouseOver :: MouseEvent | r) a",
+      "code": "HE.onMouseOver <<< const"
+    },
+    "onMouseUp": {
+      "type": "forall r a. a -> Attr (onMouseUp :: MouseEvent | r) a",
+      "code": "HE.onMouseUp <<< const"
+    },
+    "onPaste": {
+      "type": "forall r a. a -> Attr (onPaste :: ClipboardEvent | r) a",
+      "code": "HE.onPaste <<< const"
+    },
+    "onScroll": {
+      "type": "forall r a. a -> Attr (onScroll :: Event | r) a",
+      "code": "HE.onScroll <<< const"
+    },
+    "onTouchCancel": {
+      "type": "forall r a. a -> Attr (onTouchCancel :: TouchEvent | r) a",
+      "code": "HE.onTouchCancel <<< const"
+    },
+    "onTouchEnd": {
+      "type": "forall r a. a -> Attr (onTouchEnd :: TouchEvent | r) a",
+      "code": "HE.onTouchEnd <<< const"
+    },
+    "onTouchMove": {
+      "type": "forall r a. a -> Attr (onTouchMove :: TouchEvent | r) a",
+      "code": "HE.onTouchMove <<< const"
+    },
+    "onTouchStart": {
+      "type": "forall r a. a -> Attr (onTouchStart :: TouchEvent | r) a",
+      "code": "HE.onTouchStart <<< const"
+    },
+    "onTransitionEnd": {
+      "type": "forall r a. a -> Attr (onTransitionEnd :: Event | r) a",
+      "code": "HE.onTransitionEnd <<< const"
+    },
+    "onWheel": {
+      "type": "forall r a. a -> Attr (onWheel :: WheelEvent | r) a",
+      "code": "HE.onWheel <<< const"
+    },
+    "patternAttr": {
+      "type": "forall r a. {value} -> Attr (pattern :: String | r) a",
+      "code": "HP.pattern"
+    },
+    "placeholder": {
+      "type": "forall r a. {value} -> Attr (placeholder :: String | r) a",
+      "code": "HP.placeholder"
+    },
+    "playsinline": {
+      "code": "HH.prop (HH.PropName \"playsInline\")"
+    },
+    "poster": {
+      "type": "forall r a. {value} -> Attr (poster :: String | r) a",
+      "code": "HP.poster"
+    },
+    "preload": {
+      "type": "forall r a. {value} -> Attr (preload :: T.PreloadValue | r) a",
+      "code": "attribute {name}"
+    },
+    "readonly": {
+      "type": "forall r a. {value} -> Attr (readOnly :: Boolean | r) a",
+      "code": "HP.readOnly"
+    },
+    "rel": {
+      "type": "forall r a. {value} -> Attr (rel :: String | r) a",
+      "code": "HP.rel"
+    },
+    "required": {
+      "type": "forall r a. {value} -> Attr (required :: Boolean | r) a",
+      "code": "HP.required"
+    },
+    "rows": {
+      "type": "forall r a. {value} -> Attr (rows :: Int | r) a",
+      "code": "HP.rows"
+    },
+    "rowspan": {
+      "type": "forall r a. {value} -> Attr (rowSpan :: Int | r) a",
+      "code": "HP.rowSpan"
+    },
+    "selected": {
+      "type": "forall r a. {value} -> Attr (selected :: Boolean | r) a",
+      "code": "HP.selected"
+    },
+    "shadowrootclonable": {
+      "code": "HH.prop (HH.PropName \"shadowRootClonable\")"
+    },
+    "shadowrootcustomelementregistry": {
+      "code": "HH.prop (HH.PropName \"shadowRootCustomElementRegistry\")"
+    },
+    "shadowrootdelegatesfocus": {
+      "code": "HH.prop (HH.PropName \"shadowRootDelegatesFocus\")"
+    },
+    "shadowrootserializable": {
+      "code": "HH.prop (HH.PropName \"shadowRootSerializable\")"
+    },
+    "spellcheck": {
+      "type": "forall r a. {value} -> Attr (spellcheck :: Boolean | r) a",
+      "code": "attribute {name}"
+    },
+    "src": {
+      "type": "forall r a. {value} -> Attr (src :: String | r) a",
+      "code": "HP.src"
+    },
+    "srcdoc": {
+      "type": "forall r a. {value} -> Attr (srcDoc :: String | r) a",
+      "code": "HP.srcDoc"
+    },
+    "step": {
+      "type": "forall r a. {value} -> Attr (step :: T.StepValue | r) a",
+      "code": "attribute {name}"
+    },
+    "styleAttr": {
+      "type": "forall r a. {value} -> Attr (style :: String | r) a",
+      "code": "HP.style"
+    },
+    "tabindex": {
+      "type": "forall r a. {value} -> Attr (tabIndex :: Int | r) a",
+      "code": "HP.tabIndex"
+    },
+    "target": {
+      "type": "forall r a. {value} -> Attr (target :: String | r) a",
+      "code": "HP.target"
+    },
+    "titleAttr": {
+      "type": "forall r a. {value} -> Attr (title :: String | r) a",
+      "code": "HP.title"
+    },
+    "typemustmatch": {
+      "code": "HH.prop (HH.PropName \"typeMustMatch\")"
+    },
+    "value": {
+      "code": "HH.prop (HH.PropName \"value\")"
+    },
+    "width": {
+      "type": "forall r a. {value} -> Attr (width :: I.CSSPixel | r) a",
+      "code": "attribute {name}"
+    }
+  },
+  "conformance": {
+    "imports": [
+      "Prelude ((<>))",
+      "Data.Maybe (Maybe(..))",
+      "Data.Tuple (Tuple)",
+      "Halogen.Psx (class Children, class KeyedChildren, class ToKey)"
+    ],
+    "core": [
+      [
+        "text",
+        "forall w a. String -> B.Node w a"
+      ],
+      [
+        "element",
+        "forall r w a. String -> Array (B.Attr r a) -> B.Markup w a -> B.Node w a"
+      ],
+      [
+        "keyedElement",
+        "forall r w a. String -> Array (B.Attr r a) -> Array (Tuple B.Key (B.Node w a)) -> B.Node w a"
+      ],
+      [
+        "keyed",
+        "forall k w a. ToKey k => k -> B.Node w a -> Tuple B.Key (B.Node w a)"
+      ],
+      [
+        "attribute",
+        "forall r a. String -> String -> B.Attr r a"
+      ],
+      [
+        "children",
+        "forall c w a. Children c w a => c -> B.Markup w a"
+      ],
+      [
+        "keyedChildren",
+        "forall c w a. KeyedChildren c w a => c -> Array (Tuple B.Key (B.Node w a))"
+      ],
+      [
+        "root",
+        "forall w a. B.Markup w a -> B.Node w a"
+      ]
+    ],
+    "extra": [
+      "-- | What a child hole takes: a string, a node, markup, and arrays and",
+      "-- | `Maybe`s of those.",
+      "childHoles :: forall w a. B.Node w a -> B.Markup w a",
+      "childHoles node =",
+      "  B.children \"text\"",
+      "    <> B.children node",
+      "    <> B.children [ node ]",
+      "    <> B.children [ [ node ] ]",
+      "    <> B.children (Just node)",
+      "    <> B.children (Nothing :: Maybe String)",
+      "",
+      "-- | What a child hole of a keyed parent takes: keyed literals and arrays of",
+      "-- | them, keyed by strings or by integers.",
+      "keyedChildHoles :: forall w a. B.Node w a -> Array (Tuple B.Key (B.Node w a))",
+      "keyedChildHoles node =",
+      "  B.keyedChildren (B.keyed \"a\" node)",
+      "    <> B.keyedChildren [ B.keyed 1 node ]",
+      "    <> B.keyedChildren [ [ B.keyed 2 node ] ]",
+      "    <> B.keyedChildren (Just (B.keyed 3.0 node))"
+    ],
+    "nodes": "forall w a. Array (B.Node w a)",
+    "handlers": "forall w a. a -> Array (B.Node w a)"
+  }
+}

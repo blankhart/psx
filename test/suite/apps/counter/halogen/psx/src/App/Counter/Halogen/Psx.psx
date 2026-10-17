@@ -1,0 +1,69 @@
+-- | The counter scenario on Halogen, in PSX: `App.Counter` from the design
+-- | doc, with its scoped `<style>`.
+module App.Counter.Halogen.Psx (main) where
+
+import Prelude
+
+import Data.Array ((..))
+import Data.Foldable (for_)
+import Effect (Effect)
+import Effect.Class (liftEffect)
+import Halogen as H
+import Halogen.Aff as HA
+import Halogen.Psx (Markup, root)
+import Halogen.VDom.Driver (runUI)
+import Web.DOM.Node (removeChild)
+import Web.DOM.ParentNode (QuerySelector(..))
+import Web.HTML.HTMLElement (toNode)
+
+type Props = { label :: String, max :: Int }
+
+data Msg = Increment | Decrement | Reset
+
+update :: Int -> Msg -> Int
+update n = case _ of
+  Increment -> n + 1
+  Decrement -> n - 1
+  Reset -> 0
+
+view :: forall w. Props -> Int -> Markup w Msg
+view props n =
+  <section class="counter" data-testid="counter">
+    <h2 data-testid="label">{props.label}: {show n}</h2>
+    <button data-testid="decrement" onclick={Decrement} disabled={n <= 0}>-</button>
+    <button data-testid="increment" onclick={Increment} disabled={n >= props.max}>+</button>
+    {
+      if n == 0 then
+        <></>
+      else
+        <button data-testid="reset" onclick={Reset}>Reset</button>
+    }
+    <ol class="pips">
+      {
+        map
+          (\i -> <li key={i} class={if i <= n then "pip filled" else "pip"}></li>)
+          (1 .. props.max)
+      }
+    </ol>
+    <style>
+      .counter { display: grid; gap: 0.75rem; }
+      .pip { width: 1rem; height: 0.25rem; background: silver; }
+      .pip.filled { background: seagreen; }
+    </style>
+  </section>
+
+component :: forall q o m. Props -> H.Component q Unit o m
+component props = H.mkComponent
+  { initialState: const 0
+  , render: root <<< view props
+  , eval: H.mkEval H.defaultEval { handleAction = \msg -> H.modify_ (\n -> update n msg) }
+  }
+
+-- | Mounts in place of `#app`, with the scenario's fixture as the props.
+main :: Props -> Effect Unit
+main props = HA.runHalogenAff do
+  app <- HA.selectElement (QuerySelector "#app")
+  parent <- HA.selectElement (QuerySelector "#root")
+  for_ parent \p -> do
+    for_ app \a -> liftEffect (removeChild (toNode a) (toNode p))
+    runUI (component props) unit p

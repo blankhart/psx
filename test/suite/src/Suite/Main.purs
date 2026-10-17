@@ -17,7 +17,7 @@ import Data.Set (Set)
 import Data.Set as Set
 import Data.String as String
 import Data.String.CodeUnits as CodeUnits
-import Data.Traversable (for)
+import Data.Traversable (for, traverse)
 import Effect (Effect)
 import Effect.Aff (Aff, attempt, launchAff_, message)
 import Effect.Class (liftEffect)
@@ -39,8 +39,13 @@ import Suite.Scenario.Todo (todo)
 scenarios :: Array Scenario
 scenarios = [ counter, todo ]
 
-frameworks :: Array String
-frameworks = [ "portico" ]
+-- | The frameworks a scenario has apps for: the directories under
+-- | `test/suite/apps/<scenario>/`.
+frameworks :: String -> Scenario -> Effect (Array String)
+frameworks root scenario = do
+  let dir = Path.concat [ root, "test/suite/apps", scenario.name ]
+  exists <- FS.exists dir
+  if exists then Array.sort <$> FS.readdir dir else pure []
 
 -- | `purs/` first, so that `--accept` writes the contracts from the control.
 variants :: Array String
@@ -87,7 +92,7 @@ main = do
     launchAff_ do
       browser <- Driver.launch chrome
       let env = { root, accept, browser, written }
-      failures <- for chosen \scenario -> for frameworks \framework -> do
+      failures <- for chosen \scenario -> liftEffect (frameworks root scenario) >>= traverse \framework -> do
         appFailures <- for variants \variant -> runApp env { scenario, framework, variant }
         bundleFailures <- compareBundles env scenario framework
         pure (sum appFailures + bundleFailures)
