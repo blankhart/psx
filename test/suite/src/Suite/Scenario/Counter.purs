@@ -1,5 +1,6 @@
--- | `App.Counter` from the design doc: holes, `if` in a hole and a keyed
--- | list. Its scoped style joins it once `.psxt` and styles land.
+-- | `App.Counter` from the design doc: holes, `if` in a hole, a keyed list
+-- | and a scoped style. The DOM contracts leave out the style's `data-psx`
+-- | stamp (see `Suite.Dom`).
 module Suite.Scenario.Counter (counter) where
 
 import Suite.Scenario (Scenario, Step(..))

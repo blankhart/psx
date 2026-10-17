@@ -1,0 +1,374 @@
+-- | Parses `.psxt` files: an HTML document whose
+-- | `<script type="text/purescript">` holds a PureScript module and whose
+-- | `<template name="f" args="...">` elements are the bodies of that
+-- | module's `foreign import f :: T` declarations.
+-- |
+-- | At the top level a file holds the script, templates, `<style>` elements,
+-- | comments and whitespace. Every top-level element is scanned as markup,
+-- | so the file prints back exactly. The module is parsed from the file's
+-- | text with everything outside the script blanked to spaces, so its
+-- | positions are the file's.
+-- |
+-- | Resolution: each template must match a `foreign import` of its name,
+-- | which it then defines; a template without one is an error whose fix
+-- | inserts `foreign import f :: _` for the author to complete. A
+-- | `foreign import` without a template stays real FFI. `args` holds
+-- | PureScript binders, no more of them than the type has arrows.
+module Psx.Cst.Psxt
+  ( PsxtResult
+  , Psxt
+  , Script
+  , Template
+  , Args
+  , ForeignDecl
+  , TopItem(..)
+  , parsePsxt
+  , printPsxt
+  , typeArrows
+  ) where
+
+import Prelude
+
+import Data.Array as Array
+import Data.Foldable (foldMap)
+import Data.Maybe (Maybe(..), fromMaybe, isNothing)
+import Data.String as String
+import Data.String.CodeUnits as SCU
+import Data.String.Regex (replace) as Regex
+import Data.String.Regex.Flags (global) as Regex
+import Data.String.Regex.Unsafe (unsafeRegex) as Regex
+import Psx.Cst.Lexer (scanMarkup)
+import Psx.Cst.Parser (parseModule)
+import Psx.Cst.Parser.Markup (holeParser, withSource)
+import Psx.Cst.Parser.PureScript as Purs
+import Psx.Cst.Print (printMarkup)
+import Psx.Cst.Source (Source, offsetOf, posOf, source, startsWith)
+import Psx.Cst.Types (AttrValue(..), Element, MToken, Markup(..), Psx, PsxError, mtokenSource)
+import PureScript.CST as CST
+import PureScript.CST.Errors (printParseError)
+import PureScript.CST.Range (rangeOf)
+import PureScript.CST.Types (Foreign(..), Ident(..), Labeled(..), Module(..), ModuleBody(..), Name(..), SourceRange, Type(..), Wrapped(..))
+import PureScript.CST.Types as CSTTypes
+
+type PsxtResult =
+  { items :: Array TopItem
+  -- | Absent when the file has no script, or its module did not parse.
+  , file :: Maybe Psxt
+  , errors :: Array PsxError
+  }
+
+type Psxt =
+  { script :: Script
+  , templates :: Array Template
+  -- | The top-level `<style>` elements, which apply to every template.
+  , styles :: Array (Element Psx)
+  }
+
+type Script =
+  { element :: Element Psx
+  -- | The offsets of the module's text, between `>` and `</script>`.
+  , contentStart :: Int
+  , contentEnd :: Int
+  , module :: Module Psx
+  }
+
+type Template =
+  { element :: Element Psx
+  , name :: String
+  , args :: Maybe Args
+  -- | The `foreign import` the template defines, if there is one.
+  , declaration :: Maybe ForeignDecl
+  }
+
+-- | `args`' value without its quotes, and where that is.
+type Args =
+  { text :: String
+  , start :: Int
+  , end :: Int
+  , binders :: Int
+  }
+
+type ForeignDecl =
+  { range :: SourceRange
+  , type :: CSTTypes.Type Psx
+  }
+
+data TopItem
+  = TopElement (Element Psx)
+  | TopComment MToken
+  -- | Whitespace, or text that is an error.
+  | TopText MToken
+
+printPsxt :: Array TopItem -> String
+printPsxt = foldMap case _ of
+  TopElement el -> printMarkup (MarkupElement el)
+  TopComment t -> mtokenSource t
+  TopText t -> mtokenSource t
+
+parsePsxt :: String -> PsxtResult
+parsePsxt text = do
+  let
+    src = source text
+    top = withSource src \_ -> scanTop src
+    scripts = Array.filter isScript top.elements
+    templates = Array.filter (\el -> el.name.text == "template") top.elements
+    styles = Array.filter (\el -> el.name.text == "style") top.elements
+  case scripts of
+    [ el ] -> do
+      let
+        start = offsetOf src el.end.range.end
+        end = maybe' (SCU.length text) (\c -> offsetOf src c.open.range.start) el.close
+        parsed = parseModule (mask start end text)
+      case parsed.module of
+        Nothing ->
+          { items: top.items, file: Nothing, errors: sortErrors (top.errors <> parsed.errors) }
+        Just m -> do
+          let
+            foreigns = foreignValues m
+            resolved = map (resolve src el foreigns) templates
+            duplicates = duplicateErrors resolved
+          { items: top.items
+          , file: Just
+              { script: { element: el, contentStart: start, contentEnd: end, module: m }
+              , templates: map _.template resolved
+              , styles
+              }
+          , errors: sortErrors (top.errors <> parsed.errors <> foldMap _.errors resolved <> duplicates)
+          }
+    [] ->
+      { items: top.items
+      , file: Nothing
+      , errors: sortErrors
+          ( top.errors <>
+              [ { range: { start: { line: 0, column: 0 }, end: { line: 0, column: 0 } }
+                , message: "A .psxt file holds its module in a <script type=\"text/purescript\">"
+                , fix: Nothing
+                }
+              ]
+          )
+      }
+    _ ->
+      { items: top.items
+      , file: Nothing
+      , errors: sortErrors
+          ( top.errors <> (Array.drop 1 scripts <#> \el -> errorAt el "A .psxt file has one <script type=\"text/purescript\">")
+          )
+      }
+  where
+  maybe' d f = case _ of
+    Just a -> f a
+    Nothing -> d
+
+isScript :: Element Psx -> Boolean
+isScript el = el.name.text == "script"
+
+errorAt :: Element Psx -> String -> PsxError
+errorAt el message = { range: tagRange el, message, fix: Nothing }
+
+-- | `<name`, where an element's errors are reported.
+tagRange :: Element Psx -> SourceRange
+tagRange el = { start: el.open.range.start, end: el.name.range.end }
+
+sortErrors :: Array PsxError -> Array PsxError
+sortErrors = Array.sortWith \e -> [ e.range.start.line, e.range.start.column ]
+
+-- | The text with everything outside the offsets blanked, keeping line
+-- | breaks and every UTF-16 code unit's offset.
+mask :: Int -> Int -> String -> String
+mask start end text = blank (SCU.take start text) <> SCU.slice start end text <> blank (SCU.drop end text)
+  where
+  blank = Regex.replace (Regex.unsafeRegex "[^\\r\\n]" Regex.global) " "
+
+-- The top level ------------------------------------------------------------------
+
+type Top =
+  { items :: Array TopItem
+  , elements :: Array (Element Psx)
+  , errors :: Array PsxError
+  }
+
+scanTop :: Source -> Top
+scanTop src = go 0 { items: [], elements: [], errors: [] }
+  where
+  len = SCU.length src.text
+
+  token from to = { leading: "", text: SCU.slice from to src.text, range: { start: posOf src from, end: posOf src to } }
+
+  go i acc
+    | i >= len = acc
+    | startsWith src i "<!--" = do
+        let
+          end = case SCU.indexOf (String.Pattern "-->") (SCU.drop (i + 4) src.text) of
+            Just k -> i + 4 + k + 3
+            Nothing -> len
+          acc' = acc { items = Array.snoc acc.items (TopComment (token i end)) }
+        go end
+          if end == len && not (startsWith src (len - 3) "-->") then acc' { errors = Array.snoc acc'.errors (rangeError i (i + 4) "Unterminated comment: expected -->") }
+          else acc'
+    | otherwise = case scanMarkup (holeParser Purs.parseExpr src) src i of
+        Just scanned
+          | MarkupElement el <- scanned.markup -> do
+              let
+                holeErrors = scanned.holeErrors <#> \e ->
+                  { range: { start: e.position, end: e.position }, message: printParseError e.error, fix: Nothing }
+                kind = elementErrors el
+              go (max (i + 1) scanned.end)
+                { items: Array.snoc acc.items (TopElement el)
+                , elements: if Array.null kind then Array.snoc acc.elements el else acc.elements
+                , errors: acc.errors <> scanned.errors <> holeErrors <> kind
+                }
+        _ -> do
+          let
+            end = textEnd i
+            t = token i end
+            isBlank = String.trim t.text == ""
+          go end
+            { items: Array.snoc acc.items (TopText t)
+            , elements: acc.elements
+            , errors:
+                if isBlank then acc.errors
+                else Array.snoc acc.errors (rangeError (i + leadingSpace t.text) end "Text at the top of a .psxt file belongs in a <template>")
+            }
+
+  -- Text runs to the next `<`, or past a `<` that starts nothing.
+  textEnd i = case SCU.indexOf (String.Pattern "<") (SCU.drop (i + 1) src.text) of
+    Just k -> i + 1 + k
+    Nothing -> len
+
+  leadingSpace t = SCU.length t - SCU.length (SCU.dropWhile isSpace t)
+
+  rangeError from to message = { range: { start: posOf src from, end: posOf src to }, message, fix: Nothing }
+
+  isSpace c = c == ' ' || c == '\n' || c == '\r' || c == '\t'
+
+  elementErrors el = case el.name.text of
+    "script"
+      | attrText "type" el == Just "text/purescript" -> []
+      | otherwise -> [ errorAt el "A .psxt file's only <script> is its module: <script type=\"text/purescript\">" ]
+    "template" -> []
+    "style" -> []
+    other -> [ errorAt el ("<" <> other <> "> cannot stand at the top of a .psxt file: it belongs in a <template>") ]
+
+-- | A string attribute's value, without its quotes.
+attrText :: String -> Element Psx -> Maybe String
+attrText name el = Array.find (\a -> a.name.text == name) el.attrs >>= \a -> case a.value of
+  Just { value: AttrString t } -> Just (unquote t.text)
+  _ -> Nothing
+
+unquote :: String -> String
+unquote s = SCU.drop 1 (SCU.dropRight 1 s)
+
+-- Resolution ---------------------------------------------------------------------
+
+type ForeignValue = { name :: String, declaration :: ForeignDecl }
+
+foreignValues :: Module Psx -> Array ForeignValue
+foreignValues (Module { body: ModuleBody body }) = Array.mapMaybe go body.decls
+  where
+  go d = case d of
+    CSTTypes.DeclForeign _ _ (ForeignValue (Labeled { label: Name { name: Ident name }, value })) ->
+      Just { name, declaration: { range: rangeOf d, type: value } }
+    _ -> Nothing
+
+type Resolved = { template :: Template, errors :: Array PsxError }
+
+resolve :: Source -> Element Psx -> Array ForeignValue -> Element Psx -> Resolved
+resolve src script foreigns el = do
+  let
+    nameAttr = Array.find (\a -> a.name.text == "name") el.attrs
+    argsAttr = Array.find (\a -> a.name.text == "args") el.attrs
+    name = attrText "name" el
+    found = name >>= \n -> Array.find (\f -> f.name == n) foreigns
+    args = argsAttr >>= \a -> case a.value of
+      Just { value: AttrString t } -> do
+        let start = offsetOf src t.range.start + 1
+        Just { text: unquote t.text, start, end: start + SCU.length (unquote t.text), range: t.range }
+      _ -> Nothing
+    binders = args <#> \a -> countBinders a.text
+    nameErrors = case nameAttr, name of
+      Nothing, _ -> [ errorAt el "A <template> needs a name: <template name=\"f\">, for its module's foreign import f" ]
+      Just a, Nothing -> [ { range: a.name.range, message: "A template's name is a string: name=\"f\"", fix: Nothing } ]
+      _, Just n
+        | isNothing found ->
+            [ { range: maybe' (tagRange el) (\a -> attrRange a) nameAttr
+              , message: "<template name=\"" <> n <> "\"> has no foreign import " <> n <> " :: T in the script to define"
+              , fix: Just { message: "Declare foreign import " <> n <> " :: _", edits: [ insertForeign n ] }
+              }
+            ]
+        | otherwise -> []
+    argsErrors = case argsAttr, args, binders of
+      Just a, Nothing, _ -> [ { range: a.name.range, message: "A template's args are a string of binders: args=\"x y\"", fix: Nothing } ]
+      _, Just a, Just Nothing -> [ { range: a.range, message: "args holds PureScript binders, as a function's arguments: args=\"props n\"", fix: Nothing } ]
+      _, Just a, Just (Just n)
+        | Just f <- found
+        , not (endsInWildcard f.declaration.type)
+        , n > typeArrows f.declaration.type ->
+            [ { range: a.range
+              , message: "args has " <> count n "binder" <> " but the type of " <> f.name <> " has " <> count (typeArrows f.declaration.type) "arrow"
+              , fix: Nothing
+              }
+            ]
+      _, _, _ -> []
+  { template:
+      { element: el
+      , name: fromMaybe "" name
+      , args: args <#> \a -> { text: a.text, start: a.start, end: a.end, binders: fromMaybe 0 (join binders) }
+      , declaration: _.declaration <$> found
+      }
+  , errors: nameErrors <> argsErrors
+  }
+  where
+  maybe' d f = case _ of
+    Just a -> f a
+    Nothing -> d
+
+  attrRange a = case a.value of
+    Just { value: AttrString t } -> { start: a.name.range.start, end: t.range.end }
+    _ -> a.name.range
+
+  count n noun = show n <> " " <> noun <> if n == 1 then "" else "s"
+
+  -- Inserted on a line of its own just before `</script>`.
+  insertForeign n = do
+    let
+      at = case script.close of
+        Just c -> c.open.range.start
+        Nothing -> posOf src (SCU.length src.text)
+      text = "foreign import " <> n <> " :: _\n"
+    { range: { start: at, end: at }, text: if at.column == 0 then text else "\n" <> text }
+
+duplicateErrors :: Array Resolved -> Array PsxError
+duplicateErrors resolved = Array.catMaybes $ Array.mapWithIndex dup resolved
+  where
+  dup i r
+    | r.template.name /= ""
+    , Array.any (\p -> p.template.name == r.template.name) (Array.take i resolved) =
+        Just (errorAt r.template.element ("A second <template name=\"" <> r.template.name <> "\">: a name has one template"))
+    | otherwise = Nothing
+
+-- | The number of binders, or nothing if they don't parse.
+countBinders :: String -> Maybe Int
+countBinders args = case CST.parseDecl ("f " <> args <> " = f") of
+  CST.ParseSucceeded (CSTTypes.DeclValue v) -> Just (Array.length v.binders)
+  _ -> Nothing
+
+-- | Whether the type ends in `_` or `?hole`, as the quick fix leaves it, so
+-- | its arrows are not yet known.
+endsInWildcard :: forall e. CSTTypes.Type e -> Boolean
+endsInWildcard = case _ of
+  TypeForall _ _ _ t -> endsInWildcard t
+  TypeConstrained _ _ t -> endsInWildcard t
+  TypeArrow _ _ t -> endsInWildcard t
+  TypeParens (Wrapped w) -> endsInWildcard w.value
+  TypeWildcard _ -> true
+  TypeHole _ -> true
+  _ -> false
+
+-- | The arrows of a type, under its `forall`s and constraints.
+typeArrows :: forall e. CSTTypes.Type e -> Int
+typeArrows = case _ of
+  TypeForall _ _ _ t -> typeArrows t
+  TypeConstrained _ _ t -> typeArrows t
+  TypeArrow _ _ t -> 1 + typeArrows t
+  TypeParens (Wrapped w) -> typeArrows w.value
+  _ -> 0

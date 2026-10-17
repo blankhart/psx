@@ -1,0 +1,10 @@
+<script type="text/purescript">
+module App.Missing where
+
+import Portico.Psx (Markup)
+
+foreign import shown :: Markup Unit
+</script>
+
+<template name="shown"><p>shown</p></template>
+<template name="hidden" args="x"><p>{x}</p></template>

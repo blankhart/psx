@@ -1,0 +1,2 @@
+-- psx lower failed
+-- 1:1 A .psxt file holds its module in a <script type="text/purescript">

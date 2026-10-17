@@ -17,7 +17,9 @@ import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Process as Process
 import Psx.Cst (Child(..), Markup(..), Psx, foldMapMarkupRoots, parseModule, printModule)
+import Psx.Cst.Psxt (parsePsxt, printPsxt)
 import Psx.Cst.Source (offsetOf, posOf, source)
+import PureScript.CST.Range (rangeOf)
 import PureScript.CST as CST
 import PureScript.CST.Types (Module)
 
@@ -26,6 +28,7 @@ main = do
   positions
   operators
   corpus
+  psxt
   log "psx-cst: all tests passed"
 
 assert :: String -> Boolean -> Effect Unit
@@ -89,13 +92,44 @@ corpus = do
   findCorpus dir >>= case _ of
     Nothing -> throw "FAIL no test/corpus directory above the current directory"
     Just root -> do
-      files <- Array.filter (String.contains (String.Pattern "input.psx") <<< Path.basename) <$> walk root
+      all <- walk root
+      let
+        files = Array.filter (\f -> Path.basename f == "input.psx") all
+        psxtFiles = Array.filter (\f -> Path.basename f == "input.psxt") all
       assert "corpus has .psx cases" (not (Array.null files))
+      assert "corpus has .psxt cases" (not (Array.null psxtFiles))
       for_ files \file -> do
         input <- FS.readTextFile UTF8 file
         case (parseModule input).module of
           Just m -> assert ("print-after-parse is the identity on " <> file) (printModule m == input)
           Nothing -> pure unit
+      for_ psxtFiles \file -> do
+        input <- FS.readTextFile UTF8 file
+        assert ("print-after-parse is the identity on " <> file) (printPsxt (parsePsxt input).items == input)
+
+-- A .psxt file's module keeps the file's positions, and a template without a
+-- foreign import gets a fix that declares one.
+psxt :: Effect Unit
+psxt = do
+  let
+    input = "<!-- x -->\n<script type=\"text/purescript\">\nmodule M where\n\nimport Portico.Psx (Markup)\n\nforeign import a :: Markup Unit\n</script>\n<template name=\"a\"><p/></template>\n<template name=\"b\" args=\"x y\"><p>{x}</p></template>\n"
+    result = parsePsxt input
+  case result.file of
+    Nothing -> throw "FAIL the .psxt example parses"
+    Just file -> do
+      let start = (rangeOf file.script.module).start
+      assert ("the module starts at 3:1, not " <> show start) (start == { line: 2, column: 0 })
+      assert "both templates are found" (map _.name file.templates == [ "a", "b" ])
+      assert "a defines its foreign import" (map (map (_.range.start.line) <<< _.declaration) file.templates == [ Just 6, Nothing ])
+  case result.errors of
+    [ e ] | Just fix <- e.fix, [ edit ] <- fix.edits -> do
+      let
+        src = source input
+        at = offsetOf src edit.range.start
+        fixed = String.take at input <> edit.text <> String.drop at input
+      assert ("the fix declares b: " <> show edit.text) (edit.text == "foreign import b :: _\n")
+      assert "the fixed file resolves" (Array.null (parsePsxt fixed).errors)
+    errors -> throw ("FAIL one error with a fix, not " <> show (map _.message errors))
 
 findCorpus :: FilePath -> Effect (Maybe FilePath)
 findCorpus dir = do
