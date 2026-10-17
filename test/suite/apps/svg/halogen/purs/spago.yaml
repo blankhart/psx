@@ -1,0 +1,14 @@
+package:
+  name: psx-suite-svg-halogen-purs
+  dependencies:
+    - aff
+    - arrays
+    - effect
+    - foldable-traversable
+    - halogen
+    - maybe
+    - prelude
+    - strings
+    - tuples
+    - web-dom
+    - web-html

@@ -878,9 +878,12 @@ module Halogen.Psx
   , onVolumeChange
   , onWaiting
   , onWheel
+  , keyedElement
   ) where
 
 import Prelude (const, show, (<<<))
+import Data.Array as Array
+import Data.Tuple (Tuple)
 import Data.MediaType (MediaType)
 import DOM.HTML.Indexed as I
 import DOM.HTML.Indexed.AutocompleteType (AutocompleteType) as T
@@ -892,7 +895,7 @@ import DOM.HTML.Indexed.StepValue (StepValue) as T
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Halogen.Psx.Core (Attr, Markup, Node, attribute, onValueInput)
+import Halogen.Psx.Core (Attr, Key, Markup, Node, attribute, keyedHtmlElement, keyedSvgElement, onValueInput)
 import Web.Clipboard.ClipboardEvent (ClipboardEvent)
 import Web.Event.Event (Event, EventType(..))
 import Web.HTML.Event.DragEvent (DragEvent)
@@ -901,7 +904,7 @@ import Web.UIEvent.FocusEvent (FocusEvent)
 import Web.UIEvent.KeyboardEvent (KeyboardEvent)
 import Web.UIEvent.MouseEvent (MouseEvent)
 import Web.UIEvent.WheelEvent (WheelEvent)
-import Halogen.Psx.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, keyedElement, root, text, toKey) as Core
+import Halogen.Psx.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
 
@@ -1600,6 +1603,98 @@ view = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "vi
 
 vkern :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
 vkern = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "vkern")
+
+-- | The elements created in SVG's namespace.
+svgElements :: Array String
+svgElements =
+  [ "svg"
+  , "altGlyph"
+  , "altGlyphDef"
+  , "altGlyphItem"
+  , "animate"
+  , "animateColor"
+  , "animateMotion"
+  , "animateTransform"
+  , "animation"
+  , "circle"
+  , "clipPath"
+  , "color-profile"
+  , "cursor"
+  , "defs"
+  , "desc"
+  , "discard"
+  , "ellipse"
+  , "feBlend"
+  , "feColorMatrix"
+  , "feComponentTransfer"
+  , "feComposite"
+  , "feConvolveMatrix"
+  , "feDiffuseLighting"
+  , "feDisplacementMap"
+  , "feDistantLight"
+  , "feDropShadow"
+  , "feFlood"
+  , "feFuncA"
+  , "feFuncB"
+  , "feFuncG"
+  , "feFuncR"
+  , "feGaussianBlur"
+  , "feImage"
+  , "feMerge"
+  , "feMergeNode"
+  , "feMorphology"
+  , "feOffset"
+  , "fePointLight"
+  , "feSpecularLighting"
+  , "feSpotLight"
+  , "feTile"
+  , "feTurbulence"
+  , "filter"
+  , "font-face"
+  , "font-face-format"
+  , "font-face-name"
+  , "font-face-src"
+  , "font-face-uri"
+  , "foreignObject"
+  , "g"
+  , "glyph"
+  , "glyphRef"
+  , "handler"
+  , "hkern"
+  , "line"
+  , "linearGradient"
+  , "listener"
+  , "marker"
+  , "mask"
+  , "metadata"
+  , "missing-glyph"
+  , "mpath"
+  , "path"
+  , "pattern"
+  , "polygon"
+  , "polyline"
+  , "prefetch"
+  , "radialGradient"
+  , "rect"
+  , "set"
+  , "solidColor"
+  , "stop"
+  , "switch"
+  , "symbol"
+  , "tbreak"
+  , "text"
+  , "textArea"
+  , "textPath"
+  , "tref"
+  , "tspan"
+  , "unknown"
+  , "use"
+  , "view"
+  , "vkern"
+  ]
+
+keyedElement :: forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a
+keyedElement = \tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag
 
 -- Attributes ------------------------------------------------------------------
 
@@ -3300,14 +3395,14 @@ onInput = onValueInput
 onInvalid :: forall r a. a -> Attr r a
 onInvalid = HE.handler (EventType "invalid") <<< const
 
-onKeyDown :: forall r a. a -> Attr (onKeyDown :: KeyboardEvent | r) a
-onKeyDown = HE.onKeyDown <<< const
+onKeyDown :: forall r a. (KeyboardEvent -> a) -> Attr (onKeyDown :: KeyboardEvent | r) a
+onKeyDown = HE.onKeyDown
 
 onKeyPress :: forall r a. a -> Attr r a
 onKeyPress = HE.handler (EventType "keypress") <<< const
 
-onKeyUp :: forall r a. a -> Attr (onKeyUp :: KeyboardEvent | r) a
-onKeyUp = HE.onKeyUp <<< const
+onKeyUp :: forall r a. (KeyboardEvent -> a) -> Attr (onKeyUp :: KeyboardEvent | r) a
+onKeyUp = HE.onKeyUp
 
 onLanguageChange :: forall r a. a -> Attr r a
 onLanguageChange = HE.handler (EventType "languagechange") <<< const

@@ -15,7 +15,6 @@
     "element",
     "keyed",
     "keyedChildren",
-    "keyedElement",
     "root",
     "text",
     "toKey"
@@ -33,6 +32,8 @@
   ],
   "imports": [
     "Prelude (const, show, (<<<))",
+    "Data.Array as Array",
+    "Data.Tuple (Tuple)",
     "Data.MediaType (MediaType)",
     "DOM.HTML.Indexed as I",
     "DOM.HTML.Indexed.AutocompleteType (AutocompleteType) as T",
@@ -44,7 +45,7 @@
     "Halogen.HTML as HH",
     "Halogen.HTML.Events as HE",
     "Halogen.HTML.Properties as HP",
-    "Halogen.Psx.Core (Attr, Markup, Node, attribute, onValueInput)",
+    "Halogen.Psx.Core (Attr, Key, Markup, Node, attribute, keyedHtmlElement, keyedSvgElement, onValueInput)",
     "Web.Clipboard.ClipboardEvent (ClipboardEvent)",
     "Web.Event.Event (Event, EventType(..))",
     "Web.HTML.Event.DragEvent (DragEvent)",
@@ -55,6 +56,10 @@
     "Web.UIEvent.WheelEvent (WheelEvent)"
   ],
   "templates": {
+    "keyedElement": {
+      "type": "forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a",
+      "code": "\\tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag"
+    },
     "element": {
       "type": "forall r w a. Array (Attr r a) -> Markup w a -> Node w a",
       "code": "HH.element (HH.ElemName {name})"
@@ -397,12 +402,14 @@
       "sample": "\\_ -> msg"
     },
     "onKeyDown": {
-      "type": "forall r a. a -> Attr (onKeyDown :: KeyboardEvent | r) a",
-      "code": "HE.onKeyDown <<< const"
+      "type": "forall r a. (KeyboardEvent -> a) -> Attr (onKeyDown :: KeyboardEvent | r) a",
+      "code": "HE.onKeyDown",
+      "sample": "\\_ -> msg"
     },
     "onKeyUp": {
-      "type": "forall r a. a -> Attr (onKeyUp :: KeyboardEvent | r) a",
-      "code": "HE.onKeyUp <<< const"
+      "type": "forall r a. (KeyboardEvent -> a) -> Attr (onKeyUp :: KeyboardEvent | r) a",
+      "code": "HE.onKeyUp",
+      "sample": "\\_ -> msg"
     },
     "onMouseDown": {
       "type": "forall r a. a -> Attr (onMouseDown :: MouseEvent | r) a",

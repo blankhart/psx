@@ -1,0 +1,43 @@
+-- | The child: a counter component with its own state, which tells its
+-- | parent its count after each change.
+module App.Nested.Halogen.Psx.Counter
+  ( Input
+  , Output
+  , counter
+  ) where
+
+import Prelude
+
+import Halogen as H
+import Halogen.Psx (Markup, root)
+
+type Input = { id :: Int, label :: String, start :: Int }
+
+type State = { id :: Int, label :: String, count :: Int }
+
+data Action = Increment | Decrement
+
+-- | Its count, after each change.
+type Output = Int
+
+handle :: forall m. Action -> H.HalogenM State Action () Output m Unit
+handle action = do
+  state <- H.modify \s -> s { count = s.count + (if action == Increment then 1 else -1) }
+  H.raise state.count
+
+derive instance Eq Action
+
+view :: forall w. State -> Markup w Action
+view state =
+  <div class="counter" data-testid={"counter-" <> show state.id}>
+    <span class="count">{state.label}: {show state.count}</span>
+    <button data-testid={"decrement-" <> show state.id} onclick={Decrement}>-</button>
+    <button data-testid={"increment-" <> show state.id} onclick={Increment}>+</button>
+  </div>
+
+counter :: forall q m. H.Component q Input Output m
+counter = H.mkComponent
+  { initialState: \i -> { id: i.id, label: i.label, count: i.start }
+  , render: root <<< view
+  , eval: H.mkEval H.defaultEval { handleAction = handle }
+  }

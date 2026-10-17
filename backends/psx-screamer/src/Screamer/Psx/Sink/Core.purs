@@ -17,7 +17,8 @@ module Screamer.Psx.Sink.Core
   , toKey
   , text
   , element
-  , keyedElement
+  , keyedHtmlElement
+  , keyedSvgElement
   , keyed
   , attribute
   , class Children
@@ -86,8 +87,13 @@ attr send (Attr a) = a send
 
 -- | A view runs once, so keyed children are created once and never
 -- | reordered; a list that changes is Screamer's `each` in a hole.
-keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedElement tag attrs kids = element tag attrs (map snd kids)
+-- | `Screamer.Psx.Sink.keyedElement` picks this or `keyedSvgElement` by
+-- | the tag.
+keyedHtmlElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedHtmlElement tag attrs kids = element tag attrs (map snd kids)
+
+keyedSvgElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+keyedSvgElement tag attrs kids = svgElement tag attrs (map snd kids)
 
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) node

@@ -39,6 +39,8 @@ export const closeImpl = (browser) => aff(() => browser.close());
 export const openImpl = (browser) => (file) =>
   aff(async () => {
     const page = await browser.newPage();
+    // A step that cannot find its element fails in seconds, not half a minute.
+    page.setDefaultTimeout(20000);
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     page.on('console', (message) => {

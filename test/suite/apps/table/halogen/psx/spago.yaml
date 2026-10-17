@@ -1,0 +1,14 @@
+package:
+  name: psx-suite-table-halogen-psx
+  dependencies:
+    - aff
+    - arrays
+    - effect
+    - foldable-traversable
+    - halogen
+    - maybe
+    - prelude
+    - psx-halogen
+    - psx-suite-shared
+    - web-dom
+    - web-html
