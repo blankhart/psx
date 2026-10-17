@@ -1,0 +1,26 @@
+module Fmt.Whitespace where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+-- A space the policy keeps stays on its line; whitespace it removes is free
+-- to become a line break or nothing.
+greeting :: String -> Markup Unit
+greeting name = <p>  Hello, <b>{name}</b>! <i>Welcome</i>   back.   </p>
+
+-- Text written against a tag or hole stays against it.
+tight :: String -> Markup Unit
+tight name = <p>Dear {name}, <a href="/">home</a>,{name}<br/>again</p>
+
+-- Text that is only indentation between tags disappears, and the tags go one
+-- per line.
+list :: Markup Unit
+list = <ul>
+           <li>one</li>    <li>two</li>
+  <li>three</li><li>four</li></ul>
+
+-- A space between two tags renders, so they share a line.
+spaced :: Markup Unit
+spaced =
+  <div><span>a</span> <span>b</span>{" "}<span>c</span></div>

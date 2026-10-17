@@ -3,6 +3,7 @@
 module Psx.Corpus.Stages (stages) where
 
 import Psx.Corpus (Stage)
+import Psx.Corpus.Format (format)
 import Psx.Corpus.Lower (css, lower, positionMap, same)
 import Psx.Corpus.Parse (parse, parsePsxt)
 
@@ -14,4 +15,5 @@ stages =
   , positionMap
   , css
   , same
+  , format
   ]

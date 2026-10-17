@@ -1,0 +1,32 @@
+module Fmt.Edges where
+
+import Prelude
+
+import Effect (Effect)
+import Portico.Psx (Markup)
+
+-- Line ends are LF, and empty elements stay empty.
+empty :: Markup Unit
+empty = <div></div>
+
+space :: Markup Unit
+space = <div> </div>
+
+-- A comment before the closing brace of a hole.
+closing :: Int -> Markup Unit
+closing n =
+  <p>
+    {
+      show n -- why
+    }
+  </p>
+
+-- Markup after an operator, in a do block, and in a tab-indented paragraph.
+render :: (Markup Unit -> Effect Unit) -> Effect Unit
+render mount = do
+  mount $
+    <main>
+      <h1>Café 🎉</h1>
+    </main>
+  mount
+    (<p>Tabbed	text</p>)

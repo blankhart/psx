@@ -1,0 +1,6 @@
+module Lower.ErrorTwoBackends where
+
+import Halogen.Psx as H
+import Portico.Psx (Markup)
+
+view = <p>both</p>

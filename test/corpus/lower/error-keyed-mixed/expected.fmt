@@ -1,0 +1,10 @@
+module Lower.ErrorKeyedMixed where
+
+import Portico.Psx (Markup)
+
+-- In a keyed list, every child carries `key`.
+view =
+  <ul>
+    <li key="a">A</li>
+    <li>B</li>loose text
+  </ul>

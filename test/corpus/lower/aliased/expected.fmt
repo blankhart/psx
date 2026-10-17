@@ -1,0 +1,9 @@
+module Lower.Aliased where
+
+import Prelude
+
+import Portico.Psx as B
+
+-- The file already calls its backend B, so no import is added.
+view :: B.Markup Unit
+view = B.children "a" <> <p>b</p>

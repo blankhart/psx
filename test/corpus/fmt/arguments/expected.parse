@@ -1,0 +1,7 @@
+print: identical
+errors:
+  12:13-12:40 Markup as a function argument must be parenthesised
+    fix: Add parentheses: insert "(" at 12:13, insert ")" at 12:40
+markup:
+  15:17 <p>
+    text "Already parenthesised"

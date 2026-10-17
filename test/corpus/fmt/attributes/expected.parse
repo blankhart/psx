@@ -1,0 +1,29 @@
+print: identical
+errors: none
+markup:
+  11:9 <button>
+    @type="submit"
+    @onclick={Save}
+    @disabled
+    text "Save"
+  15:14 <input> (no close)
+    @class="form-control form-control-lg"
+    @id="name-input"
+    @placeholder="Your name"
+    @value={value}
+    @oninput={Typed}
+    @required
+  18:8 <svg>
+    @viewBox="0 0 10 10"
+    18:33 <circle> (self-closing)
+      @cx="5"
+      @cy="5"
+      @r="4"
+      @fill="none"
+      @stroke="currentColor"
+      @stroke-width="1.5"
+  22:10 <p>
+    @title='single "quotes"'
+    @class="a
+  b"
+    text "Text"

@@ -1,0 +1,9 @@
+module Parse.ArgumentErrorMany where
+
+import Portico.Psx
+import Prelude
+
+inDo = do
+  pure (<span title={show (1 + 1)}>hi</span>)
+
+twice = f < br /> (g (<hr/>))

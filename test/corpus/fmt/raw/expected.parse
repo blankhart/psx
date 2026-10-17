@@ -1,0 +1,20 @@
+print: identical
+errors: none
+markup:
+  11:3 <div>
+    @class="card"
+    text "\n            "
+    12:13 <style>
+      text "\n              .card { padding: 1rem; }\n              @media (min-width: 40rem) {\n                .card { display: flex; }\n              }\n            "
+    text "\n    "
+    comment "<!-- A comment keeps its text,\n         and its lines keep their place relative to its start. -->"
+    text "\n    "
+    20:5 <p>
+      text "Card"
+    text "\n  "
+  25:10 <div>
+    25:15 <script>
+      text "\n    window.answer = 42;\n"
+  30:10 <div>
+    30:15 <style>
+      text "p { margin: 0; }"

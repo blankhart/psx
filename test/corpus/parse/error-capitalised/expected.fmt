@@ -1,0 +1,2 @@
+-- psx fmt failed
+-- 5:13 <Button> is a capitalised tag. PSX has no component tags: call the function in a hole, as in {button ...}

@@ -1,0 +1,30 @@
+module Lower.Attributes where
+
+import Portico.Psx (Markup)
+
+data Msg = Clicked | Typed String
+
+-- Boolean attributes are true when present; numbers are literals; strings are
+-- strings; names outside the HTML table go through B.attribute.
+form :: Boolean -> Markup Msg
+form busy =
+  <form>
+    <input
+      type="text"
+      required
+      disabled={busy}
+      tabindex="2"
+      maxlength="-1"
+      oninput={Typed}
+    >
+    <button
+      class="primary"
+      data-state="idle"
+      aria-label="Send"
+      onclick={Clicked}
+    >
+      Send
+    </button>
+    <label for="name" title>Name</label>
+    <div my-attribute={show busy}></div>
+  </form>

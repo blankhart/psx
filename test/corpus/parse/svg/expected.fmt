@@ -1,0 +1,17 @@
+module Parse.Svg where
+
+import Portico.Psx
+
+icon =
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke-width="2">
+      <path d="M4 12h16"></path>
+      <circle cx="12" cy="12" r="10"/>
+      <linearGradient id="g">
+        <stop offset="0"/>
+      </linearGradient>
+    </g>
+    <foreignObject width="10" height="10">
+      <input type="text">
+    </foreignObject>
+  </svg>
