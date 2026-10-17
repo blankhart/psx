@@ -4,7 +4,7 @@
   "core": "Screamer.Psx.Sink.Core",
   "coreExports": [
     "class Children",
-    "class KeyedChildren",
+    "class Content",
     "class ToKey",
     "Attr",
     "Key",
@@ -14,7 +14,7 @@
     "children",
     "element",
     "keyed",
-    "keyedChildren",
+    "none",
     "root",
     "sink",
     "text",
@@ -32,25 +32,19 @@
   ],
   "imports": [
     "Prelude (show, (<<<))",
-    "Data.Array as Array",
-    "Data.Tuple (Tuple)",
     "Prelude as Prelude",
     "Screamer.Core as S",
-    "Screamer.Psx.Sink.Core (Attr, Key, Markup, Node, keyedHtmlElement, keyedSvgElement)",
+    "Screamer.Psx.Sink.Core (class Content, Attr, Node)",
     "Screamer.Psx.Sink.Core (constant, element, handler, keyHandler, svgElement, valueHandler) as Impl",
     "Web.UIEvent.KeyboardEvent (KeyboardEvent)"
   ],
   "templates": {
-    "keyedElement": {
-      "type": "forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a",
-      "code": "\\tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag"
-    },
     "element": {
-      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
       "code": "Impl.element {name}"
     },
     "svgElement": {
-      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
       "code": "Impl.svgElement {name}"
     },
     "boolean": {
@@ -109,7 +103,7 @@
       "Data.Tuple (Tuple)",
       "Effect (Effect)",
       "Screamer.Core (Element)",
-      "Screamer.Psx.Sink (class Children, class KeyedChildren, class ToKey)",
+      "Screamer.Psx.Sink (class Children, class Content, class ToKey)",
       "Screamer.Signal (Signal)"
     ],
     "core": [
@@ -119,11 +113,11 @@
       ],
       [
         "element",
-        "forall a. String -> Array (B.Attr a) -> B.Markup a -> B.Node a"
+        "forall c a. Content c a => String -> Array (B.Attr a) -> c -> B.Node a"
       ],
       [
-        "keyedElement",
-        "forall a. String -> Array (B.Attr a) -> Array (Tuple B.Key (B.Node a)) -> B.Node a"
+        "none",
+        "forall a. B.Markup a"
       ],
       [
         "keyed",
@@ -135,11 +129,7 @@
       ],
       [
         "children",
-        "forall c a. Children c a => c -> B.Markup a"
-      ],
-      [
-        "keyedChildren",
-        "forall c a. KeyedChildren c a => c -> Array (Tuple B.Key (B.Node a))"
+        "forall c r. Children c r => c -> r"
       ],
       [
         "root",
@@ -162,14 +152,22 @@
       "    <> B.children (pure node :: Signal (B.Node a))",
       "    <> B.children (pure [ node ] :: Signal (B.Markup a))",
       "",
-      "-- | What a child hole of a keyed parent takes: keyed literals and arrays of",
-      "-- | them, keyed by strings or by integers.",
+      "-- | What a child hole takes to make keyed children: keyed literals and",
+      "-- | arrays of them, keyed by strings or by integers.",
       "keyedChildHoles :: forall a. B.Node a -> Array (Tuple B.Key (B.Node a))",
       "keyedChildHoles node =",
-      "  B.keyedChildren (B.keyed \"a\" node)",
-      "    <> B.keyedChildren [ B.keyed 1 node ]",
-      "    <> B.keyedChildren [ [ B.keyed 2 node ] ]",
-      "    <> B.keyedChildren (Just (B.keyed 3.0 node))",
+      "  B.children (B.keyed \"a\" node)",
+      "    <> B.children [ B.keyed 1 node ]",
+      "    <> B.children [ [ B.keyed 2 node ] ]",
+      "    <> B.children (Just (B.keyed 3.0 node))",
+      "",
+      "-- | An element takes keyed children as it takes plain ones.",
+      "keyedContent :: forall a. B.Node a -> Array (B.Node a)",
+      "keyedContent node =",
+      "  [ B.ul [] [ B.keyed \"a\" node, B.keyed \"b\" node ]",
+      "  , B.element \"x-list\" [] (B.children [ B.keyed 1 node ])",
+      "  , B.g [] [ B.keyed \"c\" node ]",
+      "  ]",
       "",
       "-- | A view becomes a Screamer element given its sink.",
       "sink :: forall a. (a -> Effect Unit) -> B.Node a -> Element",
@@ -178,8 +176,8 @@
       "-- | Attributes take a signal of their type as well as a constant.",
       "signalAttributes :: forall a. Array (B.Node a)",
       "signalAttributes =",
-      "  [ B.div [ B.class_ (pure \"on\" :: Signal String), B.hidden (pure true :: Signal Boolean), B.tabindex (pure 0 :: Signal Int) ] []",
-      "  , B.input [ B.value (pure \"\" :: Signal String), B.checked (pure false :: Signal Boolean) ] []",
+      "  [ B.div [ B.class_ (pure \"on\" :: Signal String), B.hidden (pure true :: Signal Boolean), B.tabindex (pure 0 :: Signal Int) ] B.none",
+      "  , B.input [ B.value (pure \"\" :: Signal String), B.checked (pure false :: Signal Boolean) ] B.none",
       "  ]"
     ],
     "nodes": "forall a. Array (B.Node a)",

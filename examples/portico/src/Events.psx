@@ -52,7 +52,7 @@ arrowKey = case _ of
   _ -> Nothing
 
 -- Listener options and handlers that read the event are Portico's own
--- functions, so those elements are Portico calls in holes.
+-- functions, so they are trait holes.
 view :: Model -> Markup Msg
 view model =
   <main>
@@ -71,28 +71,28 @@ view model =
       {show model.x <> "," <> show model.y}
     </div>
     <!-- A capturing listener on the outside hears the click first. -->
-    {P.div [ P.id "outer", P.onWith "click" { capture: true, passive: false } \_ -> pure (Just (Clicked "outer")) ]
-      (<button id="inner" onclick={Clicked "inner"}>Inner</button>)
-    }
+    <div id="outer" {P.onWith "click" { capture: true, passive: false } \_ -> pure (Just (Clicked "outer"))}>
+      <button id="inner" onclick={Clicked "inner"}>Inner</button>
+    </div>
     <!-- A passive listener cannot cancel the event, so this link is followed. -->
-    {P.a
-      [ P.id "passive"
-      , P.href "#passive"
-      , P.onWith "click" { capture: false, passive: true } \event -> do
-          Event.preventDefault event
-          pure (Just (Clicked "passive"))
-      ]
-      (<>Passive</>)
-    }
-    {P.a
-      [ P.id "active"
-      , P.href "#active"
-      , P.onMaybe "click" \event -> do
-          Event.preventDefault event
-          pure (Just (Clicked "active"))
-      ]
-      (<>Active</>)
-    }
+    <a
+      id="passive"
+      href="#passive"
+      {P.onWith "click" { capture: false, passive: true } \event -> do
+        Event.preventDefault event
+        pure (Just (Clicked "passive"))}
+    >
+      Passive
+    </a>
+    <a
+      id="active"
+      href="#active"
+      {P.onMaybe "click" \event -> do
+        Event.preventDefault event
+        pure (Just (Clicked "active"))}
+    >
+      Active
+    </a>
     <p id="clicks">{String.joinWith " " model.clicks}</p>
   </main>
 

@@ -1,0 +1,8 @@
+module Parse.ErrorTraitHole where
+
+import Portico.Psx
+
+-- A trait hole that doesn't parse is kept, and the tag goes on.
+view = <p {show (} class="a">x</p>
+
+next = 1

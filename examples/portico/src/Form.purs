@@ -36,7 +36,7 @@ update model = case _ of
     model { submitted = String.joinWith "&" $ (\{ name, value } -> name <> "=" <> value) <$> fields } :> []
 
 -- `P.onCheck` and `P.onSubmitWith` read the event, which no HTML attribute
--- says, so the checkbox and the form are Portico's own functions in holes.
+-- says, so they are trait holes.
 view :: Model -> Markup Msg
 view model =
   [ B.main [] ([
@@ -45,8 +45,8 @@ view model =
       B.option [ B.value "chocolate" ] ([ B.text "Chocolate" ]) ]
    ),
     B.p [ B.id "chosen" ] (B.children (model.flavor)),
-    B.label [] (B.children (
-       P.input [ P.id "open", P.type' "checkbox", P.checked model.open, P.onCheck Open ] []) <> [
+    B.label [] ([
+      B.input [ B.id "open", B.type' "checkbox", B.checked (model.open), (P.onCheck Open) ] B.none,
       B.text "Open" ]
    ),
 
@@ -56,21 +56,18 @@ view model =
 
 
     B.div [ B.onFocusOut (Blurred) ] (B.children (
-       if model.editing then [ B.input [ B.id "note", B.onInput (Note) ] [] ] else [])
+       if model.editing then [ B.input [ B.id "note", B.onInput (Note) ] B.none ] else [])
    ),
-    B.p [ B.id "blurs" ] (B.children (show model.blurs)) ] <> B.children (
+    B.p [ B.id "blurs" ] (B.children (show model.blurs)),
 
-     P.form [ P.id "order", P.onSubmitWith Submitted ]
-      ( [
-          B.input [ B.name "name", B.required true ] [],
-          B.select [ B.name "size" ] ([
-            B.option [ B.value "s" ] ([ B.text "Small" ]),
-            B.option [ B.value "l" ] ([ B.text "Large" ]) ]
-       ),
-          B.button [ B.name "action", B.value "save" ] ([ B.text "Save" ]) ]
-
-      )) <> [
-
+    B.form [ B.id "order", (P.onSubmitWith Submitted) ] ([
+      B.input [ B.name "name", B.required true ] B.none,
+      B.select [ B.name "size" ] ([
+        B.option [ B.value "s" ] ([ B.text "Small" ]),
+        B.option [ B.value "l" ] ([ B.text "Large" ]) ]
+   ),
+      B.button [ B.name "action", B.value "save" ] ([ B.text "Save" ]) ]
+   ),
     B.p [ B.id "submitted" ] (B.children (model.submitted)) ]
    ) ]
 

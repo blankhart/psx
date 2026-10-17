@@ -31,9 +31,7 @@ keywords =
 -- | would equal one of these takes a suffix instead.
 signatureNames :: Array String
 signatureNames =
-  [ "attribute", "children", "element", "keyed", "keyedChildren"
-  , "keyedElement", "root", "text"
-  ]
+  [ "attribute", "children", "element", "keyed", "none", "root", "text" ]
 
 -- | Joins the parts of a name split at `-` and `:`, capitalising every part
 -- | but the first: `accept-charset` to `acceptCharset`, `xlink:href` to

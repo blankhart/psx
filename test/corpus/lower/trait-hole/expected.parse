@@ -1,0 +1,24 @@
+print: identical
+errors: none
+markup:
+  13:8 <div>
+    @trait {P.transitionGroup "bounce"}
+    @class="list"
+    text "x"
+  17:3 <input> (no close)
+    @type="checkbox"
+    @checked={open}
+    @trait {P.onCheck Open}
+  22:3 <svg>
+    @viewBox="0 0 10 10"
+    text "\n    "
+    23:5 <text>
+      @key="text"
+      @trait {P.transition "fade"}
+      @font-size="24"
+      text "Hi"
+    text "\n  "
+  29:3 <button>
+    @class="go"
+    @trait {P.onWith "click" { capture: true, passive: true } \_ -> pure (Just Clicked)}
+    text "\n    Go\n  "

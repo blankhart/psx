@@ -100,12 +100,12 @@ view model =
   [ B.main [] ([
     B.div [] ([
       B.text "Connection status: " ] <> B.children (maybe "Disconnected" show model.status) <> [
-      B.br [] [],
+      B.br [] B.none,
       B.button [ B.id "connect", B.onClick (Connect (not model.connect)) ] (B.children (
          if model.connect then "Disconnect" else "Connect")
    ),
-      B.br [] [],
-      B.input [ B.value (model.chat), B.onInput (ChatMsg <<< UpdatedChat) ] [],
+      B.br [] B.none,
+      B.input [ B.value (model.chat), B.onInput (ChatMsg <<< UpdatedChat) ] B.none,
       B.button [ B.onClick (ChatMsg SubmittedChat) ] ([ B.text "Send" ]) ]
    ),
     B.ul [] (B.children (model.log <#> \line -> [ B.li [] (B.children (line)) ])) ]

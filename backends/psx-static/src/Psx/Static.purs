@@ -878,706 +878,706 @@ module Psx.Static
   ) where
 
 import Prelude (const, show, (<<<))
-import Psx.Static.Core (Attr, Markup, Node)
+import Psx.Static.Core (class Content, Attr, Node)
 import Psx.Static.Core (booleanAttribute, element, noAttribute, voidElement) as Impl
-import Psx.Static.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, keyedElement, render, renderMarkup, root, text, toKey) as Core
+import Psx.Static.Core (class Children, class Content, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, none, render, renderMarkup, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
 
-a :: forall a. Array (Attr a) -> Markup a -> Node a
+a :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 a = Impl.element "a"
 
-abbr :: forall a. Array (Attr a) -> Markup a -> Node a
+abbr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 abbr = Impl.element "abbr"
 
-acronym :: forall a. Array (Attr a) -> Markup a -> Node a
+acronym :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 acronym = Impl.element "acronym"
 
-address :: forall a. Array (Attr a) -> Markup a -> Node a
+address :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 address = Impl.element "address"
 
-applet :: forall a. Array (Attr a) -> Markup a -> Node a
+applet :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 applet = Impl.element "applet"
 
-area :: forall a. Array (Attr a) -> Markup a -> Node a
+area :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 area = Impl.voidElement "area"
 
-article :: forall a. Array (Attr a) -> Markup a -> Node a
+article :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 article = Impl.element "article"
 
-aside :: forall a. Array (Attr a) -> Markup a -> Node a
+aside :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 aside = Impl.element "aside"
 
-audio :: forall a. Array (Attr a) -> Markup a -> Node a
+audio :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 audio = Impl.element "audio"
 
-b :: forall a. Array (Attr a) -> Markup a -> Node a
+b :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 b = Impl.element "b"
 
-base :: forall a. Array (Attr a) -> Markup a -> Node a
+base :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 base = Impl.voidElement "base"
 
-basefont :: forall a. Array (Attr a) -> Markup a -> Node a
+basefont :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 basefont = Impl.voidElement "basefont"
 
-bdi :: forall a. Array (Attr a) -> Markup a -> Node a
+bdi :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 bdi = Impl.element "bdi"
 
-bdo :: forall a. Array (Attr a) -> Markup a -> Node a
+bdo :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 bdo = Impl.element "bdo"
 
-bgsound :: forall a. Array (Attr a) -> Markup a -> Node a
+bgsound :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 bgsound = Impl.voidElement "bgsound"
 
-big :: forall a. Array (Attr a) -> Markup a -> Node a
+big :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 big = Impl.element "big"
 
-blink :: forall a. Array (Attr a) -> Markup a -> Node a
+blink :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 blink = Impl.element "blink"
 
-blockquote :: forall a. Array (Attr a) -> Markup a -> Node a
+blockquote :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 blockquote = Impl.element "blockquote"
 
-body :: forall a. Array (Attr a) -> Markup a -> Node a
+body :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 body = Impl.element "body"
 
-br :: forall a. Array (Attr a) -> Markup a -> Node a
+br :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 br = Impl.voidElement "br"
 
-button :: forall a. Array (Attr a) -> Markup a -> Node a
+button :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 button = Impl.element "button"
 
-canvas :: forall a. Array (Attr a) -> Markup a -> Node a
+canvas :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 canvas = Impl.element "canvas"
 
-caption :: forall a. Array (Attr a) -> Markup a -> Node a
+caption :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 caption = Impl.element "caption"
 
-center :: forall a. Array (Attr a) -> Markup a -> Node a
+center :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 center = Impl.element "center"
 
-cite :: forall a. Array (Attr a) -> Markup a -> Node a
+cite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 cite = Impl.element "cite"
 
-code :: forall a. Array (Attr a) -> Markup a -> Node a
+code :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 code = Impl.element "code"
 
-col :: forall a. Array (Attr a) -> Markup a -> Node a
+col :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 col = Impl.voidElement "col"
 
-colgroup :: forall a. Array (Attr a) -> Markup a -> Node a
+colgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 colgroup = Impl.element "colgroup"
 
-command :: forall a. Array (Attr a) -> Markup a -> Node a
+command :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 command = Impl.voidElement "command"
 
-content :: forall a. Array (Attr a) -> Markup a -> Node a
+content :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 content = Impl.element "content"
 
-data' :: forall a. Array (Attr a) -> Markup a -> Node a
+data' :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 data' = Impl.element "data"
 
-datalist :: forall a. Array (Attr a) -> Markup a -> Node a
+datalist :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 datalist = Impl.element "datalist"
 
-dd :: forall a. Array (Attr a) -> Markup a -> Node a
+dd :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 dd = Impl.element "dd"
 
-del :: forall a. Array (Attr a) -> Markup a -> Node a
+del :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 del = Impl.element "del"
 
-details :: forall a. Array (Attr a) -> Markup a -> Node a
+details :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 details = Impl.element "details"
 
-dfn :: forall a. Array (Attr a) -> Markup a -> Node a
+dfn :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 dfn = Impl.element "dfn"
 
-dialog :: forall a. Array (Attr a) -> Markup a -> Node a
+dialog :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 dialog = Impl.element "dialog"
 
-dir :: forall a. Array (Attr a) -> Markup a -> Node a
+dir :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 dir = Impl.element "dir"
 
-div :: forall a. Array (Attr a) -> Markup a -> Node a
+div :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 div = Impl.element "div"
 
-dl :: forall a. Array (Attr a) -> Markup a -> Node a
+dl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 dl = Impl.element "dl"
 
-dt :: forall a. Array (Attr a) -> Markup a -> Node a
+dt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 dt = Impl.element "dt"
 
-elementEl :: forall a. Array (Attr a) -> Markup a -> Node a
+elementEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 elementEl = Impl.element "element"
 
-em :: forall a. Array (Attr a) -> Markup a -> Node a
+em :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 em = Impl.element "em"
 
-embed :: forall a. Array (Attr a) -> Markup a -> Node a
+embed :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 embed = Impl.voidElement "embed"
 
-fieldset :: forall a. Array (Attr a) -> Markup a -> Node a
+fieldset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fieldset = Impl.element "fieldset"
 
-figcaption :: forall a. Array (Attr a) -> Markup a -> Node a
+figcaption :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 figcaption = Impl.element "figcaption"
 
-figure :: forall a. Array (Attr a) -> Markup a -> Node a
+figure :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 figure = Impl.element "figure"
 
-font :: forall a. Array (Attr a) -> Markup a -> Node a
+font :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 font = Impl.element "font"
 
-footer :: forall a. Array (Attr a) -> Markup a -> Node a
+footer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 footer = Impl.element "footer"
 
-form :: forall a. Array (Attr a) -> Markup a -> Node a
+form :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 form = Impl.element "form"
 
-frame :: forall a. Array (Attr a) -> Markup a -> Node a
+frame :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 frame = Impl.voidElement "frame"
 
-frameset :: forall a. Array (Attr a) -> Markup a -> Node a
+frameset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 frameset = Impl.element "frameset"
 
-h1 :: forall a. Array (Attr a) -> Markup a -> Node a
+h1 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 h1 = Impl.element "h1"
 
-h2 :: forall a. Array (Attr a) -> Markup a -> Node a
+h2 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 h2 = Impl.element "h2"
 
-h3 :: forall a. Array (Attr a) -> Markup a -> Node a
+h3 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 h3 = Impl.element "h3"
 
-h4 :: forall a. Array (Attr a) -> Markup a -> Node a
+h4 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 h4 = Impl.element "h4"
 
-h5 :: forall a. Array (Attr a) -> Markup a -> Node a
+h5 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 h5 = Impl.element "h5"
 
-h6 :: forall a. Array (Attr a) -> Markup a -> Node a
+h6 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 h6 = Impl.element "h6"
 
-head :: forall a. Array (Attr a) -> Markup a -> Node a
+head :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 head = Impl.element "head"
 
-header :: forall a. Array (Attr a) -> Markup a -> Node a
+header :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 header = Impl.element "header"
 
-hgroup :: forall a. Array (Attr a) -> Markup a -> Node a
+hgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 hgroup = Impl.element "hgroup"
 
-hr :: forall a. Array (Attr a) -> Markup a -> Node a
+hr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 hr = Impl.voidElement "hr"
 
-html :: forall a. Array (Attr a) -> Markup a -> Node a
+html :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 html = Impl.element "html"
 
-i :: forall a. Array (Attr a) -> Markup a -> Node a
+i :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 i = Impl.element "i"
 
-iframe :: forall a. Array (Attr a) -> Markup a -> Node a
+iframe :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 iframe = Impl.element "iframe"
 
-image :: forall a. Array (Attr a) -> Markup a -> Node a
+image :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 image = Impl.voidElement "image"
 
-img :: forall a. Array (Attr a) -> Markup a -> Node a
+img :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 img = Impl.voidElement "img"
 
-input :: forall a. Array (Attr a) -> Markup a -> Node a
+input :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 input = Impl.voidElement "input"
 
-ins :: forall a. Array (Attr a) -> Markup a -> Node a
+ins :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 ins = Impl.element "ins"
 
-isindex :: forall a. Array (Attr a) -> Markup a -> Node a
+isindex :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 isindex = Impl.element "isindex"
 
-kbd :: forall a. Array (Attr a) -> Markup a -> Node a
+kbd :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 kbd = Impl.element "kbd"
 
-keygen :: forall a. Array (Attr a) -> Markup a -> Node a
+keygen :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 keygen = Impl.voidElement "keygen"
 
-label :: forall a. Array (Attr a) -> Markup a -> Node a
+label :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 label = Impl.element "label"
 
-legend :: forall a. Array (Attr a) -> Markup a -> Node a
+legend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 legend = Impl.element "legend"
 
-li :: forall a. Array (Attr a) -> Markup a -> Node a
+li :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 li = Impl.element "li"
 
-link :: forall a. Array (Attr a) -> Markup a -> Node a
+link :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 link = Impl.voidElement "link"
 
-listing :: forall a. Array (Attr a) -> Markup a -> Node a
+listing :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 listing = Impl.element "listing"
 
-main :: forall a. Array (Attr a) -> Markup a -> Node a
+main :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 main = Impl.element "main"
 
-map :: forall a. Array (Attr a) -> Markup a -> Node a
+map :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 map = Impl.element "map"
 
-mark :: forall a. Array (Attr a) -> Markup a -> Node a
+mark :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 mark = Impl.element "mark"
 
-marquee :: forall a. Array (Attr a) -> Markup a -> Node a
+marquee :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 marquee = Impl.element "marquee"
 
-math :: forall a. Array (Attr a) -> Markup a -> Node a
+math :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 math = Impl.element "math"
 
-menu :: forall a. Array (Attr a) -> Markup a -> Node a
+menu :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 menu = Impl.element "menu"
 
-menuitem :: forall a. Array (Attr a) -> Markup a -> Node a
+menuitem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 menuitem = Impl.element "menuitem"
 
-meta :: forall a. Array (Attr a) -> Markup a -> Node a
+meta :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 meta = Impl.voidElement "meta"
 
-meter :: forall a. Array (Attr a) -> Markup a -> Node a
+meter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 meter = Impl.element "meter"
 
-multicol :: forall a. Array (Attr a) -> Markup a -> Node a
+multicol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 multicol = Impl.element "multicol"
 
-nav :: forall a. Array (Attr a) -> Markup a -> Node a
+nav :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 nav = Impl.element "nav"
 
-nextid :: forall a. Array (Attr a) -> Markup a -> Node a
+nextid :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 nextid = Impl.element "nextid"
 
-nobr :: forall a. Array (Attr a) -> Markup a -> Node a
+nobr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 nobr = Impl.element "nobr"
 
-noembed :: forall a. Array (Attr a) -> Markup a -> Node a
+noembed :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 noembed = Impl.element "noembed"
 
-noframes :: forall a. Array (Attr a) -> Markup a -> Node a
+noframes :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 noframes = Impl.element "noframes"
 
-noscript :: forall a. Array (Attr a) -> Markup a -> Node a
+noscript :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 noscript = Impl.element "noscript"
 
-object :: forall a. Array (Attr a) -> Markup a -> Node a
+object :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 object = Impl.element "object"
 
-ol :: forall a. Array (Attr a) -> Markup a -> Node a
+ol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 ol = Impl.element "ol"
 
-optgroup :: forall a. Array (Attr a) -> Markup a -> Node a
+optgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 optgroup = Impl.element "optgroup"
 
-option :: forall a. Array (Attr a) -> Markup a -> Node a
+option :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 option = Impl.element "option"
 
-output :: forall a. Array (Attr a) -> Markup a -> Node a
+output :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 output = Impl.element "output"
 
-p :: forall a. Array (Attr a) -> Markup a -> Node a
+p :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 p = Impl.element "p"
 
-param :: forall a. Array (Attr a) -> Markup a -> Node a
+param :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 param = Impl.voidElement "param"
 
-picture :: forall a. Array (Attr a) -> Markup a -> Node a
+picture :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 picture = Impl.element "picture"
 
-plaintext :: forall a. Array (Attr a) -> Markup a -> Node a
+plaintext :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 plaintext = Impl.element "plaintext"
 
-pre :: forall a. Array (Attr a) -> Markup a -> Node a
+pre :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 pre = Impl.element "pre"
 
-progress :: forall a. Array (Attr a) -> Markup a -> Node a
+progress :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 progress = Impl.element "progress"
 
-q :: forall a. Array (Attr a) -> Markup a -> Node a
+q :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 q = Impl.element "q"
 
-rb :: forall a. Array (Attr a) -> Markup a -> Node a
+rb :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 rb = Impl.element "rb"
 
-rbc :: forall a. Array (Attr a) -> Markup a -> Node a
+rbc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 rbc = Impl.element "rbc"
 
-rp :: forall a. Array (Attr a) -> Markup a -> Node a
+rp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 rp = Impl.element "rp"
 
-rt :: forall a. Array (Attr a) -> Markup a -> Node a
+rt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 rt = Impl.element "rt"
 
-rtc :: forall a. Array (Attr a) -> Markup a -> Node a
+rtc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 rtc = Impl.element "rtc"
 
-ruby :: forall a. Array (Attr a) -> Markup a -> Node a
+ruby :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 ruby = Impl.element "ruby"
 
-s :: forall a. Array (Attr a) -> Markup a -> Node a
+s :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 s = Impl.element "s"
 
-samp :: forall a. Array (Attr a) -> Markup a -> Node a
+samp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 samp = Impl.element "samp"
 
-script :: forall a. Array (Attr a) -> Markup a -> Node a
+script :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 script = Impl.element "script"
 
-search :: forall a. Array (Attr a) -> Markup a -> Node a
+search :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 search = Impl.element "search"
 
-section :: forall a. Array (Attr a) -> Markup a -> Node a
+section :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 section = Impl.element "section"
 
-select :: forall a. Array (Attr a) -> Markup a -> Node a
+select :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 select = Impl.element "select"
 
-shadow :: forall a. Array (Attr a) -> Markup a -> Node a
+shadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 shadow = Impl.element "shadow"
 
-slot :: forall a. Array (Attr a) -> Markup a -> Node a
+slot :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 slot = Impl.element "slot"
 
-small :: forall a. Array (Attr a) -> Markup a -> Node a
+small :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 small = Impl.element "small"
 
-source :: forall a. Array (Attr a) -> Markup a -> Node a
+source :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 source = Impl.voidElement "source"
 
-spacer :: forall a. Array (Attr a) -> Markup a -> Node a
+spacer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 spacer = Impl.element "spacer"
 
-span :: forall a. Array (Attr a) -> Markup a -> Node a
+span :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 span = Impl.element "span"
 
-strike :: forall a. Array (Attr a) -> Markup a -> Node a
+strike :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 strike = Impl.element "strike"
 
-strong :: forall a. Array (Attr a) -> Markup a -> Node a
+strong :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 strong = Impl.element "strong"
 
-style :: forall a. Array (Attr a) -> Markup a -> Node a
+style :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 style = Impl.element "style"
 
-sub :: forall a. Array (Attr a) -> Markup a -> Node a
+sub :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 sub = Impl.element "sub"
 
-summary :: forall a. Array (Attr a) -> Markup a -> Node a
+summary :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 summary = Impl.element "summary"
 
-sup :: forall a. Array (Attr a) -> Markup a -> Node a
+sup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 sup = Impl.element "sup"
 
-svg :: forall a. Array (Attr a) -> Markup a -> Node a
+svg :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 svg = Impl.element "svg"
 
-table :: forall a. Array (Attr a) -> Markup a -> Node a
+table :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 table = Impl.element "table"
 
-tbody :: forall a. Array (Attr a) -> Markup a -> Node a
+tbody :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tbody = Impl.element "tbody"
 
-td :: forall a. Array (Attr a) -> Markup a -> Node a
+td :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 td = Impl.element "td"
 
-template :: forall a. Array (Attr a) -> Markup a -> Node a
+template :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 template = Impl.element "template"
 
-textarea :: forall a. Array (Attr a) -> Markup a -> Node a
+textarea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 textarea = Impl.element "textarea"
 
-tfoot :: forall a. Array (Attr a) -> Markup a -> Node a
+tfoot :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tfoot = Impl.element "tfoot"
 
-th :: forall a. Array (Attr a) -> Markup a -> Node a
+th :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 th = Impl.element "th"
 
-thead :: forall a. Array (Attr a) -> Markup a -> Node a
+thead :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 thead = Impl.element "thead"
 
-time :: forall a. Array (Attr a) -> Markup a -> Node a
+time :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 time = Impl.element "time"
 
-title :: forall a. Array (Attr a) -> Markup a -> Node a
+title :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 title = Impl.element "title"
 
-tr :: forall a. Array (Attr a) -> Markup a -> Node a
+tr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tr = Impl.element "tr"
 
-track :: forall a. Array (Attr a) -> Markup a -> Node a
+track :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 track = Impl.voidElement "track"
 
-tt :: forall a. Array (Attr a) -> Markup a -> Node a
+tt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tt = Impl.element "tt"
 
-u :: forall a. Array (Attr a) -> Markup a -> Node a
+u :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 u = Impl.element "u"
 
-ul :: forall a. Array (Attr a) -> Markup a -> Node a
+ul :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 ul = Impl.element "ul"
 
-var :: forall a. Array (Attr a) -> Markup a -> Node a
+var :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 var = Impl.element "var"
 
-video :: forall a. Array (Attr a) -> Markup a -> Node a
+video :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 video = Impl.element "video"
 
-wbr :: forall a. Array (Attr a) -> Markup a -> Node a
+wbr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 wbr = Impl.voidElement "wbr"
 
-xmp :: forall a. Array (Attr a) -> Markup a -> Node a
+xmp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 xmp = Impl.element "xmp"
 
-altGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
+altGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 altGlyph = Impl.element "altGlyph"
 
-altGlyphDef :: forall a. Array (Attr a) -> Markup a -> Node a
+altGlyphDef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 altGlyphDef = Impl.element "altGlyphDef"
 
-altGlyphItem :: forall a. Array (Attr a) -> Markup a -> Node a
+altGlyphItem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 altGlyphItem = Impl.element "altGlyphItem"
 
-animate :: forall a. Array (Attr a) -> Markup a -> Node a
+animate :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animate = Impl.element "animate"
 
-animateColor :: forall a. Array (Attr a) -> Markup a -> Node a
+animateColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animateColor = Impl.element "animateColor"
 
-animateMotion :: forall a. Array (Attr a) -> Markup a -> Node a
+animateMotion :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animateMotion = Impl.element "animateMotion"
 
-animateTransform :: forall a. Array (Attr a) -> Markup a -> Node a
+animateTransform :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animateTransform = Impl.element "animateTransform"
 
-animation :: forall a. Array (Attr a) -> Markup a -> Node a
+animation :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animation = Impl.element "animation"
 
-circle :: forall a. Array (Attr a) -> Markup a -> Node a
+circle :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 circle = Impl.element "circle"
 
-clipPath :: forall a. Array (Attr a) -> Markup a -> Node a
+clipPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 clipPath = Impl.element "clipPath"
 
-colorProfile :: forall a. Array (Attr a) -> Markup a -> Node a
+colorProfile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 colorProfile = Impl.element "color-profile"
 
-cursor :: forall a. Array (Attr a) -> Markup a -> Node a
+cursor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 cursor = Impl.element "cursor"
 
-defs :: forall a. Array (Attr a) -> Markup a -> Node a
+defs :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 defs = Impl.element "defs"
 
-desc :: forall a. Array (Attr a) -> Markup a -> Node a
+desc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 desc = Impl.element "desc"
 
-discard :: forall a. Array (Attr a) -> Markup a -> Node a
+discard :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 discard = Impl.element "discard"
 
-ellipse :: forall a. Array (Attr a) -> Markup a -> Node a
+ellipse :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 ellipse = Impl.element "ellipse"
 
-feBlend :: forall a. Array (Attr a) -> Markup a -> Node a
+feBlend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feBlend = Impl.element "feBlend"
 
-feColorMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
+feColorMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feColorMatrix = Impl.element "feColorMatrix"
 
-feComponentTransfer :: forall a. Array (Attr a) -> Markup a -> Node a
+feComponentTransfer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feComponentTransfer = Impl.element "feComponentTransfer"
 
-feComposite :: forall a. Array (Attr a) -> Markup a -> Node a
+feComposite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feComposite = Impl.element "feComposite"
 
-feConvolveMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
+feConvolveMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feConvolveMatrix = Impl.element "feConvolveMatrix"
 
-feDiffuseLighting :: forall a. Array (Attr a) -> Markup a -> Node a
+feDiffuseLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDiffuseLighting = Impl.element "feDiffuseLighting"
 
-feDisplacementMap :: forall a. Array (Attr a) -> Markup a -> Node a
+feDisplacementMap :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDisplacementMap = Impl.element "feDisplacementMap"
 
-feDistantLight :: forall a. Array (Attr a) -> Markup a -> Node a
+feDistantLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDistantLight = Impl.element "feDistantLight"
 
-feDropShadow :: forall a. Array (Attr a) -> Markup a -> Node a
+feDropShadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDropShadow = Impl.element "feDropShadow"
 
-feFlood :: forall a. Array (Attr a) -> Markup a -> Node a
+feFlood :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFlood = Impl.element "feFlood"
 
-feFuncA :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncA :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncA = Impl.element "feFuncA"
 
-feFuncB :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncB :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncB = Impl.element "feFuncB"
 
-feFuncG :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncG :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncG = Impl.element "feFuncG"
 
-feFuncR :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncR :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncR = Impl.element "feFuncR"
 
-feGaussianBlur :: forall a. Array (Attr a) -> Markup a -> Node a
+feGaussianBlur :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feGaussianBlur = Impl.element "feGaussianBlur"
 
-feImage :: forall a. Array (Attr a) -> Markup a -> Node a
+feImage :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feImage = Impl.element "feImage"
 
-feMerge :: forall a. Array (Attr a) -> Markup a -> Node a
+feMerge :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feMerge = Impl.element "feMerge"
 
-feMergeNode :: forall a. Array (Attr a) -> Markup a -> Node a
+feMergeNode :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feMergeNode = Impl.element "feMergeNode"
 
-feMorphology :: forall a. Array (Attr a) -> Markup a -> Node a
+feMorphology :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feMorphology = Impl.element "feMorphology"
 
-feOffset :: forall a. Array (Attr a) -> Markup a -> Node a
+feOffset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feOffset = Impl.element "feOffset"
 
-fePointLight :: forall a. Array (Attr a) -> Markup a -> Node a
+fePointLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fePointLight = Impl.element "fePointLight"
 
-feSpecularLighting :: forall a. Array (Attr a) -> Markup a -> Node a
+feSpecularLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feSpecularLighting = Impl.element "feSpecularLighting"
 
-feSpotLight :: forall a. Array (Attr a) -> Markup a -> Node a
+feSpotLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feSpotLight = Impl.element "feSpotLight"
 
-feTile :: forall a. Array (Attr a) -> Markup a -> Node a
+feTile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feTile = Impl.element "feTile"
 
-feTurbulence :: forall a. Array (Attr a) -> Markup a -> Node a
+feTurbulence :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feTurbulence = Impl.element "feTurbulence"
 
-filter :: forall a. Array (Attr a) -> Markup a -> Node a
+filter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 filter = Impl.element "filter"
 
-fontFace :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFace :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFace = Impl.element "font-face"
 
-fontFaceFormat :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceFormat :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceFormat = Impl.element "font-face-format"
 
-fontFaceName :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceName :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceName = Impl.element "font-face-name"
 
-fontFaceSrc :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceSrc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceSrc = Impl.element "font-face-src"
 
-fontFaceUri :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceUri :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceUri = Impl.element "font-face-uri"
 
-foreignObject :: forall a. Array (Attr a) -> Markup a -> Node a
+foreignObject :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 foreignObject = Impl.element "foreignObject"
 
-g :: forall a. Array (Attr a) -> Markup a -> Node a
+g :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 g = Impl.element "g"
 
-glyph :: forall a. Array (Attr a) -> Markup a -> Node a
+glyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 glyph = Impl.element "glyph"
 
-glyphRef :: forall a. Array (Attr a) -> Markup a -> Node a
+glyphRef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 glyphRef = Impl.element "glyphRef"
 
-handler :: forall a. Array (Attr a) -> Markup a -> Node a
+handler :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 handler = Impl.element "handler"
 
-hkern :: forall a. Array (Attr a) -> Markup a -> Node a
+hkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 hkern = Impl.element "hkern"
 
-line :: forall a. Array (Attr a) -> Markup a -> Node a
+line :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 line = Impl.element "line"
 
-linearGradient :: forall a. Array (Attr a) -> Markup a -> Node a
+linearGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 linearGradient = Impl.element "linearGradient"
 
-listener :: forall a. Array (Attr a) -> Markup a -> Node a
+listener :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 listener = Impl.element "listener"
 
-marker :: forall a. Array (Attr a) -> Markup a -> Node a
+marker :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 marker = Impl.element "marker"
 
-mask :: forall a. Array (Attr a) -> Markup a -> Node a
+mask :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 mask = Impl.element "mask"
 
-metadata :: forall a. Array (Attr a) -> Markup a -> Node a
+metadata :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 metadata = Impl.element "metadata"
 
-missingGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
+missingGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 missingGlyph = Impl.element "missing-glyph"
 
-mpath :: forall a. Array (Attr a) -> Markup a -> Node a
+mpath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 mpath = Impl.element "mpath"
 
-path :: forall a. Array (Attr a) -> Markup a -> Node a
+path :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 path = Impl.element "path"
 
-pattern :: forall a. Array (Attr a) -> Markup a -> Node a
+pattern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 pattern = Impl.element "pattern"
 
-polygon :: forall a. Array (Attr a) -> Markup a -> Node a
+polygon :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 polygon = Impl.element "polygon"
 
-polyline :: forall a. Array (Attr a) -> Markup a -> Node a
+polyline :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 polyline = Impl.element "polyline"
 
-prefetch :: forall a. Array (Attr a) -> Markup a -> Node a
+prefetch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 prefetch = Impl.element "prefetch"
 
-radialGradient :: forall a. Array (Attr a) -> Markup a -> Node a
+radialGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 radialGradient = Impl.element "radialGradient"
 
-rect :: forall a. Array (Attr a) -> Markup a -> Node a
+rect :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 rect = Impl.element "rect"
 
-set :: forall a. Array (Attr a) -> Markup a -> Node a
+set :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 set = Impl.element "set"
 
-solidColor :: forall a. Array (Attr a) -> Markup a -> Node a
+solidColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 solidColor = Impl.element "solidColor"
 
-stop :: forall a. Array (Attr a) -> Markup a -> Node a
+stop :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 stop = Impl.element "stop"
 
-switch :: forall a. Array (Attr a) -> Markup a -> Node a
+switch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 switch = Impl.element "switch"
 
-symbol :: forall a. Array (Attr a) -> Markup a -> Node a
+symbol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 symbol = Impl.element "symbol"
 
-tbreak :: forall a. Array (Attr a) -> Markup a -> Node a
+tbreak :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tbreak = Impl.element "tbreak"
 
-textEl :: forall a. Array (Attr a) -> Markup a -> Node a
+textEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 textEl = Impl.element "text"
 
-textArea :: forall a. Array (Attr a) -> Markup a -> Node a
+textArea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 textArea = Impl.element "textArea"
 
-textPath :: forall a. Array (Attr a) -> Markup a -> Node a
+textPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 textPath = Impl.element "textPath"
 
-tref :: forall a. Array (Attr a) -> Markup a -> Node a
+tref :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tref = Impl.element "tref"
 
-tspan :: forall a. Array (Attr a) -> Markup a -> Node a
+tspan :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tspan = Impl.element "tspan"
 
-unknown :: forall a. Array (Attr a) -> Markup a -> Node a
+unknown :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 unknown = Impl.element "unknown"
 
-use :: forall a. Array (Attr a) -> Markup a -> Node a
+use :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 use = Impl.element "use"
 
-view :: forall a. Array (Attr a) -> Markup a -> Node a
+view :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 view = Impl.element "view"
 
-vkern :: forall a. Array (Attr a) -> Markup a -> Node a
+vkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 vkern = Impl.element "vkern"
 
 -- Attributes ------------------------------------------------------------------

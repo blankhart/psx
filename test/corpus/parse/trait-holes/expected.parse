@@ -1,0 +1,19 @@
+print: identical
+errors: none
+markup:
+  7:8 <div>
+    @trait {P.transitionGroup "bounce"}
+    @class="list"
+    text "x"
+  9:14 <input> (no close)
+    @type="checkbox"
+    @checked={open}
+    @trait {P.onCheck Open}
+  13:3 <form> (self-closing)
+    @id="order"
+    @trait {P.onSubmitWith Submitted}
+    @trait {P.onWith "click" { capture: true, passive: true } handler}
+  22:10 <div>
+    @trait {tooltip (<p>x</p>)}
+      22:25 <p>
+        text "x"

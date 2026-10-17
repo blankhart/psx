@@ -16,7 +16,9 @@ module Psx.Cst.Types
   , ElementClose
   , Fragment
   , Child(..)
-  , Attr
+  , Attr(..)
+  , NamedAttr
+  , namedAttrs
   , AttrValue(..)
   , Hole
   , MToken
@@ -94,8 +96,20 @@ data Child e
   -- | Source skipped after an error, kept so the tree still prints back.
   | ChildRaw MToken
 
+-- | What stands among an element's attributes: a named attribute, or a
+-- | trait hole `{expr}`, which holds one of the backend's `Attr`s.
+data Attr e
+  = AttrNamed (NamedAttr e)
+  | AttrTrait (Hole e)
+
+-- | The named attributes among an element's, in order.
+namedAttrs :: forall e. Array (Attr e) -> Array (NamedAttr e)
+namedAttrs = Array.mapMaybe case _ of
+  AttrNamed a -> Just a
+  AttrTrait _ -> Nothing
+
 -- | `name`, `name="text"`, `name='text'` or `name={expr}`.
-type Attr e =
+type NamedAttr e =
   { name :: MToken
   , value :: Maybe { equals :: MToken, value :: AttrValue e }
   }
@@ -196,7 +210,11 @@ markupTokens = case _ of
       $ TokenList.cons (opaque c.name)
       $ foldMap (TokenList.singleton <<< opaque) c.end
 
-  attrTokens a =
+  attrTokens = case _ of
+    AttrNamed a -> namedTokens a
+    AttrTrait h -> holeTokens h
+
+  namedTokens a =
     TokenList.cons (opaque a.name) $ a.value # foldMap \v ->
       TokenList.cons (opaque v.equals) case v.value of
         AttrString t -> TokenList.singleton (opaque t)

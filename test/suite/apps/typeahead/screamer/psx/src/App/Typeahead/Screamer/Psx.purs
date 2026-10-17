@@ -128,7 +128,7 @@ main fixture = do
 view :: Props -> Markup (Effect Unit)
 view props =
   [ B.div [ B.class_ "typeahead", B.attribute "data-testid" "typeahead" ] ([
-    B.input [ B.type' "text", B.attribute "data-testid" "search", B.placeholder "Search fruit", B.onInput (props.onQuery), B.onKeyDown (props.onKey) ] [],
+    B.input [ B.type' "text", B.attribute "data-testid" "search", B.placeholder "Search fruit", B.onInput (props.onQuery), B.onKeyDown (props.onKey) ] B.none,
     B.p [ B.attribute "data-testid" "status" ] (B.children (props.status)),
     B.ul [ B.class_ "results" ] (B.children (
        each _.index props.rows (item props))

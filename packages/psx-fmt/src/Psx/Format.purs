@@ -44,7 +44,7 @@ import Data.String.CodeUnits as SCU
 import Data.Tuple (Tuple(..))
 import Dodo (Doc)
 import Dodo as Dodo
-import Psx.Cst (Attr, AttrValue(..), Child(..), Element, Hole, Markup(..), Psx(..), PsxError, parseModule)
+import Psx.Cst (Attr(..), AttrValue(..), NamedAttr, Child(..), Element, Hole, Markup(..), Psx(..), PsxError, parseModule)
 import Psx.Cst.Psxt (TopItem(..), parsePsxt)
 import Psx.Cst.Source (offsetOf, source)
 import Psx.Lower.Whitespace (isWhitespace, normalise, trimEnd, trimStart)
@@ -240,7 +240,12 @@ openTag conf el = do
     }
 
 attr :: forall a. FormatOptions Psx a -> Attr Psx -> LaidOut a
-attr conf a = case a.value of
+attr conf = case _ of
+  AttrNamed a -> namedAttr conf a
+  AttrTrait h -> hole conf h
+
+namedAttr :: forall a. FormatOptions Psx a -> NamedAttr Psx -> LaidOut a
+namedAttr conf a = case a.value of
   Nothing -> { doc: Dodo.text a.name.text, multiline: false }
   Just v -> do
     let

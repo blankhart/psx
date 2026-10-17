@@ -66,9 +66,9 @@ status model
 view :: Model -> Markup Msg
 view model =
   [ B.div [ B.class_ "typeahead", B.attribute "data-testid" "typeahead" ] ([
-    B.input [ B.type' "text", B.attribute "data-testid" "search", B.placeholder "Search fruit", B.onInput (Query), B.onKeyDown (key) ] [],
+    B.input [ B.type' "text", B.attribute "data-testid" "search", B.placeholder "Search fruit", B.onInput (Query), B.onKeyDown (key) ] B.none,
     B.p [ B.attribute "data-testid" "status" ] (B.children (status model)),
-    B.keyedElement "ul" [ B.class_ "results" ] (B.keyedChildren (
+    B.ul [ B.class_ "results" ] (B.children (
 
         Array.mapWithIndex
           ( \i name ->

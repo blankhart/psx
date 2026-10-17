@@ -56,7 +56,7 @@ view model =
    ) ]
    ),
     B.table [ B.class_ "table table-hover table-striped test-data" ] ([
-      B.keyedElement "tbody" [] (B.keyedChildren (
+      B.tbody [] (B.children (
 
           map
             ( \row ->
@@ -64,16 +64,16 @@ view model =
                   B.td [ B.class_ "col-md-1" ] (B.children (show row.id)),
                   B.td [ B.class_ "col-md-4" ] ([ B.a [ B.attribute "data-testid" ("select-" <> show row.id), B.onClick (Select row.id) ] (B.children (row.label)) ]),
                   B.td [ B.class_ "col-md-1" ] ([
-                    B.a [ B.attribute "data-testid" ("remove-" <> show row.id), B.onClick (Remove row.id) ] ([ B.span [ B.class_ "glyphicon glyphicon-remove", B.ariaHidden "true" ] [] ]) ]
+                    B.a [ B.attribute "data-testid" ("remove-" <> show row.id), B.onClick (Remove row.id) ] ([ B.span [ B.class_ "glyphicon glyphicon-remove", B.ariaHidden "true" ] B.none ]) ]
                  ),
-                  B.td [ B.class_ "col-md-6" ] [] ]
+                  B.td [ B.class_ "col-md-6" ] B.none ]
                  )) ]
             )
             model.rows)
 
    ) ]
    ),
-    B.span [ B.class_ "preloadicon glyphicon glyphicon-remove", B.ariaHidden "true" ] [] ]
+    B.span [ B.class_ "preloadicon glyphicon glyphicon-remove", B.ariaHidden "true" ] B.none ]
    ) ]
 
 -- | Mounts on `#app`, with the scenario's seed.

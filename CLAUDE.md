@@ -10,9 +10,10 @@ Read only the doc sections your issue names. This file is the summary every task
 ## Rules
 
 - **No upstream changes.** Nothing may require a change to the language, purs, spago, the registry or any framework. If a step seems to need one, stop and say so on the issue.
-- **Away from the boundary, each language keeps its meaning.** A hole `{expr}` holds an ordinary PureScript expression. No template directives, no capitalised component tags, no attribute spreads. Conditionals and lists are `if`, `case` and `map` in holes.
+- **Away from the boundary, each language keeps its meaning.** A hole `{expr}` holds an ordinary PureScript expression. No template directives, no capitalised component tags, no attribute spreads; a hole in a start tag (a trait hole, `<div {P.transitionGroup "bounce"} class="list">`) holds exactly one `Attr` and lowers to one element of the attribute array literal, which is never a concatenation. Conditionals and lists are `if`, `case` and `map` in holes.
 - **`<` opens markup only at expression start** (after `=`, `(`, `[`, `,`, `->`, `<-`, `then`, `else`, `of`, `in`, a layout opener or an operator). Markup as a function argument must be parenthesised.
-- **`key` is the one reserved attribute.** It keys list items and is never rendered.
+- **`key` is the one reserved attribute.** It keys list items and is never rendered. It is the portable way to key; a framework's own key trait in a trait hole works but the lowering doesn't track it.
+- **Keyedness is the children's type.** Every child hole lowers to `B.children`, and an element function takes plain or keyed children (`Content`); mixing them is a purs error at the hole.
 - **Whitespace in text:** trim leading whitespace on every line but the first and trailing on every line but the last, drop empty lines, join with one space. `psx fmt` must never change rendered text.
 - **A file's framework is the backend module it imports** (`Portico.Psx`, `Halogen.Psx`, `Screamer.Psx`, `Screamer.Psx.Sink`, `Psx.Static`); the lowering binds alias `B` to it. Zero or several backend imports is an error.
 - **`<style>` is a scoped stylesheet** for the element that contains it; in a `.psxt` file a top-level `<style>` applies to every template's top-level elements. It is extracted to `<File>.css` inside `@scope ([data-psx="<Module>"])`, the element is stamped `data-psx`, and a generated companion module `<Module>.PsxStyle` imports the CSS (`Psx.Lower.Css`).
@@ -23,14 +24,15 @@ Read only the doc sections your issue names. This file is the summary every task
 ```purescript
 type Markup a = Array (Node a)
 text :: forall a. String -> Node a
-element :: forall a. String -> Array (Attr a) -> Markup a -> Node a
-keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
+-- c is Markup a or Array (Tuple Key (Node a)); keyed children build a keyed element
+class Content c a | c -> a
+element :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
+none :: forall a. Markup a
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 attribute :: forall a. String -> String -> Attr a
-class Children c a where children :: c -> Markup a
-class KeyedChildren c a where keyedChildren :: c -> Array (Tuple Key (Node a))
+class Children c r | c -> r where children :: c -> r  -- r is Markup a, or keyed nodes from keyed literals
 root :: forall a. Markup a -> Node a
--- plus one generated function per element, attribute and event in psx-html-data
+-- plus one generated function per element (taking any Content), attribute and event in psx-html-data
 ```
 
 Screamer implements it at `a = Effect Unit`. Each backend ships a `<Framework>.Psx.Conformance` module that uses every name at its expected type.

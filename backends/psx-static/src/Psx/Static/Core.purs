@@ -14,13 +14,13 @@ module Psx.Static.Core
   , toKey
   , text
   , element
-  , keyedElement
+  , class Content
+  , content
+  , none
   , keyed
   , attribute
   , class Children
   , children
-  , class KeyedChildren
-  , keyedChildren
   , root
   , render
   , renderMarkup
@@ -71,17 +71,28 @@ instance ToKey Char where
 text :: forall a. String -> Node a
 text = Text
 
-element :: forall a. String -> Array (Attr a) -> Markup a -> Node a
-element tag attrs kids = Element { tag, void: false, attrs, children: kids }
+element :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
+element tag attrs kids = Element { tag, void: false, attrs, children: content kids }
 
 -- | An element with no end tag; its children, which the parser never gives
 -- | it, are dropped.
-voidElement :: forall a. String -> Array (Attr a) -> Markup a -> Node a
+voidElement :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
 voidElement tag attrs _ = Element { tag, void: true, attrs, children: [] }
 
--- | A static page has no list to reorder, so the keys are dropped.
-keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedElement tag attrs kids = element tag attrs (map snd kids)
+-- | What an element's children are: nodes, or keyed nodes. A static page
+-- | has no list to reorder, so the keys are dropped.
+class Content c a | c -> a where
+  content :: c -> Markup a
+
+instance Content (Array (Node a)) a where
+  content = identity
+
+instance Content (Array (Tuple String (Node a))) a where
+  content = map snd
+
+-- | No children.
+none :: forall a. Markup a
+none = []
 
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) node
@@ -97,36 +108,27 @@ booleanAttribute name present = if present then BooleanAttribute name else NoAtt
 noAttribute :: forall a. Attr a
 noAttribute = NoAttribute
 
--- | What a child hole may hold. The dependency lets a hole's nodes fix the
--- | message type, as an annotation would.
-class Children c a | c -> a where
-  children :: c -> Markup a
+-- | What a child hole may hold, and the children it makes: nodes from a
+-- | string, a node or markup, keyed nodes from keyed literals, and arrays
+-- | and `Maybe`s of those. The dependency lets a hole's nodes fix the
+-- | message type, as an annotation would, and whether the parent is keyed.
+class Children c r | c -> r where
+  children :: c -> r
 
-instance Children String a where
+instance Children String (Array (Node a)) where
   children s = [ Text s ]
 
-instance Children (Node a) a where
+instance Children (Node a) (Array (Node a)) where
   children n = [ n ]
 
-instance Children c a => Children (Array c) a where
+instance Children (Tuple String (Node a)) (Array (Tuple String (Node a))) where
+  children kid = [ kid ]
+
+instance Children c (Array x) => Children (Array c) (Array x) where
   children = Array.concatMap children
 
-instance Children c a => Children (Maybe c) a where
+instance Children c (Array x) => Children (Maybe c) (Array x) where
   children = maybe [] children
-
--- | What a child hole of a keyed parent may hold: keyed literals, or arrays
--- | of them.
-class KeyedChildren c a | c -> a where
-  keyedChildren :: c -> Array (Tuple Key (Node a))
-
-instance KeyedChildren (Tuple String (Node a)) a where
-  keyedChildren kid = [ kid ]
-
-instance KeyedChildren c a => KeyedChildren (Array c) a where
-  keyedChildren = Array.concatMap keyedChildren
-
-instance KeyedChildren c a => KeyedChildren (Maybe c) a where
-  keyedChildren = maybe [] keyedChildren
 
 -- | The literal's only node, or a fragment of several, which renders as
 -- | its nodes one after another.

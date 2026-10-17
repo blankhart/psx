@@ -206,10 +206,10 @@ generating = do
       assert "an enumeration is a string" (backend "popover :: String -> A")
       assert "an event" (backend "onClick = on \"click\"")
       assert "an SVG element" (backend "textEl = el \"text\"")
-      assert "a boolean use" (conformance "  [ B.button [ B.disabled true ] []")
-      assert "an attribute shared by HTML and SVG is used in each" (conformance "  , B.g [ B.id \"\" ] []")
-      assert "an enumeration's use is its first keyword" (conformance "  [ B.div [ B.popover \"auto\" ] []")
-      assert "an event's sample" (conformance "  [ B.div [ B.onInput (\\_ -> msg) ] []")
+      assert "a boolean use" (conformance "  [ B.button [ B.disabled true ] B.none")
+      assert "an attribute shared by HTML and SVG is used in each" (conformance "  , B.g [ B.id \"\" ] B.none")
+      assert "an enumeration's use is its first keyword" (conformance "  [ B.div [ B.popover \"auto\" ] B.none")
+      assert "an event's sample" (conformance "  [ B.div [ B.onInput (\\_ -> msg) ] B.none")
   case jsonParser "{ \"module\": \"M\" }" >>= decodeMapping of
     Left _ -> pure unit
     Right _ -> throw "FAIL a mapping without templates is rejected"

@@ -17,14 +17,13 @@ module Screamer.Psx.Sink.Core
   , toKey
   , text
   , element
-  , keyedHtmlElement
-  , keyedSvgElement
+  , class Content
+  , content
+  , none
   , keyed
   , attribute
   , class Children
   , children
-  , class KeyedChildren
-  , keyedChildren
   , root
   , sink
   , svgElement
@@ -76,24 +75,30 @@ sink send (Node node) = node send
 text :: forall a. String -> Node a
 text s = Node \_ -> S.text (pure s)
 
-element :: forall a. String -> Array (Attr a) -> Markup a -> Node a
-element tag attrs kids = Node \send -> S.element_ tag (map (attr send) attrs) (map (sink send) kids)
+element :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
+element tag attrs kids = Node \send -> S.element_ tag (map (attr send) attrs) (map (sink send) (content kids))
 
-svgElement :: forall a. String -> Array (Attr a) -> Markup a -> Node a
-svgElement tag attrs kids = Node \send -> S.svgElement_ tag (map (attr send) attrs) (map (sink send) kids)
+svgElement :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
+svgElement tag attrs kids = Node \send -> S.svgElement_ tag (map (attr send) attrs) (map (sink send) (content kids))
 
 attr :: forall a. (a -> Effect Unit) -> Attr a -> S.Attribute
 attr send (Attr a) = a send
 
--- | A view runs once, so keyed children are created once and never
--- | reordered; a list that changes is Screamer's `each` in a hole.
--- | `Screamer.Psx.Sink.keyedElement` picks this or `keyedSvgElement` by
--- | the tag.
-keyedHtmlElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedHtmlElement tag attrs kids = element tag attrs (map snd kids)
+-- | What an element's children are: nodes, or keyed nodes. A view runs
+-- | once, so keyed children are created once and never reordered, and the
+-- | keys are dropped; a list that changes is Screamer's `each` in a hole.
+class Content c a | c -> a where
+  content :: c -> Markup a
 
-keyedSvgElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedSvgElement tag attrs kids = svgElement tag attrs (map snd kids)
+instance Content (Array (Node a)) a where
+  content = identity
+
+instance Content (Array (Tuple String (Node a))) a where
+  content = map snd
+
+-- | No children.
+none :: forall a. Markup a
+none = []
 
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) node
@@ -119,51 +124,43 @@ keyHandler name f = Attr \send -> S.unsafeOn_ name (send <<< f)
 
 foreign import targetValue :: Event -> Effect String
 
--- | What a child hole may hold. The dependency lets a hole's nodes fix the
--- | message type, as an annotation would.
-class Children c a | c -> a where
-  children :: c -> Markup a
+-- | What a child hole may hold, and the children it makes: nodes from a
+-- | string, a node, markup, a Screamer element or a signal, keyed nodes
+-- | from keyed literals, and arrays and `Maybe`s of those. The dependency
+-- | lets a hole's nodes fix the message type, as an annotation would, and
+-- | whether the parent is keyed.
+class Children c r | c -> r where
+  children :: c -> r
 
-instance Children String a where
+instance Children String (Array (Node a)) where
   children s = [ text s ]
 
-instance Children (Node a) a where
+instance Children (Node a) (Array (Node a)) where
   children n = [ n ]
 
+instance Children (Tuple String (Node a)) (Array (Tuple String (Node a))) where
+  children kid = [ kid ]
+
 -- | A Screamer element, which sends nothing.
-instance Children S.Element a where
+instance Children S.Element (Array (Node a)) where
   children e = [ Node \_ -> e ]
 
 -- | A text node, updated in place.
-instance Children (Signal String) a where
+instance Children (Signal String) (Array (Node a)) where
   children s = [ Node \_ -> S.text s ]
 
 -- | A `dyn`: each new value replaces the nodes.
-instance Children (Signal (Node a)) a where
+instance Children (Signal (Node a)) (Array (Node a)) where
   children s = [ Node \send -> S.dyn (sink send <$> s) ]
 
-instance Children (Signal (Array (Node a))) a where
+instance Children (Signal (Array (Node a))) (Array (Node a)) where
   children s = [ Node \send -> S.dyn (S.fragment_ <<< map (sink send) <$> s) ]
 
-instance Children c a => Children (Array c) a where
+instance Children c (Array x) => Children (Array c) (Array x) where
   children = Array.concatMap children
 
-instance Children c a => Children (Maybe c) a where
+instance Children c (Array x) => Children (Maybe c) (Array x) where
   children = maybe [] children
-
--- | What a child hole of a keyed parent may hold: keyed literals, or arrays
--- | of them.
-class KeyedChildren c a | c -> a where
-  keyedChildren :: c -> Array (Tuple Key (Node a))
-
-instance KeyedChildren (Tuple String (Node a)) a where
-  keyedChildren kid = [ kid ]
-
-instance KeyedChildren c a => KeyedChildren (Array c) a where
-  keyedChildren = Array.concatMap keyedChildren
-
-instance KeyedChildren c a => KeyedChildren (Maybe c) a where
-  keyedChildren = maybe [] keyedChildren
 
 -- | The literal's only node, or a fragment of several.
 root :: forall a. Markup a -> Node a

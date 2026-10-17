@@ -54,15 +54,15 @@ view model =
   [ B.section [ B.class_ "todo", B.attribute "data-testid" "todo" ] ([
     B.h1 [] ([ B.text "Todos" ]),
     B.div [ B.class_ "new" ] ([
-      B.input [ B.type' "text", B.attribute "data-testid" "draft", B.value (model.draft), B.onInput (Draft) ] [],
+      B.input [ B.type' "text", B.attribute "data-testid" "draft", B.value (model.draft), B.onInput (Draft) ] B.none,
       B.button [ B.attribute "data-testid" "add", B.onClick (Add), B.disabled (model.draft == "") ] ([ B.text "Add" ]) ]
    ),
-    B.keyedElement "ul" [ B.class_ "items" ] (B.keyedChildren (
+    B.ul [ B.class_ "items" ] (B.children (
 
         map
           ( \todo ->
               [ B.keyed (todo.id) (B.li [ B.class_ (if todo.done then "item done" else "item") ] ([
-                B.input [ B.type' "checkbox", B.attribute "data-testid" ("toggle-" <> show todo.id), B.checked (todo.done), B.onChange (Toggle todo.id) ] [],
+                B.input [ B.type' "checkbox", B.attribute "data-testid" ("toggle-" <> show todo.id), B.checked (todo.done), B.onChange (Toggle todo.id) ] B.none,
                 B.span [] (B.children (todo.text)),
                 B.button [ B.attribute "data-testid" ("remove-" <> show todo.id), B.onClick (Remove todo.id) ] ([ B.text "Remove" ]) ]
                )) ]

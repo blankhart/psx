@@ -124,7 +124,7 @@ classes :: Array (Tuple String Boolean) -> String
 classes = String.joinWith " " <<< map fst <<< Array.filter snd
 
 -- The checkbox reads the event (`P.onCheck`), which no HTML attribute says,
--- so it is Portico's own function in a hole.
+-- so it is a trait hole.
 view :: Router.Mode -> Model -> Markup Msg
 view mode model =
   <main>
@@ -133,7 +133,7 @@ view mode model =
       {"Description: " <> maybe "Error 404" describe model.route}
     </h2>
     <label>
-      {P.input [ P.id "unsaved", P.type' "checkbox", P.checked model.unsaved, P.onCheck Unsaved ] []}
+      <input id="unsaved" type="checkbox" checked={model.unsaved} {P.onCheck Unsaved}>
       Unsaved changes
     </label>
     <p id="refused">{if model.refused == "" then "" else "Refused: " <> model.refused}</p>

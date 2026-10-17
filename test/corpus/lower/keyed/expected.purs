@@ -10,14 +10,14 @@ type Item = { id :: Int, name :: String }
 -- A hole whose literals carry `key` makes its parent a keyed element.
 list :: Array Item -> Markup Unit
 list items =
-  [ B.keyedElement "ul" [ B.class_ "items" ] (B.keyedChildren (
+  [ B.ul [ B.class_ "items" ] (B.children (
      map (\item -> [ B.keyed (item.id) (B.li [] (B.children (item.name))) ]) items)
    ) ]
 
 -- Children that carry `key` themselves.
 fixed :: Markup Unit
 fixed =
-  [ B.keyedElement "ol" [] ([
+  [ B.ol [] ([
     B.keyed "a" (B.li [] ([ B.text "A" ])),
     B.keyed "b" (B.li [] ([ B.text "B" ])) ]
    ) ]

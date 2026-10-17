@@ -13,4 +13,4 @@ module Psx.Cst
 import Psx.Cst.Parser (ParseResult, parseModule)
 import Psx.Cst.Print (printExpr, printMarkup, printModule)
 import Psx.Cst.Traversal (foldMapHoles, foldMapMarkupRoots, foldMapMarkupRootsExpr, markupErrors)
-import Psx.Cst.Types (Attr, AttrValue(..), Child(..), Edit, Element, ElementClose, Fix, Fragment, Hole, MToken, Markup(..), MarkupRoot, Psx(..), PsxError, markupTokens, mtokenSource)
+import Psx.Cst.Types (Attr(..), AttrValue(..), Child(..), Edit, Element, ElementClose, Fix, Fragment, Hole, MToken, Markup(..), MarkupRoot, NamedAttr, Psx(..), PsxError, markupTokens, mtokenSource, namedAttrs)

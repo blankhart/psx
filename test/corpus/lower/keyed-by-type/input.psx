@@ -1,0 +1,18 @@
+module Lower.KeyedByType where
+
+import Prelude
+
+import Data.Array as Array
+import Portico.Psx (Markup)
+
+-- The lowering can't see that `item` makes keyed children, and needn't:
+-- the hole is `B.children` either way, and its type keys the list.
+list :: Array Int -> Markup Unit
+list values =
+  <div class="list">{Array.mapWithIndex item values}</div>
+  where
+  item index value = <div key={show value}>{show index}</div>
+
+-- No children at all is `B.none`.
+empty :: Markup Unit
+empty = <div><input type="text"></div>

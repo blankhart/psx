@@ -70,9 +70,9 @@ status state
 view :: forall w. State -> Markup w Action
 view state =
   [ B.div [ B.class_ "typeahead", B.attribute "data-testid" "typeahead" ] ([
-    B.input [ B.type' "text", B.attribute "data-testid" "search", B.placeholder "Search fruit", B.onInput (Query), B.onKeyDown (Key <<< KE.key) ] [],
+    B.input [ B.type' "text", B.attribute "data-testid" "search", B.placeholder "Search fruit", B.onInput (Query), B.onKeyDown (Key <<< KE.key) ] B.none,
     B.p [ B.attribute "data-testid" "status" ] (B.children (status state)),
-    B.keyedElement "ul" [ B.class_ "results" ] (B.keyedChildren (
+    B.ul [ B.class_ "results" ] (B.children (
 
         Array.mapWithIndex
           ( \i name ->
