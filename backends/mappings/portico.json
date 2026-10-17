@@ -132,9 +132,6 @@
     }
   ],
   "names": {
-    "class_": {
-      "code": "P.class'"
-    },
     "commandAttr": {
       "code": "P.command"
     },

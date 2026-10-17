@@ -56,7 +56,7 @@ export const errors = (page) => () => page.psxErrors.slice();
 export const clickImpl = (page) => (testId) => aff(() => page.click(selector(testId)));
 
 export const clickNthImpl = (page) => (prefix) => (index) =>
-  aff(() => page.click(`[data-testid^=${JSON.stringify(prefix)}] >> nth=${index}`));
+  aff(() => page.dispatchEvent(`[data-testid^=${JSON.stringify(prefix)}] >> nth=${index}`, 'click'));
 
 export const fillImpl = (page) => (testId) => (text) =>
   aff(() => page.fill(selector(testId), text));
@@ -96,7 +96,8 @@ export const timedImpl = (page) => (kind) => (testId) => (text) =>
         });
         const start = performance.now();
         if (kind === 'click' || kind === 'clickNth') {
-          element.click();
+          // SVG elements have no click().
+          element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
         } else if (kind === 'type') {
           element.value = text;
           element.dispatchEvent(new Event('input', { bubbles: true }));
