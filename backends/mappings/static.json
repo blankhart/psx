@@ -4,7 +4,7 @@
   "core": "Psx.Static.Core",
   "coreExports": [
     "class Children",
-    "class KeyedChildren",
+    "class Content",
     "class ToKey",
     "Attr",
     "Key",
@@ -14,8 +14,7 @@
     "children",
     "element",
     "keyed",
-    "keyedChildren",
-    "keyedElement",
+    "none",
     "render",
     "renderMarkup",
     "root",
@@ -32,16 +31,16 @@
   ],
   "imports": [
     "Prelude (const, show, (<<<))",
-    "Psx.Static.Core (Attr, Markup, Node)",
+    "Psx.Static.Core (class Content, Attr, Node)",
     "Psx.Static.Core (booleanAttribute, element, noAttribute, voidElement) as Impl"
   ],
   "templates": {
     "element": {
-      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
       "code": "Impl.element {name}"
     },
     "voidElement": {
-      "type": "forall a. Array (Attr a) -> Markup a -> Node a",
+      "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
       "code": "Impl.voidElement {name}"
     },
     "boolean": {
@@ -73,7 +72,7 @@
       "Prelude ((<>))",
       "Data.Maybe (Maybe(..))",
       "Data.Tuple (Tuple)",
-      "Psx.Static (class Children, class KeyedChildren, class ToKey)"
+      "Psx.Static (class Children, class Content, class ToKey)"
     ],
     "core": [
       [
@@ -82,11 +81,11 @@
       ],
       [
         "element",
-        "forall a. String -> Array (B.Attr a) -> B.Markup a -> B.Node a"
+        "forall c a. Content c a => String -> Array (B.Attr a) -> c -> B.Node a"
       ],
       [
-        "keyedElement",
-        "forall a. String -> Array (B.Attr a) -> Array (Tuple B.Key (B.Node a)) -> B.Node a"
+        "none",
+        "forall a. B.Markup a"
       ],
       [
         "keyed",
@@ -98,11 +97,7 @@
       ],
       [
         "children",
-        "forall c a. Children c a => c -> B.Markup a"
-      ],
-      [
-        "keyedChildren",
-        "forall c a. KeyedChildren c a => c -> Array (Tuple B.Key (B.Node a))"
+        "forall c r. Children c r => c -> r"
       ],
       [
         "root",
@@ -129,14 +124,22 @@
       "    <> B.children (Just node)",
       "    <> B.children (Nothing :: Maybe String)",
       "",
-      "-- | What a child hole of a keyed parent takes: keyed literals and arrays of",
-      "-- | them, keyed by strings or by integers.",
+      "-- | What a child hole takes to make keyed children: keyed literals and",
+      "-- | arrays of them, keyed by strings or by integers.",
       "keyedChildHoles :: forall a. B.Node a -> Array (Tuple B.Key (B.Node a))",
       "keyedChildHoles node =",
-      "  B.keyedChildren (B.keyed \"a\" node)",
-      "    <> B.keyedChildren [ B.keyed 1 node ]",
-      "    <> B.keyedChildren [ [ B.keyed 2 node ] ]",
-      "    <> B.keyedChildren (Just (B.keyed 3.0 node))"
+      "  B.children (B.keyed \"a\" node)",
+      "    <> B.children [ B.keyed 1 node ]",
+      "    <> B.children [ [ B.keyed 2 node ] ]",
+      "    <> B.children (Just (B.keyed 3.0 node))",
+      "",
+      "-- | An element takes keyed children as it takes plain ones.",
+      "keyedContent :: forall a. B.Node a -> Array (B.Node a)",
+      "keyedContent node =",
+      "  [ B.ul [] [ B.keyed \"a\" node, B.keyed \"b\" node ]",
+      "  , B.element \"x-list\" [] (B.children [ B.keyed 1 node ])",
+      "  , B.g [] [ B.keyed \"c\" node ]",
+      "  ]"
     ],
     "nodes": "forall a. Array (B.Node a)",
     "handlers": "forall a. a -> Array (B.Node a)"

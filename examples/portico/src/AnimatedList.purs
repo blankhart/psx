@@ -10,7 +10,7 @@ import Effect (Effect)
 import Effect.Random as Random
 import Portico ((:>))
 import Portico as P
-import Portico.Psx (Key, Markup, Node, keyedChildren, keyedElement, root)
+import Portico.Psx (Key, Markup, Node, root)
 import Portico.Psx as B
 import Examples.AnimatedList.PsxStyle as B.Style
 type Model =
@@ -60,10 +60,8 @@ view :: Model -> Markup Msg
 view model =
   [ B.main [ B.id "main", B.attribute "data-psx" B.Style.scope ] ([
     B.button [ B.onClick (Add) ] ([ B.text "Add" ]),
-    B.button [ B.onClick (Shuffle) ] ([ B.text "Shuffle" ]) ] <> B.children (
-     keyedElement "div" [ P.transitionGroup "bounce", P.class' "list" ]
-      (keyedChildren (Array.mapWithIndex item model.values)))
-
+    B.button [ B.onClick (Shuffle) ] ([ B.text "Shuffle" ]),
+    B.div [ (P.transitionGroup "bounce"), B.class_ "list" ] (B.children (Array.mapWithIndex item model.values)) ]
  ) ]
 
 item :: Int -> Int -> Array (Tuple Key (Node Msg))

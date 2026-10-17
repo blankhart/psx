@@ -73,7 +73,7 @@ view props =
   [ B.section [ B.class_ "todo", B.attribute "data-testid" "todo" ] ([
     B.h1 [] ([ B.text "Todos" ]),
     B.div [ B.class_ "new" ] ([
-      B.input [ B.type' "text", B.attribute "data-testid" "draft", B.value (props.draft), B.onInput (props.setDraft) ] [],
+      B.input [ B.type' "text", B.attribute "data-testid" "draft", B.value (props.draft), B.onInput (props.setDraft) ] B.none,
       B.button [ B.attribute "data-testid" "add", B.onClick (props.add), B.disabled ((_ == "") <$> props.draft) ] ([ B.text "Add" ]) ]
    ),
     B.ul [ B.class_ "items" ] (B.children (
@@ -92,7 +92,7 @@ item props todo = component do
   { id } <- liftEffect (read todo)
   pure $ root
     ( [ B.li [ B.class_ ((\t -> if t.done then "item done" else "item") <$> todo) ] ([
-        B.input [ B.type' "checkbox", B.attribute "data-testid" ("toggle-" <> show id), B.checked (_.done <$> todo), B.onChange (props.toggle id) ] [],
+        B.input [ B.type' "checkbox", B.attribute "data-testid" ("toggle-" <> show id), B.checked (_.done <$> todo), B.onChange (props.toggle id) ] B.none,
         B.span [] (B.children (_.text <$> todo)),
         B.button [ B.attribute "data-testid" ("remove-" <> show id), B.onClick (props.remove id) ] ([ B.text "Remove" ]) ]
      ) ]

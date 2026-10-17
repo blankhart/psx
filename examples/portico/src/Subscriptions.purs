@@ -52,7 +52,7 @@ view model =
   [ B.main [] ([
     B.button [ B.id "toggle", B.onClick (Toggle) ] (B.children (if model.running then "Stop" else "Start")),
     B.p [ B.id "ticks" ] (B.children (show model.ticks)),
-    B.input [ B.id "search", B.onInput (Search) ] [],
+    B.input [ B.id "search", B.onInput (Search) ] B.none,
     B.ul [ B.id "results" ] (B.children (model.results <#> \result -> [ B.li [] (B.children (result)) ])) ]
    ) ]
 

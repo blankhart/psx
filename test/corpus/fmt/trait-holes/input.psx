@@ -1,0 +1,20 @@
+module Fmt.TraitHoles where
+
+import Prelude
+
+import Portico as P
+import Portico.Psx (Markup)
+
+data Msg = Open Boolean | Submitted
+
+-- Trait holes keep their places among the attributes.
+check :: Boolean -> Markup Msg
+check open = <input   type="checkbox"  {P.onCheck  Open}   checked={open} >
+
+-- Those that don't fit go one per line, like any attribute.
+form :: Markup Msg
+form = <form id="order" class="form form-horizontal" {P.onSubmitWith (const Submitted)} {P.transition "fade"}>Go</form>
+
+-- A long expression breaks inside its braces.
+listen :: Markup Msg
+listen = <button {P.onWith "click" { capture: true, passive: true } \_ -> pure (Just (Open true))}>Go</button>

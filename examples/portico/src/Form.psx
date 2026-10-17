@@ -36,7 +36,7 @@ update model = case _ of
     model { submitted = String.joinWith "&" $ (\{ name, value } -> name <> "=" <> value) <$> fields } :> []
 
 -- `P.onCheck` and `P.onSubmitWith` read the event, which no HTML attribute
--- says, so the checkbox and the form are Portico's own functions in holes.
+-- says, so they are trait holes.
 view :: Model -> Markup Msg
 view model =
   <main>
@@ -46,7 +46,7 @@ view model =
     </select>
     <p id="chosen">{model.flavor}</p>
     <label>
-      {P.input [ P.id "open", P.type' "checkbox", P.checked model.open, P.onCheck Open ] []}
+      <input id="open" type="checkbox" checked={model.open} {P.onCheck Open}>
       Open
     </label>
     <!-- An attribute whose value changes is updated, and one that goes is unset. -->
@@ -60,17 +60,14 @@ view model =
     </div>
     <p id="blurs">{show model.blurs}</p>
     <!-- The browser validates the form before anything is sent. -->
-    {P.form [ P.id "order", P.onSubmitWith Submitted ]
-      ( <>
-          <input name="name" required>
-          <select name="size">
-            <option value="s">Small</option>
-            <option value="l">Large</option>
-          </select>
-          <button name="action" value="save">Save</button>
-        </>
-      )
-    }
+    <form id="order" {P.onSubmitWith Submitted}>
+      <input name="name" required>
+      <select name="size">
+        <option value="s">Small</option>
+        <option value="l">Large</option>
+      </select>
+      <button name="action" value="save">Save</button>
+    </form>
     <p id="submitted">{model.submitted}</p>
   </main>
 

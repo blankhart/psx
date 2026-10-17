@@ -66,8 +66,8 @@ view props =
       B.g [ B.class_ "bars" ] (B.children (
          map bar (Array.range 0 (props.count - 1)))
    ),
-      B.path [ B.class_ "trend", B.d (trend <$> props.values), B.fill "none", B.stroke "gray" ] [],
-      B.line [ B.x1 "5", B.y1 "55", B.x2 "115", B.y2 "55", B.stroke "black" ] [] ] <> B.children (
+      B.path [ B.class_ "trend", B.d (trend <$> props.values), B.fill "none", B.stroke "gray" ] B.none,
+      B.line [ B.x1 "5", B.y1 "55", B.x2 "115", B.y2 "55", B.stroke "black" ] B.none ] <> B.children (
        lift2 marker props.selected props.values) <> [
       B.textEl [ B.x "5", B.y "8" ] ([ B.text "Values" ]) ]
    ),
@@ -76,9 +76,9 @@ view props =
    ) ]
   where
   bar i =
-    [ B.rect [ B.attribute "data-testid" ("bar-" <> show i), B.x (show (left i)), B.y (show <<< barTop <<< value i <$> props.values), B.width "16", B.height (show <<< (4 * _) <<< value i <$> props.values), B.fill ((\s -> if s == Just i then "orange" else "steelblue") <$> props.selected), B.onClick (props.select i) ] [] ]
+    [ B.rect [ B.attribute "data-testid" ("bar-" <> show i), B.x (show (left i)), B.y (show <<< barTop <<< value i <$> props.values), B.width "16", B.height (show <<< (4 * _) <<< value i <$> props.values), B.fill ((\s -> if s == Just i then "orange" else "steelblue") <$> props.selected), B.onClick (props.select i) ] B.none ]
   marker selected values = case selected of
-    Just i -> [ B.circle [ B.cx (show (left i + 8)), B.cy (show (barTop (value i values))), B.r "2", B.fill "orange" ] [] ]
+    Just i -> [ B.circle [ B.cx (show (left i + 8)), B.cy (show (barTop (value i values))), B.r "2", B.fill "orange" ] B.none ]
     Nothing -> []
 
 -- | Mounts in place of `#app`, starting from the scenario's fixture.

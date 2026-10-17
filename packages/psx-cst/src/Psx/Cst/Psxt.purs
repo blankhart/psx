@@ -43,7 +43,7 @@ import Psx.Cst.Parser.Markup (holeParser, withSource)
 import Psx.Cst.Parser.PureScript as Purs
 import Psx.Cst.Print (printMarkup)
 import Psx.Cst.Source (Source, offsetOf, posOf, source, startsWith)
-import Psx.Cst.Types (AttrValue(..), Element, MToken, Markup(..), Psx, PsxError, mtokenSource)
+import Psx.Cst.Types (AttrValue(..), Element, namedAttrs, MToken, Markup(..), Psx, PsxError, mtokenSource)
 import PureScript.CST as CST
 import PureScript.CST.Errors (printParseError)
 import PureScript.CST.Range (rangeOf)
@@ -251,7 +251,7 @@ scanTop src = go 0 { items: [], elements: [], errors: [] }
 
 -- | A string attribute's value, without its quotes.
 attrText :: String -> Element Psx -> Maybe String
-attrText name el = Array.find (\a -> a.name.text == name) el.attrs >>= \a -> case a.value of
+attrText name el = Array.find (\a -> a.name.text == name) (namedAttrs el.attrs) >>= \a -> case a.value of
   Just { value: AttrString t } -> Just (unquote t.text)
   _ -> Nothing
 
@@ -275,8 +275,8 @@ type Resolved = { template :: Template, errors :: Array PsxError }
 resolve :: Source -> Element Psx -> Array ForeignValue -> Element Psx -> Resolved
 resolve src script foreigns el = do
   let
-    nameAttr = Array.find (\a -> a.name.text == "name") el.attrs
-    argsAttr = Array.find (\a -> a.name.text == "args") el.attrs
+    nameAttr = Array.find (\a -> a.name.text == "name") (namedAttrs el.attrs)
+    argsAttr = Array.find (\a -> a.name.text == "args") (namedAttrs el.attrs)
     name = attrText "name" el
     found = name >>= \n -> Array.find (\f -> f.name == n) foreigns
     args = argsAttr >>= \a -> case a.value of

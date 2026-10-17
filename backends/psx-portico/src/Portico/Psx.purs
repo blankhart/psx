@@ -878,806 +878,711 @@ module Portico.Psx
   , onVolumeChange
   , onWaiting
   , onWheel
-  , keyedElement
   ) where
 
 import Prelude (pure, show, (<<<))
-import Data.Array as Array
 import Data.Maybe (Maybe)
-import Data.Tuple (Tuple)
 import Portico as P
-import Portico.Psx.Core (Attr, Key, Markup, Node, booleanAttribute, keyedHtmlElement, keyedSvgElement, svgElement)
-import Portico.Psx.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, root, text, toKey) as Core
+import Portico.Psx.Core (class Content, Attr, Node, booleanAttribute, elementOf, svgElement)
+import Portico.Psx.Core (class Children, class Content, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, none, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
 
-a :: forall a. Array (Attr a) -> Markup a -> Node a
-a = P.element "a"
+a :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+a = elementOf (P.element "a")
 
-abbr :: forall a. Array (Attr a) -> Markup a -> Node a
-abbr = P.element "abbr"
+abbr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+abbr = elementOf (P.element "abbr")
 
-acronym :: forall a. Array (Attr a) -> Markup a -> Node a
-acronym = P.element "acronym"
+acronym :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+acronym = elementOf (P.element "acronym")
 
-address :: forall a. Array (Attr a) -> Markup a -> Node a
-address = P.element "address"
+address :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+address = elementOf (P.element "address")
 
-applet :: forall a. Array (Attr a) -> Markup a -> Node a
-applet = P.element "applet"
+applet :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+applet = elementOf (P.element "applet")
 
-area :: forall a. Array (Attr a) -> Markup a -> Node a
-area = P.element "area"
+area :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+area = elementOf (P.element "area")
 
-article :: forall a. Array (Attr a) -> Markup a -> Node a
-article = P.element "article"
+article :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+article = elementOf (P.element "article")
 
-aside :: forall a. Array (Attr a) -> Markup a -> Node a
-aside = P.element "aside"
+aside :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+aside = elementOf (P.element "aside")
 
-audio :: forall a. Array (Attr a) -> Markup a -> Node a
-audio = P.element "audio"
+audio :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+audio = elementOf (P.element "audio")
 
-b :: forall a. Array (Attr a) -> Markup a -> Node a
-b = P.element "b"
+b :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+b = elementOf (P.element "b")
 
-base :: forall a. Array (Attr a) -> Markup a -> Node a
-base = P.element "base"
+base :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+base = elementOf (P.element "base")
 
-basefont :: forall a. Array (Attr a) -> Markup a -> Node a
-basefont = P.element "basefont"
+basefont :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+basefont = elementOf (P.element "basefont")
 
-bdi :: forall a. Array (Attr a) -> Markup a -> Node a
-bdi = P.element "bdi"
+bdi :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+bdi = elementOf (P.element "bdi")
 
-bdo :: forall a. Array (Attr a) -> Markup a -> Node a
-bdo = P.element "bdo"
+bdo :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+bdo = elementOf (P.element "bdo")
 
-bgsound :: forall a. Array (Attr a) -> Markup a -> Node a
-bgsound = P.element "bgsound"
+bgsound :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+bgsound = elementOf (P.element "bgsound")
 
-big :: forall a. Array (Attr a) -> Markup a -> Node a
-big = P.element "big"
+big :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+big = elementOf (P.element "big")
 
-blink :: forall a. Array (Attr a) -> Markup a -> Node a
-blink = P.element "blink"
+blink :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+blink = elementOf (P.element "blink")
 
-blockquote :: forall a. Array (Attr a) -> Markup a -> Node a
-blockquote = P.element "blockquote"
+blockquote :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+blockquote = elementOf (P.element "blockquote")
 
-body :: forall a. Array (Attr a) -> Markup a -> Node a
-body = P.element "body"
+body :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+body = elementOf (P.element "body")
 
-br :: forall a. Array (Attr a) -> Markup a -> Node a
-br = P.element "br"
+br :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+br = elementOf (P.element "br")
 
-button :: forall a. Array (Attr a) -> Markup a -> Node a
-button = P.element "button"
+button :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+button = elementOf (P.element "button")
 
-canvas :: forall a. Array (Attr a) -> Markup a -> Node a
-canvas = P.element "canvas"
+canvas :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+canvas = elementOf (P.element "canvas")
 
-caption :: forall a. Array (Attr a) -> Markup a -> Node a
-caption = P.element "caption"
+caption :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+caption = elementOf (P.element "caption")
 
-center :: forall a. Array (Attr a) -> Markup a -> Node a
-center = P.element "center"
+center :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+center = elementOf (P.element "center")
 
-cite :: forall a. Array (Attr a) -> Markup a -> Node a
-cite = P.element "cite"
+cite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+cite = elementOf (P.element "cite")
 
-code :: forall a. Array (Attr a) -> Markup a -> Node a
-code = P.element "code"
+code :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+code = elementOf (P.element "code")
 
-col :: forall a. Array (Attr a) -> Markup a -> Node a
-col = P.element "col"
+col :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+col = elementOf (P.element "col")
 
-colgroup :: forall a. Array (Attr a) -> Markup a -> Node a
-colgroup = P.element "colgroup"
+colgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+colgroup = elementOf (P.element "colgroup")
 
-command :: forall a. Array (Attr a) -> Markup a -> Node a
-command = P.element "command"
+command :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+command = elementOf (P.element "command")
 
-content :: forall a. Array (Attr a) -> Markup a -> Node a
-content = P.element "content"
+content :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+content = elementOf (P.element "content")
 
-data' :: forall a. Array (Attr a) -> Markup a -> Node a
-data' = P.element "data"
+data' :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+data' = elementOf (P.element "data")
 
-datalist :: forall a. Array (Attr a) -> Markup a -> Node a
-datalist = P.element "datalist"
+datalist :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+datalist = elementOf (P.element "datalist")
 
-dd :: forall a. Array (Attr a) -> Markup a -> Node a
-dd = P.element "dd"
+dd :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dd = elementOf (P.element "dd")
 
-del :: forall a. Array (Attr a) -> Markup a -> Node a
-del = P.element "del"
+del :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+del = elementOf (P.element "del")
 
-details :: forall a. Array (Attr a) -> Markup a -> Node a
-details = P.element "details"
+details :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+details = elementOf (P.element "details")
 
-dfn :: forall a. Array (Attr a) -> Markup a -> Node a
-dfn = P.element "dfn"
+dfn :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dfn = elementOf (P.element "dfn")
 
-dialog :: forall a. Array (Attr a) -> Markup a -> Node a
-dialog = P.element "dialog"
+dialog :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dialog = elementOf (P.element "dialog")
 
-dir :: forall a. Array (Attr a) -> Markup a -> Node a
-dir = P.element "dir"
+dir :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dir = elementOf (P.element "dir")
 
-div :: forall a. Array (Attr a) -> Markup a -> Node a
-div = P.element "div"
+div :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+div = elementOf (P.element "div")
 
-dl :: forall a. Array (Attr a) -> Markup a -> Node a
-dl = P.element "dl"
+dl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dl = elementOf (P.element "dl")
 
-dt :: forall a. Array (Attr a) -> Markup a -> Node a
-dt = P.element "dt"
+dt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+dt = elementOf (P.element "dt")
 
-elementEl :: forall a. Array (Attr a) -> Markup a -> Node a
-elementEl = P.element "element"
+elementEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+elementEl = elementOf (P.element "element")
 
-em :: forall a. Array (Attr a) -> Markup a -> Node a
-em = P.element "em"
+em :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+em = elementOf (P.element "em")
 
-embed :: forall a. Array (Attr a) -> Markup a -> Node a
-embed = P.element "embed"
+embed :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+embed = elementOf (P.element "embed")
 
-fieldset :: forall a. Array (Attr a) -> Markup a -> Node a
-fieldset = P.element "fieldset"
+fieldset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+fieldset = elementOf (P.element "fieldset")
 
-figcaption :: forall a. Array (Attr a) -> Markup a -> Node a
-figcaption = P.element "figcaption"
+figcaption :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+figcaption = elementOf (P.element "figcaption")
 
-figure :: forall a. Array (Attr a) -> Markup a -> Node a
-figure = P.element "figure"
+figure :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+figure = elementOf (P.element "figure")
 
-font :: forall a. Array (Attr a) -> Markup a -> Node a
-font = P.element "font"
+font :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+font = elementOf (P.element "font")
 
-footer :: forall a. Array (Attr a) -> Markup a -> Node a
-footer = P.element "footer"
+footer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+footer = elementOf (P.element "footer")
 
-form :: forall a. Array (Attr a) -> Markup a -> Node a
-form = P.element "form"
+form :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+form = elementOf (P.element "form")
 
-frame :: forall a. Array (Attr a) -> Markup a -> Node a
-frame = P.element "frame"
+frame :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+frame = elementOf (P.element "frame")
 
-frameset :: forall a. Array (Attr a) -> Markup a -> Node a
-frameset = P.element "frameset"
+frameset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+frameset = elementOf (P.element "frameset")
 
-h1 :: forall a. Array (Attr a) -> Markup a -> Node a
-h1 = P.element "h1"
+h1 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h1 = elementOf (P.element "h1")
 
-h2 :: forall a. Array (Attr a) -> Markup a -> Node a
-h2 = P.element "h2"
+h2 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h2 = elementOf (P.element "h2")
 
-h3 :: forall a. Array (Attr a) -> Markup a -> Node a
-h3 = P.element "h3"
+h3 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h3 = elementOf (P.element "h3")
 
-h4 :: forall a. Array (Attr a) -> Markup a -> Node a
-h4 = P.element "h4"
+h4 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h4 = elementOf (P.element "h4")
 
-h5 :: forall a. Array (Attr a) -> Markup a -> Node a
-h5 = P.element "h5"
+h5 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h5 = elementOf (P.element "h5")
 
-h6 :: forall a. Array (Attr a) -> Markup a -> Node a
-h6 = P.element "h6"
+h6 :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+h6 = elementOf (P.element "h6")
 
-head :: forall a. Array (Attr a) -> Markup a -> Node a
-head = P.element "head"
+head :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+head = elementOf (P.element "head")
 
-header :: forall a. Array (Attr a) -> Markup a -> Node a
-header = P.element "header"
+header :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+header = elementOf (P.element "header")
 
-hgroup :: forall a. Array (Attr a) -> Markup a -> Node a
-hgroup = P.element "hgroup"
+hgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+hgroup = elementOf (P.element "hgroup")
 
-hr :: forall a. Array (Attr a) -> Markup a -> Node a
-hr = P.element "hr"
+hr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+hr = elementOf (P.element "hr")
 
-html :: forall a. Array (Attr a) -> Markup a -> Node a
-html = P.element "html"
+html :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+html = elementOf (P.element "html")
 
-i :: forall a. Array (Attr a) -> Markup a -> Node a
-i = P.element "i"
+i :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+i = elementOf (P.element "i")
 
-iframe :: forall a. Array (Attr a) -> Markup a -> Node a
-iframe = P.element "iframe"
+iframe :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+iframe = elementOf (P.element "iframe")
 
-image :: forall a. Array (Attr a) -> Markup a -> Node a
-image = P.element "image"
+image :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+image = elementOf (P.element "image")
 
-img :: forall a. Array (Attr a) -> Markup a -> Node a
-img = P.element "img"
+img :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+img = elementOf (P.element "img")
 
-input :: forall a. Array (Attr a) -> Markup a -> Node a
-input = P.element "input"
+input :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+input = elementOf (P.element "input")
 
-ins :: forall a. Array (Attr a) -> Markup a -> Node a
-ins = P.element "ins"
+ins :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ins = elementOf (P.element "ins")
 
-isindex :: forall a. Array (Attr a) -> Markup a -> Node a
-isindex = P.element "isindex"
+isindex :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+isindex = elementOf (P.element "isindex")
 
-kbd :: forall a. Array (Attr a) -> Markup a -> Node a
-kbd = P.element "kbd"
+kbd :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+kbd = elementOf (P.element "kbd")
 
-keygen :: forall a. Array (Attr a) -> Markup a -> Node a
-keygen = P.element "keygen"
+keygen :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+keygen = elementOf (P.element "keygen")
 
-label :: forall a. Array (Attr a) -> Markup a -> Node a
-label = P.element "label"
+label :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+label = elementOf (P.element "label")
 
-legend :: forall a. Array (Attr a) -> Markup a -> Node a
-legend = P.element "legend"
+legend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+legend = elementOf (P.element "legend")
 
-li :: forall a. Array (Attr a) -> Markup a -> Node a
-li = P.element "li"
+li :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+li = elementOf (P.element "li")
 
-link :: forall a. Array (Attr a) -> Markup a -> Node a
-link = P.element "link"
+link :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+link = elementOf (P.element "link")
 
-listing :: forall a. Array (Attr a) -> Markup a -> Node a
-listing = P.element "listing"
+listing :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+listing = elementOf (P.element "listing")
 
-main :: forall a. Array (Attr a) -> Markup a -> Node a
-main = P.element "main"
+main :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+main = elementOf (P.element "main")
 
-map :: forall a. Array (Attr a) -> Markup a -> Node a
-map = P.element "map"
+map :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+map = elementOf (P.element "map")
 
-mark :: forall a. Array (Attr a) -> Markup a -> Node a
-mark = P.element "mark"
+mark :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+mark = elementOf (P.element "mark")
 
-marquee :: forall a. Array (Attr a) -> Markup a -> Node a
-marquee = P.element "marquee"
+marquee :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+marquee = elementOf (P.element "marquee")
 
-math :: forall a. Array (Attr a) -> Markup a -> Node a
-math = P.element "math"
+math :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+math = elementOf (P.element "math")
 
-menu :: forall a. Array (Attr a) -> Markup a -> Node a
-menu = P.element "menu"
+menu :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+menu = elementOf (P.element "menu")
 
-menuitem :: forall a. Array (Attr a) -> Markup a -> Node a
-menuitem = P.element "menuitem"
+menuitem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+menuitem = elementOf (P.element "menuitem")
 
-meta :: forall a. Array (Attr a) -> Markup a -> Node a
-meta = P.element "meta"
+meta :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+meta = elementOf (P.element "meta")
 
-meter :: forall a. Array (Attr a) -> Markup a -> Node a
-meter = P.element "meter"
+meter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+meter = elementOf (P.element "meter")
 
-multicol :: forall a. Array (Attr a) -> Markup a -> Node a
-multicol = P.element "multicol"
+multicol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+multicol = elementOf (P.element "multicol")
 
-nav :: forall a. Array (Attr a) -> Markup a -> Node a
-nav = P.element "nav"
+nav :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+nav = elementOf (P.element "nav")
 
-nextid :: forall a. Array (Attr a) -> Markup a -> Node a
-nextid = P.element "nextid"
+nextid :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+nextid = elementOf (P.element "nextid")
 
-nobr :: forall a. Array (Attr a) -> Markup a -> Node a
-nobr = P.element "nobr"
+nobr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+nobr = elementOf (P.element "nobr")
 
-noembed :: forall a. Array (Attr a) -> Markup a -> Node a
-noembed = P.element "noembed"
+noembed :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+noembed = elementOf (P.element "noembed")
 
-noframes :: forall a. Array (Attr a) -> Markup a -> Node a
-noframes = P.element "noframes"
+noframes :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+noframes = elementOf (P.element "noframes")
 
-noscript :: forall a. Array (Attr a) -> Markup a -> Node a
-noscript = P.element "noscript"
+noscript :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+noscript = elementOf (P.element "noscript")
 
-object :: forall a. Array (Attr a) -> Markup a -> Node a
-object = P.element "object"
+object :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+object = elementOf (P.element "object")
 
-ol :: forall a. Array (Attr a) -> Markup a -> Node a
-ol = P.element "ol"
+ol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ol = elementOf (P.element "ol")
 
-optgroup :: forall a. Array (Attr a) -> Markup a -> Node a
-optgroup = P.element "optgroup"
+optgroup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+optgroup = elementOf (P.element "optgroup")
 
-option :: forall a. Array (Attr a) -> Markup a -> Node a
-option = P.element "option"
+option :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+option = elementOf (P.element "option")
 
-output :: forall a. Array (Attr a) -> Markup a -> Node a
-output = P.element "output"
+output :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+output = elementOf (P.element "output")
 
-p :: forall a. Array (Attr a) -> Markup a -> Node a
-p = P.element "p"
+p :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+p = elementOf (P.element "p")
 
-param :: forall a. Array (Attr a) -> Markup a -> Node a
-param = P.element "param"
+param :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+param = elementOf (P.element "param")
 
-picture :: forall a. Array (Attr a) -> Markup a -> Node a
-picture = P.element "picture"
+picture :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+picture = elementOf (P.element "picture")
 
-plaintext :: forall a. Array (Attr a) -> Markup a -> Node a
-plaintext = P.element "plaintext"
+plaintext :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+plaintext = elementOf (P.element "plaintext")
 
-pre :: forall a. Array (Attr a) -> Markup a -> Node a
-pre = P.element "pre"
+pre :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+pre = elementOf (P.element "pre")
 
-progress :: forall a. Array (Attr a) -> Markup a -> Node a
-progress = P.element "progress"
+progress :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+progress = elementOf (P.element "progress")
 
-q :: forall a. Array (Attr a) -> Markup a -> Node a
-q = P.element "q"
+q :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+q = elementOf (P.element "q")
 
-rb :: forall a. Array (Attr a) -> Markup a -> Node a
-rb = P.element "rb"
+rb :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rb = elementOf (P.element "rb")
 
-rbc :: forall a. Array (Attr a) -> Markup a -> Node a
-rbc = P.element "rbc"
+rbc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rbc = elementOf (P.element "rbc")
 
-rp :: forall a. Array (Attr a) -> Markup a -> Node a
-rp = P.element "rp"
+rp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rp = elementOf (P.element "rp")
 
-rt :: forall a. Array (Attr a) -> Markup a -> Node a
-rt = P.element "rt"
+rt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rt = elementOf (P.element "rt")
 
-rtc :: forall a. Array (Attr a) -> Markup a -> Node a
-rtc = P.element "rtc"
+rtc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+rtc = elementOf (P.element "rtc")
 
-ruby :: forall a. Array (Attr a) -> Markup a -> Node a
-ruby = P.element "ruby"
+ruby :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ruby = elementOf (P.element "ruby")
 
-s :: forall a. Array (Attr a) -> Markup a -> Node a
-s = P.element "s"
+s :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+s = elementOf (P.element "s")
 
-samp :: forall a. Array (Attr a) -> Markup a -> Node a
-samp = P.element "samp"
+samp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+samp = elementOf (P.element "samp")
 
-script :: forall a. Array (Attr a) -> Markup a -> Node a
-script = P.element "script"
+script :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+script = elementOf (P.element "script")
 
-search :: forall a. Array (Attr a) -> Markup a -> Node a
-search = P.element "search"
+search :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+search = elementOf (P.element "search")
 
-section :: forall a. Array (Attr a) -> Markup a -> Node a
-section = P.element "section"
+section :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+section = elementOf (P.element "section")
 
-select :: forall a. Array (Attr a) -> Markup a -> Node a
-select = P.element "select"
+select :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+select = elementOf (P.element "select")
 
-shadow :: forall a. Array (Attr a) -> Markup a -> Node a
-shadow = P.element "shadow"
+shadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+shadow = elementOf (P.element "shadow")
 
-slot :: forall a. Array (Attr a) -> Markup a -> Node a
-slot = P.element "slot"
+slot :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+slot = elementOf (P.element "slot")
 
-small :: forall a. Array (Attr a) -> Markup a -> Node a
-small = P.element "small"
+small :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+small = elementOf (P.element "small")
 
-source :: forall a. Array (Attr a) -> Markup a -> Node a
-source = P.element "source"
+source :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+source = elementOf (P.element "source")
 
-spacer :: forall a. Array (Attr a) -> Markup a -> Node a
-spacer = P.element "spacer"
+spacer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+spacer = elementOf (P.element "spacer")
 
-span :: forall a. Array (Attr a) -> Markup a -> Node a
-span = P.element "span"
+span :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+span = elementOf (P.element "span")
 
-strike :: forall a. Array (Attr a) -> Markup a -> Node a
-strike = P.element "strike"
+strike :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+strike = elementOf (P.element "strike")
 
-strong :: forall a. Array (Attr a) -> Markup a -> Node a
-strong = P.element "strong"
+strong :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+strong = elementOf (P.element "strong")
 
-style :: forall a. Array (Attr a) -> Markup a -> Node a
-style = P.element "style"
+style :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+style = elementOf (P.element "style")
 
-sub :: forall a. Array (Attr a) -> Markup a -> Node a
-sub = P.element "sub"
+sub :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+sub = elementOf (P.element "sub")
 
-summary :: forall a. Array (Attr a) -> Markup a -> Node a
-summary = P.element "summary"
+summary :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+summary = elementOf (P.element "summary")
 
-sup :: forall a. Array (Attr a) -> Markup a -> Node a
-sup = P.element "sup"
+sup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+sup = elementOf (P.element "sup")
 
-svg :: forall a. Array (Attr a) -> Markup a -> Node a
+svg :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 svg = svgElement "svg"
 
-table :: forall a. Array (Attr a) -> Markup a -> Node a
-table = P.element "table"
+table :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+table = elementOf (P.element "table")
 
-tbody :: forall a. Array (Attr a) -> Markup a -> Node a
-tbody = P.element "tbody"
+tbody :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tbody = elementOf (P.element "tbody")
 
-td :: forall a. Array (Attr a) -> Markup a -> Node a
-td = P.element "td"
+td :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+td = elementOf (P.element "td")
 
-template :: forall a. Array (Attr a) -> Markup a -> Node a
-template = P.element "template"
+template :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+template = elementOf (P.element "template")
 
-textarea :: forall a. Array (Attr a) -> Markup a -> Node a
-textarea = P.element "textarea"
+textarea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+textarea = elementOf (P.element "textarea")
 
-tfoot :: forall a. Array (Attr a) -> Markup a -> Node a
-tfoot = P.element "tfoot"
+tfoot :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tfoot = elementOf (P.element "tfoot")
 
-th :: forall a. Array (Attr a) -> Markup a -> Node a
-th = P.element "th"
+th :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+th = elementOf (P.element "th")
 
-thead :: forall a. Array (Attr a) -> Markup a -> Node a
-thead = P.element "thead"
+thead :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+thead = elementOf (P.element "thead")
 
-time :: forall a. Array (Attr a) -> Markup a -> Node a
-time = P.element "time"
+time :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+time = elementOf (P.element "time")
 
-title :: forall a. Array (Attr a) -> Markup a -> Node a
-title = P.element "title"
+title :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+title = elementOf (P.element "title")
 
-tr :: forall a. Array (Attr a) -> Markup a -> Node a
-tr = P.element "tr"
+tr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tr = elementOf (P.element "tr")
 
-track :: forall a. Array (Attr a) -> Markup a -> Node a
-track = P.element "track"
+track :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+track = elementOf (P.element "track")
 
-tt :: forall a. Array (Attr a) -> Markup a -> Node a
-tt = P.element "tt"
+tt :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+tt = elementOf (P.element "tt")
 
-u :: forall a. Array (Attr a) -> Markup a -> Node a
-u = P.element "u"
+u :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+u = elementOf (P.element "u")
 
-ul :: forall a. Array (Attr a) -> Markup a -> Node a
-ul = P.element "ul"
+ul :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+ul = elementOf (P.element "ul")
 
-var :: forall a. Array (Attr a) -> Markup a -> Node a
-var = P.element "var"
+var :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+var = elementOf (P.element "var")
 
-video :: forall a. Array (Attr a) -> Markup a -> Node a
-video = P.element "video"
+video :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+video = elementOf (P.element "video")
 
-wbr :: forall a. Array (Attr a) -> Markup a -> Node a
-wbr = P.element "wbr"
+wbr :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+wbr = elementOf (P.element "wbr")
 
-xmp :: forall a. Array (Attr a) -> Markup a -> Node a
-xmp = P.element "xmp"
+xmp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
+xmp = elementOf (P.element "xmp")
 
-altGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
+altGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 altGlyph = svgElement "altGlyph"
 
-altGlyphDef :: forall a. Array (Attr a) -> Markup a -> Node a
+altGlyphDef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 altGlyphDef = svgElement "altGlyphDef"
 
-altGlyphItem :: forall a. Array (Attr a) -> Markup a -> Node a
+altGlyphItem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 altGlyphItem = svgElement "altGlyphItem"
 
-animate :: forall a. Array (Attr a) -> Markup a -> Node a
+animate :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animate = svgElement "animate"
 
-animateColor :: forall a. Array (Attr a) -> Markup a -> Node a
+animateColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animateColor = svgElement "animateColor"
 
-animateMotion :: forall a. Array (Attr a) -> Markup a -> Node a
+animateMotion :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animateMotion = svgElement "animateMotion"
 
-animateTransform :: forall a. Array (Attr a) -> Markup a -> Node a
+animateTransform :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animateTransform = svgElement "animateTransform"
 
-animation :: forall a. Array (Attr a) -> Markup a -> Node a
+animation :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 animation = svgElement "animation"
 
-circle :: forall a. Array (Attr a) -> Markup a -> Node a
+circle :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 circle = svgElement "circle"
 
-clipPath :: forall a. Array (Attr a) -> Markup a -> Node a
+clipPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 clipPath = svgElement "clipPath"
 
-colorProfile :: forall a. Array (Attr a) -> Markup a -> Node a
+colorProfile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 colorProfile = svgElement "color-profile"
 
-cursor :: forall a. Array (Attr a) -> Markup a -> Node a
+cursor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 cursor = svgElement "cursor"
 
-defs :: forall a. Array (Attr a) -> Markup a -> Node a
+defs :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 defs = svgElement "defs"
 
-desc :: forall a. Array (Attr a) -> Markup a -> Node a
+desc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 desc = svgElement "desc"
 
-discard :: forall a. Array (Attr a) -> Markup a -> Node a
+discard :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 discard = svgElement "discard"
 
-ellipse :: forall a. Array (Attr a) -> Markup a -> Node a
+ellipse :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 ellipse = svgElement "ellipse"
 
-feBlend :: forall a. Array (Attr a) -> Markup a -> Node a
+feBlend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feBlend = svgElement "feBlend"
 
-feColorMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
+feColorMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feColorMatrix = svgElement "feColorMatrix"
 
-feComponentTransfer :: forall a. Array (Attr a) -> Markup a -> Node a
+feComponentTransfer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feComponentTransfer = svgElement "feComponentTransfer"
 
-feComposite :: forall a. Array (Attr a) -> Markup a -> Node a
+feComposite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feComposite = svgElement "feComposite"
 
-feConvolveMatrix :: forall a. Array (Attr a) -> Markup a -> Node a
+feConvolveMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feConvolveMatrix = svgElement "feConvolveMatrix"
 
-feDiffuseLighting :: forall a. Array (Attr a) -> Markup a -> Node a
+feDiffuseLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDiffuseLighting = svgElement "feDiffuseLighting"
 
-feDisplacementMap :: forall a. Array (Attr a) -> Markup a -> Node a
+feDisplacementMap :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDisplacementMap = svgElement "feDisplacementMap"
 
-feDistantLight :: forall a. Array (Attr a) -> Markup a -> Node a
+feDistantLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDistantLight = svgElement "feDistantLight"
 
-feDropShadow :: forall a. Array (Attr a) -> Markup a -> Node a
+feDropShadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feDropShadow = svgElement "feDropShadow"
 
-feFlood :: forall a. Array (Attr a) -> Markup a -> Node a
+feFlood :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFlood = svgElement "feFlood"
 
-feFuncA :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncA :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncA = svgElement "feFuncA"
 
-feFuncB :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncB :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncB = svgElement "feFuncB"
 
-feFuncG :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncG :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncG = svgElement "feFuncG"
 
-feFuncR :: forall a. Array (Attr a) -> Markup a -> Node a
+feFuncR :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feFuncR = svgElement "feFuncR"
 
-feGaussianBlur :: forall a. Array (Attr a) -> Markup a -> Node a
+feGaussianBlur :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feGaussianBlur = svgElement "feGaussianBlur"
 
-feImage :: forall a. Array (Attr a) -> Markup a -> Node a
+feImage :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feImage = svgElement "feImage"
 
-feMerge :: forall a. Array (Attr a) -> Markup a -> Node a
+feMerge :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feMerge = svgElement "feMerge"
 
-feMergeNode :: forall a. Array (Attr a) -> Markup a -> Node a
+feMergeNode :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feMergeNode = svgElement "feMergeNode"
 
-feMorphology :: forall a. Array (Attr a) -> Markup a -> Node a
+feMorphology :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feMorphology = svgElement "feMorphology"
 
-feOffset :: forall a. Array (Attr a) -> Markup a -> Node a
+feOffset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feOffset = svgElement "feOffset"
 
-fePointLight :: forall a. Array (Attr a) -> Markup a -> Node a
+fePointLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fePointLight = svgElement "fePointLight"
 
-feSpecularLighting :: forall a. Array (Attr a) -> Markup a -> Node a
+feSpecularLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feSpecularLighting = svgElement "feSpecularLighting"
 
-feSpotLight :: forall a. Array (Attr a) -> Markup a -> Node a
+feSpotLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feSpotLight = svgElement "feSpotLight"
 
-feTile :: forall a. Array (Attr a) -> Markup a -> Node a
+feTile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feTile = svgElement "feTile"
 
-feTurbulence :: forall a. Array (Attr a) -> Markup a -> Node a
+feTurbulence :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 feTurbulence = svgElement "feTurbulence"
 
-filter :: forall a. Array (Attr a) -> Markup a -> Node a
+filter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 filter = svgElement "filter"
 
-fontFace :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFace :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFace = svgElement "font-face"
 
-fontFaceFormat :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceFormat :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceFormat = svgElement "font-face-format"
 
-fontFaceName :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceName :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceName = svgElement "font-face-name"
 
-fontFaceSrc :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceSrc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceSrc = svgElement "font-face-src"
 
-fontFaceUri :: forall a. Array (Attr a) -> Markup a -> Node a
+fontFaceUri :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 fontFaceUri = svgElement "font-face-uri"
 
-foreignObject :: forall a. Array (Attr a) -> Markup a -> Node a
+foreignObject :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 foreignObject = svgElement "foreignObject"
 
-g :: forall a. Array (Attr a) -> Markup a -> Node a
+g :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 g = svgElement "g"
 
-glyph :: forall a. Array (Attr a) -> Markup a -> Node a
+glyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 glyph = svgElement "glyph"
 
-glyphRef :: forall a. Array (Attr a) -> Markup a -> Node a
+glyphRef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 glyphRef = svgElement "glyphRef"
 
-handler :: forall a. Array (Attr a) -> Markup a -> Node a
+handler :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 handler = svgElement "handler"
 
-hkern :: forall a. Array (Attr a) -> Markup a -> Node a
+hkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 hkern = svgElement "hkern"
 
-line :: forall a. Array (Attr a) -> Markup a -> Node a
+line :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 line = svgElement "line"
 
-linearGradient :: forall a. Array (Attr a) -> Markup a -> Node a
+linearGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 linearGradient = svgElement "linearGradient"
 
-listener :: forall a. Array (Attr a) -> Markup a -> Node a
+listener :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 listener = svgElement "listener"
 
-marker :: forall a. Array (Attr a) -> Markup a -> Node a
+marker :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 marker = svgElement "marker"
 
-mask :: forall a. Array (Attr a) -> Markup a -> Node a
+mask :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 mask = svgElement "mask"
 
-metadata :: forall a. Array (Attr a) -> Markup a -> Node a
+metadata :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 metadata = svgElement "metadata"
 
-missingGlyph :: forall a. Array (Attr a) -> Markup a -> Node a
+missingGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 missingGlyph = svgElement "missing-glyph"
 
-mpath :: forall a. Array (Attr a) -> Markup a -> Node a
+mpath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 mpath = svgElement "mpath"
 
-path :: forall a. Array (Attr a) -> Markup a -> Node a
+path :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 path = svgElement "path"
 
-pattern :: forall a. Array (Attr a) -> Markup a -> Node a
+pattern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 pattern = svgElement "pattern"
 
-polygon :: forall a. Array (Attr a) -> Markup a -> Node a
+polygon :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 polygon = svgElement "polygon"
 
-polyline :: forall a. Array (Attr a) -> Markup a -> Node a
+polyline :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 polyline = svgElement "polyline"
 
-prefetch :: forall a. Array (Attr a) -> Markup a -> Node a
+prefetch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 prefetch = svgElement "prefetch"
 
-radialGradient :: forall a. Array (Attr a) -> Markup a -> Node a
+radialGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 radialGradient = svgElement "radialGradient"
 
-rect :: forall a. Array (Attr a) -> Markup a -> Node a
+rect :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 rect = svgElement "rect"
 
-set :: forall a. Array (Attr a) -> Markup a -> Node a
+set :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 set = svgElement "set"
 
-solidColor :: forall a. Array (Attr a) -> Markup a -> Node a
+solidColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 solidColor = svgElement "solidColor"
 
-stop :: forall a. Array (Attr a) -> Markup a -> Node a
+stop :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 stop = svgElement "stop"
 
-switch :: forall a. Array (Attr a) -> Markup a -> Node a
+switch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 switch = svgElement "switch"
 
-symbol :: forall a. Array (Attr a) -> Markup a -> Node a
+symbol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 symbol = svgElement "symbol"
 
-tbreak :: forall a. Array (Attr a) -> Markup a -> Node a
+tbreak :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tbreak = svgElement "tbreak"
 
-textEl :: forall a. Array (Attr a) -> Markup a -> Node a
+textEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 textEl = svgElement "text"
 
-textArea :: forall a. Array (Attr a) -> Markup a -> Node a
+textArea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 textArea = svgElement "textArea"
 
-textPath :: forall a. Array (Attr a) -> Markup a -> Node a
+textPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 textPath = svgElement "textPath"
 
-tref :: forall a. Array (Attr a) -> Markup a -> Node a
+tref :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tref = svgElement "tref"
 
-tspan :: forall a. Array (Attr a) -> Markup a -> Node a
+tspan :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 tspan = svgElement "tspan"
 
-unknown :: forall a. Array (Attr a) -> Markup a -> Node a
+unknown :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 unknown = svgElement "unknown"
 
-use :: forall a. Array (Attr a) -> Markup a -> Node a
+use :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 use = svgElement "use"
 
-view :: forall a. Array (Attr a) -> Markup a -> Node a
+view :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 view = svgElement "view"
 
-vkern :: forall a. Array (Attr a) -> Markup a -> Node a
+vkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 vkern = svgElement "vkern"
-
--- | The elements created in SVG's namespace.
-svgElements :: Array String
-svgElements =
-  [ "svg"
-  , "altGlyph"
-  , "altGlyphDef"
-  , "altGlyphItem"
-  , "animate"
-  , "animateColor"
-  , "animateMotion"
-  , "animateTransform"
-  , "animation"
-  , "circle"
-  , "clipPath"
-  , "color-profile"
-  , "cursor"
-  , "defs"
-  , "desc"
-  , "discard"
-  , "ellipse"
-  , "feBlend"
-  , "feColorMatrix"
-  , "feComponentTransfer"
-  , "feComposite"
-  , "feConvolveMatrix"
-  , "feDiffuseLighting"
-  , "feDisplacementMap"
-  , "feDistantLight"
-  , "feDropShadow"
-  , "feFlood"
-  , "feFuncA"
-  , "feFuncB"
-  , "feFuncG"
-  , "feFuncR"
-  , "feGaussianBlur"
-  , "feImage"
-  , "feMerge"
-  , "feMergeNode"
-  , "feMorphology"
-  , "feOffset"
-  , "fePointLight"
-  , "feSpecularLighting"
-  , "feSpotLight"
-  , "feTile"
-  , "feTurbulence"
-  , "filter"
-  , "font-face"
-  , "font-face-format"
-  , "font-face-name"
-  , "font-face-src"
-  , "font-face-uri"
-  , "foreignObject"
-  , "g"
-  , "glyph"
-  , "glyphRef"
-  , "handler"
-  , "hkern"
-  , "line"
-  , "linearGradient"
-  , "listener"
-  , "marker"
-  , "mask"
-  , "metadata"
-  , "missing-glyph"
-  , "mpath"
-  , "path"
-  , "pattern"
-  , "polygon"
-  , "polyline"
-  , "prefetch"
-  , "radialGradient"
-  , "rect"
-  , "set"
-  , "solidColor"
-  , "stop"
-  , "switch"
-  , "symbol"
-  , "tbreak"
-  , "text"
-  , "textArea"
-  , "textPath"
-  , "tref"
-  , "tspan"
-  , "unknown"
-  , "use"
-  , "view"
-  , "vkern"
-  ]
-
-keyedElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedElement = \tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag
 
 -- Attributes ------------------------------------------------------------------
 

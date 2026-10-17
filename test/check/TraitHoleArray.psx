@@ -1,0 +1,13 @@
+module Examples.CheckTraitHoleArray where
+
+import Prelude
+
+import Portico as P
+import Portico.Psx (Markup)
+
+-- A trait hole holds one trait, not an array of them.
+label :: Markup Unit
+label =
+  <p class="label" {[ P.transition "fade", P.key "x" ]}>
+    Hello
+  </p>

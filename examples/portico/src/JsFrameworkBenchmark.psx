@@ -157,8 +157,8 @@ nouns =
   ]
 
 -- The table's click handler reads the event (`P.onMaybe`), which no HTML
--- attribute says, so the table is Portico's own function in a hole. The rows
--- are lazy and keyed by `P.keyedLazy`.
+-- attribute says, so it is a trait hole. The rows are lazy and keyed by
+-- `P.keyedLazy`.
 view :: Model -> Markup Msg
 view model =
   <main class="container">
@@ -170,12 +170,9 @@ view model =
         <div class="col-md-6">{buttons}</div>
       </div>
     </div>
-    {P.table
-      [ P.class' "table table-hover table-striped test-data"
-      , P.onMaybe "click" handleTableClick
-      ]
-      (<tbody>{P.keyedLazy "tr" (show <<< _.id) viewRow <$> model.rows}</tbody>)
-    }
+    <table class="table table-hover table-striped test-data" {P.onMaybe "click" handleTableClick}>
+      <tbody>{P.keyedLazy "tr" (show <<< _.id) viewRow <$> model.rows}</tbody>
+    </table>
     <span class="preloadicon glyphicon glyphicon-remove" aria-hidden="true"></span>
   </main>
 

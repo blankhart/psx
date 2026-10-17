@@ -878,12 +878,9 @@ module Halogen.Psx
   , onVolumeChange
   , onWaiting
   , onWheel
-  , keyedElement
   ) where
 
 import Prelude (const, show, (<<<))
-import Data.Array as Array
-import Data.Tuple (Tuple)
 import Data.MediaType (MediaType)
 import DOM.HTML.Indexed as I
 import DOM.HTML.Indexed.AutocompleteType (AutocompleteType) as T
@@ -895,7 +892,7 @@ import DOM.HTML.Indexed.StepValue (StepValue) as T
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Halogen.Psx.Core (Attr, Key, Markup, Node, attribute, keyedHtmlElement, keyedSvgElement, onValueInput)
+import Halogen.Psx.Core (class Content, Attr, Node, attribute, elementOf, keyedHtmlElement, keyedSvgElement, onValueInput, svgNamespace)
 import Web.Clipboard.ClipboardEvent (ClipboardEvent)
 import Web.Event.Event (Event, EventType(..))
 import Web.HTML.Event.DragEvent (DragEvent)
@@ -904,797 +901,705 @@ import Web.UIEvent.FocusEvent (FocusEvent)
 import Web.UIEvent.KeyboardEvent (KeyboardEvent)
 import Web.UIEvent.MouseEvent (MouseEvent)
 import Web.UIEvent.WheelEvent (WheelEvent)
-import Halogen.Psx.Core (class Children, class KeyedChildren, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, keyedChildren, root, text, toKey) as Core
+import Halogen.Psx.Core (class Children, class Content, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, none, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
 
-a :: forall w a. Array (Attr I.HTMLa a) -> Markup w a -> Node w a
-a = HH.a
+a :: forall c w a. Content c w a => Array (Attr I.HTMLa a) -> c -> Node w a
+a = elementOf HH.a (keyedHtmlElement "a")
 
-abbr :: forall w a. Array (Attr I.HTMLabbr a) -> Markup w a -> Node w a
-abbr = HH.abbr
+abbr :: forall c w a. Content c w a => Array (Attr I.HTMLabbr a) -> c -> Node w a
+abbr = elementOf HH.abbr (keyedHtmlElement "abbr")
 
-acronym :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-acronym = HH.element (HH.ElemName "acronym")
+acronym :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+acronym = elementOf (HH.element (HH.ElemName "acronym")) (keyedHtmlElement "acronym")
 
-address :: forall w a. Array (Attr I.HTMLaddress a) -> Markup w a -> Node w a
-address = HH.address
+address :: forall c w a. Content c w a => Array (Attr I.HTMLaddress a) -> c -> Node w a
+address = elementOf HH.address (keyedHtmlElement "address")
 
-applet :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-applet = HH.element (HH.ElemName "applet")
+applet :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+applet = elementOf (HH.element (HH.ElemName "applet")) (keyedHtmlElement "applet")
 
-area :: forall w a. Array (Attr I.HTMLarea a) -> Markup w a -> Node w a
-area = \props _ -> HH.area props
+area :: forall c w a. Content c w a => Array (Attr I.HTMLarea a) -> c -> Node w a
+area = elementOf (\props _ -> HH.area props) (\props _ -> HH.area props)
 
-article :: forall w a. Array (Attr I.HTMLarticle a) -> Markup w a -> Node w a
-article = HH.article
+article :: forall c w a. Content c w a => Array (Attr I.HTMLarticle a) -> c -> Node w a
+article = elementOf HH.article (keyedHtmlElement "article")
 
-aside :: forall w a. Array (Attr I.HTMLaside a) -> Markup w a -> Node w a
-aside = HH.aside
+aside :: forall c w a. Content c w a => Array (Attr I.HTMLaside a) -> c -> Node w a
+aside = elementOf HH.aside (keyedHtmlElement "aside")
 
-audio :: forall w a. Array (Attr I.HTMLaudio a) -> Markup w a -> Node w a
-audio = HH.audio
+audio :: forall c w a. Content c w a => Array (Attr I.HTMLaudio a) -> c -> Node w a
+audio = elementOf HH.audio (keyedHtmlElement "audio")
 
-b :: forall w a. Array (Attr I.HTMLb a) -> Markup w a -> Node w a
-b = HH.b
+b :: forall c w a. Content c w a => Array (Attr I.HTMLb a) -> c -> Node w a
+b = elementOf HH.b (keyedHtmlElement "b")
 
-base :: forall w a. Array (Attr I.HTMLbase a) -> Markup w a -> Node w a
-base = \props _ -> HH.base props
+base :: forall c w a. Content c w a => Array (Attr I.HTMLbase a) -> c -> Node w a
+base = elementOf (\props _ -> HH.base props) (\props _ -> HH.base props)
 
-basefont :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-basefont = HH.element (HH.ElemName "basefont")
+basefont :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+basefont = elementOf (HH.element (HH.ElemName "basefont")) (keyedHtmlElement "basefont")
 
-bdi :: forall w a. Array (Attr I.HTMLbdi a) -> Markup w a -> Node w a
-bdi = HH.bdi
+bdi :: forall c w a. Content c w a => Array (Attr I.HTMLbdi a) -> c -> Node w a
+bdi = elementOf HH.bdi (keyedHtmlElement "bdi")
 
-bdo :: forall w a. Array (Attr I.HTMLbdo a) -> Markup w a -> Node w a
-bdo = HH.bdo
+bdo :: forall c w a. Content c w a => Array (Attr I.HTMLbdo a) -> c -> Node w a
+bdo = elementOf HH.bdo (keyedHtmlElement "bdo")
 
-bgsound :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-bgsound = HH.element (HH.ElemName "bgsound")
+bgsound :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+bgsound = elementOf (HH.element (HH.ElemName "bgsound")) (keyedHtmlElement "bgsound")
 
-big :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-big = HH.element (HH.ElemName "big")
+big :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+big = elementOf (HH.element (HH.ElemName "big")) (keyedHtmlElement "big")
 
-blink :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-blink = HH.element (HH.ElemName "blink")
+blink :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+blink = elementOf (HH.element (HH.ElemName "blink")) (keyedHtmlElement "blink")
 
-blockquote :: forall w a. Array (Attr I.HTMLblockquote a) -> Markup w a -> Node w a
-blockquote = HH.blockquote
+blockquote :: forall c w a. Content c w a => Array (Attr I.HTMLblockquote a) -> c -> Node w a
+blockquote = elementOf HH.blockquote (keyedHtmlElement "blockquote")
 
-body :: forall w a. Array (Attr I.HTMLbody a) -> Markup w a -> Node w a
-body = HH.body
+body :: forall c w a. Content c w a => Array (Attr I.HTMLbody a) -> c -> Node w a
+body = elementOf HH.body (keyedHtmlElement "body")
 
-br :: forall w a. Array (Attr I.HTMLbr a) -> Markup w a -> Node w a
-br = \props _ -> HH.br props
+br :: forall c w a. Content c w a => Array (Attr I.HTMLbr a) -> c -> Node w a
+br = elementOf (\props _ -> HH.br props) (\props _ -> HH.br props)
 
-button :: forall w a. Array (Attr I.HTMLbutton a) -> Markup w a -> Node w a
-button = HH.button
+button :: forall c w a. Content c w a => Array (Attr I.HTMLbutton a) -> c -> Node w a
+button = elementOf HH.button (keyedHtmlElement "button")
 
-canvas :: forall w a. Array (Attr I.HTMLcanvas a) -> Markup w a -> Node w a
-canvas = \props _ -> HH.canvas props
+canvas :: forall c w a. Content c w a => Array (Attr I.HTMLcanvas a) -> c -> Node w a
+canvas = elementOf (\props _ -> HH.canvas props) (\props _ -> HH.canvas props)
 
-caption :: forall w a. Array (Attr I.HTMLcaption a) -> Markup w a -> Node w a
-caption = HH.caption
+caption :: forall c w a. Content c w a => Array (Attr I.HTMLcaption a) -> c -> Node w a
+caption = elementOf HH.caption (keyedHtmlElement "caption")
 
-center :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-center = HH.element (HH.ElemName "center")
+center :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+center = elementOf (HH.element (HH.ElemName "center")) (keyedHtmlElement "center")
 
-cite :: forall w a. Array (Attr I.HTMLcite a) -> Markup w a -> Node w a
-cite = HH.cite
+cite :: forall c w a. Content c w a => Array (Attr I.HTMLcite a) -> c -> Node w a
+cite = elementOf HH.cite (keyedHtmlElement "cite")
 
-code :: forall w a. Array (Attr I.HTMLcode a) -> Markup w a -> Node w a
-code = HH.code
+code :: forall c w a. Content c w a => Array (Attr I.HTMLcode a) -> c -> Node w a
+code = elementOf HH.code (keyedHtmlElement "code")
 
-col :: forall w a. Array (Attr I.HTMLcol a) -> Markup w a -> Node w a
-col = \props _ -> HH.col props
+col :: forall c w a. Content c w a => Array (Attr I.HTMLcol a) -> c -> Node w a
+col = elementOf (\props _ -> HH.col props) (\props _ -> HH.col props)
 
-colgroup :: forall w a. Array (Attr I.HTMLcolgroup a) -> Markup w a -> Node w a
-colgroup = HH.colgroup
+colgroup :: forall c w a. Content c w a => Array (Attr I.HTMLcolgroup a) -> c -> Node w a
+colgroup = elementOf HH.colgroup (keyedHtmlElement "colgroup")
 
-command :: forall w a. Array (Attr I.HTMLcommand a) -> Markup w a -> Node w a
-command = \props _ -> HH.command props
+command :: forall c w a. Content c w a => Array (Attr I.HTMLcommand a) -> c -> Node w a
+command = elementOf (\props _ -> HH.command props) (\props _ -> HH.command props)
 
-content :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-content = HH.element (HH.ElemName "content")
+content :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+content = elementOf (HH.element (HH.ElemName "content")) (keyedHtmlElement "content")
 
-data' :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-data' = HH.element (HH.ElemName "data")
+data' :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+data' = elementOf (HH.element (HH.ElemName "data")) (keyedHtmlElement "data")
 
-datalist :: forall w a. Array (Attr I.HTMLdatalist a) -> Markup w a -> Node w a
-datalist = HH.datalist
+datalist :: forall c w a. Content c w a => Array (Attr I.HTMLdatalist a) -> c -> Node w a
+datalist = elementOf HH.datalist (keyedHtmlElement "datalist")
 
-dd :: forall w a. Array (Attr I.HTMLdd a) -> Markup w a -> Node w a
-dd = HH.dd
+dd :: forall c w a. Content c w a => Array (Attr I.HTMLdd a) -> c -> Node w a
+dd = elementOf HH.dd (keyedHtmlElement "dd")
 
-del :: forall w a. Array (Attr I.HTMLdel a) -> Markup w a -> Node w a
-del = HH.del
+del :: forall c w a. Content c w a => Array (Attr I.HTMLdel a) -> c -> Node w a
+del = elementOf HH.del (keyedHtmlElement "del")
 
-details :: forall w a. Array (Attr I.HTMLdetails a) -> Markup w a -> Node w a
-details = HH.details
+details :: forall c w a. Content c w a => Array (Attr I.HTMLdetails a) -> c -> Node w a
+details = elementOf HH.details (keyedHtmlElement "details")
 
-dfn :: forall w a. Array (Attr I.HTMLdfn a) -> Markup w a -> Node w a
-dfn = HH.dfn
+dfn :: forall c w a. Content c w a => Array (Attr I.HTMLdfn a) -> c -> Node w a
+dfn = elementOf HH.dfn (keyedHtmlElement "dfn")
 
-dialog :: forall w a. Array (Attr I.HTMLdialog a) -> Markup w a -> Node w a
-dialog = HH.dialog
+dialog :: forall c w a. Content c w a => Array (Attr I.HTMLdialog a) -> c -> Node w a
+dialog = elementOf HH.dialog (keyedHtmlElement "dialog")
 
-dir :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-dir = HH.element (HH.ElemName "dir")
+dir :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+dir = elementOf (HH.element (HH.ElemName "dir")) (keyedHtmlElement "dir")
 
-div :: forall w a. Array (Attr I.HTMLdiv a) -> Markup w a -> Node w a
-div = HH.div
+div :: forall c w a. Content c w a => Array (Attr I.HTMLdiv a) -> c -> Node w a
+div = elementOf HH.div (keyedHtmlElement "div")
 
-dl :: forall w a. Array (Attr I.HTMLdl a) -> Markup w a -> Node w a
-dl = HH.dl
+dl :: forall c w a. Content c w a => Array (Attr I.HTMLdl a) -> c -> Node w a
+dl = elementOf HH.dl (keyedHtmlElement "dl")
 
-dt :: forall w a. Array (Attr I.HTMLdt a) -> Markup w a -> Node w a
-dt = HH.dt
+dt :: forall c w a. Content c w a => Array (Attr I.HTMLdt a) -> c -> Node w a
+dt = elementOf HH.dt (keyedHtmlElement "dt")
 
-elementEl :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-elementEl = HH.element (HH.ElemName "element")
+elementEl :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+elementEl = elementOf (HH.element (HH.ElemName "element")) (keyedHtmlElement "element")
 
-em :: forall w a. Array (Attr I.HTMLem a) -> Markup w a -> Node w a
-em = HH.em
+em :: forall c w a. Content c w a => Array (Attr I.HTMLem a) -> c -> Node w a
+em = elementOf HH.em (keyedHtmlElement "em")
 
-embed :: forall w a. Array (Attr I.HTMLembed a) -> Markup w a -> Node w a
-embed = HH.embed
+embed :: forall c w a. Content c w a => Array (Attr I.HTMLembed a) -> c -> Node w a
+embed = elementOf HH.embed (keyedHtmlElement "embed")
 
-fieldset :: forall w a. Array (Attr I.HTMLfieldset a) -> Markup w a -> Node w a
-fieldset = HH.fieldset
+fieldset :: forall c w a. Content c w a => Array (Attr I.HTMLfieldset a) -> c -> Node w a
+fieldset = elementOf HH.fieldset (keyedHtmlElement "fieldset")
 
-figcaption :: forall w a. Array (Attr I.HTMLfigcaption a) -> Markup w a -> Node w a
-figcaption = HH.figcaption
+figcaption :: forall c w a. Content c w a => Array (Attr I.HTMLfigcaption a) -> c -> Node w a
+figcaption = elementOf HH.figcaption (keyedHtmlElement "figcaption")
 
-figure :: forall w a. Array (Attr I.HTMLfigure a) -> Markup w a -> Node w a
-figure = HH.figure
+figure :: forall c w a. Content c w a => Array (Attr I.HTMLfigure a) -> c -> Node w a
+figure = elementOf HH.figure (keyedHtmlElement "figure")
 
-font :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-font = HH.element (HH.ElemName "font")
+font :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+font = elementOf (HH.element (HH.ElemName "font")) (keyedHtmlElement "font")
 
-footer :: forall w a. Array (Attr I.HTMLfooter a) -> Markup w a -> Node w a
-footer = HH.footer
+footer :: forall c w a. Content c w a => Array (Attr I.HTMLfooter a) -> c -> Node w a
+footer = elementOf HH.footer (keyedHtmlElement "footer")
 
-form :: forall w a. Array (Attr I.HTMLform a) -> Markup w a -> Node w a
-form = HH.form
+form :: forall c w a. Content c w a => Array (Attr I.HTMLform a) -> c -> Node w a
+form = elementOf HH.form (keyedHtmlElement "form")
 
-frame :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-frame = HH.element (HH.ElemName "frame")
+frame :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+frame = elementOf (HH.element (HH.ElemName "frame")) (keyedHtmlElement "frame")
 
-frameset :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-frameset = HH.element (HH.ElemName "frameset")
+frameset :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+frameset = elementOf (HH.element (HH.ElemName "frameset")) (keyedHtmlElement "frameset")
 
-h1 :: forall w a. Array (Attr I.HTMLh1 a) -> Markup w a -> Node w a
-h1 = HH.h1
+h1 :: forall c w a. Content c w a => Array (Attr I.HTMLh1 a) -> c -> Node w a
+h1 = elementOf HH.h1 (keyedHtmlElement "h1")
 
-h2 :: forall w a. Array (Attr I.HTMLh2 a) -> Markup w a -> Node w a
-h2 = HH.h2
+h2 :: forall c w a. Content c w a => Array (Attr I.HTMLh2 a) -> c -> Node w a
+h2 = elementOf HH.h2 (keyedHtmlElement "h2")
 
-h3 :: forall w a. Array (Attr I.HTMLh3 a) -> Markup w a -> Node w a
-h3 = HH.h3
+h3 :: forall c w a. Content c w a => Array (Attr I.HTMLh3 a) -> c -> Node w a
+h3 = elementOf HH.h3 (keyedHtmlElement "h3")
 
-h4 :: forall w a. Array (Attr I.HTMLh4 a) -> Markup w a -> Node w a
-h4 = HH.h4
+h4 :: forall c w a. Content c w a => Array (Attr I.HTMLh4 a) -> c -> Node w a
+h4 = elementOf HH.h4 (keyedHtmlElement "h4")
 
-h5 :: forall w a. Array (Attr I.HTMLh5 a) -> Markup w a -> Node w a
-h5 = HH.h5
+h5 :: forall c w a. Content c w a => Array (Attr I.HTMLh5 a) -> c -> Node w a
+h5 = elementOf HH.h5 (keyedHtmlElement "h5")
 
-h6 :: forall w a. Array (Attr I.HTMLh6 a) -> Markup w a -> Node w a
-h6 = HH.h6
+h6 :: forall c w a. Content c w a => Array (Attr I.HTMLh6 a) -> c -> Node w a
+h6 = elementOf HH.h6 (keyedHtmlElement "h6")
 
-head :: forall w a. Array (Attr I.HTMLhead a) -> Markup w a -> Node w a
-head = HH.head
+head :: forall c w a. Content c w a => Array (Attr I.HTMLhead a) -> c -> Node w a
+head = elementOf HH.head (keyedHtmlElement "head")
 
-header :: forall w a. Array (Attr I.HTMLheader a) -> Markup w a -> Node w a
-header = HH.header
+header :: forall c w a. Content c w a => Array (Attr I.HTMLheader a) -> c -> Node w a
+header = elementOf HH.header (keyedHtmlElement "header")
 
-hgroup :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-hgroup = HH.element (HH.ElemName "hgroup")
+hgroup :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+hgroup = elementOf (HH.element (HH.ElemName "hgroup")) (keyedHtmlElement "hgroup")
 
-hr :: forall w a. Array (Attr I.HTMLhr a) -> Markup w a -> Node w a
-hr = \props _ -> HH.hr props
+hr :: forall c w a. Content c w a => Array (Attr I.HTMLhr a) -> c -> Node w a
+hr = elementOf (\props _ -> HH.hr props) (\props _ -> HH.hr props)
 
-html :: forall w a. Array (Attr I.HTMLhtml a) -> Markup w a -> Node w a
-html = HH.html
+html :: forall c w a. Content c w a => Array (Attr I.HTMLhtml a) -> c -> Node w a
+html = elementOf HH.html (keyedHtmlElement "html")
 
-i :: forall w a. Array (Attr I.HTMLi a) -> Markup w a -> Node w a
-i = HH.i
+i :: forall c w a. Content c w a => Array (Attr I.HTMLi a) -> c -> Node w a
+i = elementOf HH.i (keyedHtmlElement "i")
 
-iframe :: forall w a. Array (Attr I.HTMLiframe a) -> Markup w a -> Node w a
-iframe = \props _ -> HH.iframe props
+iframe :: forall c w a. Content c w a => Array (Attr I.HTMLiframe a) -> c -> Node w a
+iframe = elementOf (\props _ -> HH.iframe props) (\props _ -> HH.iframe props)
 
-image :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-image = HH.element (HH.ElemName "image")
+image :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+image = elementOf (HH.element (HH.ElemName "image")) (keyedHtmlElement "image")
 
-img :: forall w a. Array (Attr I.HTMLimg a) -> Markup w a -> Node w a
-img = \props _ -> HH.img props
+img :: forall c w a. Content c w a => Array (Attr I.HTMLimg a) -> c -> Node w a
+img = elementOf (\props _ -> HH.img props) (\props _ -> HH.img props)
 
-input :: forall w a. Array (Attr I.HTMLinput a) -> Markup w a -> Node w a
-input = \props _ -> HH.input props
+input :: forall c w a. Content c w a => Array (Attr I.HTMLinput a) -> c -> Node w a
+input = elementOf (\props _ -> HH.input props) (\props _ -> HH.input props)
 
-ins :: forall w a. Array (Attr I.HTMLins a) -> Markup w a -> Node w a
-ins = HH.ins
+ins :: forall c w a. Content c w a => Array (Attr I.HTMLins a) -> c -> Node w a
+ins = elementOf HH.ins (keyedHtmlElement "ins")
 
-isindex :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-isindex = HH.element (HH.ElemName "isindex")
+isindex :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+isindex = elementOf (HH.element (HH.ElemName "isindex")) (keyedHtmlElement "isindex")
 
-kbd :: forall w a. Array (Attr I.HTMLkbd a) -> Markup w a -> Node w a
-kbd = HH.kbd
+kbd :: forall c w a. Content c w a => Array (Attr I.HTMLkbd a) -> c -> Node w a
+kbd = elementOf HH.kbd (keyedHtmlElement "kbd")
 
-keygen :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-keygen = HH.element (HH.ElemName "keygen")
+keygen :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+keygen = elementOf (HH.element (HH.ElemName "keygen")) (keyedHtmlElement "keygen")
 
-label :: forall w a. Array (Attr I.HTMLlabel a) -> Markup w a -> Node w a
-label = HH.label
+label :: forall c w a. Content c w a => Array (Attr I.HTMLlabel a) -> c -> Node w a
+label = elementOf HH.label (keyedHtmlElement "label")
 
-legend :: forall w a. Array (Attr I.HTMLlegend a) -> Markup w a -> Node w a
-legend = HH.legend
+legend :: forall c w a. Content c w a => Array (Attr I.HTMLlegend a) -> c -> Node w a
+legend = elementOf HH.legend (keyedHtmlElement "legend")
 
-li :: forall w a. Array (Attr I.HTMLli a) -> Markup w a -> Node w a
-li = HH.li
+li :: forall c w a. Content c w a => Array (Attr I.HTMLli a) -> c -> Node w a
+li = elementOf HH.li (keyedHtmlElement "li")
 
-link :: forall w a. Array (Attr I.HTMLlink a) -> Markup w a -> Node w a
-link = \props _ -> HH.link props
+link :: forall c w a. Content c w a => Array (Attr I.HTMLlink a) -> c -> Node w a
+link = elementOf (\props _ -> HH.link props) (\props _ -> HH.link props)
 
-listing :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-listing = HH.element (HH.ElemName "listing")
+listing :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+listing = elementOf (HH.element (HH.ElemName "listing")) (keyedHtmlElement "listing")
 
-main :: forall w a. Array (Attr I.HTMLmain a) -> Markup w a -> Node w a
-main = HH.main
+main :: forall c w a. Content c w a => Array (Attr I.HTMLmain a) -> c -> Node w a
+main = elementOf HH.main (keyedHtmlElement "main")
 
-map :: forall w a. Array (Attr I.HTMLmap a) -> Markup w a -> Node w a
-map = HH.map
+map :: forall c w a. Content c w a => Array (Attr I.HTMLmap a) -> c -> Node w a
+map = elementOf HH.map (keyedHtmlElement "map")
 
-mark :: forall w a. Array (Attr I.HTMLmark a) -> Markup w a -> Node w a
-mark = HH.mark
+mark :: forall c w a. Content c w a => Array (Attr I.HTMLmark a) -> c -> Node w a
+mark = elementOf HH.mark (keyedHtmlElement "mark")
 
-marquee :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-marquee = HH.element (HH.ElemName "marquee")
+marquee :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+marquee = elementOf (HH.element (HH.ElemName "marquee")) (keyedHtmlElement "marquee")
 
-math :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-math = HH.element (HH.ElemName "math")
+math :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+math = elementOf (HH.element (HH.ElemName "math")) (keyedHtmlElement "math")
 
-menu :: forall w a. Array (Attr I.HTMLmenu a) -> Markup w a -> Node w a
-menu = HH.menu
+menu :: forall c w a. Content c w a => Array (Attr I.HTMLmenu a) -> c -> Node w a
+menu = elementOf HH.menu (keyedHtmlElement "menu")
 
-menuitem :: forall w a. Array (Attr I.HTMLmenuitem a) -> Markup w a -> Node w a
-menuitem = HH.menuitem
+menuitem :: forall c w a. Content c w a => Array (Attr I.HTMLmenuitem a) -> c -> Node w a
+menuitem = elementOf HH.menuitem (keyedHtmlElement "menuitem")
 
-meta :: forall w a. Array (Attr I.HTMLmeta a) -> Markup w a -> Node w a
-meta = \props _ -> HH.meta props
+meta :: forall c w a. Content c w a => Array (Attr I.HTMLmeta a) -> c -> Node w a
+meta = elementOf (\props _ -> HH.meta props) (\props _ -> HH.meta props)
 
-meter :: forall w a. Array (Attr I.HTMLmeter a) -> Markup w a -> Node w a
-meter = HH.meter
+meter :: forall c w a. Content c w a => Array (Attr I.HTMLmeter a) -> c -> Node w a
+meter = elementOf HH.meter (keyedHtmlElement "meter")
 
-multicol :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-multicol = HH.element (HH.ElemName "multicol")
+multicol :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+multicol = elementOf (HH.element (HH.ElemName "multicol")) (keyedHtmlElement "multicol")
 
-nav :: forall w a. Array (Attr I.HTMLnav a) -> Markup w a -> Node w a
-nav = HH.nav
+nav :: forall c w a. Content c w a => Array (Attr I.HTMLnav a) -> c -> Node w a
+nav = elementOf HH.nav (keyedHtmlElement "nav")
 
-nextid :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-nextid = HH.element (HH.ElemName "nextid")
+nextid :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+nextid = elementOf (HH.element (HH.ElemName "nextid")) (keyedHtmlElement "nextid")
 
-nobr :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-nobr = HH.element (HH.ElemName "nobr")
+nobr :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+nobr = elementOf (HH.element (HH.ElemName "nobr")) (keyedHtmlElement "nobr")
 
-noembed :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-noembed = HH.element (HH.ElemName "noembed")
+noembed :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+noembed = elementOf (HH.element (HH.ElemName "noembed")) (keyedHtmlElement "noembed")
 
-noframes :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-noframes = HH.element (HH.ElemName "noframes")
+noframes :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+noframes = elementOf (HH.element (HH.ElemName "noframes")) (keyedHtmlElement "noframes")
 
-noscript :: forall w a. Array (Attr I.HTMLnoscript a) -> Markup w a -> Node w a
-noscript = HH.noscript
+noscript :: forall c w a. Content c w a => Array (Attr I.HTMLnoscript a) -> c -> Node w a
+noscript = elementOf HH.noscript (keyedHtmlElement "noscript")
 
-object :: forall w a. Array (Attr I.HTMLobject a) -> Markup w a -> Node w a
-object = HH.object
+object :: forall c w a. Content c w a => Array (Attr I.HTMLobject a) -> c -> Node w a
+object = elementOf HH.object (keyedHtmlElement "object")
 
-ol :: forall w a. Array (Attr I.HTMLol a) -> Markup w a -> Node w a
-ol = HH.ol
+ol :: forall c w a. Content c w a => Array (Attr I.HTMLol a) -> c -> Node w a
+ol = elementOf HH.ol (keyedHtmlElement "ol")
 
-optgroup :: forall w a. Array (Attr I.HTMLoptgroup a) -> Markup w a -> Node w a
-optgroup = HH.optgroup
+optgroup :: forall c w a. Content c w a => Array (Attr I.HTMLoptgroup a) -> c -> Node w a
+optgroup = elementOf HH.optgroup (keyedHtmlElement "optgroup")
 
-option :: forall w a. Array (Attr I.HTMLoption a) -> Markup w a -> Node w a
-option = HH.option
+option :: forall c w a. Content c w a => Array (Attr I.HTMLoption a) -> c -> Node w a
+option = elementOf HH.option (keyedHtmlElement "option")
 
-output :: forall w a. Array (Attr I.HTMLoutput a) -> Markup w a -> Node w a
-output = HH.output
+output :: forall c w a. Content c w a => Array (Attr I.HTMLoutput a) -> c -> Node w a
+output = elementOf HH.output (keyedHtmlElement "output")
 
-p :: forall w a. Array (Attr I.HTMLp a) -> Markup w a -> Node w a
-p = HH.p
+p :: forall c w a. Content c w a => Array (Attr I.HTMLp a) -> c -> Node w a
+p = elementOf HH.p (keyedHtmlElement "p")
 
-param :: forall w a. Array (Attr I.HTMLparam a) -> Markup w a -> Node w a
-param = \props _ -> HH.param props
+param :: forall c w a. Content c w a => Array (Attr I.HTMLparam a) -> c -> Node w a
+param = elementOf (\props _ -> HH.param props) (\props _ -> HH.param props)
 
-picture :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-picture = HH.element (HH.ElemName "picture")
+picture :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+picture = elementOf (HH.element (HH.ElemName "picture")) (keyedHtmlElement "picture")
 
-plaintext :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-plaintext = HH.element (HH.ElemName "plaintext")
+plaintext :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+plaintext = elementOf (HH.element (HH.ElemName "plaintext")) (keyedHtmlElement "plaintext")
 
-pre :: forall w a. Array (Attr I.HTMLpre a) -> Markup w a -> Node w a
-pre = HH.pre
+pre :: forall c w a. Content c w a => Array (Attr I.HTMLpre a) -> c -> Node w a
+pre = elementOf HH.pre (keyedHtmlElement "pre")
 
-progress :: forall w a. Array (Attr I.HTMLprogress a) -> Markup w a -> Node w a
-progress = HH.progress
+progress :: forall c w a. Content c w a => Array (Attr I.HTMLprogress a) -> c -> Node w a
+progress = elementOf HH.progress (keyedHtmlElement "progress")
 
-q :: forall w a. Array (Attr I.HTMLq a) -> Markup w a -> Node w a
-q = HH.q
+q :: forall c w a. Content c w a => Array (Attr I.HTMLq a) -> c -> Node w a
+q = elementOf HH.q (keyedHtmlElement "q")
 
-rb :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-rb = HH.element (HH.ElemName "rb")
+rb :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+rb = elementOf (HH.element (HH.ElemName "rb")) (keyedHtmlElement "rb")
 
-rbc :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-rbc = HH.element (HH.ElemName "rbc")
+rbc :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+rbc = elementOf (HH.element (HH.ElemName "rbc")) (keyedHtmlElement "rbc")
 
-rp :: forall w a. Array (Attr I.HTMLrp a) -> Markup w a -> Node w a
-rp = HH.rp
+rp :: forall c w a. Content c w a => Array (Attr I.HTMLrp a) -> c -> Node w a
+rp = elementOf HH.rp (keyedHtmlElement "rp")
 
-rt :: forall w a. Array (Attr I.HTMLrt a) -> Markup w a -> Node w a
-rt = HH.rt
+rt :: forall c w a. Content c w a => Array (Attr I.HTMLrt a) -> c -> Node w a
+rt = elementOf HH.rt (keyedHtmlElement "rt")
 
-rtc :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-rtc = HH.element (HH.ElemName "rtc")
+rtc :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+rtc = elementOf (HH.element (HH.ElemName "rtc")) (keyedHtmlElement "rtc")
 
-ruby :: forall w a. Array (Attr I.HTMLruby a) -> Markup w a -> Node w a
-ruby = HH.ruby
+ruby :: forall c w a. Content c w a => Array (Attr I.HTMLruby a) -> c -> Node w a
+ruby = elementOf HH.ruby (keyedHtmlElement "ruby")
 
-s :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-s = HH.element (HH.ElemName "s")
+s :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+s = elementOf (HH.element (HH.ElemName "s")) (keyedHtmlElement "s")
 
-samp :: forall w a. Array (Attr I.HTMLsamp a) -> Markup w a -> Node w a
-samp = HH.samp
+samp :: forall c w a. Content c w a => Array (Attr I.HTMLsamp a) -> c -> Node w a
+samp = elementOf HH.samp (keyedHtmlElement "samp")
 
-script :: forall w a. Array (Attr I.HTMLscript a) -> Markup w a -> Node w a
-script = HH.script
+script :: forall c w a. Content c w a => Array (Attr I.HTMLscript a) -> c -> Node w a
+script = elementOf HH.script (keyedHtmlElement "script")
 
-search :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-search = HH.element (HH.ElemName "search")
+search :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+search = elementOf (HH.element (HH.ElemName "search")) (keyedHtmlElement "search")
 
-section :: forall w a. Array (Attr I.HTMLsection a) -> Markup w a -> Node w a
-section = HH.section
+section :: forall c w a. Content c w a => Array (Attr I.HTMLsection a) -> c -> Node w a
+section = elementOf HH.section (keyedHtmlElement "section")
 
-select :: forall w a. Array (Attr I.HTMLselect a) -> Markup w a -> Node w a
-select = HH.select
+select :: forall c w a. Content c w a => Array (Attr I.HTMLselect a) -> c -> Node w a
+select = elementOf HH.select (keyedHtmlElement "select")
 
-shadow :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-shadow = HH.element (HH.ElemName "shadow")
+shadow :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+shadow = elementOf (HH.element (HH.ElemName "shadow")) (keyedHtmlElement "shadow")
 
-slot :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-slot = HH.element (HH.ElemName "slot")
+slot :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+slot = elementOf (HH.element (HH.ElemName "slot")) (keyedHtmlElement "slot")
 
-small :: forall w a. Array (Attr I.HTMLsmall a) -> Markup w a -> Node w a
-small = HH.small
+small :: forall c w a. Content c w a => Array (Attr I.HTMLsmall a) -> c -> Node w a
+small = elementOf HH.small (keyedHtmlElement "small")
 
-source :: forall w a. Array (Attr I.HTMLsource a) -> Markup w a -> Node w a
-source = \props _ -> HH.source props
+source :: forall c w a. Content c w a => Array (Attr I.HTMLsource a) -> c -> Node w a
+source = elementOf (\props _ -> HH.source props) (\props _ -> HH.source props)
 
-spacer :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-spacer = HH.element (HH.ElemName "spacer")
+spacer :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+spacer = elementOf (HH.element (HH.ElemName "spacer")) (keyedHtmlElement "spacer")
 
-span :: forall w a. Array (Attr I.HTMLspan a) -> Markup w a -> Node w a
-span = HH.span
+span :: forall c w a. Content c w a => Array (Attr I.HTMLspan a) -> c -> Node w a
+span = elementOf HH.span (keyedHtmlElement "span")
 
-strike :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-strike = HH.element (HH.ElemName "strike")
+strike :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+strike = elementOf (HH.element (HH.ElemName "strike")) (keyedHtmlElement "strike")
 
-strong :: forall w a. Array (Attr I.HTMLstrong a) -> Markup w a -> Node w a
-strong = HH.strong
+strong :: forall c w a. Content c w a => Array (Attr I.HTMLstrong a) -> c -> Node w a
+strong = elementOf HH.strong (keyedHtmlElement "strong")
 
-style :: forall w a. Array (Attr I.HTMLstyle a) -> Markup w a -> Node w a
-style = HH.style
+style :: forall c w a. Content c w a => Array (Attr I.HTMLstyle a) -> c -> Node w a
+style = elementOf HH.style (keyedHtmlElement "style")
 
-sub :: forall w a. Array (Attr I.HTMLsub a) -> Markup w a -> Node w a
-sub = HH.sub
+sub :: forall c w a. Content c w a => Array (Attr I.HTMLsub a) -> c -> Node w a
+sub = elementOf HH.sub (keyedHtmlElement "sub")
 
-summary :: forall w a. Array (Attr I.HTMLsummary a) -> Markup w a -> Node w a
-summary = HH.summary
+summary :: forall c w a. Content c w a => Array (Attr I.HTMLsummary a) -> c -> Node w a
+summary = elementOf HH.summary (keyedHtmlElement "summary")
 
-sup :: forall w a. Array (Attr I.HTMLsup a) -> Markup w a -> Node w a
-sup = HH.sup
+sup :: forall c w a. Content c w a => Array (Attr I.HTMLsup a) -> c -> Node w a
+sup = elementOf HH.sup (keyedHtmlElement "sup")
 
-svg :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-svg = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "svg")
+svg :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+svg = elementOf (HH.elementNS svgNamespace (HH.ElemName "svg")) (keyedSvgElement "svg")
 
-table :: forall w a. Array (Attr I.HTMLtable a) -> Markup w a -> Node w a
-table = HH.table
+table :: forall c w a. Content c w a => Array (Attr I.HTMLtable a) -> c -> Node w a
+table = elementOf HH.table (keyedHtmlElement "table")
 
-tbody :: forall w a. Array (Attr I.HTMLtbody a) -> Markup w a -> Node w a
-tbody = HH.tbody
+tbody :: forall c w a. Content c w a => Array (Attr I.HTMLtbody a) -> c -> Node w a
+tbody = elementOf HH.tbody (keyedHtmlElement "tbody")
 
-td :: forall w a. Array (Attr I.HTMLtd a) -> Markup w a -> Node w a
-td = HH.td
+td :: forall c w a. Content c w a => Array (Attr I.HTMLtd a) -> c -> Node w a
+td = elementOf HH.td (keyedHtmlElement "td")
 
-template :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-template = HH.element (HH.ElemName "template")
+template :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+template = elementOf (HH.element (HH.ElemName "template")) (keyedHtmlElement "template")
 
-textarea :: forall w a. Array (Attr I.HTMLtextarea a) -> Markup w a -> Node w a
-textarea = \props _ -> HH.textarea props
+textarea :: forall c w a. Content c w a => Array (Attr I.HTMLtextarea a) -> c -> Node w a
+textarea = elementOf (\props _ -> HH.textarea props) (\props _ -> HH.textarea props)
 
-tfoot :: forall w a. Array (Attr I.HTMLtfoot a) -> Markup w a -> Node w a
-tfoot = HH.tfoot
+tfoot :: forall c w a. Content c w a => Array (Attr I.HTMLtfoot a) -> c -> Node w a
+tfoot = elementOf HH.tfoot (keyedHtmlElement "tfoot")
 
-th :: forall w a. Array (Attr I.HTMLth a) -> Markup w a -> Node w a
-th = HH.th
+th :: forall c w a. Content c w a => Array (Attr I.HTMLth a) -> c -> Node w a
+th = elementOf HH.th (keyedHtmlElement "th")
 
-thead :: forall w a. Array (Attr I.HTMLthead a) -> Markup w a -> Node w a
-thead = HH.thead
+thead :: forall c w a. Content c w a => Array (Attr I.HTMLthead a) -> c -> Node w a
+thead = elementOf HH.thead (keyedHtmlElement "thead")
 
-time :: forall w a. Array (Attr I.HTMLtime a) -> Markup w a -> Node w a
-time = HH.time
+time :: forall c w a. Content c w a => Array (Attr I.HTMLtime a) -> c -> Node w a
+time = elementOf HH.time (keyedHtmlElement "time")
 
-title :: forall w a. Array (Attr I.HTMLtitle a) -> Markup w a -> Node w a
-title = HH.title
+title :: forall c w a. Content c w a => Array (Attr I.HTMLtitle a) -> c -> Node w a
+title = elementOf HH.title (keyedHtmlElement "title")
 
-tr :: forall w a. Array (Attr I.HTMLtr a) -> Markup w a -> Node w a
-tr = HH.tr
+tr :: forall c w a. Content c w a => Array (Attr I.HTMLtr a) -> c -> Node w a
+tr = elementOf HH.tr (keyedHtmlElement "tr")
 
-track :: forall w a. Array (Attr I.HTMLtrack a) -> Markup w a -> Node w a
-track = \props _ -> HH.track props
+track :: forall c w a. Content c w a => Array (Attr I.HTMLtrack a) -> c -> Node w a
+track = elementOf (\props _ -> HH.track props) (\props _ -> HH.track props)
 
-tt :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-tt = HH.element (HH.ElemName "tt")
+tt :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+tt = elementOf (HH.element (HH.ElemName "tt")) (keyedHtmlElement "tt")
 
-u :: forall w a. Array (Attr I.HTMLu a) -> Markup w a -> Node w a
-u = HH.u
+u :: forall c w a. Content c w a => Array (Attr I.HTMLu a) -> c -> Node w a
+u = elementOf HH.u (keyedHtmlElement "u")
 
-ul :: forall w a. Array (Attr I.HTMLul a) -> Markup w a -> Node w a
-ul = HH.ul
+ul :: forall c w a. Content c w a => Array (Attr I.HTMLul a) -> c -> Node w a
+ul = elementOf HH.ul (keyedHtmlElement "ul")
 
-var :: forall w a. Array (Attr I.HTMLvar a) -> Markup w a -> Node w a
-var = HH.var
+var :: forall c w a. Content c w a => Array (Attr I.HTMLvar a) -> c -> Node w a
+var = elementOf HH.var (keyedHtmlElement "var")
 
-video :: forall w a. Array (Attr I.HTMLvideo a) -> Markup w a -> Node w a
-video = HH.video
+video :: forall c w a. Content c w a => Array (Attr I.HTMLvideo a) -> c -> Node w a
+video = elementOf HH.video (keyedHtmlElement "video")
 
-wbr :: forall w a. Array (Attr I.HTMLwbr a) -> Markup w a -> Node w a
-wbr = \props _ -> HH.wbr props
+wbr :: forall c w a. Content c w a => Array (Attr I.HTMLwbr a) -> c -> Node w a
+wbr = elementOf (\props _ -> HH.wbr props) (\props _ -> HH.wbr props)
 
-xmp :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-xmp = HH.element (HH.ElemName "xmp")
+xmp :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+xmp = elementOf (HH.element (HH.ElemName "xmp")) (keyedHtmlElement "xmp")
 
-altGlyph :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-altGlyph = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "altGlyph")
+altGlyph :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+altGlyph = elementOf (HH.elementNS svgNamespace (HH.ElemName "altGlyph")) (keyedSvgElement "altGlyph")
 
-altGlyphDef :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-altGlyphDef = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "altGlyphDef")
+altGlyphDef :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+altGlyphDef = elementOf (HH.elementNS svgNamespace (HH.ElemName "altGlyphDef")) (keyedSvgElement "altGlyphDef")
 
-altGlyphItem :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-altGlyphItem = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "altGlyphItem")
+altGlyphItem :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+altGlyphItem = elementOf (HH.elementNS svgNamespace (HH.ElemName "altGlyphItem")) (keyedSvgElement "altGlyphItem")
 
-animate :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-animate = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "animate")
+animate :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+animate = elementOf (HH.elementNS svgNamespace (HH.ElemName "animate")) (keyedSvgElement "animate")
 
-animateColor :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-animateColor = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "animateColor")
+animateColor :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+animateColor = elementOf (HH.elementNS svgNamespace (HH.ElemName "animateColor")) (keyedSvgElement "animateColor")
 
-animateMotion :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-animateMotion = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "animateMotion")
+animateMotion :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+animateMotion = elementOf (HH.elementNS svgNamespace (HH.ElemName "animateMotion")) (keyedSvgElement "animateMotion")
 
-animateTransform :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-animateTransform = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "animateTransform")
+animateTransform :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+animateTransform = elementOf (HH.elementNS svgNamespace (HH.ElemName "animateTransform")) (keyedSvgElement "animateTransform")
 
-animation :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-animation = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "animation")
+animation :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+animation = elementOf (HH.elementNS svgNamespace (HH.ElemName "animation")) (keyedSvgElement "animation")
 
-circle :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-circle = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "circle")
+circle :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+circle = elementOf (HH.elementNS svgNamespace (HH.ElemName "circle")) (keyedSvgElement "circle")
 
-clipPath :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-clipPath = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "clipPath")
+clipPath :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+clipPath = elementOf (HH.elementNS svgNamespace (HH.ElemName "clipPath")) (keyedSvgElement "clipPath")
 
-colorProfile :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-colorProfile = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "color-profile")
+colorProfile :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+colorProfile = elementOf (HH.elementNS svgNamespace (HH.ElemName "color-profile")) (keyedSvgElement "color-profile")
 
-cursor :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-cursor = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "cursor")
+cursor :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+cursor = elementOf (HH.elementNS svgNamespace (HH.ElemName "cursor")) (keyedSvgElement "cursor")
 
-defs :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-defs = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "defs")
+defs :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+defs = elementOf (HH.elementNS svgNamespace (HH.ElemName "defs")) (keyedSvgElement "defs")
 
-desc :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-desc = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "desc")
+desc :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+desc = elementOf (HH.elementNS svgNamespace (HH.ElemName "desc")) (keyedSvgElement "desc")
 
-discard :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-discard = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "discard")
+discard :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+discard = elementOf (HH.elementNS svgNamespace (HH.ElemName "discard")) (keyedSvgElement "discard")
 
-ellipse :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-ellipse = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "ellipse")
+ellipse :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+ellipse = elementOf (HH.elementNS svgNamespace (HH.ElemName "ellipse")) (keyedSvgElement "ellipse")
 
-feBlend :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feBlend = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feBlend")
+feBlend :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feBlend = elementOf (HH.elementNS svgNamespace (HH.ElemName "feBlend")) (keyedSvgElement "feBlend")
 
-feColorMatrix :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feColorMatrix = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feColorMatrix")
+feColorMatrix :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feColorMatrix = elementOf (HH.elementNS svgNamespace (HH.ElemName "feColorMatrix")) (keyedSvgElement "feColorMatrix")
 
-feComponentTransfer :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feComponentTransfer = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feComponentTransfer")
+feComponentTransfer :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feComponentTransfer = elementOf (HH.elementNS svgNamespace (HH.ElemName "feComponentTransfer")) (keyedSvgElement "feComponentTransfer")
 
-feComposite :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feComposite = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feComposite")
+feComposite :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feComposite = elementOf (HH.elementNS svgNamespace (HH.ElemName "feComposite")) (keyedSvgElement "feComposite")
 
-feConvolveMatrix :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feConvolveMatrix = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feConvolveMatrix")
+feConvolveMatrix :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feConvolveMatrix = elementOf (HH.elementNS svgNamespace (HH.ElemName "feConvolveMatrix")) (keyedSvgElement "feConvolveMatrix")
 
-feDiffuseLighting :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feDiffuseLighting = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feDiffuseLighting")
+feDiffuseLighting :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feDiffuseLighting = elementOf (HH.elementNS svgNamespace (HH.ElemName "feDiffuseLighting")) (keyedSvgElement "feDiffuseLighting")
 
-feDisplacementMap :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feDisplacementMap = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feDisplacementMap")
+feDisplacementMap :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feDisplacementMap = elementOf (HH.elementNS svgNamespace (HH.ElemName "feDisplacementMap")) (keyedSvgElement "feDisplacementMap")
 
-feDistantLight :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feDistantLight = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feDistantLight")
+feDistantLight :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feDistantLight = elementOf (HH.elementNS svgNamespace (HH.ElemName "feDistantLight")) (keyedSvgElement "feDistantLight")
 
-feDropShadow :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feDropShadow = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feDropShadow")
+feDropShadow :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feDropShadow = elementOf (HH.elementNS svgNamespace (HH.ElemName "feDropShadow")) (keyedSvgElement "feDropShadow")
 
-feFlood :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feFlood = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feFlood")
+feFlood :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feFlood = elementOf (HH.elementNS svgNamespace (HH.ElemName "feFlood")) (keyedSvgElement "feFlood")
 
-feFuncA :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feFuncA = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feFuncA")
+feFuncA :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feFuncA = elementOf (HH.elementNS svgNamespace (HH.ElemName "feFuncA")) (keyedSvgElement "feFuncA")
 
-feFuncB :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feFuncB = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feFuncB")
+feFuncB :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feFuncB = elementOf (HH.elementNS svgNamespace (HH.ElemName "feFuncB")) (keyedSvgElement "feFuncB")
 
-feFuncG :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feFuncG = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feFuncG")
+feFuncG :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feFuncG = elementOf (HH.elementNS svgNamespace (HH.ElemName "feFuncG")) (keyedSvgElement "feFuncG")
 
-feFuncR :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feFuncR = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feFuncR")
+feFuncR :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feFuncR = elementOf (HH.elementNS svgNamespace (HH.ElemName "feFuncR")) (keyedSvgElement "feFuncR")
 
-feGaussianBlur :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feGaussianBlur = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feGaussianBlur")
+feGaussianBlur :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feGaussianBlur = elementOf (HH.elementNS svgNamespace (HH.ElemName "feGaussianBlur")) (keyedSvgElement "feGaussianBlur")
 
-feImage :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feImage = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feImage")
+feImage :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feImage = elementOf (HH.elementNS svgNamespace (HH.ElemName "feImage")) (keyedSvgElement "feImage")
 
-feMerge :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feMerge = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feMerge")
+feMerge :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feMerge = elementOf (HH.elementNS svgNamespace (HH.ElemName "feMerge")) (keyedSvgElement "feMerge")
 
-feMergeNode :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feMergeNode = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feMergeNode")
+feMergeNode :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feMergeNode = elementOf (HH.elementNS svgNamespace (HH.ElemName "feMergeNode")) (keyedSvgElement "feMergeNode")
 
-feMorphology :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feMorphology = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feMorphology")
+feMorphology :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feMorphology = elementOf (HH.elementNS svgNamespace (HH.ElemName "feMorphology")) (keyedSvgElement "feMorphology")
 
-feOffset :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feOffset = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feOffset")
+feOffset :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feOffset = elementOf (HH.elementNS svgNamespace (HH.ElemName "feOffset")) (keyedSvgElement "feOffset")
 
-fePointLight :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-fePointLight = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "fePointLight")
+fePointLight :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+fePointLight = elementOf (HH.elementNS svgNamespace (HH.ElemName "fePointLight")) (keyedSvgElement "fePointLight")
 
-feSpecularLighting :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feSpecularLighting = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feSpecularLighting")
+feSpecularLighting :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feSpecularLighting = elementOf (HH.elementNS svgNamespace (HH.ElemName "feSpecularLighting")) (keyedSvgElement "feSpecularLighting")
 
-feSpotLight :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feSpotLight = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feSpotLight")
+feSpotLight :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feSpotLight = elementOf (HH.elementNS svgNamespace (HH.ElemName "feSpotLight")) (keyedSvgElement "feSpotLight")
 
-feTile :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feTile = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feTile")
+feTile :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feTile = elementOf (HH.elementNS svgNamespace (HH.ElemName "feTile")) (keyedSvgElement "feTile")
 
-feTurbulence :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-feTurbulence = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "feTurbulence")
+feTurbulence :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+feTurbulence = elementOf (HH.elementNS svgNamespace (HH.ElemName "feTurbulence")) (keyedSvgElement "feTurbulence")
 
-filter :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-filter = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "filter")
+filter :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+filter = elementOf (HH.elementNS svgNamespace (HH.ElemName "filter")) (keyedSvgElement "filter")
 
-fontFace :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-fontFace = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "font-face")
+fontFace :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+fontFace = elementOf (HH.elementNS svgNamespace (HH.ElemName "font-face")) (keyedSvgElement "font-face")
 
-fontFaceFormat :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-fontFaceFormat = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "font-face-format")
+fontFaceFormat :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+fontFaceFormat = elementOf (HH.elementNS svgNamespace (HH.ElemName "font-face-format")) (keyedSvgElement "font-face-format")
 
-fontFaceName :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-fontFaceName = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "font-face-name")
+fontFaceName :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+fontFaceName = elementOf (HH.elementNS svgNamespace (HH.ElemName "font-face-name")) (keyedSvgElement "font-face-name")
 
-fontFaceSrc :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-fontFaceSrc = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "font-face-src")
+fontFaceSrc :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+fontFaceSrc = elementOf (HH.elementNS svgNamespace (HH.ElemName "font-face-src")) (keyedSvgElement "font-face-src")
 
-fontFaceUri :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-fontFaceUri = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "font-face-uri")
+fontFaceUri :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+fontFaceUri = elementOf (HH.elementNS svgNamespace (HH.ElemName "font-face-uri")) (keyedSvgElement "font-face-uri")
 
-foreignObject :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-foreignObject = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "foreignObject")
+foreignObject :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+foreignObject = elementOf (HH.elementNS svgNamespace (HH.ElemName "foreignObject")) (keyedSvgElement "foreignObject")
 
-g :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-g = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "g")
+g :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+g = elementOf (HH.elementNS svgNamespace (HH.ElemName "g")) (keyedSvgElement "g")
 
-glyph :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-glyph = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "glyph")
+glyph :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+glyph = elementOf (HH.elementNS svgNamespace (HH.ElemName "glyph")) (keyedSvgElement "glyph")
 
-glyphRef :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-glyphRef = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "glyphRef")
+glyphRef :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+glyphRef = elementOf (HH.elementNS svgNamespace (HH.ElemName "glyphRef")) (keyedSvgElement "glyphRef")
 
-handler :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-handler = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "handler")
+handler :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+handler = elementOf (HH.elementNS svgNamespace (HH.ElemName "handler")) (keyedSvgElement "handler")
 
-hkern :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-hkern = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "hkern")
+hkern :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+hkern = elementOf (HH.elementNS svgNamespace (HH.ElemName "hkern")) (keyedSvgElement "hkern")
 
-line :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-line = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "line")
+line :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+line = elementOf (HH.elementNS svgNamespace (HH.ElemName "line")) (keyedSvgElement "line")
 
-linearGradient :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-linearGradient = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "linearGradient")
+linearGradient :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+linearGradient = elementOf (HH.elementNS svgNamespace (HH.ElemName "linearGradient")) (keyedSvgElement "linearGradient")
 
-listener :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-listener = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "listener")
+listener :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+listener = elementOf (HH.elementNS svgNamespace (HH.ElemName "listener")) (keyedSvgElement "listener")
 
-marker :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-marker = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "marker")
+marker :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+marker = elementOf (HH.elementNS svgNamespace (HH.ElemName "marker")) (keyedSvgElement "marker")
 
-mask :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-mask = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "mask")
+mask :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+mask = elementOf (HH.elementNS svgNamespace (HH.ElemName "mask")) (keyedSvgElement "mask")
 
-metadata :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-metadata = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "metadata")
+metadata :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+metadata = elementOf (HH.elementNS svgNamespace (HH.ElemName "metadata")) (keyedSvgElement "metadata")
 
-missingGlyph :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-missingGlyph = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "missing-glyph")
+missingGlyph :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+missingGlyph = elementOf (HH.elementNS svgNamespace (HH.ElemName "missing-glyph")) (keyedSvgElement "missing-glyph")
 
-mpath :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-mpath = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "mpath")
+mpath :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+mpath = elementOf (HH.elementNS svgNamespace (HH.ElemName "mpath")) (keyedSvgElement "mpath")
 
-path :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-path = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "path")
+path :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+path = elementOf (HH.elementNS svgNamespace (HH.ElemName "path")) (keyedSvgElement "path")
 
-pattern :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-pattern = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "pattern")
+pattern :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+pattern = elementOf (HH.elementNS svgNamespace (HH.ElemName "pattern")) (keyedSvgElement "pattern")
 
-polygon :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-polygon = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "polygon")
+polygon :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+polygon = elementOf (HH.elementNS svgNamespace (HH.ElemName "polygon")) (keyedSvgElement "polygon")
 
-polyline :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-polyline = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "polyline")
+polyline :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+polyline = elementOf (HH.elementNS svgNamespace (HH.ElemName "polyline")) (keyedSvgElement "polyline")
 
-prefetch :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-prefetch = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "prefetch")
+prefetch :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+prefetch = elementOf (HH.elementNS svgNamespace (HH.ElemName "prefetch")) (keyedSvgElement "prefetch")
 
-radialGradient :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-radialGradient = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "radialGradient")
+radialGradient :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+radialGradient = elementOf (HH.elementNS svgNamespace (HH.ElemName "radialGradient")) (keyedSvgElement "radialGradient")
 
-rect :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-rect = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "rect")
+rect :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+rect = elementOf (HH.elementNS svgNamespace (HH.ElemName "rect")) (keyedSvgElement "rect")
 
-set :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-set = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "set")
+set :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+set = elementOf (HH.elementNS svgNamespace (HH.ElemName "set")) (keyedSvgElement "set")
 
-solidColor :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-solidColor = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "solidColor")
+solidColor :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+solidColor = elementOf (HH.elementNS svgNamespace (HH.ElemName "solidColor")) (keyedSvgElement "solidColor")
 
-stop :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-stop = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "stop")
+stop :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+stop = elementOf (HH.elementNS svgNamespace (HH.ElemName "stop")) (keyedSvgElement "stop")
 
-switch :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-switch = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "switch")
+switch :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+switch = elementOf (HH.elementNS svgNamespace (HH.ElemName "switch")) (keyedSvgElement "switch")
 
-symbol :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-symbol = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "symbol")
+symbol :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+symbol = elementOf (HH.elementNS svgNamespace (HH.ElemName "symbol")) (keyedSvgElement "symbol")
 
-tbreak :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-tbreak = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "tbreak")
+tbreak :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+tbreak = elementOf (HH.elementNS svgNamespace (HH.ElemName "tbreak")) (keyedSvgElement "tbreak")
 
-textEl :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-textEl = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "text")
+textEl :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+textEl = elementOf (HH.elementNS svgNamespace (HH.ElemName "text")) (keyedSvgElement "text")
 
-textArea :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-textArea = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "textArea")
+textArea :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+textArea = elementOf (HH.elementNS svgNamespace (HH.ElemName "textArea")) (keyedSvgElement "textArea")
 
-textPath :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-textPath = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "textPath")
+textPath :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+textPath = elementOf (HH.elementNS svgNamespace (HH.ElemName "textPath")) (keyedSvgElement "textPath")
 
-tref :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-tref = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "tref")
+tref :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+tref = elementOf (HH.elementNS svgNamespace (HH.ElemName "tref")) (keyedSvgElement "tref")
 
-tspan :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-tspan = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "tspan")
+tspan :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+tspan = elementOf (HH.elementNS svgNamespace (HH.ElemName "tspan")) (keyedSvgElement "tspan")
 
-unknown :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-unknown = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "unknown")
+unknown :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+unknown = elementOf (HH.elementNS svgNamespace (HH.ElemName "unknown")) (keyedSvgElement "unknown")
 
-use :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-use = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "use")
+use :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+use = elementOf (HH.elementNS svgNamespace (HH.ElemName "use")) (keyedSvgElement "use")
 
-view :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-view = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "view")
+view :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+view = elementOf (HH.elementNS svgNamespace (HH.ElemName "view")) (keyedSvgElement "view")
 
-vkern :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-vkern = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "vkern")
-
--- | The elements created in SVG's namespace.
-svgElements :: Array String
-svgElements =
-  [ "svg"
-  , "altGlyph"
-  , "altGlyphDef"
-  , "altGlyphItem"
-  , "animate"
-  , "animateColor"
-  , "animateMotion"
-  , "animateTransform"
-  , "animation"
-  , "circle"
-  , "clipPath"
-  , "color-profile"
-  , "cursor"
-  , "defs"
-  , "desc"
-  , "discard"
-  , "ellipse"
-  , "feBlend"
-  , "feColorMatrix"
-  , "feComponentTransfer"
-  , "feComposite"
-  , "feConvolveMatrix"
-  , "feDiffuseLighting"
-  , "feDisplacementMap"
-  , "feDistantLight"
-  , "feDropShadow"
-  , "feFlood"
-  , "feFuncA"
-  , "feFuncB"
-  , "feFuncG"
-  , "feFuncR"
-  , "feGaussianBlur"
-  , "feImage"
-  , "feMerge"
-  , "feMergeNode"
-  , "feMorphology"
-  , "feOffset"
-  , "fePointLight"
-  , "feSpecularLighting"
-  , "feSpotLight"
-  , "feTile"
-  , "feTurbulence"
-  , "filter"
-  , "font-face"
-  , "font-face-format"
-  , "font-face-name"
-  , "font-face-src"
-  , "font-face-uri"
-  , "foreignObject"
-  , "g"
-  , "glyph"
-  , "glyphRef"
-  , "handler"
-  , "hkern"
-  , "line"
-  , "linearGradient"
-  , "listener"
-  , "marker"
-  , "mask"
-  , "metadata"
-  , "missing-glyph"
-  , "mpath"
-  , "path"
-  , "pattern"
-  , "polygon"
-  , "polyline"
-  , "prefetch"
-  , "radialGradient"
-  , "rect"
-  , "set"
-  , "solidColor"
-  , "stop"
-  , "switch"
-  , "symbol"
-  , "tbreak"
-  , "text"
-  , "textArea"
-  , "textPath"
-  , "tref"
-  , "tspan"
-  , "unknown"
-  , "use"
-  , "view"
-  , "vkern"
-  ]
-
-keyedElement :: forall r w a. String -> Array (Attr r a) -> Array (Tuple Key (Node w a)) -> Node w a
-keyedElement = \tag -> if Array.elem tag svgElements then keyedSvgElement tag else keyedHtmlElement tag
+vkern :: forall r c w a. Content c w a => Array (Attr r a) -> c -> Node w a
+vkern = elementOf (HH.elementNS svgNamespace (HH.ElemName "vkern")) (keyedSvgElement "vkern")
 
 -- Attributes ------------------------------------------------------------------
 

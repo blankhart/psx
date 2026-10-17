@@ -9,8 +9,8 @@ data Msg = Clicked | Typed String
 form :: Boolean -> Markup Msg
 form busy =
   [ B.form [] ([
-    B.input [ B.type' "text", B.required true, B.disabled (busy), B.tabindex 2, B.maxlength (-1), B.onInput (Typed) ] [],
+    B.input [ B.type' "text", B.required true, B.disabled (busy), B.tabindex 2, B.maxlength (-1), B.onInput (Typed) ] B.none,
     B.button [ B.class_ "primary", B.attribute "data-state" "idle", B.ariaLabel "Send", B.onClick (Clicked) ] ([ B.text "Send" ]),
     B.label [ B.for "name", B.titleAttr "" ] ([ B.text "Name" ]),
-    B.div [ B.attribute "my-attribute" (show busy) ] [] ]
+    B.div [ B.attribute "my-attribute" (show busy) ] B.none ]
    ) ]

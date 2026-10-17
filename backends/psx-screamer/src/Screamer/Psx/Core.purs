@@ -18,14 +18,14 @@ module Screamer.Psx.Core
   , toKey
   , text
   , element
-  , keyedHtmlElement
-  , keyedSvgElement
+  , class Content
+  , content
+  , elementOf
+  , none
   , keyed
   , attribute
   , class Children
   , children
-  , class KeyedChildren
-  , keyedChildren
   , root
   , onValueInput
   ) where
@@ -69,18 +69,29 @@ instance ToKey Char where
 text :: forall a. String -> Node a
 text s = S.text (pure s)
 
-element :: forall a. String -> Array (Attr a) -> Markup a -> Node a
-element = S.element_
+element :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
+element tag = elementOf (S.element_ tag)
 
--- | A view runs once, so a literal's keyed children are created once and
--- | never reordered: the keys need nothing from Screamer. A list that changes
--- | is Screamer's own `each` in a hole.
--- | `Screamer.Psx.keyedElement` picks this or `keyedSvgElement` by the tag.
-keyedHtmlElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedHtmlElement tag attrs kids = S.element_ tag attrs (map snd kids)
+-- | What an element's children are: nodes, or keyed nodes. A view runs
+-- | once, so a literal's keyed children are created once and never
+-- | reordered: the keys need nothing from Screamer, and are dropped. A list
+-- | that changes is Screamer's own `each` in a hole.
+class Content c a | c -> a where
+  content :: c -> Markup a
 
-keyedSvgElement :: forall a. String -> Array (Attr a) -> Array (Tuple Key (Node a)) -> Node a
-keyedSvgElement tag attrs kids = S.svgElement_ tag attrs (map snd kids)
+instance Content (Array S.Element) a where
+  content = identity
+
+instance Content (Array (Tuple String S.Element)) a where
+  content = map snd
+
+-- | An element function that takes either kind of children.
+elementOf :: forall c a. Content c a => (Array (Attr a) -> Markup a -> Node a) -> Array (Attr a) -> c -> Node a
+elementOf build attrs = build attrs <<< content
+
+-- | No children.
+none :: forall a. Markup a
+none = []
 
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) node
@@ -88,47 +99,39 @@ keyed k node = Tuple (toKey k) node
 attribute :: forall a. String -> String -> Attr a
 attribute name value = S.attribute name (pure value)
 
--- | What a child hole may hold. Every instance is at `a = Effect Unit`, so a
--- | hole fixes a view's handlers to effects.
-class Children c a | c -> a where
-  children :: c -> Markup a
+-- | What a child hole may hold, and the children it makes: nodes from a
+-- | string, an element, markup or a signal, keyed nodes from keyed
+-- | literals, and arrays and `Maybe`s of those. Screamer's nodes carry no
+-- | message type, so the children are `Array S.Element` whatever a view's
+-- | handlers are.
+class Children c r | c -> r where
+  children :: c -> r
 
-instance Children String (Effect Unit) where
+instance Children String (Array S.Element) where
   children s = [ text s ]
 
-instance Children S.Element (Effect Unit) where
+instance Children S.Element (Array S.Element) where
   children n = [ n ]
 
+instance Children (Tuple String S.Element) (Array (Tuple String S.Element)) where
+  children kid = [ kid ]
+
 -- | A text node, updated in place.
-instance Children (Signal String) (Effect Unit) where
+instance Children (Signal String) (Array S.Element) where
   children s = [ S.text s ]
 
 -- | A `dyn`: each new value replaces the nodes.
-instance Children (Signal S.Element) (Effect Unit) where
+instance Children (Signal S.Element) (Array S.Element) where
   children s = [ S.dyn s ]
 
-instance Children (Signal (Array S.Element)) (Effect Unit) where
+instance Children (Signal (Array S.Element)) (Array S.Element) where
   children s = [ S.dyn (S.fragment_ <$> s) ]
 
-instance Children c a => Children (Array c) a where
+instance Children c (Array x) => Children (Array c) (Array x) where
   children = Array.concatMap children
 
-instance Children c a => Children (Maybe c) a where
+instance Children c (Array x) => Children (Maybe c) (Array x) where
   children = maybe [] children
-
--- | What a child hole of a keyed parent may hold: keyed literals, or arrays
--- | of them.
-class KeyedChildren c a | c -> a where
-  keyedChildren :: c -> Array (Tuple Key (Node a))
-
-instance KeyedChildren (Tuple String S.Element) (Effect Unit) where
-  keyedChildren kid = [ kid ]
-
-instance KeyedChildren c a => KeyedChildren (Array c) a where
-  keyedChildren = Array.concatMap keyedChildren
-
-instance KeyedChildren c a => KeyedChildren (Maybe c) a where
-  keyedChildren = maybe [] keyedChildren
 
 -- | The one element a view hands to `mount` or returns from `component`:
 -- | the literal's only node, or a fragment of several.

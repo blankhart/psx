@@ -1,0 +1,25 @@
+module Parse.TraitHoles where
+
+import Portico.Psx
+
+import Portico as P
+
+-- A hole among the attributes holds one trait, at its own position.
+list = <div {P.transitionGroup "bounce"} class="list">x</div>
+
+check open = <input type="checkbox" checked={open} {P.onCheck Open}>
+
+-- One on a line of its own, and one whose expression spans lines.
+form =
+  <form
+    id="order"
+    {P.onSubmitWith Submitted}
+    {
+      P.onWith "click"
+        { capture: true, passive: true }
+        handler
+    }
+  />
+
+-- A trait hole may hold markup, like any hole.
+nested = <div {tooltip (<p>x</p>)}></div>

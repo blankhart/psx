@@ -401,7 +401,7 @@ checkContract env r name printed = do
 -- | Logs each framework's `psx/` and `purs/` bundle sizes. The build plan
 -- | asks that the two minified bundles differ only by the scope attributes
 -- | PSX stamps, which cannot hold as stated: the `psx/` bundle also carries
--- | the backend's `Children` and `KeyedChildren` dispatch, `keyed` and
+-- | the backend's `Children` and `Content` dispatch, `keyed` and
 -- | `root`, and purs writes each module's name and line numbers into its
 -- | pattern-match errors. So, as decided on psx#8, the comparison is
 -- | reported and does not fail the run.

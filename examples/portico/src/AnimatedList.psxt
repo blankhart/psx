@@ -11,7 +11,7 @@ import Effect (Effect)
 import Effect.Random as Random
 import Portico ((:>))
 import Portico as P
-import Portico.Psx (Key, Markup, Node, keyedChildren, keyedElement, root)
+import Portico.Psx (Key, Markup, Node, root)
 
 type Model =
   { next :: Int
@@ -54,16 +54,14 @@ main = do
 </script>
 
 <!--
-  A transition group is a Portico trait with no HTML attribute, so the list
-  is Portico's own keyed element in a hole, over keyed literals.
+  A transition group is a Portico trait with no HTML attribute, so it is a
+  trait hole. The items are keyed literals, so the list is keyed.
 -->
 <template name="view" args="model">
   <main id="main">
     <button onclick={Add}>Add</button>
     <button onclick={Shuffle}>Shuffle</button>
-    {keyedElement "div" [ P.transitionGroup "bounce", P.class' "list" ]
-      (keyedChildren (Array.mapWithIndex item model.values))
-    }
+    <div {P.transitionGroup "bounce"} class="list">{Array.mapWithIndex item model.values}</div>
   </main>
 </template>
 

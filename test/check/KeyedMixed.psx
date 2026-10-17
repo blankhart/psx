@@ -1,0 +1,15 @@
+module Examples.CheckKeyedMixed where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+-- Keyed children from a hole can't sit beside unkeyed ones.
+list :: Array Int -> Markup Unit
+list values =
+  <ul>
+    <li>First</li>
+    {map item values}
+  </ul>
+  where
+  item value = <li key={value}>{show value}</li>
