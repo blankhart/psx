@@ -1,0 +1,9 @@
+package:
+  name: psx-suite-counter-screamer-psx
+  dependencies:
+    - arrays
+    - effect
+    - prelude
+    - psx-screamer
+    - psx-suite-shared
+    - screamer
