@@ -2632,7 +2632,7 @@
       "height": {
         "purescript": "height",
         "type": {
-          "kind": "number",
+          "kind": "string",
           "values": []
         },
         "elementTypes": {}
@@ -3660,7 +3660,7 @@
       "width": {
         "purescript": "width",
         "type": {
-          "kind": "number",
+          "kind": "string",
           "values": []
         },
         "elementTypes": {}

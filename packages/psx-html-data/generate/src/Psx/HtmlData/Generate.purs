@@ -127,6 +127,9 @@ overrides =
   , html "formmethod" [] formMethods
   -- An overloaded boolean (`until-found` is its one other value) used as a boolean.
   , html "hidden" [] booleanType
+  -- SVG's `width` and `height` are lengths, and one identifier serves both
+  -- namespaces, so HTML's take a string too: a backend has one function each.
+  , html "height" [] stringType
   , html "inputmode" [] $ enumeration [ "none", "text", "decimal", "numeric", "tel", "search", "email", "url" ]
   , html "kind" [ "track" ] $ enumeration [ "subtitles", "captions", "descriptions", "chapters", "metadata" ]
   , html "loading" [] $ enumeration [ "lazy", "eager" ]
@@ -153,6 +156,7 @@ overrides =
   -- `property-information` marks `value` booleanish for hast's sake.
   , html "value" [] stringType
   , html "wrap" [] $ enumeration [ "soft", "hard" ]
+  , html "width" [] stringType
   , html "writingsuggestions" [] $ enumeration [ "true", "false" ]
   , html "aria-checked" [] tristate
   , html "aria-pressed" [] tristate

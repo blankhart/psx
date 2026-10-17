@@ -1,7 +1,14 @@
 package:
   name: psx-screamer
   dependencies:
+    - arrays
+    - effect
+    - maybe
     - prelude
+    - screamer
+    - tuples
+    - web-events
+    - web-uievents
   test:
     main: Test.Screamer.Psx
     dependencies:

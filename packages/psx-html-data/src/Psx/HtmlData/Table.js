@@ -2634,7 +2634,7 @@ export const table = {
       "height": {
         "purescript": "height",
         "type": {
-          "kind": "number",
+          "kind": "string",
           "values": []
         },
         "elementTypes": {}
@@ -3662,7 +3662,7 @@ export const table = {
       "width": {
         "purescript": "width",
         "type": {
-          "kind": "number",
+          "kind": "string",
           "values": []
         },
         "elementTypes": {}
