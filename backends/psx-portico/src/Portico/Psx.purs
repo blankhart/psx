@@ -1896,7 +1896,7 @@ citeAttr :: forall a. String -> Attr a
 citeAttr = P.attribute "cite"
 
 class_ :: forall a. String -> Attr a
-class_ = P.class'
+class_ = P.attribute "class"
 
 classid :: forall a. String -> Attr a
 classid = P.attribute "classid"

@@ -1,0 +1,29 @@
+-- | The child: a counter with its own model, messages and view, which the
+-- | parent composes.
+module App.Nested.Portico.Psx.Counter
+  ( Model
+  , Msg
+  , update
+  , view
+  ) where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+type Model = Int
+
+data Msg = Increment | Decrement
+
+update :: Model -> Msg -> Model
+update n = case _ of
+  Increment -> n + 1
+  Decrement -> n - 1
+
+view :: Int -> String -> Model -> Markup Msg
+view id label n =
+  <div class="counter" data-testid={"counter-" <> show id}>
+    <span class="count">{label}: {show n}</span>
+    <button data-testid={"decrement-" <> show id} onclick={Decrement}>-</button>
+    <button data-testid={"increment-" <> show id} onclick={Increment}>+</button>
+  </div>

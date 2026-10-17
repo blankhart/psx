@@ -1,0 +1,9 @@
+package:
+  name: psx-suite-table-portico-purs
+  dependencies:
+    - arrays
+    - effect
+    - maybe
+    - portico
+    - prelude
+    - psx-suite-shared

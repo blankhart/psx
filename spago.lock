@@ -490,6 +490,39 @@
           "dependencies": []
         }
       },
+      "psx-suite-nested-portico-psx": {
+        "path": "test/suite/apps/nested/portico/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "maybe",
+            "portico",
+            "prelude",
+            "psx-portico"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-nested-portico-purs": {
+        "path": "test/suite/apps/nested/portico/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "maybe",
+            "portico",
+            "prelude"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-suite-shared": {
         "path": "test/suite/shared",
         "core": {
@@ -503,6 +536,72 @@
             "prelude",
             "strings",
             "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-svg-portico-psx": {
+        "path": "test/suite/apps/svg/portico/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "maybe",
+            "portico",
+            "prelude",
+            "psx-portico",
+            "strings"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-svg-portico-purs": {
+        "path": "test/suite/apps/svg/portico/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "maybe",
+            "portico",
+            "prelude",
+            "strings"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-table-portico-psx": {
+        "path": "test/suite/apps/table/portico/psx",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "maybe",
+            "portico",
+            "prelude",
+            "psx-portico",
+            "psx-suite-shared"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-table-portico-purs": {
+        "path": "test/suite/apps/table/portico/purs",
+        "core": {
+          "dependencies": [
+            "arrays",
+            "effect",
+            "maybe",
+            "portico",
+            "prelude",
+            "psx-suite-shared"
           ]
         },
         "test": {

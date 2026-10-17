@@ -1293,7 +1293,7 @@ sup :: forall w a. Array (Attr I.HTMLsup a) -> Markup w a -> Node w a
 sup = HH.sup
 
 svg :: forall r w a. Array (Attr r a) -> Markup w a -> Node w a
-svg = HH.element (HH.ElemName "svg")
+svg = HH.elementNS (HH.Namespace "http://www.w3.org/2000/svg") (HH.ElemName "svg")
 
 table :: forall w a. Array (Attr I.HTMLtable a) -> Markup w a -> Node w a
 table = HH.table

@@ -179,8 +179,10 @@ type Name =
 elements :: Array Name
 elements = html <> svg
   where
+  -- `svg` is in HTML's list, but it opens SVG content, so it is created in
+  -- the SVG namespace like the elements inside it.
   html = HtmlData.elementNames Html # Array.mapMaybe \tag -> HtmlData.element Html tag <#> \e ->
-    { ident: e.purescript, kind: ElementKind, html: tag, namespace: Html, void: e.void, value: "", uses: [] }
+    { ident: e.purescript, kind: ElementKind, html: tag, namespace: if tag == "svg" then Svg else Html, void: e.void, value: "", uses: [] }
   svg = HtmlData.elementNames Svg # Array.mapMaybe \tag -> case HtmlData.element Svg tag of
     Just e | not (HtmlData.isHtmlElement tag) ->
       Just { ident: e.purescript, kind: ElementKind, html: tag, namespace: Svg, void: false, value: "", uses: [] }

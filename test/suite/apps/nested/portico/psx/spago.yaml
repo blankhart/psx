@@ -1,0 +1,10 @@
+package:
+  name: psx-suite-nested-portico-psx
+  dependencies:
+    - arrays
+    - effect
+    - foldable-traversable
+    - maybe
+    - portico
+    - prelude
+    - psx-portico

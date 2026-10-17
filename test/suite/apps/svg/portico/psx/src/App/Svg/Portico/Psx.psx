@@ -1,0 +1,82 @@
+-- | The svg scenario on Portico, in PSX.
+module App.Svg.Portico.Psx (main) where
+
+import Prelude
+
+import Data.Array as Array
+import Data.Maybe (Maybe(..), fromMaybe)
+import Data.String as String
+import Effect (Effect)
+import Portico ((:>))
+import Portico as P
+import Portico.Psx (Markup, root)
+
+type Fixture = { values :: Array Int, max :: Int }
+
+type Model = { values :: Array Int, max :: Int, selected :: Maybe Int }
+
+data Msg = Select Int | Grow
+
+update :: Model -> Msg -> Model
+update model = case _ of
+  Select i -> model { selected = Just i }
+  Grow -> case model.selected of
+    Just i -> model { values = fromMaybe model.values (Array.modifyAt i (\v -> min model.max (v + 1)) model.values) }
+    Nothing -> model
+
+-- | A bar's left edge and barTop, in the chart's coordinates.
+left :: Int -> Int
+left i = 10 + 20 * i
+
+barTop :: Int -> Int
+barTop v = 55 - 4 * v
+
+-- | The line through the tops of the bars.
+trend :: Array Int -> String
+trend values = String.joinWith " " (Array.mapWithIndex point values)
+  where
+  point i v = (if i == 0 then "M " else "L ") <> show (left i + 8) <> " " <> show (barTop v)
+
+view :: Model -> Markup Msg
+view model =
+  <figure class="chart" data-testid="chart">
+    <svg viewBox="0 0 120 60" width="360" height="180">
+      <g class="bars">
+        {
+          Array.mapWithIndex
+            ( \i v ->
+                <rect key={i} data-testid={"bar-" <> show i} x={show (left i)} y={show (barTop v)} width="16" height={show (4 * v)} fill={if model.selected == Just i then "orange" else "steelblue"} onclick={Select i}/>
+            )
+            model.values
+        }
+      </g>
+      <path class="trend" d={trend model.values} fill="none" stroke="gray"/>
+      <line x1="5" y1="55" x2="115" y2="55" stroke="black"/>
+      {
+        case model.selected of
+          Just i -> <circle cx={show (left i + 8)} cy={show (barTop (value i))} r="2" fill="orange"/>
+          Nothing -> <></>
+      }
+      <text x="5" y="8">Values</text>
+    </svg>
+    <figcaption data-testid="caption">
+      {
+        case model.selected of
+          Just i -> "Bar " <> show i <> ": " <> show (value i)
+          Nothing -> "Click a bar"
+      }
+    </figcaption>
+    <button data-testid="grow" onclick={Grow} disabled={model.selected == Nothing}>Grow</button>
+  </figure>
+  where
+  value i = fromMaybe 0 (Array.index model.values i)
+
+-- | Mounts on `#app`, starting from the scenario's fixture.
+main :: Fixture -> Effect Unit
+main fixture =
+  void $ P.mount "#app"
+    { init: { values: fixture.values, max: fixture.max, selected: Nothing } :> []
+    , update: \model msg -> update model msg :> []
+    , subscriptions: P.noSubscriptions
+    , view: root <<< view
+    }

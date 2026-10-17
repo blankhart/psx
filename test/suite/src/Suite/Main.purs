@@ -264,7 +264,8 @@ runStep :: Env -> Array Running -> Step -> Aff Unit
 runStep env live = case _ of
   Measure m -> do
     let runs = fromMaybe m.runs env.options.runs
-    for_ (Array.range 1 runs) \_ -> for_ live \r -> guarded r do
+    -- Each run starts with the next app, so none is always first.
+    for_ (Array.range 0 (runs - 1)) \run -> for_ (rotate run live) \r -> guarded r do
       for_ m.setup (untimed env r)
       times <- for m.steps (timed env r)
       liftEffect $ Ref.modify_ (addSample m (sum times)) r.measures
@@ -284,6 +285,11 @@ runStep env live = case _ of
   step -> for_ live \r -> guarded r (untimed env r step)
   where
   ms n = toStringWith (fixed 1) n <> " ms"
+
+rotate :: forall a. Int -> Array a -> Array a
+rotate n xs = Array.drop k xs <> Array.take k xs
+  where
+  k = if Array.null xs then 0 else n `mod` Array.length xs
 
 addSample :: Measure -> Number -> Array { name :: String, samples :: Array Number } -> Array { name :: String, samples :: Array Number }
 addSample m t measures = case Array.findIndex (\x -> x.name == m.name) measures of
