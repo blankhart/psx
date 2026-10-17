@@ -3,12 +3,15 @@
 module Psx.Corpus.Stages (stages) where
 
 import Psx.Corpus (Stage)
-import Psx.Corpus.Lower (lower, positionMap)
-import Psx.Corpus.Parse (parse)
+import Psx.Corpus.Lower (css, lower, positionMap, same)
+import Psx.Corpus.Parse (parse, parsePsxt)
 
 stages :: Array Stage
 stages =
   [ parse
+  , parsePsxt
   , lower
   , positionMap
+  , css
+  , same
   ]

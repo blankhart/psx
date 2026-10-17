@@ -1,0 +1,28 @@
+print: identical
+errors: none
+script: 1:1-9:10, module App.Card where
+template "card" at 11:1, args "title" (1 binders), defines the foreign import at 7:1 (1 arrows)
+  text "\n  "
+  12:3 <article>
+    @class="card"
+    text "\n    "
+    13:5 <h2>
+      hole {title}
+    text "\n    "
+    hole {badge 3}
+    text "\n    "
+    15:5 <aside>
+      @class="note"
+      text "\n      Aside\n      "
+      17:7 <style>
+        text "\n        p { margin: 0; }\n      "
+      text "\n    "
+    text "\n  "
+  text "\n"
+template "badge" at 24:1, args "n" (1 binders), defines the foreign import at 8:1 (1 arrows)
+  text "\n  "
+  25:3 <span>
+    @class="badge"
+    hole {show n}
+  text "\n"
+style 28:1

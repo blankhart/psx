@@ -1,3 +1,4 @@
+<script type="text/purescript">
 module Examples.AnimatedList where
 
 import Prelude
@@ -10,7 +11,7 @@ import Effect (Effect)
 import Effect.Random as Random
 import Portico ((:>))
 import Portico as P
-import Portico.Psx (Markup, keyedChildren, keyedElement, root)
+import Portico.Psx (Key, Markup, Node, keyedChildren, keyedElement, root)
 
 type Model =
   { next :: Int
@@ -42,10 +43,21 @@ shuffle array = do
   randoms <- replicateA length $ Random.randomInt 0 (length - 1)
   pure $ array # Array.zip randoms # Array.sortWith (\(Tuple a _) -> a) # map (\(Tuple _ b) -> b)
 
--- A transition group is a Portico trait with no HTML attribute, so the list
--- is Portico's own keyed element in a hole, over keyed literals.
-view :: Model -> Markup Msg
-view model =
+foreign import view :: Model -> Markup Msg
+
+-- | One value in the list, keyed by itself.
+foreign import item :: Int -> Int -> Array (Tuple Key (Node Msg))
+
+main :: Effect Unit
+main = do
+  void $ P.mount "main" { init, update, subscriptions: P.noSubscriptions, view: root <<< view }
+</script>
+
+<!--
+  A transition group is a Portico trait with no HTML attribute, so the list
+  is Portico's own keyed element in a hole, over keyed literals.
+-->
+<template name="view" args="model">
   <main id="main">
     <button onclick={Add}>Add</button>
     <button onclick={Shuffle}>Shuffle</button>
@@ -53,10 +65,55 @@ view model =
       (keyedChildren (Array.mapWithIndex item model.values))
     }
   </main>
-  where
-  item index value =
-    <div key={show value} onclick={Remove index}>{show value}</div>
+</template>
 
-main :: Effect Unit
-main = do
-  void $ P.mount "main" { init, update, subscriptions: P.noSubscriptions, view: root <<< view }
+<template name="item" args="index value">
+  <div key={show value} onclick={Remove index}>{show value}</div>
+</template>
+
+<style>
+  :scope {
+    width: 500px;
+    margin: 2rem auto;
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .list > * {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    background: crimson;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bounce-enter-active {
+    animation: bounce-in 0.5s;
+  }
+
+  .bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+  }
+
+  .bounce-move {
+    transition: 0.5s all;
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>

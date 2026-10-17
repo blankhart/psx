@@ -7,7 +7,9 @@
 -- | - the order of attributes (they are sorted),
 -- | - comments (the snapshot leaves them out), and
 -- | - whether a form control's state was set as an attribute or a property
--- |   (the snapshot reports its live `value` and `checked`).
+-- |   (the snapshot reports its live `value` and `checked`), and
+-- | - `data-psx`, the attribute PSX stamps on the elements its scoped styles
+-- |   root, which a hand-written `purs/` app has no reason to carry.
 module Suite.Dom
   ( Node(..)
   , normalise
@@ -37,7 +39,7 @@ normalise = Array.foldr step []
 
   normaliseNode = case _ of
     Element tag attributes kids ->
-      Element tag (Array.sortWith fst attributes) (normalise kids)
+      Element tag (Array.sortWith fst (Array.filter ((_ /= "data-psx") <<< fst) attributes)) (normalise kids)
     text -> text
 
 -- | One element per line, indented by depth; each text node on a line of its

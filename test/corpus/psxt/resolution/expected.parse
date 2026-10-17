@@ -1,0 +1,32 @@
+print: identical
+errors: none
+script: 6:1-21:10, module App.Table where
+template "footer" at 2:1, defines the foreign import at 17:1 (0 arrows)
+  text "\n  "
+  3:3 <footer>
+    text "Rows: "
+    hole {"many"}
+  text "\n"
+template "table" at 23:1, args "{ title, rows } extra" (2 binders), defines the foreign import at 15:1 (2 arrows)
+  text "\n  "
+  24:3 <table>
+    text "\n    "
+    25:5 <caption>
+      hole {title}
+      text " ("
+      hole {show extra}
+      text ")"
+    text "\n    "
+    hole {map row rows}
+    text "\n  "
+  text "\n  "
+  hole {footer}
+  text "\n"
+template "row" at 30:1, args "r" (1 binders), defines the foreign import at 16:1 (1 arrows)
+  text "\n  "
+  31:3 <tr>
+    31:7 <td>
+      hole {show r.id}
+    31:27 <td>
+      hole {r.label}
+  text "\n"

@@ -5,7 +5,8 @@ import Prelude
 import Data.Array as Array
 import Data.Either (Either(..))
 import Data.Foldable (for_)
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), maybe)
+import Data.Traversable (for)
 import Data.String as String
 import Data.String.CodeUnits as SCU
 
@@ -17,8 +18,10 @@ import Node.FS.Sync as FS
 import Node.Path (FilePath)
 import Node.Path as Path
 import Node.Process as Process
-import Psx.Cst.Source (offsetOf, source)
-import Psx.Lower (lower)
+import Psx.Cst.Psxt (parsePsxt)
+import Psx.Cst.Source (offsetOf, posOf, source)
+import Psx.Lower (lower, lowerPsxt)
+import Psx.Lower.Css as Css
 import Psx.Lower.Entities as Entities
 import Psx.Lower.PositionMap (SegmentKind(..), toSource)
 import Psx.Lower.Whitespace (normalise)
@@ -32,6 +35,8 @@ main = do
   whitespace
   entities
   positionMap
+  css
+  psxt
   files <- sources
   for_ files lowered
   log $ "psx-lower: all tests passed (" <> show (Array.length files) <> " files lowered)"
@@ -93,16 +98,18 @@ positionMap = do
     , column: String.length (SCU.slice (Array.foldl max 0 lineStarts) offset src.text)
     }
 
--- Every `.psx` file the corpus lowers and every example.
+-- Every `.psx` and `.psxt` file the corpus lowers and every example.
 sources :: Effect (Array FilePath)
 sources = do
   root <- workspaceRoot
   let
-    lowerDir = Path.concat [ root, "test", "corpus", "lower" ]
+    areas = [ "lower", "psxt" ]
     examples = Path.concat [ root, "examples", "portico", "src" ]
-  cases <- FS.readdir lowerDir
-  corpus <- Array.filterA FS.exists (cases <#> \c -> Path.concat [ lowerDir, c, "input.psx" ])
-  exampleFiles <- map (\f -> Path.concat [ examples, f ]) <<< Array.filter (\f -> Path.extname f == ".psx") <$> FS.readdir examples
+  corpus <- Array.concat <$> for areas \area -> do
+    let dir = Path.concat [ root, "test", "corpus", area ]
+    cases <- FS.readdir dir
+    Array.filterA FS.exists (Array.concatMap (\c -> [ Path.concat [ dir, c, "input.psx" ], Path.concat [ dir, c, "input.psxt" ] ]) cases)
+  exampleFiles <- map (\f -> Path.concat [ examples, f ]) <<< Array.filter (\f -> Path.extname f == ".psx" || Path.extname f == ".psxt") <$> FS.readdir examples
   pure (Array.sort corpus <> Array.sort exampleFiles)
 
 workspaceRoot :: Effect FilePath
@@ -116,11 +123,15 @@ workspaceRoot = Process.cwd >>= go
 
 -- What a lowering must be: plain PureScript that cst-parser parses, whose
 -- copied segments are the source's text, and whose lines after the imports
--- are the source's lines.
+-- are the source's lines, shifted by at most one when an added import finds
+-- no blank line to take. In a `.psxt` file that holds for the script.
 lowered :: FilePath -> Effect Unit
 lowered file = do
   input <- FS.readTextFile UTF8 file
-  case lower { sourceName: "input.psx", generatedName: "input.purs" } input of
+  let
+    isPsxt = Path.extname file == ".psxt"
+    names = { sourceName: Path.basename file, generatedName: "input.purs" }
+  case (if isPsxt then lowerPsxt names input else lower names input) of
     Left _ -> pure unit -- an error case
     Right result -> do
       case CST.parseModule result.purs of
@@ -131,14 +142,79 @@ lowered file = do
         out = source result.purs
         copies = Array.filter (\s -> s.kind == Copy) result.positionMap.segments
         text s r = SCU.slice (offsetOf s r.start) (offsetOf s r.end) s.text
-        firstDecl = case parseModule input of
-          { module: Just (Module { body: ModuleBody body }) } -> (\d -> (rangeOf d).start.line) <$> Array.head body.decls
-          _ -> Nothing
+        parsed =
+          if isPsxt then (parsePsxt input).file <#> \f ->
+            { m: f.script.module
+            , end: (posOf src f.script.contentEnd).line
+            -- The template's signatures move to the templates.
+            , moved: map _.range.start.line (Array.mapMaybe _.declaration f.templates)
+            }
+          else (parseModule input).module <#> \m -> { m, end: Array.length src.lineStarts, moved: [] }
+        firstDecl = parsed >>= \{ m: Module { body: ModuleBody body } } -> (\d -> (rangeOf d).start.line) <$> Array.head body.decls
+        scriptEnd = maybe 0 _.end parsed
+        moved = maybe [] _.moved parsed
       for_ copies \seg ->
         assert ("a copy in " <> file <> " is the source's text") (text out seg.generated == text src seg.source)
-      for_ firstDecl \decl ->
-        for_ (Array.filter (\s -> s.source.start.line >= decl) copies) \seg ->
+      for_ firstDecl \decl -> do
+        let
+          kept = Array.filter (\s -> s.source.start.line >= decl && s.source.start.line < scriptEnd && not (Array.elem s.source.start.line moved)) copies
+          shift = maybe 0 (\s -> s.generated.start.line - s.source.start.line) (Array.head kept)
+        assert ("the lines of " <> file <> " shift by at most one (" <> show shift <> ")") (shift == 0 || shift == 1)
+        for_ kept \seg ->
           assert
-            ("line " <> show (seg.source.start.line + 1) <> " of " <> file <> " stays line " <> show (seg.source.start.line + 1) <> " (is " <> show (seg.generated.start.line + 1) <> ")")
-            (seg.generated.start.line == seg.source.start.line)
+            ("line " <> show (seg.source.start.line + 1) <> " of " <> file <> " stays line " <> show (seg.source.start.line + 1 + shift) <> " (is " <> show (seg.generated.start.line + 1) <> ")")
+            (seg.generated.start.line == seg.source.start.line + shift)
 
+-- Scoped styles: each selector also matches the scope's root, unless it
+-- names the root already; at-rules that `@scope` cannot hold move out.
+css :: Effect Unit
+css = do
+  let
+    cases =
+      [ { css: ".a { x: 1 }", expect: "@scope ([data-psx=\"M\"]) {\n  .a, :scope:is(.a) { x: 1 }\n}\n" }
+      , { css: ".a::before, :scope > b { x: 1 }", expect: "@scope ([data-psx=\"M\"]) {\n  .a::before, :scope > b, :scope:is(.a)::before { x: 1 }\n}\n" }
+      , { css: "a:is(.x, .y):after { x: 1 }", expect: "@scope ([data-psx=\"M\"]) {\n  a:is(.x, .y):after, :scope:is(a:is(.x, .y)):after { x: 1 }\n}\n" }
+      , { css: "\n    @media (min-width: 1px) {\n      p { x: 1 }\n    }\n  ", expect: "@scope ([data-psx=\"M\"]) {\n  @media (min-width: 1px) {\n    p, :scope:is(p) { x: 1 }\n  }\n}\n" }
+      , { css: "@import \"a.css\";\n@keyframes k { to { x: 1 } }\n[title=\"a,b\"] { x: 1 }", expect: "@import \"a.css\";\n@keyframes k { to { x: 1 } }\n@scope ([data-psx=\"M\"]) {\n  [title=\"a,b\"], :scope:is([title=\"a,b\"]) { x: 1 }\n}\n" }
+      ]
+  for_ cases \c -> do
+    let actual = Css.scoped "M" c.css
+    assert ("scoping " <> show c.css <> " gives " <> show actual) (actual == c.expect)
+
+-- A template's lines are kept, its signature takes the blank line before
+-- it, and the file's style is stamped on its top-level elements.
+psxt :: Effect Unit
+psxt = do
+  let
+    input = String.joinWith "\n"
+      [ "<script type=\"text/purescript\">"
+      , "module M where"
+      , ""
+      , "import Portico.Psx (Markup)"
+      , ""
+      , "foreign import view :: Int -> Markup Unit"
+      , "</script>"
+      , ""
+      , "<template name=\"view\" args=\"n\">"
+      , "  <p>{show n}</p>"
+      , "</template>"
+      , "<style>p { color: red; }</style>"
+      , ""
+      ]
+  case lowerPsxt { sourceName: "M.psxt", generatedName: "M.purs" } input of
+    Left errors -> throw ("FAIL the .psxt example lowers: " <> show (map _.message errors))
+    Right result -> do
+      let lines = String.split (String.Pattern "\n") result.purs
+      assert ("the header is line 1: " <> show (Array.index lines 0)) (Array.index lines 0 == Just "-- Generated by psx from M.psxt")
+      assert ("the signature is line 8: " <> show (Array.index lines 7)) (Array.index lines 7 == Just "view :: Int -> Markup Unit")
+      assert ("the definition is line 9: " <> show (Array.index lines 8)) (Array.index lines 8 == Just "view n =")
+      assert ("the paragraph is line 10, stamped: " <> show (Array.index lines 9))
+        (map (String.contains (String.Pattern "B.p [ B.attribute \"data-psx\" B.Style.scope ]")) (Array.index lines 9) == Just true)
+      case result.style of
+        Nothing -> throw "FAIL the .psxt example has a style"
+        Just style -> do
+          assert "the companion is M.PsxStyle" (style.companion == "M.PsxStyle")
+          assert ("the companion imports the stylesheet: " <> show (Css.companionForeign { sourceName: "M.psxt", moduleName: "M", cssImport: "../../src/M.css" } style.scopes))
+            ( Css.companionForeign { sourceName: "M.psxt", moduleName: "M", cssImport: "../../src/M.css" } style.scopes
+                == "// Generated by psx from M.psxt\nimport \"../../src/M.css\";\n\nexport const scope = \"M\";\n"
+            )

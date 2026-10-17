@@ -111,10 +111,17 @@ runApp env app = do
   if not compiled then
     fail [ moduleName app <> " has not been compiled; run `spago build` first" ]
   else do
+    let css = Path.concat [ dist, "app.css" ]
     liftEffect do
       FS.mkdir' dist { recursive: true, mode: permsAll }
-      FS.writeTextFile UTF8 (Path.concat [ dist, "index.html" ]) (page app)
+      stale <- FS.exists css
+      when stale (FS.unlink css)
+    -- esbuild writes app.css beside app.js when the app imports CSS, as a
+    -- PSX module with scoped styles does through its companion module.
     Driver.bundle { module: module_, outfile: Path.concat [ dist, "app.js" ] }
+    liftEffect do
+      styled <- FS.exists css
+      FS.writeTextFile UTF8 (Path.concat [ dist, "index.html" ]) (page app styled)
     result <- attempt do
       p <- Driver.open env.browser (Path.concat [ dist, "index.html" ])
       Driver.settle p
@@ -224,13 +231,13 @@ compareBundles env scenario framework = liftEffect do
       _ -> pure unit
   pure 0
 
-page :: App -> String
-page app =
+page :: App -> Boolean -> String
+page app styled =
   """<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>""" <> label app <> """</title>
+    <title>""" <> label app <> """</title>""" <> (if styled then "\n    <link rel=\"stylesheet\" href=\"app.css\">" else "") <> """
   </head>
   <body>
     <div id="root"><div id="app"></div></div>

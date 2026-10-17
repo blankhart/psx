@@ -1,0 +1,40 @@
+print: identical
+errors: none
+script: 1:1-13:10, module App.Counter where
+template "view" at 15:1, args "props n" (2 binders), defines the foreign import at 12:1 (2 arrows)
+  text "\n  "
+  16:3 <section>
+    @class="counter"
+    text "\n    "
+    17:5 <h2>
+      hole {props.label}
+      text ": "
+      hole {show n}
+    text "\n    "
+    18:5 <button>
+      @onclick={Decrement}
+      @disabled={n <= 0}
+      text "-"
+    text "\n    "
+    19:5 <button>
+      @onclick={Increment}
+      @disabled={n >= props.max}
+      text "+"
+    text "\n    "
+    hole {if n == 0 then <></> else <button onclick={Reset}>Reset</button>}
+      22:9 <>
+      24:9 <button>
+        @onclick={Reset}
+        text "Reset"
+    text "\n    "
+    26:5 <ol>
+      @class="pips"
+      text "\n      "
+      hole {map (\i -> <li key={i} class={if i <= n then "pip filled" else "pip"}></li>) (1 .. props.max)}
+        29:18 <li>
+          @key={i}
+          @class={if i <= n then "pip filled" else "pip"}
+      text "\n    "
+    text "\n  "
+  text "\n"
+style 36:1
