@@ -1,0 +1,23 @@
+module Fmt.Attributes where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+data Msg = Save | Typed String
+
+-- Attributes that fit stay on the tag's line.
+short :: Markup Msg
+short = <button   type="submit"    onclick={Save}  disabled >Save</button>
+
+-- Attributes that don't go one per line, the tag's end on its own line.
+long :: String -> Markup Msg
+long value = <input class="form-control form-control-lg" id="name-input" placeholder="Your name" value={value} oninput={Typed} required>
+
+self :: Markup Msg
+self = <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+
+-- A quoted value is kept as written, line breaks included.
+quoted :: Markup Msg
+quoted = <p title='single "quotes"' class="a
+  b">Text</p>

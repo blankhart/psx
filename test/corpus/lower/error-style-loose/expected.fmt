@@ -1,0 +1,13 @@
+module App.Loose where
+
+import Portico.Psx (Markup)
+
+top :: Markup Unit
+top = <style>p { color: red; }</style>
+
+fragment :: Markup Unit
+fragment =
+  <>
+    <p>Hi</p>
+    <style>p { color: red; }</style>
+  </>

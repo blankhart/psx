@@ -11,6 +11,9 @@
 -- | - `psx check [dir...] [--json] [-- <spago build arguments>]` builds, then
 -- |   compiles with `spago build --json-errors` and reports the compiler's
 -- |   errors and warnings at their `.psx` positions.
+-- | - `psx fmt [--check] [path...]` formats every `.psx` and `.psxt` file
+-- |   at the paths (default `src`) in place. With `--check` it writes
+-- |   nothing, and fails if a file is not formatted.
 -- |
 -- | Compiling stays spago's job: a project runs `psx build && spago build`.
 module Psx.Cli
@@ -39,6 +42,7 @@ import Node.Process as Process
 import Psx.Cli.Check (Diagnostic, Severity(..), diagnosticJson, parseCompilerOutput, printDiagnostic, remap)
 import Psx.Cli.Process (runSync)
 import Psx.Cst (PsxError)
+import Psx.Format (formatPsx, formatPsxt)
 import Psx.Lower (Lowered, isGenerated, lower, lowerPsxt)
 import Psx.Lower.Css as Css
 import Psx.Lower.PositionMap (printJson)
@@ -54,6 +58,7 @@ usage = String.joinWith "\n"
   [ "usage: psx build [dir...]"
   , "       psx lower <file.psx|file.psxt> [-o <out.purs>] [--map <out.map.json>]"
   , "       psx check [dir...] [--json] [-- <spago build arguments>]"
+  , "       psx fmt [--check] [path...]"
   ]
 
 -- | Runs a command and returns its exit status.
@@ -66,6 +71,7 @@ run args = case Array.uncons args of
       { before, after } = splitDashes tail
       json = Array.elem "--json" before
     check (dirs (Array.filter (_ /= "--json") before)) json after
+  Just { head: "fmt", tail } -> fmt (dirs (Array.filter (_ /= "--check") tail)) (Array.elem "--check" tail)
   _ -> do
     error usage
     pure 2
@@ -296,3 +302,28 @@ remapDiagnostic d = case d.file of
             Right lowered -> remap { generated: file, source: sourcePath, positionMap: lowered.positionMap } d
             Left _ -> d
       _ -> pure d
+
+-- Formatting ---------------------------------------------------------------------
+
+-- | Formats the sources at the paths in place, or with `check` reports those
+-- | that are not formatted. Fails if any file has errors or, with `check`,
+-- | is not formatted.
+fmt :: Array FilePath -> Boolean -> Effect Int
+fmt roots checkOnly = do
+  sources <- findSources roots
+  failures <- for sources \file -> do
+    text <- FS.readTextFile UTF8 file
+    case (if Path.extname file == ".psxt" then formatPsxt else formatPsx) text of
+      Left errors -> do
+        printErrors file errors
+        pure 1
+      Right formatted
+        | formatted == text -> pure 0
+        | checkOnly -> do
+            error $ file <> ": not formatted (run psx fmt)"
+            pure 1
+        | otherwise -> do
+            FS.writeTextFile UTF8 file formatted
+            log $ "formatted " <> file
+            pure 0
+  pure (if Array.foldl (+) 0 failures > 0 then 1 else 0)

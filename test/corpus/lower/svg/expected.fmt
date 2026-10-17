@@ -1,0 +1,18 @@
+module Lower.Svg where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+-- Inside <svg>, names are SVG's: `text` is the element textEl, and literals in
+-- holes are in SVG too.
+icon :: Boolean -> Markup Unit
+icon on =
+  <svg viewBox="0 0 10 10" width="10">
+    <circle cx="5" cy="5" r="4" fill={if on then "green" else "gray"}/>
+    <text x="1" y="9" font-size="2">label</text>
+    {if on then <path d="M 0 0 L 10 10"/> else <></>}
+    <foreignObject>
+      <p>html again</p>
+    </foreignObject>
+  </svg>

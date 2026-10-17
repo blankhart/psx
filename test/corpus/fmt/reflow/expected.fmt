@@ -1,0 +1,30 @@
+module Fmt.Reflow where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+-- Words fill lines to the page width.
+paragraph :: Markup Unit
+paragraph =
+  <p>
+    PSX lets PureScript and HTML markup nest in each other. A .psx file is a
+    PureScript module where a markup literal can stand wherever an expression
+    can, and a .psxt file is an HTML document.
+  </p>
+
+-- Whitespace within a line is kept as written, character references are text,
+-- and a short paragraph joins its lines.
+kept :: Markup Unit
+kept =
+  <p>Fish  &amp;   chips, &nbsp;please.</p>
+
+-- A long run of words around inline tags breaks only between words.
+inline :: String -> Markup Unit
+inline user =
+  <p>
+    Signed in as <strong>{user}</strong>. You
+    can <a href="/settings">change your settings</a> or <a href="/logout">
+      sign out
+    </a> at any time.
+  </p>

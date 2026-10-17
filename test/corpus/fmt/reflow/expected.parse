@@ -1,0 +1,20 @@
+print: identical
+errors: none
+markup:
+  10:3 <p>
+    text "\n    PSX lets PureScript and HTML markup nest in each other. A .psx file is a PureScript module where a markup literal can stand wherever an expression can,\n    and a .psxt file\n    is an HTML document.\n  "
+  20:3 <p>
+    text "\n    Fish  &amp;   chips,\n    &nbsp;please.\n  "
+  28:3 <p>
+    text "Signed in as "
+    28:19 <strong>
+      hole {user}
+    text ". You can "
+    28:52 <a>
+      @href="/settings"
+      text "change your settings"
+    text " or "
+    28:100 <a>
+      @href="/logout"
+      text "sign out"
+    text " at any time."

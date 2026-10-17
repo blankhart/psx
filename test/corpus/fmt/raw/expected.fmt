@@ -1,0 +1,36 @@
+module Fmt.Raw where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+-- A stylesheet is reindented under its element, its lines keeping their
+-- indentation relative to one another.
+card :: Markup Unit
+card =
+  <div class="card">
+    <style>
+      .card { padding: 1rem; }
+      @media (min-width: 40rem) {
+        .card { display: flex; }
+      }
+    </style>
+    <!-- A comment keeps its text,
+         and its lines keep their place relative to its start. -->
+    <p>Card</p>
+  </div>
+
+-- A script's content is kept exactly.
+script :: Markup Unit
+script =
+  <div>
+    <script>
+    window.answer = 42;
+</script>
+  </div>
+
+inline :: Markup Unit
+inline =
+  <div>
+    <style>p { margin: 0; }</style>
+  </div>

@@ -1,0 +1,23 @@
+print: identical
+errors: none
+markup:
+  11:16 <p>
+    text "Hello, "
+    hole {name}
+  12:14 <p>
+    text "Hello, stranger. Nice to meet you, whoever you turn out to be."
+  15:8 <p>
+    text "One"
+  15:22 <p>
+    text "Two"
+  20:13 <h1>
+    text "Title"
+  22:5 <article>
+    hole {title}
+    22:21 <p>
+      text "Body"
+  26:12 <>
+    26:14 <li>
+      text "a"
+    26:24 <li>
+      text "b"

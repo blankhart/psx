@@ -24,6 +24,7 @@ main = do
   compilerOutput
   remapping
   styles
+  formatting
   log "psx-cli: all tests passed"
 
 assert :: String -> Boolean -> Effect Unit
@@ -117,3 +118,27 @@ styles = do
   written <- FS.exists (file "Card/PsxStyle.js")
   assert "nor writes its companion" (not written)
   FS.rm' ws { force: true, recursive: true, maxRetries: 0, retryDelay: 0 }
+
+-- `psx fmt --check` fails on a file that is not formatted and writes
+-- nothing; `psx fmt` formats it in place, after which the check passes.
+formatting :: Effect Unit
+formatting = do
+  cwd <- Process.cwd
+  let
+    dir = Path.concat [ cwd, "output", "psx-cli-fmt-test" ]
+    file = Path.concat [ dir, "View.psx" ]
+    messy = "module View where\n\nimport Portico.Psx (Markup)\n\nview :: Markup Unit\nview = <ul><li>one</li></ul>\n"
+    tidy = "module View where\n\nimport Portico.Psx (Markup)\n\nview :: Markup Unit\nview =\n  <ul>\n    <li>one</li>\n  </ul>\n"
+  FS.mkdir' dir { recursive: true, mode: permsAll }
+  FS.writeTextFile UTF8 file messy
+  unformatted <- run [ "fmt", "--check", dir ]
+  assert "fmt --check fails on an unformatted file" (unformatted == 1)
+  untouched <- FS.readTextFile UTF8 file
+  assert "fmt --check writes nothing" (untouched == messy)
+  formatted <- run [ "fmt", dir ]
+  assert "fmt formats" (formatted == 0)
+  text <- FS.readTextFile UTF8 file
+  assert ("fmt writes the formatted file: " <> show text) (text == tidy)
+  checked <- run [ "fmt", "--check", file ]
+  assert "fmt --check passes on a formatted file" (checked == 0)
+  FS.rm' dir { force: true, recursive: true, maxRetries: 0, retryDelay: 0 }

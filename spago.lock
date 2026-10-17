@@ -22,6 +22,7 @@
             "node-process",
             "prelude",
             "psx-cst",
+            "psx-fmt",
             "psx-lower",
             "strings",
             "tuples"
@@ -51,6 +52,7 @@
             "node-process",
             "prelude",
             "psx-cst",
+            "psx-fmt",
             "psx-lower",
             "strings"
           ]
@@ -154,13 +156,29 @@
         "path": "packages/psx-fmt",
         "core": {
           "dependencies": [
-            "prelude"
+            "arrays",
+            "dodo-printer",
+            "either",
+            "foldable-traversable",
+            "language-cst-parser",
+            "maybe",
+            "prelude",
+            "psx-cst",
+            "psx-lower",
+            "strings",
+            "tidy",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "effect",
+            "exceptions",
+            "node-buffer",
+            "node-fs",
+            "node-path",
+            "node-process"
           ]
         }
       },
@@ -1150,6 +1168,16 @@
         "prelude"
       ]
     },
+    "ansi": {
+      "type": "registry",
+      "version": "7.0.0",
+      "integrity": "sha256-tOUaXJFzPSfBVAqLI8hc+Tz2M1rg16cXqyHaK/3SmFg=",
+      "dependencies": [
+        "foldable-traversable",
+        "lists",
+        "prelude"
+      ]
+    },
     "argonaut-core": {
       "type": "registry",
       "version": "7.0.0",
@@ -1304,6 +1332,25 @@
         "prelude",
         "tuples",
         "type-equality"
+      ]
+    },
+    "dodo-printer": {
+      "type": "registry",
+      "version": "2.2.3",
+      "integrity": "sha256-z6LZV9tXQPBZvHqzUYyCYGB7zHq6u7TOgV6Pr0wiobs=",
+      "dependencies": [
+        "ansi",
+        "either",
+        "foldable-traversable",
+        "integers",
+        "lists",
+        "maybe",
+        "newtype",
+        "partial",
+        "prelude",
+        "safe-coerce",
+        "strings",
+        "tuples"
       ]
     },
     "effect": {
@@ -1992,6 +2039,27 @@
         "partial",
         "prelude",
         "refs"
+      ]
+    },
+    "tidy": {
+      "type": "registry",
+      "version": "0.11.1",
+      "integrity": "sha256-YVBajrHqEC0A5OpY5QwXgDzkqbdVs+Ym7qIM/A64MGA=",
+      "dependencies": [
+        "arrays",
+        "control",
+        "dodo-printer",
+        "either",
+        "foldable-traversable",
+        "language-cst-parser",
+        "lists",
+        "maybe",
+        "newtype",
+        "ordered-collections",
+        "partial",
+        "prelude",
+        "strings",
+        "tuples"
       ]
     },
     "transformers": {

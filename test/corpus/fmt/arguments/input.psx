@@ -1,0 +1,15 @@
+module Fmt.Arguments where
+
+import Prelude
+
+import Portico.Psx (Markup, root)
+
+-- Markup as a function argument gets its parentheses.
+page :: Markup Unit -> Markup Unit
+page body = body
+
+main :: Markup Unit
+main = page <main><h1>Title</h1></main>
+
+wrapped :: Markup Unit
+wrapped = page (<p>Already parenthesised</p>)

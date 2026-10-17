@@ -1,0 +1,27 @@
+module App.Styles where
+
+import Prelude
+
+import Portico.Psx (Markup)
+
+view :: Int -> Markup Unit
+view n =
+  <main class="page">
+    <style>
+      .page { max-width: 40rem; }
+    </style>
+    <ul class="list">
+      {map item [ 1, 2, n ]}
+      <style>.list > li:first-child { font-weight: bold; }</style>
+    </ul>
+  </main>
+  where
+  item i =
+    <li>
+      <>
+        {show i}
+        <style>
+          li::marker, :scope:hover { color: crimson; }
+        </style>
+      </>
+    </li>

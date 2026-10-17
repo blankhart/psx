@@ -1,0 +1,5 @@
+module Parse.Unicode where
+
+import Portico.Psx
+
+view = <p title="日本語">héllo 🎉 {show 1} wörld</p> <> <b>ok</b>

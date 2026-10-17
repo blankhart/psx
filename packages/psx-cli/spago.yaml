@@ -18,6 +18,7 @@ package:
     - node-process
     - prelude
     - psx-cst
+    - psx-fmt
     - psx-lower
     - strings
     - tuples
