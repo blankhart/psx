@@ -153,6 +153,32 @@
           ]
         }
       },
+      "psx-examples-screamer": {
+        "path": "examples/screamer",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "control",
+            "datetime",
+            "effect",
+            "filterable",
+            "integers",
+            "maybe",
+            "prelude",
+            "psx-screamer",
+            "random",
+            "refs",
+            "screamer",
+            "strings",
+            "web-events",
+            "web-uievents"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
       "psx-fmt": {
         "path": "packages/psx-fmt",
         "core": {
@@ -339,8 +365,7 @@
         },
         "test": {
           "dependencies": [
-            "console",
-            "effect"
+            "console"
           ]
         }
       },
