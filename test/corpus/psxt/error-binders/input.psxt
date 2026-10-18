@@ -7,5 +7,5 @@ foreign import one :: forall a. Show a => a -> Markup Unit
 foreign import bad :: Int -> Markup Unit
 </script>
 
-<template name="one" args="a b"><p>{show a}</p></template>
-<template name="bad" args="(x"><p>{show x}</p></template>
+<template name="one a b"><p>{show a}</p></template>
+<template name="bad (x"><p>{show x}</p></template>

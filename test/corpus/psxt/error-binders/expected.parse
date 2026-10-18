@@ -1,11 +1,11 @@
 print: identical
 errors:
-  10:27-10:32 args has 2 binders but the type of one has 1 arrow
-  11:27-11:31 args holds PureScript binders, as a function's arguments: args="props n"
+  10:21-10:24 <template name="one a b"> has 2 binders but the type of one has 1 arrow
+  11:21-11:23 The words after a template's name are PureScript binders, as a function's arguments: name="f props n"
 script: 1:1-8:10, module App.Binders where
 template "one" at 10:1, args "a b" (2 binders), defines the foreign import at 6:1 (1 arrows)
-  10:33 <p>
+  10:26 <p>
     hole {show a}
 template "bad" at 11:1, args "(x" (0 binders), defines the foreign import at 7:1 (1 arrows)
-  11:32 <p>
+  11:25 <p>
     hole {show x}

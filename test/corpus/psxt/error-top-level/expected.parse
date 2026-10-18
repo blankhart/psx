@@ -12,6 +12,6 @@ template "view" at 11:1, defines the foreign import at 6:1 (0 arrows)
 template "view" at 12:1, defines the foreign import at 6:1 (0 arrows)
   12:23 <p>
     text "two"
-template "" at 13:1, args "x" (1 binders), no foreign import
-  13:20 <p>
-    hole {x}
+template "" at 13:1, no foreign import
+  13:11 <p>
+    text "unnamed"

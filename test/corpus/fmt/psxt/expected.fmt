@@ -11,14 +11,14 @@ foreign import card :: String -> Markup Unit
 foreign import badge :: Int -> Markup Unit
 </script>
 
-<template name="card" args="title">
+<template name="card title">
   <article class="card">
     <h2>{title}</h2>{badge 3}
   </article>
 </template>
 
 <!-- The badge. -->
-<template name="badge" args="n">
+<template name="badge n">
   <span class="badge">{show n}</span>
 </template>
 

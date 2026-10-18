@@ -1,7 +1,8 @@
 -- | Parses `.psxt` files: an HTML document whose
 -- | `<script type="text/purescript">` holds a PureScript module and whose
--- | `<template name="f" args="...">` elements are the bodies of that
--- | module's `foreign import f :: T` declarations.
+-- | `<template name="f x y">` elements are the bodies of that module's
+-- | `foreign import f :: T` declarations. `name` holds the left side of the
+-- | equation: the template's name, then its arguments.
 -- |
 -- | At the top level a file holds the script, templates, `<style>` elements,
 -- | comments and whitespace. Every top-level element is scanned as markup,
@@ -12,8 +13,8 @@
 -- | Resolution: each template must match a `foreign import` of its name,
 -- | which it then defines; a template without one is an error whose fix
 -- | inserts `foreign import f :: _` for the author to complete. A
--- | `foreign import` without a template stays real FFI. `args` holds
--- | PureScript binders, no more of them than the type has arrows.
+-- | `foreign import` without a template stays real FFI. The words after the
+-- | name are PureScript binders, no more of them than the type has arrows.
 module Psx.Cst.Psxt
   ( PsxtResult
   , Psxt
@@ -80,7 +81,7 @@ type Template =
   , declaration :: Maybe ForeignDecl
   }
 
--- | `args`' value without its quotes, and where that is.
+-- | The binders after the name in `name`'s value, and where they are.
 type Args =
   { text :: String
   , start :: Int
@@ -277,17 +278,17 @@ resolve src script foreigns el = do
   let
     nameAttr = Array.find (\a -> a.name.text == "name") (namedAttrs el.attrs)
     argsAttr = Array.find (\a -> a.name.text == "args") (namedAttrs el.attrs)
-    name = attrText "name" el
-    found = name >>= \n -> Array.find (\f -> f.name == n) foreigns
-    args = argsAttr >>= \a -> case a.value of
-      Just { value: AttrString t } -> do
-        let start = offsetOf src t.range.start + 1
-        Just { text: unquote t.text, start, end: start + SCU.length (unquote t.text), range: t.range }
+    -- `name`'s value: the first word is the name, the rest are binders.
+    lhs = nameAttr >>= \a -> case a.value of
+      Just { value: AttrString t } -> Just (splitName src (offsetOf src t.range.start + 1) (unquote t.text))
       _ -> Nothing
+    name = lhs >>= _.name
+    found = name >>= \n -> Array.find (\f -> f.name == n) foreigns
+    args = lhs >>= _.args
     binders = args <#> \a -> countBinders a.text
     nameErrors = case nameAttr, name of
       Nothing, _ -> [ errorAt el "A <template> needs a name: <template name=\"f\">, for its module's foreign import f" ]
-      Just a, Nothing -> [ { range: a.name.range, message: "A template's name is a string: name=\"f\"", fix: Nothing } ]
+      Just a, Nothing -> [ { range: a.name.range, message: "A template's name is a string: name=\"f\", or name=\"f x y\" with its arguments", fix: Nothing } ]
       _, Just n
         | isNothing found ->
             [ { range: maybe' (tagRange el) (\a -> attrRange a) nameAttr
@@ -297,14 +298,14 @@ resolve src script foreigns el = do
             ]
         | otherwise -> []
     argsErrors = case argsAttr, args, binders of
-      Just a, Nothing, _ -> [ { range: a.name.range, message: "A template's args are a string of binders: args=\"x y\"", fix: Nothing } ]
-      _, Just a, Just Nothing -> [ { range: a.range, message: "args holds PureScript binders, as a function's arguments: args=\"props n\"", fix: Nothing } ]
+      Just a, _, _ -> [ { range: attrRange a, message: "A template's arguments follow its name: name=\"f x y\" rather than args", fix: Nothing } ]
+      _, Just a, Just Nothing -> [ { range: a.range, message: "The words after a template's name are PureScript binders, as a function's arguments: name=\"f props n\"", fix: Nothing } ]
       _, Just a, Just (Just n)
         | Just f <- found
         , not (endsInWildcard f.declaration.type)
         , n > typeArrows f.declaration.type ->
             [ { range: a.range
-              , message: "args has " <> count n "binder" <> " but the type of " <> f.name <> " has " <> count (typeArrows f.declaration.type) "arrow"
+              , message: "<template name=\"" <> f.name <> " " <> a.text <> "\"> has " <> count n "binder" <> " but the type of " <> f.name <> " has " <> count (typeArrows f.declaration.type) "arrow"
               , fix: Nothing
               }
             ]
@@ -345,6 +346,24 @@ duplicateErrors resolved = Array.catMaybes $ Array.mapWithIndex dup resolved
     , Array.any (\p -> p.template.name == r.template.name) (Array.take i resolved) =
         Just (errorAt r.template.element ("A second <template name=\"" <> r.template.name <> "\">: a name has one template"))
     | otherwise = Nothing
+
+-- | Splits `name`'s value, which starts at `start`, into the template's name
+-- | and the binders after it, with where they are.
+splitName :: Source -> Int -> String -> { name :: Maybe String, args :: Maybe { text :: String, start :: Int, end :: Int, range :: SourceRange } }
+splitName src start value = do
+  let
+    isSpace c = c == ' ' || c == '\t' || c == '\n' || c == '\r'
+    lead = SCU.length (SCU.takeWhile isSpace value)
+    afterLead = SCU.drop lead value
+    word = SCU.takeWhile (not <<< isSpace) afterLead
+    rest = SCU.drop (SCU.length word) afterLead
+    gap = SCU.length (SCU.takeWhile isSpace rest)
+    text = String.trim rest
+    argsStart = start + lead + SCU.length word + gap
+    argsEnd = argsStart + SCU.length text
+  { name: if word == "" then Nothing else Just word
+  , args: if text == "" then Nothing else Just { text, start: argsStart, end: argsEnd, range: { start: posOf src argsStart, end: posOf src argsEnd } }
+  }
 
 -- | The number of binders, or nothing if they don't parse.
 countBinders :: String -> Maybe Int
