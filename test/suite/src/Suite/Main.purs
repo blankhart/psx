@@ -1,7 +1,9 @@
 -- | `spago run -p psx-suite` runs every scenario's apps in Chromium and checks
 -- | them against the scenario's DOM contracts, then writes the report (see
 -- | `Suite.Report`) to `test/suite/dist/report/`. Run `spago build` first:
--- | the apps are bundled from the workspace's compiled output.
+-- | the apps are bundled from the workspace's compiled output. Each app is
+-- | also compiled with purs-backend-es and bundled from that, for the
+-- | report's bundle sizes only; those bundles are not run.
 -- |
 -- | Arguments, before the names of the scenarios to run (all by default):
 -- |
@@ -122,6 +124,8 @@ type Env =
   , browser :: Browser
   -- | The contracts `--accept` has written in this run.
   , written :: Ref (Set String)
+  -- | Whether purs-backend-es compiled the workspace to `output-es/`.
+  , es :: Boolean
   }
 
 main :: Effect Unit
@@ -142,9 +146,13 @@ main = do
         Process.setExitCode 2
       else do
         written <- Ref.new Set.empty
+        built <- Driver.buildEs root
+        unless built.ok do
+          log "psx-suite: purs-backend-es failed, so the report has no purs-backend-es bundle sizes:"
+          log (indent built.output)
         launchAff_ do
           browser <- Driver.launch chrome
-          let env = { root, options, browser, written }
+          let env = { root, options, browser, written, es: built.ok }
           results <- Array.concat <<< Array.concat <$> for chosen \scenario ->
             liftEffect (frameworks root scenario) >>= traverse (runFramework env scenario)
           Driver.close browser
@@ -197,12 +205,12 @@ runFramework env scenario framework = do
         Driver.settle page
         pure page
       case opened of
-        Left error -> pure (Left { app: p.app, bundle: Just p.bundle, problem: message error })
+        Left error -> pure (Left { app: p.app, bundle: Just p.bundle, esBundle: p.esBundle, problem: message error })
         Right page -> liftEffect do
           problems <- Ref.new []
           measures <- Ref.new []
           broken <- Ref.new false
-          pure (Right { running: { app: p.app, page, problems, measures, broken }, bundle: p.bundle })
+          pure (Right { running: { app: p.app, page, problems, measures, broken }, bundle: p.bundle, esBundle: p.esBundle })
   let live = Array.mapMaybe (case _ of
         Right r -> Just r.running
         Left _ -> Nothing) running
@@ -210,29 +218,32 @@ runFramework env scenario framework = do
   results <- for running case _ of
     Left failure -> do
       liftEffect $ report failure.app [ failure.problem ]
-      pure (result failure.app false [ failure.problem ] [] failure.bundle)
-    Right { running: r, bundle } -> do
+      pure (result failure.app false [ failure.problem ] [] failure.bundle failure.esBundle)
+    Right { running: r, bundle, esBundle } -> do
       errors <- liftEffect (Driver.pageErrors r.page)
       Driver.closePage r.page
       liftEffect do
         problems <- (_ <> map ("page error: " <> _) errors) <$> Ref.read r.problems
         measures <- Ref.read r.measures
         report r.app problems
-        pure (result r.app (Array.null problems) problems measures (Just bundle))
+        pure (result r.app (Array.null problems) problems measures (Just bundle) esBundle)
   liftEffect (compareBundles scenario framework results)
   pure results
   where
-  result app pass problems measures bundle =
-    { scenario: scenario.name, framework, variant: app.variant, control: app.control, pass, problems, measures, bundle }
+  result app pass problems measures bundle esBundle =
+    { scenario: scenario.name, framework, variant: app.variant, control: app.control, pass, problems, measures, bundle, esBundle }
   report app problems = do
     log $ (if Array.null problems then "ok   " else "FAIL ") <> label app
     for_ problems \problem -> log $ indent problem
 
--- | Bundles the app and writes the page that loads it.
+type Size = { bytes :: Int, gzip :: Int }
+
+-- | Bundles the app and writes the page that loads it, and bundles it again
+-- | from purs-backend-es's output to measure it.
 prepare
   :: Env
   -> App
-  -> Aff (Either { app :: App, bundle :: Maybe { bytes :: Int, gzip :: Int }, problem :: String } { app :: App, bundle :: { bytes :: Int, gzip :: Int } })
+  -> Aff (Either { app :: App, bundle :: Maybe Size, esBundle :: Maybe Size, problem :: String } { app :: App, bundle :: Size, esBundle :: Maybe Size })
 prepare env app = do
   let
     dist = distDir env.root app
@@ -240,7 +251,7 @@ prepare env app = do
     js = Path.concat [ dist, "app.js" ]
   compiled <- liftEffect (FS.exists module_)
   if not compiled then
-    pure (Left { app, bundle: Nothing, problem: moduleName app <> " has not been compiled; run `spago build` first" })
+    pure (Left { app, bundle: Nothing, esBundle: Nothing, problem: moduleName app <> " has not been compiled; run `spago build` first" })
   else do
     let css = Path.concat [ dist, "app.css" ]
     -- The control loads the bundle the `purs/` app has just written.
@@ -252,12 +263,33 @@ prepare env app = do
       -- esbuild writes app.css beside app.js when the app imports CSS, as a
       -- PSX module with scoped styles does through its companion module.
       Driver.bundle { module: module_, outfile: js }
+    esBundle <- if app.control || not env.es then pure Nothing else bundleEs env app dist
     liftEffect do
       styled <- FS.exists css
       FS.writeTextFile UTF8 (Path.concat [ dist, pageFile app ]) (pageHtml app styled)
-      source <- FS.readTextFile UTF8 js
-      gzip <- Driver.gzipSize js
-      pure (Right { app, bundle: { bytes: CodeUnits.length source, gzip } })
+      bundle <- sizeOf js
+      pure (Right { app, bundle, esBundle })
+
+-- | The app bundled from `output-es/`, with the same esbuild settings, or
+-- | nothing if it cannot be: the size is reported and the bundle is not run.
+bundleEs :: Env -> App -> String -> Aff (Maybe Size)
+bundleEs env app dist = do
+  let
+    module_ = Path.concat [ env.root, "output-es", moduleName app, "index.js" ]
+    js = Path.concat [ dist, "es", "app.js" ]
+  liftEffect $ FS.mkdir' (Path.dirname js) { recursive: true, mode: permsAll }
+  bundled <- attempt (Driver.bundle { module: module_, outfile: js })
+  case bundled of
+    Left error -> liftEffect do
+      log $ "     " <> label app <> ": no purs-backend-es bundle: " <> message error
+      pure Nothing
+    Right _ -> liftEffect (Just <$> sizeOf js)
+
+sizeOf :: String -> Effect Size
+sizeOf js = do
+  source <- FS.readTextFile UTF8 js
+  gzip <- Driver.gzipSize js
+  pure { bytes: CodeUnits.length source, gzip }
 
 -- | Runs one step in every app that has not broken.
 runStep :: Env -> Array Running -> Step -> Aff Unit
@@ -398,27 +430,36 @@ checkContract env r name printed = do
             <> "):\n"
             <> Contract.diff e actual
 
--- | Logs each framework's `psx/` and `purs/` bundle sizes. The build plan
--- | asks that the two minified bundles differ only by the scope attributes
--- | PSX stamps, which cannot hold as stated: the `psx/` bundle also carries
--- | the backend's `Children` and `Content` dispatch, `keyed` and
--- | `root`, and purs writes each module's name and line numbers into its
--- | pattern-match errors. So, as decided on psx#8, the comparison is
--- | reported and does not fail the run.
+-- | Logs each framework's `psx/` and `purs/` bundle sizes, from purs's own
+-- | code generator and from purs-backend-es. The build plan asks that the
+-- | two minified bundles differ only by the scope attributes PSX stamps,
+-- | which cannot hold as stated: the `psx/` bundle also carries the
+-- | backend's `Children` and `Content` dispatch, `keyed` and `root`, and
+-- | purs writes each module's name and line numbers into its pattern-match
+-- | errors. So, as decided on psx#8, the comparison is reported and does not
+-- | fail the run. purs-backend-es inlines dictionaries whose instances are
+-- | known, so its gap is what a general optimiser leaves of that dispatch
+-- | (psx#34).
 compareBundles :: Scenario -> String -> Array AppResult -> Effect Unit
 compareBundles scenario framework results = do
   let
     name = scenario.name <> "/" <> framework
-    size variant = Array.find (\r -> r.variant == variant && not r.control) results >>= _.bundle
-  case size "purs", size "psx" of
-    Just purs, Just psx -> do
-      log $ "     " <> name <> " bundles: purs " <> show purs.bytes <> " B (" <> show purs.gzip <> " B gzip), psx "
+    find variant = Array.find (\r -> r.variant == variant && not r.control) results
+    logSizes codegen purs psx = do
+      log $ "     " <> name <> " bundles (" <> codegen <> "): purs " <> show purs.bytes <> " B (" <> show purs.gzip <> " B gzip), psx "
         <> show psx.bytes
         <> " B ("
         <> show psx.gzip
         <> " B gzip)"
       log $ "     " <> name <> " psx/ adds " <> show (psx.bytes - purs.bytes) <> " B (" <> show (psx.gzip - purs.gzip)
-        <> " B gzip) to purs/"
+        <> " B gzip) to purs/ ("
+        <> codegen
+        <> ")"
+  case find "purs" >>= _.bundle, find "psx" >>= _.bundle of
+    Just purs, Just psx -> logSizes "purs" purs psx
+    _, _ -> pure unit
+  case find "purs" >>= _.esBundle, find "psx" >>= _.esBundle of
+    Just purs, Just psx -> logSizes "purs-backend-es" purs psx
     _, _ -> pure unit
 
 pageFile :: App -> String
