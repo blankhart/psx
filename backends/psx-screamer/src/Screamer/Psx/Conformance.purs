@@ -878,7 +878,6 @@ citeAttr =
 class_ :: Array (B.Node (Effect Unit))
 class_ =
   [ B.div [ B.class_ "" ] B.none
-  , B.g [ B.class_ "" ] B.none
   ]
 
 classid :: Array (B.Node (Effect Unit))
@@ -1432,8 +1431,7 @@ headers =
 
 height :: Array (B.Node (Effect Unit))
 height =
-  [ B.applet [ B.height "" ] B.none
-  , B.animation [ B.height "" ] B.none
+  [ B.applet [ B.height 0 ] B.none
   ]
 
 hidden :: Array (B.Node (Effect Unit))
@@ -2586,6 +2584,21 @@ surfaceScale =
   [ B.feDiffuseLighting [ B.surfaceScale 0.0 ] B.none
   ]
 
+svgClass :: Array (B.Node (Effect Unit))
+svgClass =
+  [ B.g [ B.svgClass "" ] B.none
+  ]
+
+svgHeight :: Array (B.Node (Effect Unit))
+svgHeight =
+  [ B.animation [ B.svgHeight "" ] B.none
+  ]
+
+svgWidth :: Array (B.Node (Effect Unit))
+svgWidth =
+  [ B.animation [ B.svgWidth "" ] B.none
+  ]
+
 syncBehavior :: Array (B.Node (Effect Unit))
 syncBehavior =
   [ B.animation [ B.syncBehavior "" ] B.none
@@ -2868,8 +2881,7 @@ whiteSpace =
 
 width :: Array (B.Node (Effect Unit))
 width =
-  [ B.applet [ B.width "" ] B.none
-  , B.animation [ B.width "" ] B.none
+  [ B.applet [ B.width 0 ] B.none
   ]
 
 widths :: Array (B.Node (Effect Unit))

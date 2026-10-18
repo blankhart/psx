@@ -680,6 +680,9 @@ module Psx.Static
   , styleAttr
   , summaryAttr
   , surfaceScale
+  , svgClass
+  , svgHeight
+  , svgWidth
   , syncBehavior
   , syncBehaviorDefault
   , syncMaster
@@ -2221,8 +2224,8 @@ hanging = Core.attribute "hanging" <<< show
 headers :: forall a. String -> Attr a
 headers = Core.attribute "headers"
 
-height :: forall a. String -> Attr a
-height = Core.attribute "height"
+height :: forall a. Int -> Attr a
+height = Core.attribute "height" <<< show
 
 hidden :: forall a. Boolean -> Attr a
 hidden = Impl.booleanAttribute "hidden"
@@ -2905,6 +2908,15 @@ summaryAttr = Core.attribute "summary"
 surfaceScale :: forall a. Number -> Attr a
 surfaceScale = Core.attribute "surfaceScale" <<< show
 
+svgClass :: forall a. String -> Attr a
+svgClass = Core.attribute "class"
+
+svgHeight :: forall a. String -> Attr a
+svgHeight = Core.attribute "height"
+
+svgWidth :: forall a. String -> Attr a
+svgWidth = Core.attribute "width"
+
 syncBehavior :: forall a. String -> Attr a
 syncBehavior = Core.attribute "syncBehavior"
 
@@ -3070,8 +3082,8 @@ vspace = Core.attribute "vspace" <<< show
 whiteSpace :: forall a. String -> Attr a
 whiteSpace = Core.attribute "white-space"
 
-width :: forall a. String -> Attr a
-width = Core.attribute "width"
+width :: forall a. Int -> Attr a
+width = Core.attribute "width" <<< show
 
 widths :: forall a. String -> Attr a
 widths = Core.attribute "widths"
