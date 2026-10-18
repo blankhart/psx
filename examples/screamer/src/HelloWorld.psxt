@@ -23,7 +23,7 @@ counter = component do
 foreign import view :: SignalSource Int -> Markup (Effect Unit)
 </script>
 
-<template name="view" args="count">
+<template name="view count">
   <div class="counter">
     <button id="decrement" onclick={count.modify (_ - 1)}>-</button>
     <span id="count">{show <$> count.signal}</span>

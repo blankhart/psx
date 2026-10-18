@@ -7,4 +7,4 @@ foreign import shown :: Markup Unit
 </script>
 
 <template name="shown"><p>shown</p></template>
-<template name="hidden" args="x"><p>{x}</p></template>
+<template name="hidden x"><p>{x}</p></template>

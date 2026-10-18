@@ -20,13 +20,13 @@ foreign import footer :: Markup Unit
 foreign import now :: Int
 </script>
 
-<template name="table" args="{ title, rows } extra">
+<template name="table { title, rows } extra">
   <table>
     <caption>{title} ({show extra})</caption>
     {map row rows}
   </table>
   {footer}
 </template>
-<template name="row" args="r">
+<template name="row r">
   <tr><td>{show r.id}</td><td>{r.label}</td></tr>
 </template>

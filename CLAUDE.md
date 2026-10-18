@@ -1,6 +1,6 @@
 # PSX
 
-PSX lets PureScript and HTML markup nest in each other. A `.psx` file is a PureScript module where a markup literal can stand wherever an expression can. A `.psxt` file is an HTML document whose `<script type="text/purescript">` is a PureScript module and whose `<template name="f" args="...">` elements are the bodies of that module's `foreign import f :: T` declarations. Both lower, file by file, to ordinary `.purs`.
+PSX lets PureScript and HTML markup nest in each other. A `.psx` file is a PureScript module where a markup literal can stand wherever an expression can. A `.psxt` file is an HTML document whose `<script type="text/purescript">` is a PureScript module and whose `<template name="f x y">` elements are the bodies of that module's `foreign import f :: T` declarations, with `name` holding the left side of the equation `f x y = …`. Both lower, file by file, to ordinary `.purs`.
 
 - Design: [PSX: mixed markup and PureScript, with tooling](https://claude.ai/artifact/9QSAvYisU4d3JT3hmeYwpu)
 - Build plan: [PSX build plan](https://claude.ai/code/artifact/1f9402ce-3ee6-4022-abdb-7e3954c88435), tracked in #1 with one sub-issue per step
