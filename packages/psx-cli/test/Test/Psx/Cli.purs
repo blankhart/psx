@@ -182,6 +182,7 @@ generating = do
       , "    \"voidElement\": { \"type\": \"E\", \"code\": \"void {name}\" },"
       , "    \"boolean\": { \"type\": \"{value} -> A\", \"code\": \"bool {name}\" },"
       , "    \"string\": { \"type\": \"{value} -> A\", \"code\": \"str {name}\" },"
+      , "    \"integer\": { \"type\": \"{value} -> A\", \"code\": \"int {name}\" },"
       , "    \"number\": { \"type\": \"{value} -> A\", \"code\": \"num {name}\" },"
       , "    \"event\": { \"type\": \"H\", \"code\": \"on {name}\" } },"
       , "  \"groups\": [ { \"names\": [\"disabled\", \"id\"], \"code\": \"F.{ident}\" } ],"
@@ -202,7 +203,9 @@ generating = do
       assert "a void element" (backend "br = void \"br\"")
       assert "a group's name" (backend "disabled = F.disabled")
       assert "a name's own entry wins over its group" (backend "id = F.identifier")
-      assert "a number attribute" (backend "tabindex :: Int -> A")
+      assert "an integer attribute" (backend "tabindex :: Int -> A")
+      assert "a number attribute" (backend "low :: Number -> A")
+      assert "a number attribute's use is a Number literal" (conformance "  [ B.meter [ B.low 0.0 ] B.none")
       assert "an enumeration is a string" (backend "popover :: String -> A")
       assert "an event" (backend "onClick = on \"click\"")
       assert "an SVG element" (backend "textEl = el \"text\"")

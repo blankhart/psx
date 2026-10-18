@@ -70,8 +70,12 @@
       "type": "forall r a. String -> Attr r a",
       "code": "attribute {name}"
     },
-    "number": {
+    "integer": {
       "type": "forall r a. Int -> Attr r a",
+      "code": "attribute {name} <<< show"
+    },
+    "number": {
+      "type": "forall r a. Number -> Attr r a",
       "code": "attribute {name} <<< show"
     },
     "event": {

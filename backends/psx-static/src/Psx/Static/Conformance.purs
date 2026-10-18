@@ -318,7 +318,7 @@ about =
 
 accentHeight :: forall a. Array (B.Node a)
 accentHeight =
-  [ B.fontFace [ B.accentHeight 0 ] B.none
+  [ B.fontFace [ B.accentHeight 0.0 ] B.none
   ]
 
 accept :: forall a. Array (B.Node a)
@@ -393,7 +393,7 @@ alpha =
 
 alphabetic :: forall a. Array (B.Node a)
 alphabetic =
-  [ B.fontFace [ B.alphabetic 0 ] B.none
+  [ B.fontFace [ B.alphabetic 0.0 ] B.none
   ]
 
 alt :: forall a. Array (B.Node a)
@@ -403,7 +403,7 @@ alt =
 
 amplitude :: forall a. Array (B.Node a)
 amplitude =
-  [ B.feFuncA [ B.amplitude 0 ] B.none
+  [ B.feFuncA [ B.amplitude 0.0 ] B.none
   ]
 
 arabicForm :: forall a. Array (B.Node a)
@@ -682,20 +682,20 @@ ariaSort =
 
 ariaValuemax :: forall a. Array (B.Node a)
 ariaValuemax =
-  [ B.div [ B.ariaValuemax 0 ] B.none
-  , B.g [ B.ariaValuemax 0 ] B.none
+  [ B.div [ B.ariaValuemax 0.0 ] B.none
+  , B.g [ B.ariaValuemax 0.0 ] B.none
   ]
 
 ariaValuemin :: forall a. Array (B.Node a)
 ariaValuemin =
-  [ B.div [ B.ariaValuemin 0 ] B.none
-  , B.g [ B.ariaValuemin 0 ] B.none
+  [ B.div [ B.ariaValuemin 0.0 ] B.none
+  , B.g [ B.ariaValuemin 0.0 ] B.none
   ]
 
 ariaValuenow :: forall a. Array (B.Node a)
 ariaValuenow =
-  [ B.div [ B.ariaValuenow 0 ] B.none
-  , B.g [ B.ariaValuenow 0 ] B.none
+  [ B.div [ B.ariaValuenow 0.0 ] B.none
+  , B.g [ B.ariaValuenow 0.0 ] B.none
   ]
 
 ariaValuetext :: forall a. Array (B.Node a)
@@ -711,7 +711,7 @@ as =
 
 ascent :: forall a. Array (B.Node a)
 ascent =
-  [ B.fontFace [ B.ascent 0 ] B.none
+  [ B.fontFace [ B.ascent 0.0 ] B.none
   ]
 
 async :: forall a. Array (B.Node a)
@@ -761,7 +761,7 @@ axis =
 
 azimuth :: forall a. Array (B.Node a)
 azimuth =
-  [ B.feDistantLight [ B.azimuth 0 ] B.none
+  [ B.feDistantLight [ B.azimuth 0.0 ] B.none
   ]
 
 background :: forall a. Array (B.Node a)
@@ -806,7 +806,7 @@ bgcolor =
 
 bias :: forall a. Array (B.Node a)
 bias =
-  [ B.feConvolveMatrix [ B.bias 0 ] B.none
+  [ B.feConvolveMatrix [ B.bias 0.0 ] B.none
   ]
 
 blocking :: forall a. Array (B.Node a)
@@ -831,7 +831,7 @@ calcMode =
 
 capHeight :: forall a. Array (B.Node a)
 capHeight =
-  [ B.fontFace [ B.capHeight 0 ] B.none
+  [ B.fontFace [ B.capHeight 0.0 ] B.none
   ]
 
 cellpadding :: forall a. Array (B.Node a)
@@ -1080,12 +1080,12 @@ defer =
 
 descent :: forall a. Array (B.Node a)
 descent =
-  [ B.fontFace [ B.descent 0 ] B.none
+  [ B.fontFace [ B.descent 0.0 ] B.none
   ]
 
 diffuseConstant :: forall a. Array (B.Node a)
 diffuseConstant =
-  [ B.feDiffuseLighting [ B.diffuseConstant 0 ] B.none
+  [ B.feDiffuseLighting [ B.diffuseConstant 0.0 ] B.none
   ]
 
 dirAttr :: forall a. Array (B.Node a)
@@ -1115,7 +1115,7 @@ display =
 
 divisor :: forall a. Array (B.Node a)
 divisor =
-  [ B.feConvolveMatrix [ B.divisor 0 ] B.none
+  [ B.feConvolveMatrix [ B.divisor 0.0 ] B.none
   ]
 
 dominantBaseline :: forall a. Array (B.Node a)
@@ -1161,7 +1161,7 @@ editable =
 
 elevation :: forall a. Array (B.Node a)
 elevation =
-  [ B.feDistantLight [ B.elevation 0 ] B.none
+  [ B.feDistantLight [ B.elevation 0.0 ] B.none
   ]
 
 enableBackground :: forall a. Array (B.Node a)
@@ -1191,7 +1191,7 @@ event =
 
 exponent :: forall a. Array (B.Node a)
 exponent =
-  [ B.feFuncA [ B.exponent 0 ] B.none
+  [ B.feFuncA [ B.exponent 0.0 ] B.none
   ]
 
 exportparts :: forall a. Array (B.Node a)
@@ -1221,7 +1221,7 @@ fill =
 
 fillOpacity :: forall a. Array (B.Node a)
 fillOpacity =
-  [ B.g [ B.fillOpacity 0 ] B.none
+  [ B.g [ B.fillOpacity 0.0 ] B.none
   ]
 
 fillRule :: forall a. Array (B.Node a)
@@ -1416,7 +1416,7 @@ handlerAttr =
 
 hanging :: forall a. Array (B.Node a)
 hanging =
-  [ B.fontFace [ B.hanging 0 ] B.none
+  [ B.fontFace [ B.hanging 0.0 ] B.none
   ]
 
 headers :: forall a. Array (B.Node a)
@@ -1437,22 +1437,22 @@ hidden =
 
 high :: forall a. Array (B.Node a)
 high =
-  [ B.meter [ B.high 0 ] B.none
+  [ B.meter [ B.high 0.0 ] B.none
   ]
 
 horizAdvX :: forall a. Array (B.Node a)
 horizAdvX =
-  [ B.font [ B.horizAdvX 0 ] B.none
+  [ B.font [ B.horizAdvX 0.0 ] B.none
   ]
 
 horizOriginX :: forall a. Array (B.Node a)
 horizOriginX =
-  [ B.font [ B.horizOriginX 0 ] B.none
+  [ B.font [ B.horizOriginX 0.0 ] B.none
   ]
 
 horizOriginY :: forall a. Array (B.Node a)
 horizOriginY =
-  [ B.font [ B.horizOriginY 0 ] B.none
+  [ B.font [ B.horizOriginY 0.0 ] B.none
   ]
 
 href :: forall a. Array (B.Node a)
@@ -1485,7 +1485,7 @@ id =
 
 ideographic :: forall a. Array (B.Node a)
 ideographic =
-  [ B.fontFace [ B.ideographic 0 ] B.none
+  [ B.fontFace [ B.ideographic 0.0 ] B.none
   ]
 
 imageRendering :: forall a. Array (B.Node a)
@@ -1535,7 +1535,7 @@ integrity =
 
 intercept :: forall a. Array (B.Node a)
 intercept =
-  [ B.feFuncA [ B.intercept 0 ] B.none
+  [ B.feFuncA [ B.intercept 0.0 ] B.none
   ]
 
 is :: forall a. Array (B.Node a)
@@ -1575,27 +1575,27 @@ itemtype =
 
 k :: forall a. Array (B.Node a)
 k =
-  [ B.hkern [ B.k 0 ] B.none
+  [ B.hkern [ B.k 0.0 ] B.none
   ]
 
 k1 :: forall a. Array (B.Node a)
 k1 =
-  [ B.feComposite [ B.k1 0 ] B.none
+  [ B.feComposite [ B.k1 0.0 ] B.none
   ]
 
 k2 :: forall a. Array (B.Node a)
 k2 =
-  [ B.feComposite [ B.k2 0 ] B.none
+  [ B.feComposite [ B.k2 0.0 ] B.none
   ]
 
 k3 :: forall a. Array (B.Node a)
 k3 =
-  [ B.feComposite [ B.k3 0 ] B.none
+  [ B.feComposite [ B.k3 0.0 ] B.none
   ]
 
 k4 :: forall a. Array (B.Node a)
 k4 =
-  [ B.feComposite [ B.k4 0 ] B.none
+  [ B.feComposite [ B.k4 0.0 ] B.none
   ]
 
 kernelMatrix :: forall a. Array (B.Node a)
@@ -1666,7 +1666,7 @@ lightingColor =
 
 limitingConeAngle :: forall a. Array (B.Node a)
 limitingConeAngle =
-  [ B.feSpotLight [ B.limitingConeAngle 0 ] B.none
+  [ B.feSpotLight [ B.limitingConeAngle 0.0 ] B.none
   ]
 
 linkAttr :: forall a. Array (B.Node a)
@@ -1701,7 +1701,7 @@ loop =
 
 low :: forall a. Array (B.Node a)
 low =
-  [ B.meter [ B.low 0 ] B.none
+  [ B.meter [ B.low 0.0 ] B.none
   ]
 
 manifest :: forall a. Array (B.Node a)
@@ -1798,7 +1798,7 @@ mediaContentEncodings =
 
 mediaSize :: forall a. Array (B.Node a)
 mediaSize =
-  [ B.prefetch [ B.mediaSize 0 ] B.none
+  [ B.prefetch [ B.mediaSize 0.0 ] B.none
   ]
 
 mediaTime :: forall a. Array (B.Node a)
@@ -1966,7 +1966,7 @@ operator =
 
 optimum :: forall a. Array (B.Node a)
 optimum =
-  [ B.meter [ B.optimum 0 ] B.none
+  [ B.meter [ B.optimum 0.0 ] B.none
   ]
 
 order :: forall a. Array (B.Node a)
@@ -2001,12 +2001,12 @@ overlay =
 
 overlinePosition :: forall a. Array (B.Node a)
 overlinePosition =
-  [ B.fontFace [ B.overlinePosition 0 ] B.none
+  [ B.fontFace [ B.overlinePosition 0.0 ] B.none
   ]
 
 overlineThickness :: forall a. Array (B.Node a)
 overlineThickness =
-  [ B.fontFace [ B.overlineThickness 0 ] B.none
+  [ B.fontFace [ B.overlineThickness 0.0 ] B.none
   ]
 
 paintOrder :: forall a. Array (B.Node a)
@@ -2031,7 +2031,7 @@ pathAttr =
 
 pathLength :: forall a. Array (B.Node a)
 pathLength =
-  [ B.circle [ B.pathLength 0 ] B.none
+  [ B.circle [ B.pathLength 0.0 ] B.none
   ]
 
 patternAttr :: forall a. Array (B.Node a)
@@ -2097,17 +2097,17 @@ points =
 
 pointsAtX :: forall a. Array (B.Node a)
 pointsAtX =
-  [ B.feSpotLight [ B.pointsAtX 0 ] B.none
+  [ B.feSpotLight [ B.pointsAtX 0.0 ] B.none
   ]
 
 pointsAtY :: forall a. Array (B.Node a)
 pointsAtY =
-  [ B.feSpotLight [ B.pointsAtY 0 ] B.none
+  [ B.feSpotLight [ B.pointsAtY 0.0 ] B.none
   ]
 
 pointsAtZ :: forall a. Array (B.Node a)
 pointsAtZ =
-  [ B.feSpotLight [ B.pointsAtZ 0 ] B.none
+  [ B.feSpotLight [ B.pointsAtZ 0.0 ] B.none
   ]
 
 popover :: forall a. Array (B.Node a)
@@ -2421,12 +2421,12 @@ spanAttr =
 
 specularConstant :: forall a. Array (B.Node a)
 specularConstant =
-  [ B.feSpecularLighting [ B.specularConstant 0 ] B.none
+  [ B.feSpecularLighting [ B.specularConstant 0.0 ] B.none
   ]
 
 specularExponent :: forall a. Array (B.Node a)
 specularExponent =
-  [ B.feSpecularLighting [ B.specularExponent 0 ] B.none
+  [ B.feSpecularLighting [ B.specularExponent 0.0 ] B.none
   ]
 
 spellcheck :: forall a. Array (B.Node a)
@@ -2511,12 +2511,12 @@ stopOpacity =
 
 strikethroughPosition :: forall a. Array (B.Node a)
 strikethroughPosition =
-  [ B.fontFace [ B.strikethroughPosition 0 ] B.none
+  [ B.fontFace [ B.strikethroughPosition 0.0 ] B.none
   ]
 
 strikethroughThickness :: forall a. Array (B.Node a)
 strikethroughThickness =
-  [ B.fontFace [ B.strikethroughThickness 0 ] B.none
+  [ B.fontFace [ B.strikethroughThickness 0.0 ] B.none
   ]
 
 string :: forall a. Array (B.Node a)
@@ -2551,12 +2551,12 @@ strokeLinejoin =
 
 strokeMiterlimit :: forall a. Array (B.Node a)
 strokeMiterlimit =
-  [ B.g [ B.strokeMiterlimit 0 ] B.none
+  [ B.g [ B.strokeMiterlimit 0.0 ] B.none
   ]
 
 strokeOpacity :: forall a. Array (B.Node a)
 strokeOpacity =
-  [ B.g [ B.strokeOpacity 0 ] B.none
+  [ B.g [ B.strokeOpacity 0.0 ] B.none
   ]
 
 strokeWidth :: forall a. Array (B.Node a)
@@ -2577,7 +2577,7 @@ summaryAttr =
 
 surfaceScale :: forall a. Array (B.Node a)
 surfaceScale =
-  [ B.feDiffuseLighting [ B.surfaceScale 0 ] B.none
+  [ B.feDiffuseLighting [ B.surfaceScale 0.0 ] B.none
   ]
 
 syncBehavior :: forall a. Array (B.Node a)
@@ -2731,12 +2731,12 @@ u2 =
 
 underlinePosition :: forall a. Array (B.Node a)
 underlinePosition =
-  [ B.fontFace [ B.underlinePosition 0 ] B.none
+  [ B.fontFace [ B.underlinePosition 0.0 ] B.none
   ]
 
 underlineThickness :: forall a. Array (B.Node a)
 underlineThickness =
-  [ B.fontFace [ B.underlineThickness 0 ] B.none
+  [ B.fontFace [ B.underlineThickness 0.0 ] B.none
   ]
 
 unicode :: forall a. Array (B.Node a)
@@ -2756,7 +2756,7 @@ unicodeRange =
 
 unitsPerEm :: forall a. Array (B.Node a)
 unitsPerEm =
-  [ B.fontFace [ B.unitsPerEm 0 ] B.none
+  [ B.fontFace [ B.unitsPerEm 0.0 ] B.none
   ]
 
 usemap :: forall a. Array (B.Node a)
@@ -2766,22 +2766,22 @@ usemap =
 
 vAlphabetic :: forall a. Array (B.Node a)
 vAlphabetic =
-  [ B.fontFace [ B.vAlphabetic 0 ] B.none
+  [ B.fontFace [ B.vAlphabetic 0.0 ] B.none
   ]
 
 vHanging :: forall a. Array (B.Node a)
 vHanging =
-  [ B.fontFace [ B.vHanging 0 ] B.none
+  [ B.fontFace [ B.vHanging 0.0 ] B.none
   ]
 
 vIdeographic :: forall a. Array (B.Node a)
 vIdeographic =
-  [ B.fontFace [ B.vIdeographic 0 ] B.none
+  [ B.fontFace [ B.vIdeographic 0.0 ] B.none
   ]
 
 vMathematical :: forall a. Array (B.Node a)
 vMathematical =
-  [ B.fontFace [ B.vMathematical 0 ] B.none
+  [ B.fontFace [ B.vMathematical 0.0 ] B.none
   ]
 
 valign :: forall a. Array (B.Node a)
@@ -2817,17 +2817,17 @@ version =
 
 vertAdvY :: forall a. Array (B.Node a)
 vertAdvY =
-  [ B.font [ B.vertAdvY 0 ] B.none
+  [ B.font [ B.vertAdvY 0.0 ] B.none
   ]
 
 vertOriginX :: forall a. Array (B.Node a)
 vertOriginX =
-  [ B.font [ B.vertOriginX 0 ] B.none
+  [ B.font [ B.vertOriginX 0.0 ] B.none
   ]
 
 vertOriginY :: forall a. Array (B.Node a)
 vertOriginY =
-  [ B.font [ B.vertOriginY 0 ] B.none
+  [ B.font [ B.vertOriginY 0.0 ] B.none
   ]
 
 viewBox :: forall a. Array (B.Node a)
@@ -2913,7 +2913,7 @@ xChannelSelector =
 
 xHeight :: forall a. Array (B.Node a)
 xHeight =
-  [ B.fontFace [ B.xHeight 0 ] B.none
+  [ B.fontFace [ B.xHeight 0.0 ] B.none
   ]
 
 y :: forall a. Array (B.Node a)
