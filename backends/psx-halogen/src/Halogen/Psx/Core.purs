@@ -104,6 +104,9 @@ instance Content (Array (Tuple String (HH.HTML w a))) w a where
 none :: forall w a. Markup w a
 none = []
 
+-- | Keys a child for its parent's keyed child list. A key belongs to the
+-- | list, not to the element, so it is never an `Attr`: write `key` on the
+-- | element in markup, never a key in a trait hole.
 keyed :: forall k w a. ToKey k => k -> Node w a -> Tuple Key (Node w a)
 keyed k node = Tuple (toKey k) node
 
