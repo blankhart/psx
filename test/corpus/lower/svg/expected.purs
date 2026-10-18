@@ -8,7 +8,7 @@ import Portico.Psx as B
 -- holes are in SVG too.
 icon :: Boolean -> Markup Unit
 icon on =
-  [ B.svg [ B.viewBox "0 0 10 10", B.width "10" ] ([
+  [ B.svg [ B.viewBox "0 0 10 10", B.svgWidth "10" ] ([
     B.circle [ B.cx "5", B.cy "5", B.r "4", B.fill (if on then "green" else "gray") ] B.none,
     B.textEl [ B.x "1", B.y "9", B.fontSize "2" ] ([ B.text "label" ]) ] <> B.children (
      if on then [ B.path [ B.d "M 0 0 L 10 10" ] B.none ] else []) <> [

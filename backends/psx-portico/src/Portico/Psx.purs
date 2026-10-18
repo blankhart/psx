@@ -683,6 +683,9 @@ module Portico.Psx
   , styleAttr
   , summaryAttr
   , surfaceScale
+  , svgClass
+  , svgHeight
+  , svgWidth
   , syncBehavior
   , syncBehaviorDefault
   , syncMaster
@@ -883,7 +886,7 @@ module Portico.Psx
 import Prelude (pure, show, (<<<))
 import Data.Maybe (Maybe)
 import Portico as P
-import Portico.Psx.Core (class Content, Attr, Node, booleanAttribute, elementOf, svgElement)
+import Portico.Psx.Core (class Content, Attr, Node, booleanAttribute, elementOf)
 import Portico.Psx.Core (class Children, class Content, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, none, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
@@ -1276,7 +1279,7 @@ sup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 sup = elementOf (P.element "sup")
 
 svg :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-svg = svgElement "svg"
+svg = elementOf (P.element "svg")
 
 table :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 table = elementOf (P.element "table")
@@ -1336,253 +1339,253 @@ xmp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 xmp = elementOf (P.element "xmp")
 
 altGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-altGlyph = svgElement "altGlyph"
+altGlyph = elementOf (P.element "altGlyph")
 
 altGlyphDef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-altGlyphDef = svgElement "altGlyphDef"
+altGlyphDef = elementOf (P.element "altGlyphDef")
 
 altGlyphItem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-altGlyphItem = svgElement "altGlyphItem"
+altGlyphItem = elementOf (P.element "altGlyphItem")
 
 animate :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animate = svgElement "animate"
+animate = elementOf (P.element "animate")
 
 animateColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animateColor = svgElement "animateColor"
+animateColor = elementOf (P.element "animateColor")
 
 animateMotion :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animateMotion = svgElement "animateMotion"
+animateMotion = elementOf (P.element "animateMotion")
 
 animateTransform :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animateTransform = svgElement "animateTransform"
+animateTransform = elementOf (P.element "animateTransform")
 
 animation :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animation = svgElement "animation"
+animation = elementOf (P.element "animation")
 
 circle :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-circle = svgElement "circle"
+circle = elementOf (P.element "circle")
 
 clipPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-clipPath = svgElement "clipPath"
+clipPath = elementOf (P.element "clipPath")
 
 colorProfile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-colorProfile = svgElement "color-profile"
+colorProfile = elementOf (P.element "color-profile")
 
 cursor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-cursor = svgElement "cursor"
+cursor = elementOf (P.element "cursor")
 
 defs :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-defs = svgElement "defs"
+defs = elementOf (P.element "defs")
 
 desc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-desc = svgElement "desc"
+desc = elementOf (P.element "desc")
 
 discard :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-discard = svgElement "discard"
+discard = elementOf (P.element "discard")
 
 ellipse :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-ellipse = svgElement "ellipse"
+ellipse = elementOf (P.element "ellipse")
 
 feBlend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feBlend = svgElement "feBlend"
+feBlend = elementOf (P.element "feBlend")
 
 feColorMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feColorMatrix = svgElement "feColorMatrix"
+feColorMatrix = elementOf (P.element "feColorMatrix")
 
 feComponentTransfer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feComponentTransfer = svgElement "feComponentTransfer"
+feComponentTransfer = elementOf (P.element "feComponentTransfer")
 
 feComposite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feComposite = svgElement "feComposite"
+feComposite = elementOf (P.element "feComposite")
 
 feConvolveMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feConvolveMatrix = svgElement "feConvolveMatrix"
+feConvolveMatrix = elementOf (P.element "feConvolveMatrix")
 
 feDiffuseLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDiffuseLighting = svgElement "feDiffuseLighting"
+feDiffuseLighting = elementOf (P.element "feDiffuseLighting")
 
 feDisplacementMap :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDisplacementMap = svgElement "feDisplacementMap"
+feDisplacementMap = elementOf (P.element "feDisplacementMap")
 
 feDistantLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDistantLight = svgElement "feDistantLight"
+feDistantLight = elementOf (P.element "feDistantLight")
 
 feDropShadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDropShadow = svgElement "feDropShadow"
+feDropShadow = elementOf (P.element "feDropShadow")
 
 feFlood :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFlood = svgElement "feFlood"
+feFlood = elementOf (P.element "feFlood")
 
 feFuncA :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncA = svgElement "feFuncA"
+feFuncA = elementOf (P.element "feFuncA")
 
 feFuncB :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncB = svgElement "feFuncB"
+feFuncB = elementOf (P.element "feFuncB")
 
 feFuncG :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncG = svgElement "feFuncG"
+feFuncG = elementOf (P.element "feFuncG")
 
 feFuncR :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncR = svgElement "feFuncR"
+feFuncR = elementOf (P.element "feFuncR")
 
 feGaussianBlur :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feGaussianBlur = svgElement "feGaussianBlur"
+feGaussianBlur = elementOf (P.element "feGaussianBlur")
 
 feImage :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feImage = svgElement "feImage"
+feImage = elementOf (P.element "feImage")
 
 feMerge :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feMerge = svgElement "feMerge"
+feMerge = elementOf (P.element "feMerge")
 
 feMergeNode :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feMergeNode = svgElement "feMergeNode"
+feMergeNode = elementOf (P.element "feMergeNode")
 
 feMorphology :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feMorphology = svgElement "feMorphology"
+feMorphology = elementOf (P.element "feMorphology")
 
 feOffset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feOffset = svgElement "feOffset"
+feOffset = elementOf (P.element "feOffset")
 
 fePointLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fePointLight = svgElement "fePointLight"
+fePointLight = elementOf (P.element "fePointLight")
 
 feSpecularLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feSpecularLighting = svgElement "feSpecularLighting"
+feSpecularLighting = elementOf (P.element "feSpecularLighting")
 
 feSpotLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feSpotLight = svgElement "feSpotLight"
+feSpotLight = elementOf (P.element "feSpotLight")
 
 feTile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feTile = svgElement "feTile"
+feTile = elementOf (P.element "feTile")
 
 feTurbulence :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feTurbulence = svgElement "feTurbulence"
+feTurbulence = elementOf (P.element "feTurbulence")
 
 filter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-filter = svgElement "filter"
+filter = elementOf (P.element "filter")
 
 fontFace :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFace = svgElement "font-face"
+fontFace = elementOf (P.element "font-face")
 
 fontFaceFormat :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceFormat = svgElement "font-face-format"
+fontFaceFormat = elementOf (P.element "font-face-format")
 
 fontFaceName :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceName = svgElement "font-face-name"
+fontFaceName = elementOf (P.element "font-face-name")
 
 fontFaceSrc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceSrc = svgElement "font-face-src"
+fontFaceSrc = elementOf (P.element "font-face-src")
 
 fontFaceUri :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceUri = svgElement "font-face-uri"
+fontFaceUri = elementOf (P.element "font-face-uri")
 
 foreignObject :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-foreignObject = svgElement "foreignObject"
+foreignObject = elementOf (P.element "foreignObject")
 
 g :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-g = svgElement "g"
+g = elementOf (P.element "g")
 
 glyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-glyph = svgElement "glyph"
+glyph = elementOf (P.element "glyph")
 
 glyphRef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-glyphRef = svgElement "glyphRef"
+glyphRef = elementOf (P.element "glyphRef")
 
 handler :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-handler = svgElement "handler"
+handler = elementOf (P.element "handler")
 
 hkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-hkern = svgElement "hkern"
+hkern = elementOf (P.element "hkern")
 
 line :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-line = svgElement "line"
+line = elementOf (P.element "line")
 
 linearGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-linearGradient = svgElement "linearGradient"
+linearGradient = elementOf (P.element "linearGradient")
 
 listener :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-listener = svgElement "listener"
+listener = elementOf (P.element "listener")
 
 marker :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-marker = svgElement "marker"
+marker = elementOf (P.element "marker")
 
 mask :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-mask = svgElement "mask"
+mask = elementOf (P.element "mask")
 
 metadata :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-metadata = svgElement "metadata"
+metadata = elementOf (P.element "metadata")
 
 missingGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-missingGlyph = svgElement "missing-glyph"
+missingGlyph = elementOf (P.element "missing-glyph")
 
 mpath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-mpath = svgElement "mpath"
+mpath = elementOf (P.element "mpath")
 
 path :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-path = svgElement "path"
+path = elementOf (P.element "path")
 
 pattern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-pattern = svgElement "pattern"
+pattern = elementOf (P.element "pattern")
 
 polygon :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-polygon = svgElement "polygon"
+polygon = elementOf (P.element "polygon")
 
 polyline :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-polyline = svgElement "polyline"
+polyline = elementOf (P.element "polyline")
 
 prefetch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-prefetch = svgElement "prefetch"
+prefetch = elementOf (P.element "prefetch")
 
 radialGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-radialGradient = svgElement "radialGradient"
+radialGradient = elementOf (P.element "radialGradient")
 
 rect :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-rect = svgElement "rect"
+rect = elementOf (P.element "rect")
 
 set :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-set = svgElement "set"
+set = elementOf (P.element "set")
 
 solidColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-solidColor = svgElement "solidColor"
+solidColor = elementOf (P.element "solidColor")
 
 stop :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-stop = svgElement "stop"
+stop = elementOf (P.element "stop")
 
 switch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-switch = svgElement "switch"
+switch = elementOf (P.element "switch")
 
 symbol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-symbol = svgElement "symbol"
+symbol = elementOf (P.element "symbol")
 
 tbreak :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-tbreak = svgElement "tbreak"
+tbreak = elementOf (P.element "tbreak")
 
 textEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-textEl = svgElement "text"
+textEl = elementOf (P.element "text")
 
 textArea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-textArea = svgElement "textArea"
+textArea = elementOf (P.element "textArea")
 
 textPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-textPath = svgElement "textPath"
+textPath = elementOf (P.element "textPath")
 
 tref :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-tref = svgElement "tref"
+tref = elementOf (P.element "tref")
 
 tspan :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-tspan = svgElement "tspan"
+tspan = elementOf (P.element "tspan")
 
 unknown :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-unknown = svgElement "unknown"
+unknown = elementOf (P.element "unknown")
 
 use :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-use = svgElement "use"
+use = elementOf (P.element "use")
 
 view :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-view = svgElement "view"
+view = elementOf (P.element "view")
 
 vkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-vkern = svgElement "vkern"
+vkern = elementOf (P.element "vkern")
 
 -- Attributes ------------------------------------------------------------------
 
@@ -2225,8 +2228,8 @@ hanging = P.attribute "hanging" <<< show
 headers :: forall a. String -> Attr a
 headers = P.attribute "headers"
 
-height :: forall a. String -> Attr a
-height = P.attribute "height"
+height :: forall a. Int -> Attr a
+height = P.attribute "height" <<< show
 
 hidden :: forall a. Boolean -> Attr a
 hidden = booleanAttribute "hidden"
@@ -2909,6 +2912,15 @@ summaryAttr = P.attribute "summary"
 surfaceScale :: forall a. Number -> Attr a
 surfaceScale = P.attribute "surfaceScale" <<< show
 
+svgClass :: forall a. String -> Attr a
+svgClass = P.attribute "class"
+
+svgHeight :: forall a. String -> Attr a
+svgHeight = P.attribute "height"
+
+svgWidth :: forall a. String -> Attr a
+svgWidth = P.attribute "width"
+
 syncBehavior :: forall a. String -> Attr a
 syncBehavior = P.attribute "syncBehavior"
 
@@ -3074,8 +3086,8 @@ vspace = P.attribute "vspace" <<< show
 whiteSpace :: forall a. String -> Attr a
 whiteSpace = P.attribute "white-space"
 
-width :: forall a. String -> Attr a
-width = P.attribute "width"
+width :: forall a. Int -> Attr a
+width = P.attribute "width" <<< show
 
 widths :: forall a. String -> Attr a
 widths = P.attribute "widths"

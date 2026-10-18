@@ -866,7 +866,6 @@ citeAttr =
 class_ :: forall w a. Array (B.Node w a)
 class_ =
   [ B.div [ B.class_ "" ] B.none
-  , B.g [ B.class_ "" ] B.none
   ]
 
 classid :: forall w a. Array (B.Node w a)
@@ -1420,8 +1419,7 @@ headers =
 
 height :: forall w a. Array (B.Node w a)
 height =
-  [ B.applet [ B.height "" ] B.none
-  , B.animation [ B.height "" ] B.none
+  [ B.applet [ B.height 0 ] B.none
   ]
 
 hidden :: forall w a. Array (B.Node w a)
@@ -2574,6 +2572,21 @@ surfaceScale =
   [ B.feDiffuseLighting [ B.surfaceScale 0.0 ] B.none
   ]
 
+svgClass :: forall w a. Array (B.Node w a)
+svgClass =
+  [ B.g [ B.svgClass "" ] B.none
+  ]
+
+svgHeight :: forall w a. Array (B.Node w a)
+svgHeight =
+  [ B.animation [ B.svgHeight "" ] B.none
+  ]
+
+svgWidth :: forall w a. Array (B.Node w a)
+svgWidth =
+  [ B.animation [ B.svgWidth "" ] B.none
+  ]
+
 syncBehavior :: forall w a. Array (B.Node w a)
 syncBehavior =
   [ B.animation [ B.syncBehavior "" ] B.none
@@ -2856,8 +2869,7 @@ whiteSpace =
 
 width :: forall w a. Array (B.Node w a)
 width =
-  [ B.applet [ B.width "" ] B.none
-  , B.animation [ B.width "" ] B.none
+  [ B.applet [ B.width 0 ] B.none
   ]
 
 widths :: forall w a. Array (B.Node w a)

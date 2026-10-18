@@ -2632,7 +2632,7 @@
       "height": {
         "purescript": "height",
         "type": {
-          "kind": "string",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3660,7 +3660,7 @@
       "width": {
         "purescript": "width",
         "type": {
-          "kind": "string",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -9165,7 +9165,7 @@
         "elementTypes": {}
       },
       "class": {
-        "purescript": "class_",
+        "purescript": "svgClass",
         "type": {
           "kind": "string",
           "values": []
@@ -9728,7 +9728,7 @@
         "elementTypes": {}
       },
       "height": {
-        "purescript": "height",
+        "purescript": "svgHeight",
         "type": {
           "kind": "string",
           "values": []
@@ -11259,7 +11259,7 @@
         "elementTypes": {}
       },
       "width": {
-        "purescript": "width",
+        "purescript": "svgWidth",
         "type": {
           "kind": "string",
           "values": []

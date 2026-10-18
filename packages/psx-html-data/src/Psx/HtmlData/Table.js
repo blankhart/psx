@@ -2634,7 +2634,7 @@ export const table = {
       "height": {
         "purescript": "height",
         "type": {
-          "kind": "string",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3662,7 +3662,7 @@ export const table = {
       "width": {
         "purescript": "width",
         "type": {
-          "kind": "string",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -9167,7 +9167,7 @@ export const table = {
         "elementTypes": {}
       },
       "class": {
-        "purescript": "class_",
+        "purescript": "svgClass",
         "type": {
           "kind": "string",
           "values": []
@@ -9730,7 +9730,7 @@ export const table = {
         "elementTypes": {}
       },
       "height": {
-        "purescript": "height",
+        "purescript": "svgHeight",
         "type": {
           "kind": "string",
           "values": []
@@ -11261,7 +11261,7 @@ export const table = {
         "elementTypes": {}
       },
       "width": {
-        "purescript": "width",
+        "purescript": "svgWidth",
         "type": {
           "kind": "string",
           "values": []
