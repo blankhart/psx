@@ -6,7 +6,10 @@
 -- |   and blank lines left out, and generated `.purs` too.
 -- | - **Cross-framework diff**: lines added and removed between this app's
 -- |   source and the same variant of the scenario on each other framework.
--- | - **Bundle size**: esbuild minified, then gzip, in bytes.
+-- | - **Bundle size**: esbuild minified, then gzip, in bytes, from purs's
+-- |   own code generator and from purs-backend-es. The bundles section sets
+-- |   each framework's `psx/` against its `purs/` under both, so the second
+-- |   gap shows what a general optimiser leaves of the backend's dispatch.
 -- | - **Runtime**: the median of each `Measure`'s runs, in milliseconds,
 -- |   with its quartiles as the spread.
 -- | - **Build time**: `psx build` of the app, and `spago build` of its
@@ -69,6 +72,8 @@ type AppResult =
   , problems :: Array String
   , measures :: Array { name :: String, samples :: Array Number }
   , bundle :: Maybe { bytes :: Int, gzip :: Int }
+  -- | The app bundled from purs-backend-es's output, not run.
+  , esBundle :: Maybe { bytes :: Int, gzip :: Int }
   }
 
 type Config =
@@ -427,10 +432,12 @@ reportJson rows timings = fromObject $ Object.fromFoldable
         , Tuple "tokens" (int row.source.tokens)
         ]
     , Tuple "diff" (fromArray (map (\d -> obj [ Tuple "framework" (fromString d.framework), Tuple "lines" (int d.lines) ]) row.diff))
-    , Tuple "bundle" (maybe jsonNull (\b -> obj [ Tuple "bytes" (int b.bytes), Tuple "gzip" (int b.gzip) ]) row.result.bundle)
+    , Tuple "bundle" (maybe jsonNull sizeJson row.result.bundle)
+    , Tuple "esBundle" (maybe jsonNull sizeJson row.result.esBundle)
     , Tuple "runtime" (fromArray (map (\m -> obj [ Tuple "name" (fromString m.name), Tuple "summary" (summaryJson m.summary), Tuple "samples" (samplesOf row m.name) ]) row.runtime))
     , Tuple "build" (maybe jsonNull (\b -> obj [ Tuple "psx" (maybe jsonNull fromNumber b.psx), Tuple "spago" (fromNumber b.spago) ]) row.build)
     ]
+  sizeJson b = obj [ Tuple "bytes" (int b.bytes), Tuple "gzip" (int b.gzip) ]
   samplesOf row name = fromArray $ map fromNumber $ fromMaybe [] $ _.samples <$> Array.find (\m -> m.name == name) row.result.measures
   timingJson t = obj
     [ Tuple "scenario" (fromString t.scenario)
@@ -460,7 +467,7 @@ type Table = { headers :: Array String, rows :: Array (Array String) }
 
 gridTable :: Array ReportRow -> Table
 gridTable rows =
-  { headers: [ "Scenario", "Framework", "Variant", "Pass", "Source (lines / tokens)", "Diff from other frameworks (lines)", "Bundle (gzip B)", "Runtime (median ms, quartiles)", "Build (s)" ]
+  { headers: [ "Scenario", "Framework", "Variant", "Pass", "Source (lines / tokens)", "Diff from other frameworks (lines)", "Bundle (gzip B)", "Bundle, purs-backend-es (gzip B)", "Runtime (median ms, quartiles)", "Build (s)" ]
   , rows: rows <#> \row ->
       [ row.result.scenario
       , row.result.framework
@@ -469,6 +476,7 @@ gridTable rows =
       , show row.source.lines <> " / " <> show row.source.tokens
       , String.joinWith ", " (map (\d -> d.framework <> " " <> show d.lines) row.diff)
       , maybe "" (show <<< _.gzip) row.result.bundle
+      , maybe "" (show <<< _.gzip) row.result.esBundle
       , runtimeCell row.runtime
       , maybe "" (\b -> maybe "" (\p -> "psx " <> seconds p <> ", ") b.psx <> "spago " <> seconds b.spago) row.build
       ]
@@ -478,6 +486,33 @@ gridTable rows =
     [] -> ""
     [ m ] -> m.name <> ": " <> spread m.summary
     ms' -> show (Array.length ms') <> " measures, below"
+
+-- | Each framework's `psx/` bundle against its `purs/` one, minified and
+-- | gzipped, from purs's code generator and from purs-backend-es.
+bundleTable :: Array ReportRow -> Table
+bundleTable rows =
+  { headers: [ "Scenario", "Framework", "purs/ (B, gzip)", "psx/ (B, gzip)", "psx/ − purs/", "purs/, es (B, gzip)", "psx/, es (B, gzip)", "psx/ − purs/, es" ]
+  , rows: Array.mapMaybe pair rows
+  }
+  where
+  pair psx
+    | psx.result.variant /= "psx" = Nothing
+    | otherwise = do
+        purs <- Array.find (\r -> r.result.variant == "purs" && r.result.scenario == psx.result.scenario && r.result.framework == psx.result.framework) rows
+        pure
+          [ psx.result.scenario
+          , psx.result.framework
+          , maybe "" size purs.result.bundle
+          , maybe "" size psx.result.bundle
+          , gap purs.result.bundle psx.result.bundle
+          , maybe "" size purs.result.esBundle
+          , maybe "" size psx.result.esBundle
+          , gap purs.result.esBundle psx.result.esBundle
+          ]
+  size b = show b.bytes <> ", " <> show b.gzip
+  gap (Just a) (Just b) = signedInt (b.bytes - a.bytes) <> ", " <> signedInt (b.gzip - a.gzip)
+  gap _ _ = ""
+  signedInt n = (if n >= 0 then "+" else "") <> show n
 
 timingTable :: Array Timing -> Table
 timingTable timings =
@@ -506,9 +541,11 @@ markdown rows timings =
     <> summaryLine rows timings
     <> "\n\n"
     <> mdTable (gridTable rows)
+    <> bundles (bundleTable rows)
     <> (if Array.null timings then "" else "\n## Timings\n\n" <> mdTable (timingTable timings))
     <> failures rows
   where
+  bundles t = if Array.null t.rows then "" else "\n## Bundles\n\n" <> mdTable t
   mdTable t =
     line t.headers <> line (map (const "---") t.headers) <> foldMap line t.rows
   line cells = "| " <> String.joinWith " | " (map (String.replaceAll (String.Pattern "|") (String.Replacement "\\|")) cells) <> " |\n"
@@ -551,6 +588,7 @@ html rows timings =
 <h1>PSX suite report</h1>
 <p>""" <> escape (summaryLine rows timings) <> "</p>\n"
     <> htmlTable (gridTable rows)
+    <> (let t = bundleTable rows in if Array.null t.rows then "" else "<h2>Bundles</h2>\n" <> htmlTable t)
     <> (if Array.null timings then "" else "<h2>Timings</h2>\n" <> htmlTable (timingTable timings))
     <> "</body>\n</html>\n"
   where
