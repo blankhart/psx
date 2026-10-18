@@ -1682,7 +1682,7 @@
       "aria-colcount": {
         "purescript": "ariaColcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1690,7 +1690,7 @@
       "aria-colindex": {
         "purescript": "ariaColindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1698,7 +1698,7 @@
       "aria-colspan": {
         "purescript": "ariaColspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1846,7 +1846,7 @@
       "aria-level": {
         "purescript": "ariaLevel",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1919,7 +1919,7 @@
       "aria-posinset": {
         "purescript": "ariaPosinset",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1977,7 +1977,7 @@
       "aria-rowcount": {
         "purescript": "ariaRowcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1985,7 +1985,7 @@
       "aria-rowindex": {
         "purescript": "ariaRowindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1993,7 +1993,7 @@
       "aria-rowspan": {
         "purescript": "ariaRowspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2012,7 +2012,7 @@
       "aria-setsize": {
         "purescript": "ariaSetsize",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2166,7 +2166,7 @@
       "border": {
         "purescript": "border",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2302,7 +2302,7 @@
       "cols": {
         "purescript": "cols",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2310,7 +2310,7 @@
       "colspan": {
         "purescript": "colspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2672,7 +2672,7 @@
       "hspace": {
         "purescript": "hspace",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2903,7 +2903,7 @@
       "marginheight": {
         "purescript": "marginheight",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2911,7 +2911,7 @@
       "marginwidth": {
         "purescript": "marginwidth",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2927,7 +2927,7 @@
       "maxlength": {
         "purescript": "maxlength",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2963,7 +2963,7 @@
       "minlength": {
         "purescript": "minlength",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3248,7 +3248,7 @@
       "rows": {
         "purescript": "rows",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3256,7 +3256,7 @@
       "rowspan": {
         "purescript": "rowspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3384,7 +3384,7 @@
       "size": {
         "purescript": "size",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3408,7 +3408,7 @@
       "span": {
         "purescript": "spanAttr",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3467,7 +3467,7 @@
       "start": {
         "purescript": "start",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3499,7 +3499,7 @@
       "tabindex": {
         "purescript": "tabindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3652,7 +3652,7 @@
       "vspace": {
         "purescript": "vspace",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8677,7 +8677,7 @@
       "aria-colcount": {
         "purescript": "ariaColcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8685,7 +8685,7 @@
       "aria-colindex": {
         "purescript": "ariaColindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8693,7 +8693,7 @@
       "aria-colspan": {
         "purescript": "ariaColspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8841,7 +8841,7 @@
       "aria-level": {
         "purescript": "ariaLevel",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8914,7 +8914,7 @@
       "aria-posinset": {
         "purescript": "ariaPosinset",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8972,7 +8972,7 @@
       "aria-rowcount": {
         "purescript": "ariaRowcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8980,7 +8980,7 @@
       "aria-rowindex": {
         "purescript": "ariaRowindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8988,7 +8988,7 @@
       "aria-rowspan": {
         "purescript": "ariaRowspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -9007,7 +9007,7 @@
       "aria-setsize": {
         "purescript": "ariaSetsize",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -10941,7 +10941,7 @@
       "tabindex": {
         "purescript": "tabindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -10965,7 +10965,7 @@
       "targetX": {
         "purescript": "targetX",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -10973,7 +10973,7 @@
       "targetY": {
         "purescript": "targetY",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}

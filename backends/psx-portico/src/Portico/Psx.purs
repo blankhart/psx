@@ -1592,7 +1592,7 @@ abbrAttr = P.attribute "abbr"
 about :: forall a. String -> Attr a
 about = P.attribute "about"
 
-accentHeight :: forall a. Int -> Attr a
+accentHeight :: forall a. Number -> Attr a
 accentHeight = P.attribute "accent-height" <<< show
 
 accept :: forall a. String -> Attr a
@@ -1637,13 +1637,13 @@ allowusermedia = booleanAttribute "allowusermedia"
 alpha :: forall a. Boolean -> Attr a
 alpha = booleanAttribute "alpha"
 
-alphabetic :: forall a. Int -> Attr a
+alphabetic :: forall a. Number -> Attr a
 alphabetic = P.attribute "alphabetic" <<< show
 
 alt :: forall a. String -> Attr a
 alt = P.attribute "alt"
 
-amplitude :: forall a. Int -> Attr a
+amplitude :: forall a. Number -> Attr a
 amplitude = P.attribute "amplitude" <<< show
 
 arabicForm :: forall a. String -> Attr a
@@ -1784,13 +1784,13 @@ ariaSetsize = P.attribute "aria-setsize" <<< show
 ariaSort :: forall a. String -> Attr a
 ariaSort = P.attribute "aria-sort"
 
-ariaValuemax :: forall a. Int -> Attr a
+ariaValuemax :: forall a. Number -> Attr a
 ariaValuemax = P.attribute "aria-valuemax" <<< show
 
-ariaValuemin :: forall a. Int -> Attr a
+ariaValuemin :: forall a. Number -> Attr a
 ariaValuemin = P.attribute "aria-valuemin" <<< show
 
-ariaValuenow :: forall a. Int -> Attr a
+ariaValuenow :: forall a. Number -> Attr a
 ariaValuenow = P.attribute "aria-valuenow" <<< show
 
 ariaValuetext :: forall a. String -> Attr a
@@ -1799,7 +1799,7 @@ ariaValuetext = P.attribute "aria-valuetext"
 as :: forall a. String -> Attr a
 as = P.attribute "as"
 
-ascent :: forall a. Int -> Attr a
+ascent :: forall a. Number -> Attr a
 ascent = P.attribute "ascent" <<< show
 
 async :: forall a. Boolean -> Attr a
@@ -1829,7 +1829,7 @@ autoplay = booleanAttribute "autoplay"
 axis :: forall a. String -> Attr a
 axis = P.attribute "axis"
 
-azimuth :: forall a. Int -> Attr a
+azimuth :: forall a. Number -> Attr a
 azimuth = P.attribute "azimuth" <<< show
 
 background :: forall a. String -> Attr a
@@ -1856,7 +1856,7 @@ begin = P.attribute "begin"
 bgcolor :: forall a. String -> Attr a
 bgcolor = P.attribute "bgcolor"
 
-bias :: forall a. Int -> Attr a
+bias :: forall a. Number -> Attr a
 bias = P.attribute "bias" <<< show
 
 blocking :: forall a. String -> Attr a
@@ -1871,7 +1871,7 @@ by = P.attribute "by"
 calcMode :: forall a. String -> Attr a
 calcMode = P.attribute "calcMode"
 
-capHeight :: forall a. Int -> Attr a
+capHeight :: forall a. Number -> Attr a
 capHeight = P.attribute "cap-height" <<< show
 
 cellpadding :: forall a. String -> Attr a
@@ -2018,10 +2018,10 @@ defaultAction = P.attribute "defaultAction"
 defer :: forall a. Boolean -> Attr a
 defer = booleanAttribute "defer"
 
-descent :: forall a. Int -> Attr a
+descent :: forall a. Number -> Attr a
 descent = P.attribute "descent" <<< show
 
-diffuseConstant :: forall a. Int -> Attr a
+diffuseConstant :: forall a. Number -> Attr a
 diffuseConstant = P.attribute "diffuseConstant" <<< show
 
 dirAttr :: forall a. String -> Attr a
@@ -2039,7 +2039,7 @@ disabled = P.disabled
 display :: forall a. String -> Attr a
 display = P.attribute "display"
 
-divisor :: forall a. Int -> Attr a
+divisor :: forall a. Number -> Attr a
 divisor = P.attribute "divisor" <<< show
 
 dominantBaseline :: forall a. String -> Attr a
@@ -2066,7 +2066,7 @@ edgeMode = P.attribute "edgeMode"
 editable :: forall a. String -> Attr a
 editable = P.attribute "editable"
 
-elevation :: forall a. Int -> Attr a
+elevation :: forall a. Number -> Attr a
 elevation = P.attribute "elevation" <<< show
 
 enableBackground :: forall a. String -> Attr a
@@ -2084,7 +2084,7 @@ enterkeyhint = P.attribute "enterkeyhint"
 event :: forall a. String -> Attr a
 event = P.attribute "event"
 
-exponent :: forall a. Int -> Attr a
+exponent :: forall a. Number -> Attr a
 exponent = P.attribute "exponent" <<< show
 
 exportparts :: forall a. String -> Attr a
@@ -2102,7 +2102,7 @@ fetchpriority = P.attribute "fetchpriority"
 fill :: forall a. String -> Attr a
 fill = P.attribute "fill"
 
-fillOpacity :: forall a. Int -> Attr a
+fillOpacity :: forall a. Number -> Attr a
 fillOpacity = P.attribute "fill-opacity" <<< show
 
 fillRule :: forall a. String -> Attr a
@@ -2219,7 +2219,7 @@ gradientUnits = P.attribute "gradientUnits"
 handlerAttr :: forall a. String -> Attr a
 handlerAttr = P.attribute "handler"
 
-hanging :: forall a. Int -> Attr a
+hanging :: forall a. Number -> Attr a
 hanging = P.attribute "hanging" <<< show
 
 headers :: forall a. String -> Attr a
@@ -2231,16 +2231,16 @@ height = P.attribute "height"
 hidden :: forall a. Boolean -> Attr a
 hidden = booleanAttribute "hidden"
 
-high :: forall a. Int -> Attr a
+high :: forall a. Number -> Attr a
 high = P.attribute "high" <<< show
 
-horizAdvX :: forall a. Int -> Attr a
+horizAdvX :: forall a. Number -> Attr a
 horizAdvX = P.attribute "horiz-adv-x" <<< show
 
-horizOriginX :: forall a. Int -> Attr a
+horizOriginX :: forall a. Number -> Attr a
 horizOriginX = P.attribute "horiz-origin-x" <<< show
 
-horizOriginY :: forall a. Int -> Attr a
+horizOriginY :: forall a. Number -> Attr a
 horizOriginY = P.attribute "horiz-origin-y" <<< show
 
 href :: forall a. String -> Attr a
@@ -2258,7 +2258,7 @@ httpEquiv = P.attribute "http-equiv"
 id :: forall a. String -> Attr a
 id = P.id
 
-ideographic :: forall a. Int -> Attr a
+ideographic :: forall a. Number -> Attr a
 ideographic = P.attribute "ideographic" <<< show
 
 imageRendering :: forall a. String -> Attr a
@@ -2288,7 +2288,7 @@ inputmode = P.attribute "inputmode"
 integrity :: forall a. String -> Attr a
 integrity = P.attribute "integrity"
 
-intercept :: forall a. Int -> Attr a
+intercept :: forall a. Number -> Attr a
 intercept = P.attribute "intercept" <<< show
 
 is :: forall a. String -> Attr a
@@ -2312,19 +2312,19 @@ itemscope = booleanAttribute "itemscope"
 itemtype :: forall a. String -> Attr a
 itemtype = P.attribute "itemtype"
 
-k :: forall a. Int -> Attr a
+k :: forall a. Number -> Attr a
 k = P.attribute "k" <<< show
 
-k1 :: forall a. Int -> Attr a
+k1 :: forall a. Number -> Attr a
 k1 = P.attribute "k1" <<< show
 
-k2 :: forall a. Int -> Attr a
+k2 :: forall a. Number -> Attr a
 k2 = P.attribute "k2" <<< show
 
-k3 :: forall a. Int -> Attr a
+k3 :: forall a. Number -> Attr a
 k3 = P.attribute "k3" <<< show
 
-k4 :: forall a. Int -> Attr a
+k4 :: forall a. Number -> Attr a
 k4 = P.attribute "k4" <<< show
 
 kernelMatrix :: forall a. String -> Attr a
@@ -2366,7 +2366,7 @@ letterSpacing = P.attribute "letter-spacing"
 lightingColor :: forall a. String -> Attr a
 lightingColor = P.attribute "lighting-color"
 
-limitingConeAngle :: forall a. Int -> Attr a
+limitingConeAngle :: forall a. Number -> Attr a
 limitingConeAngle = P.attribute "limitingConeAngle" <<< show
 
 linkAttr :: forall a. String -> Attr a
@@ -2387,7 +2387,7 @@ longdesc = P.attribute "longdesc"
 loop :: forall a. Boolean -> Attr a
 loop = booleanAttribute "loop"
 
-low :: forall a. Int -> Attr a
+low :: forall a. Number -> Attr a
 low = P.attribute "low" <<< show
 
 manifest :: forall a. String -> Attr a
@@ -2444,7 +2444,7 @@ mediaCharacterEncoding = P.attribute "mediaCharacterEncoding"
 mediaContentEncodings :: forall a. String -> Attr a
 mediaContentEncodings = P.attribute "mediaContentEncodings"
 
-mediaSize :: forall a. Int -> Attr a
+mediaSize :: forall a. Number -> Attr a
 mediaSize = P.attribute "mediaSize" <<< show
 
 mediaTime :: forall a. String -> Attr a
@@ -2543,7 +2543,7 @@ open = booleanAttribute "open"
 operator :: forall a. String -> Attr a
 operator = P.attribute "operator"
 
-optimum :: forall a. Int -> Attr a
+optimum :: forall a. Number -> Attr a
 optimum = P.attribute "optimum" <<< show
 
 order :: forall a. String -> Attr a
@@ -2564,10 +2564,10 @@ overflow = P.attribute "overflow"
 overlay :: forall a. String -> Attr a
 overlay = P.attribute "overlay"
 
-overlinePosition :: forall a. Int -> Attr a
+overlinePosition :: forall a. Number -> Attr a
 overlinePosition = P.attribute "overline-position" <<< show
 
-overlineThickness :: forall a. Int -> Attr a
+overlineThickness :: forall a. Number -> Attr a
 overlineThickness = P.attribute "overline-thickness" <<< show
 
 paintOrder :: forall a. String -> Attr a
@@ -2582,7 +2582,7 @@ part = P.attribute "part"
 pathAttr :: forall a. String -> Attr a
 pathAttr = P.attribute "path"
 
-pathLength :: forall a. Int -> Attr a
+pathLength :: forall a. Number -> Attr a
 pathLength = P.attribute "pathLength" <<< show
 
 patternAttr :: forall a. String -> Attr a
@@ -2621,13 +2621,13 @@ pointerEvents = P.attribute "pointer-events"
 points :: forall a. String -> Attr a
 points = P.attribute "points"
 
-pointsAtX :: forall a. Int -> Attr a
+pointsAtX :: forall a. Number -> Attr a
 pointsAtX = P.attribute "pointsAtX" <<< show
 
-pointsAtY :: forall a. Int -> Attr a
+pointsAtY :: forall a. Number -> Attr a
 pointsAtY = P.attribute "pointsAtY" <<< show
 
-pointsAtZ :: forall a. Int -> Attr a
+pointsAtZ :: forall a. Number -> Attr a
 pointsAtZ = P.attribute "pointsAtZ" <<< show
 
 popover :: forall a. String -> Attr a
@@ -2813,10 +2813,10 @@ spacing = P.attribute "spacing"
 spanAttr :: forall a. Int -> Attr a
 spanAttr = P.attribute "span" <<< show
 
-specularConstant :: forall a. Int -> Attr a
+specularConstant :: forall a. Number -> Attr a
 specularConstant = P.attribute "specularConstant" <<< show
 
-specularExponent :: forall a. Int -> Attr a
+specularExponent :: forall a. Number -> Attr a
 specularExponent = P.attribute "specularExponent" <<< show
 
 spellcheck :: forall a. String -> Attr a
@@ -2867,10 +2867,10 @@ stopColor = P.attribute "stop-color"
 stopOpacity :: forall a. String -> Attr a
 stopOpacity = P.attribute "stop-opacity"
 
-strikethroughPosition :: forall a. Int -> Attr a
+strikethroughPosition :: forall a. Number -> Attr a
 strikethroughPosition = P.attribute "strikethrough-position" <<< show
 
-strikethroughThickness :: forall a. Int -> Attr a
+strikethroughThickness :: forall a. Number -> Attr a
 strikethroughThickness = P.attribute "strikethrough-thickness" <<< show
 
 string :: forall a. String -> Attr a
@@ -2891,10 +2891,10 @@ strokeLinecap = P.attribute "stroke-linecap"
 strokeLinejoin :: forall a. String -> Attr a
 strokeLinejoin = P.attribute "stroke-linejoin"
 
-strokeMiterlimit :: forall a. Int -> Attr a
+strokeMiterlimit :: forall a. Number -> Attr a
 strokeMiterlimit = P.attribute "stroke-miterlimit" <<< show
 
-strokeOpacity :: forall a. Int -> Attr a
+strokeOpacity :: forall a. Number -> Attr a
 strokeOpacity = P.attribute "stroke-opacity" <<< show
 
 strokeWidth :: forall a. String -> Attr a
@@ -2906,7 +2906,7 @@ styleAttr = P.attribute "style"
 summaryAttr :: forall a. String -> Attr a
 summaryAttr = P.attribute "summary"
 
-surfaceScale :: forall a. Int -> Attr a
+surfaceScale :: forall a. Number -> Attr a
 surfaceScale = P.attribute "surfaceScale" <<< show
 
 syncBehavior :: forall a. String -> Attr a
@@ -2996,10 +2996,10 @@ u1 = P.attribute "u1"
 u2 :: forall a. String -> Attr a
 u2 = P.attribute "u2"
 
-underlinePosition :: forall a. Int -> Attr a
+underlinePosition :: forall a. Number -> Attr a
 underlinePosition = P.attribute "underline-position" <<< show
 
-underlineThickness :: forall a. Int -> Attr a
+underlineThickness :: forall a. Number -> Attr a
 underlineThickness = P.attribute "underline-thickness" <<< show
 
 unicode :: forall a. String -> Attr a
@@ -3011,22 +3011,22 @@ unicodeBidi = P.attribute "unicode-bidi"
 unicodeRange :: forall a. String -> Attr a
 unicodeRange = P.attribute "unicode-range"
 
-unitsPerEm :: forall a. Int -> Attr a
+unitsPerEm :: forall a. Number -> Attr a
 unitsPerEm = P.attribute "units-per-em" <<< show
 
 usemap :: forall a. String -> Attr a
 usemap = P.attribute "usemap"
 
-vAlphabetic :: forall a. Int -> Attr a
+vAlphabetic :: forall a. Number -> Attr a
 vAlphabetic = P.attribute "v-alphabetic" <<< show
 
-vHanging :: forall a. Int -> Attr a
+vHanging :: forall a. Number -> Attr a
 vHanging = P.attribute "v-hanging" <<< show
 
-vIdeographic :: forall a. Int -> Attr a
+vIdeographic :: forall a. Number -> Attr a
 vIdeographic = P.attribute "v-ideographic" <<< show
 
-vMathematical :: forall a. Int -> Attr a
+vMathematical :: forall a. Number -> Attr a
 vMathematical = P.attribute "v-mathematical" <<< show
 
 valign :: forall a. String -> Attr a
@@ -3047,13 +3047,13 @@ vectorEffect = P.attribute "vector-effect"
 version :: forall a. String -> Attr a
 version = P.attribute "version"
 
-vertAdvY :: forall a. Int -> Attr a
+vertAdvY :: forall a. Number -> Attr a
 vertAdvY = P.attribute "vert-adv-y" <<< show
 
-vertOriginX :: forall a. Int -> Attr a
+vertOriginX :: forall a. Number -> Attr a
 vertOriginX = P.attribute "vert-origin-x" <<< show
 
-vertOriginY :: forall a. Int -> Attr a
+vertOriginY :: forall a. Number -> Attr a
 vertOriginY = P.attribute "vert-origin-y" <<< show
 
 viewBox :: forall a. String -> Attr a
@@ -3104,7 +3104,7 @@ x2 = P.attribute "x2"
 xChannelSelector :: forall a. String -> Attr a
 xChannelSelector = P.attribute "xChannelSelector"
 
-xHeight :: forall a. Int -> Attr a
+xHeight :: forall a. Number -> Attr a
 xHeight = P.attribute "x-height" <<< show
 
 y :: forall a. String -> Attr a

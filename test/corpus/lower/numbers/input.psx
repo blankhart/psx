@@ -1,0 +1,15 @@
+module Lower.Numbers where
+
+import Portico.Psx (Markup)
+
+-- A whole-number attribute takes an Int literal and a real-number attribute a
+-- Number literal, so `low="1"` is `1.0`.
+gauge :: forall a. Markup a
+gauge =
+  <div tabindex="-1">
+    <meter low="1" high="0.75" optimum="-2"></meter>
+    <td colspan="2"></td>
+    <svg>
+      <circle stroke-opacity="0.5" pathLength="100"/>
+    </svg>
+  </div>

@@ -1588,7 +1588,7 @@ abbrAttr = Core.attribute "abbr"
 about :: forall a. String -> Attr a
 about = Core.attribute "about"
 
-accentHeight :: forall a. Int -> Attr a
+accentHeight :: forall a. Number -> Attr a
 accentHeight = Core.attribute "accent-height" <<< show
 
 accept :: forall a. String -> Attr a
@@ -1633,13 +1633,13 @@ allowusermedia = Impl.booleanAttribute "allowusermedia"
 alpha :: forall a. Boolean -> Attr a
 alpha = Impl.booleanAttribute "alpha"
 
-alphabetic :: forall a. Int -> Attr a
+alphabetic :: forall a. Number -> Attr a
 alphabetic = Core.attribute "alphabetic" <<< show
 
 alt :: forall a. String -> Attr a
 alt = Core.attribute "alt"
 
-amplitude :: forall a. Int -> Attr a
+amplitude :: forall a. Number -> Attr a
 amplitude = Core.attribute "amplitude" <<< show
 
 arabicForm :: forall a. String -> Attr a
@@ -1780,13 +1780,13 @@ ariaSetsize = Core.attribute "aria-setsize" <<< show
 ariaSort :: forall a. String -> Attr a
 ariaSort = Core.attribute "aria-sort"
 
-ariaValuemax :: forall a. Int -> Attr a
+ariaValuemax :: forall a. Number -> Attr a
 ariaValuemax = Core.attribute "aria-valuemax" <<< show
 
-ariaValuemin :: forall a. Int -> Attr a
+ariaValuemin :: forall a. Number -> Attr a
 ariaValuemin = Core.attribute "aria-valuemin" <<< show
 
-ariaValuenow :: forall a. Int -> Attr a
+ariaValuenow :: forall a. Number -> Attr a
 ariaValuenow = Core.attribute "aria-valuenow" <<< show
 
 ariaValuetext :: forall a. String -> Attr a
@@ -1795,7 +1795,7 @@ ariaValuetext = Core.attribute "aria-valuetext"
 as :: forall a. String -> Attr a
 as = Core.attribute "as"
 
-ascent :: forall a. Int -> Attr a
+ascent :: forall a. Number -> Attr a
 ascent = Core.attribute "ascent" <<< show
 
 async :: forall a. Boolean -> Attr a
@@ -1825,7 +1825,7 @@ autoplay = Impl.booleanAttribute "autoplay"
 axis :: forall a. String -> Attr a
 axis = Core.attribute "axis"
 
-azimuth :: forall a. Int -> Attr a
+azimuth :: forall a. Number -> Attr a
 azimuth = Core.attribute "azimuth" <<< show
 
 background :: forall a. String -> Attr a
@@ -1852,7 +1852,7 @@ begin = Core.attribute "begin"
 bgcolor :: forall a. String -> Attr a
 bgcolor = Core.attribute "bgcolor"
 
-bias :: forall a. Int -> Attr a
+bias :: forall a. Number -> Attr a
 bias = Core.attribute "bias" <<< show
 
 blocking :: forall a. String -> Attr a
@@ -1867,7 +1867,7 @@ by = Core.attribute "by"
 calcMode :: forall a. String -> Attr a
 calcMode = Core.attribute "calcMode"
 
-capHeight :: forall a. Int -> Attr a
+capHeight :: forall a. Number -> Attr a
 capHeight = Core.attribute "cap-height" <<< show
 
 cellpadding :: forall a. String -> Attr a
@@ -2014,10 +2014,10 @@ defaultAction = Core.attribute "defaultAction"
 defer :: forall a. Boolean -> Attr a
 defer = Impl.booleanAttribute "defer"
 
-descent :: forall a. Int -> Attr a
+descent :: forall a. Number -> Attr a
 descent = Core.attribute "descent" <<< show
 
-diffuseConstant :: forall a. Int -> Attr a
+diffuseConstant :: forall a. Number -> Attr a
 diffuseConstant = Core.attribute "diffuseConstant" <<< show
 
 dirAttr :: forall a. String -> Attr a
@@ -2035,7 +2035,7 @@ disabled = Impl.booleanAttribute "disabled"
 display :: forall a. String -> Attr a
 display = Core.attribute "display"
 
-divisor :: forall a. Int -> Attr a
+divisor :: forall a. Number -> Attr a
 divisor = Core.attribute "divisor" <<< show
 
 dominantBaseline :: forall a. String -> Attr a
@@ -2062,7 +2062,7 @@ edgeMode = Core.attribute "edgeMode"
 editable :: forall a. String -> Attr a
 editable = Core.attribute "editable"
 
-elevation :: forall a. Int -> Attr a
+elevation :: forall a. Number -> Attr a
 elevation = Core.attribute "elevation" <<< show
 
 enableBackground :: forall a. String -> Attr a
@@ -2080,7 +2080,7 @@ enterkeyhint = Core.attribute "enterkeyhint"
 event :: forall a. String -> Attr a
 event = Core.attribute "event"
 
-exponent :: forall a. Int -> Attr a
+exponent :: forall a. Number -> Attr a
 exponent = Core.attribute "exponent" <<< show
 
 exportparts :: forall a. String -> Attr a
@@ -2098,7 +2098,7 @@ fetchpriority = Core.attribute "fetchpriority"
 fill :: forall a. String -> Attr a
 fill = Core.attribute "fill"
 
-fillOpacity :: forall a. Int -> Attr a
+fillOpacity :: forall a. Number -> Attr a
 fillOpacity = Core.attribute "fill-opacity" <<< show
 
 fillRule :: forall a. String -> Attr a
@@ -2215,7 +2215,7 @@ gradientUnits = Core.attribute "gradientUnits"
 handlerAttr :: forall a. String -> Attr a
 handlerAttr = Core.attribute "handler"
 
-hanging :: forall a. Int -> Attr a
+hanging :: forall a. Number -> Attr a
 hanging = Core.attribute "hanging" <<< show
 
 headers :: forall a. String -> Attr a
@@ -2227,16 +2227,16 @@ height = Core.attribute "height"
 hidden :: forall a. Boolean -> Attr a
 hidden = Impl.booleanAttribute "hidden"
 
-high :: forall a. Int -> Attr a
+high :: forall a. Number -> Attr a
 high = Core.attribute "high" <<< show
 
-horizAdvX :: forall a. Int -> Attr a
+horizAdvX :: forall a. Number -> Attr a
 horizAdvX = Core.attribute "horiz-adv-x" <<< show
 
-horizOriginX :: forall a. Int -> Attr a
+horizOriginX :: forall a. Number -> Attr a
 horizOriginX = Core.attribute "horiz-origin-x" <<< show
 
-horizOriginY :: forall a. Int -> Attr a
+horizOriginY :: forall a. Number -> Attr a
 horizOriginY = Core.attribute "horiz-origin-y" <<< show
 
 href :: forall a. String -> Attr a
@@ -2254,7 +2254,7 @@ httpEquiv = Core.attribute "http-equiv"
 id :: forall a. String -> Attr a
 id = Core.attribute "id"
 
-ideographic :: forall a. Int -> Attr a
+ideographic :: forall a. Number -> Attr a
 ideographic = Core.attribute "ideographic" <<< show
 
 imageRendering :: forall a. String -> Attr a
@@ -2284,7 +2284,7 @@ inputmode = Core.attribute "inputmode"
 integrity :: forall a. String -> Attr a
 integrity = Core.attribute "integrity"
 
-intercept :: forall a. Int -> Attr a
+intercept :: forall a. Number -> Attr a
 intercept = Core.attribute "intercept" <<< show
 
 is :: forall a. String -> Attr a
@@ -2308,19 +2308,19 @@ itemscope = Impl.booleanAttribute "itemscope"
 itemtype :: forall a. String -> Attr a
 itemtype = Core.attribute "itemtype"
 
-k :: forall a. Int -> Attr a
+k :: forall a. Number -> Attr a
 k = Core.attribute "k" <<< show
 
-k1 :: forall a. Int -> Attr a
+k1 :: forall a. Number -> Attr a
 k1 = Core.attribute "k1" <<< show
 
-k2 :: forall a. Int -> Attr a
+k2 :: forall a. Number -> Attr a
 k2 = Core.attribute "k2" <<< show
 
-k3 :: forall a. Int -> Attr a
+k3 :: forall a. Number -> Attr a
 k3 = Core.attribute "k3" <<< show
 
-k4 :: forall a. Int -> Attr a
+k4 :: forall a. Number -> Attr a
 k4 = Core.attribute "k4" <<< show
 
 kernelMatrix :: forall a. String -> Attr a
@@ -2362,7 +2362,7 @@ letterSpacing = Core.attribute "letter-spacing"
 lightingColor :: forall a. String -> Attr a
 lightingColor = Core.attribute "lighting-color"
 
-limitingConeAngle :: forall a. Int -> Attr a
+limitingConeAngle :: forall a. Number -> Attr a
 limitingConeAngle = Core.attribute "limitingConeAngle" <<< show
 
 linkAttr :: forall a. String -> Attr a
@@ -2383,7 +2383,7 @@ longdesc = Core.attribute "longdesc"
 loop :: forall a. Boolean -> Attr a
 loop = Impl.booleanAttribute "loop"
 
-low :: forall a. Int -> Attr a
+low :: forall a. Number -> Attr a
 low = Core.attribute "low" <<< show
 
 manifest :: forall a. String -> Attr a
@@ -2440,7 +2440,7 @@ mediaCharacterEncoding = Core.attribute "mediaCharacterEncoding"
 mediaContentEncodings :: forall a. String -> Attr a
 mediaContentEncodings = Core.attribute "mediaContentEncodings"
 
-mediaSize :: forall a. Int -> Attr a
+mediaSize :: forall a. Number -> Attr a
 mediaSize = Core.attribute "mediaSize" <<< show
 
 mediaTime :: forall a. String -> Attr a
@@ -2539,7 +2539,7 @@ open = Impl.booleanAttribute "open"
 operator :: forall a. String -> Attr a
 operator = Core.attribute "operator"
 
-optimum :: forall a. Int -> Attr a
+optimum :: forall a. Number -> Attr a
 optimum = Core.attribute "optimum" <<< show
 
 order :: forall a. String -> Attr a
@@ -2560,10 +2560,10 @@ overflow = Core.attribute "overflow"
 overlay :: forall a. String -> Attr a
 overlay = Core.attribute "overlay"
 
-overlinePosition :: forall a. Int -> Attr a
+overlinePosition :: forall a. Number -> Attr a
 overlinePosition = Core.attribute "overline-position" <<< show
 
-overlineThickness :: forall a. Int -> Attr a
+overlineThickness :: forall a. Number -> Attr a
 overlineThickness = Core.attribute "overline-thickness" <<< show
 
 paintOrder :: forall a. String -> Attr a
@@ -2578,7 +2578,7 @@ part = Core.attribute "part"
 pathAttr :: forall a. String -> Attr a
 pathAttr = Core.attribute "path"
 
-pathLength :: forall a. Int -> Attr a
+pathLength :: forall a. Number -> Attr a
 pathLength = Core.attribute "pathLength" <<< show
 
 patternAttr :: forall a. String -> Attr a
@@ -2617,13 +2617,13 @@ pointerEvents = Core.attribute "pointer-events"
 points :: forall a. String -> Attr a
 points = Core.attribute "points"
 
-pointsAtX :: forall a. Int -> Attr a
+pointsAtX :: forall a. Number -> Attr a
 pointsAtX = Core.attribute "pointsAtX" <<< show
 
-pointsAtY :: forall a. Int -> Attr a
+pointsAtY :: forall a. Number -> Attr a
 pointsAtY = Core.attribute "pointsAtY" <<< show
 
-pointsAtZ :: forall a. Int -> Attr a
+pointsAtZ :: forall a. Number -> Attr a
 pointsAtZ = Core.attribute "pointsAtZ" <<< show
 
 popover :: forall a. String -> Attr a
@@ -2809,10 +2809,10 @@ spacing = Core.attribute "spacing"
 spanAttr :: forall a. Int -> Attr a
 spanAttr = Core.attribute "span" <<< show
 
-specularConstant :: forall a. Int -> Attr a
+specularConstant :: forall a. Number -> Attr a
 specularConstant = Core.attribute "specularConstant" <<< show
 
-specularExponent :: forall a. Int -> Attr a
+specularExponent :: forall a. Number -> Attr a
 specularExponent = Core.attribute "specularExponent" <<< show
 
 spellcheck :: forall a. String -> Attr a
@@ -2863,10 +2863,10 @@ stopColor = Core.attribute "stop-color"
 stopOpacity :: forall a. String -> Attr a
 stopOpacity = Core.attribute "stop-opacity"
 
-strikethroughPosition :: forall a. Int -> Attr a
+strikethroughPosition :: forall a. Number -> Attr a
 strikethroughPosition = Core.attribute "strikethrough-position" <<< show
 
-strikethroughThickness :: forall a. Int -> Attr a
+strikethroughThickness :: forall a. Number -> Attr a
 strikethroughThickness = Core.attribute "strikethrough-thickness" <<< show
 
 string :: forall a. String -> Attr a
@@ -2887,10 +2887,10 @@ strokeLinecap = Core.attribute "stroke-linecap"
 strokeLinejoin :: forall a. String -> Attr a
 strokeLinejoin = Core.attribute "stroke-linejoin"
 
-strokeMiterlimit :: forall a. Int -> Attr a
+strokeMiterlimit :: forall a. Number -> Attr a
 strokeMiterlimit = Core.attribute "stroke-miterlimit" <<< show
 
-strokeOpacity :: forall a. Int -> Attr a
+strokeOpacity :: forall a. Number -> Attr a
 strokeOpacity = Core.attribute "stroke-opacity" <<< show
 
 strokeWidth :: forall a. String -> Attr a
@@ -2902,7 +2902,7 @@ styleAttr = Core.attribute "style"
 summaryAttr :: forall a. String -> Attr a
 summaryAttr = Core.attribute "summary"
 
-surfaceScale :: forall a. Int -> Attr a
+surfaceScale :: forall a. Number -> Attr a
 surfaceScale = Core.attribute "surfaceScale" <<< show
 
 syncBehavior :: forall a. String -> Attr a
@@ -2992,10 +2992,10 @@ u1 = Core.attribute "u1"
 u2 :: forall a. String -> Attr a
 u2 = Core.attribute "u2"
 
-underlinePosition :: forall a. Int -> Attr a
+underlinePosition :: forall a. Number -> Attr a
 underlinePosition = Core.attribute "underline-position" <<< show
 
-underlineThickness :: forall a. Int -> Attr a
+underlineThickness :: forall a. Number -> Attr a
 underlineThickness = Core.attribute "underline-thickness" <<< show
 
 unicode :: forall a. String -> Attr a
@@ -3007,22 +3007,22 @@ unicodeBidi = Core.attribute "unicode-bidi"
 unicodeRange :: forall a. String -> Attr a
 unicodeRange = Core.attribute "unicode-range"
 
-unitsPerEm :: forall a. Int -> Attr a
+unitsPerEm :: forall a. Number -> Attr a
 unitsPerEm = Core.attribute "units-per-em" <<< show
 
 usemap :: forall a. String -> Attr a
 usemap = Core.attribute "usemap"
 
-vAlphabetic :: forall a. Int -> Attr a
+vAlphabetic :: forall a. Number -> Attr a
 vAlphabetic = Core.attribute "v-alphabetic" <<< show
 
-vHanging :: forall a. Int -> Attr a
+vHanging :: forall a. Number -> Attr a
 vHanging = Core.attribute "v-hanging" <<< show
 
-vIdeographic :: forall a. Int -> Attr a
+vIdeographic :: forall a. Number -> Attr a
 vIdeographic = Core.attribute "v-ideographic" <<< show
 
-vMathematical :: forall a. Int -> Attr a
+vMathematical :: forall a. Number -> Attr a
 vMathematical = Core.attribute "v-mathematical" <<< show
 
 valign :: forall a. String -> Attr a
@@ -3043,13 +3043,13 @@ vectorEffect = Core.attribute "vector-effect"
 version :: forall a. String -> Attr a
 version = Core.attribute "version"
 
-vertAdvY :: forall a. Int -> Attr a
+vertAdvY :: forall a. Number -> Attr a
 vertAdvY = Core.attribute "vert-adv-y" <<< show
 
-vertOriginX :: forall a. Int -> Attr a
+vertOriginX :: forall a. Number -> Attr a
 vertOriginX = Core.attribute "vert-origin-x" <<< show
 
-vertOriginY :: forall a. Int -> Attr a
+vertOriginY :: forall a. Number -> Attr a
 vertOriginY = Core.attribute "vert-origin-y" <<< show
 
 viewBox :: forall a. String -> Attr a
@@ -3100,7 +3100,7 @@ x2 = Core.attribute "x2"
 xChannelSelector :: forall a. String -> Attr a
 xChannelSelector = Core.attribute "xChannelSelector"
 
-xHeight :: forall a. Int -> Attr a
+xHeight :: forall a. Number -> Attr a
 xHeight = Core.attribute "x-height" <<< show
 
 y :: forall a. String -> Attr a

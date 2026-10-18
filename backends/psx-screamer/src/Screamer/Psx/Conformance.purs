@@ -324,7 +324,7 @@ about =
 
 accentHeight :: Array (B.Node (Effect Unit))
 accentHeight =
-  [ B.fontFace [ B.accentHeight 0 ] B.none
+  [ B.fontFace [ B.accentHeight 0.0 ] B.none
   ]
 
 accept :: Array (B.Node (Effect Unit))
@@ -399,7 +399,7 @@ alpha =
 
 alphabetic :: Array (B.Node (Effect Unit))
 alphabetic =
-  [ B.fontFace [ B.alphabetic 0 ] B.none
+  [ B.fontFace [ B.alphabetic 0.0 ] B.none
   ]
 
 alt :: Array (B.Node (Effect Unit))
@@ -409,7 +409,7 @@ alt =
 
 amplitude :: Array (B.Node (Effect Unit))
 amplitude =
-  [ B.feFuncA [ B.amplitude 0 ] B.none
+  [ B.feFuncA [ B.amplitude 0.0 ] B.none
   ]
 
 arabicForm :: Array (B.Node (Effect Unit))
@@ -688,20 +688,20 @@ ariaSort =
 
 ariaValuemax :: Array (B.Node (Effect Unit))
 ariaValuemax =
-  [ B.div [ B.ariaValuemax 0 ] B.none
-  , B.g [ B.ariaValuemax 0 ] B.none
+  [ B.div [ B.ariaValuemax 0.0 ] B.none
+  , B.g [ B.ariaValuemax 0.0 ] B.none
   ]
 
 ariaValuemin :: Array (B.Node (Effect Unit))
 ariaValuemin =
-  [ B.div [ B.ariaValuemin 0 ] B.none
-  , B.g [ B.ariaValuemin 0 ] B.none
+  [ B.div [ B.ariaValuemin 0.0 ] B.none
+  , B.g [ B.ariaValuemin 0.0 ] B.none
   ]
 
 ariaValuenow :: Array (B.Node (Effect Unit))
 ariaValuenow =
-  [ B.div [ B.ariaValuenow 0 ] B.none
-  , B.g [ B.ariaValuenow 0 ] B.none
+  [ B.div [ B.ariaValuenow 0.0 ] B.none
+  , B.g [ B.ariaValuenow 0.0 ] B.none
   ]
 
 ariaValuetext :: Array (B.Node (Effect Unit))
@@ -717,7 +717,7 @@ as =
 
 ascent :: Array (B.Node (Effect Unit))
 ascent =
-  [ B.fontFace [ B.ascent 0 ] B.none
+  [ B.fontFace [ B.ascent 0.0 ] B.none
   ]
 
 async :: Array (B.Node (Effect Unit))
@@ -767,7 +767,7 @@ axis =
 
 azimuth :: Array (B.Node (Effect Unit))
 azimuth =
-  [ B.feDistantLight [ B.azimuth 0 ] B.none
+  [ B.feDistantLight [ B.azimuth 0.0 ] B.none
   ]
 
 background :: Array (B.Node (Effect Unit))
@@ -812,7 +812,7 @@ bgcolor =
 
 bias :: Array (B.Node (Effect Unit))
 bias =
-  [ B.feConvolveMatrix [ B.bias 0 ] B.none
+  [ B.feConvolveMatrix [ B.bias 0.0 ] B.none
   ]
 
 blocking :: Array (B.Node (Effect Unit))
@@ -837,7 +837,7 @@ calcMode =
 
 capHeight :: Array (B.Node (Effect Unit))
 capHeight =
-  [ B.fontFace [ B.capHeight 0 ] B.none
+  [ B.fontFace [ B.capHeight 0.0 ] B.none
   ]
 
 cellpadding :: Array (B.Node (Effect Unit))
@@ -1086,12 +1086,12 @@ defer =
 
 descent :: Array (B.Node (Effect Unit))
 descent =
-  [ B.fontFace [ B.descent 0 ] B.none
+  [ B.fontFace [ B.descent 0.0 ] B.none
   ]
 
 diffuseConstant :: Array (B.Node (Effect Unit))
 diffuseConstant =
-  [ B.feDiffuseLighting [ B.diffuseConstant 0 ] B.none
+  [ B.feDiffuseLighting [ B.diffuseConstant 0.0 ] B.none
   ]
 
 dirAttr :: Array (B.Node (Effect Unit))
@@ -1121,7 +1121,7 @@ display =
 
 divisor :: Array (B.Node (Effect Unit))
 divisor =
-  [ B.feConvolveMatrix [ B.divisor 0 ] B.none
+  [ B.feConvolveMatrix [ B.divisor 0.0 ] B.none
   ]
 
 dominantBaseline :: Array (B.Node (Effect Unit))
@@ -1167,7 +1167,7 @@ editable =
 
 elevation :: Array (B.Node (Effect Unit))
 elevation =
-  [ B.feDistantLight [ B.elevation 0 ] B.none
+  [ B.feDistantLight [ B.elevation 0.0 ] B.none
   ]
 
 enableBackground :: Array (B.Node (Effect Unit))
@@ -1197,7 +1197,7 @@ event =
 
 exponent :: Array (B.Node (Effect Unit))
 exponent =
-  [ B.feFuncA [ B.exponent 0 ] B.none
+  [ B.feFuncA [ B.exponent 0.0 ] B.none
   ]
 
 exportparts :: Array (B.Node (Effect Unit))
@@ -1227,7 +1227,7 @@ fill =
 
 fillOpacity :: Array (B.Node (Effect Unit))
 fillOpacity =
-  [ B.g [ B.fillOpacity 0 ] B.none
+  [ B.g [ B.fillOpacity 0.0 ] B.none
   ]
 
 fillRule :: Array (B.Node (Effect Unit))
@@ -1422,7 +1422,7 @@ handlerAttr =
 
 hanging :: Array (B.Node (Effect Unit))
 hanging =
-  [ B.fontFace [ B.hanging 0 ] B.none
+  [ B.fontFace [ B.hanging 0.0 ] B.none
   ]
 
 headers :: Array (B.Node (Effect Unit))
@@ -1443,22 +1443,22 @@ hidden =
 
 high :: Array (B.Node (Effect Unit))
 high =
-  [ B.meter [ B.high 0 ] B.none
+  [ B.meter [ B.high 0.0 ] B.none
   ]
 
 horizAdvX :: Array (B.Node (Effect Unit))
 horizAdvX =
-  [ B.font [ B.horizAdvX 0 ] B.none
+  [ B.font [ B.horizAdvX 0.0 ] B.none
   ]
 
 horizOriginX :: Array (B.Node (Effect Unit))
 horizOriginX =
-  [ B.font [ B.horizOriginX 0 ] B.none
+  [ B.font [ B.horizOriginX 0.0 ] B.none
   ]
 
 horizOriginY :: Array (B.Node (Effect Unit))
 horizOriginY =
-  [ B.font [ B.horizOriginY 0 ] B.none
+  [ B.font [ B.horizOriginY 0.0 ] B.none
   ]
 
 href :: Array (B.Node (Effect Unit))
@@ -1491,7 +1491,7 @@ id =
 
 ideographic :: Array (B.Node (Effect Unit))
 ideographic =
-  [ B.fontFace [ B.ideographic 0 ] B.none
+  [ B.fontFace [ B.ideographic 0.0 ] B.none
   ]
 
 imageRendering :: Array (B.Node (Effect Unit))
@@ -1541,7 +1541,7 @@ integrity =
 
 intercept :: Array (B.Node (Effect Unit))
 intercept =
-  [ B.feFuncA [ B.intercept 0 ] B.none
+  [ B.feFuncA [ B.intercept 0.0 ] B.none
   ]
 
 is :: Array (B.Node (Effect Unit))
@@ -1581,27 +1581,27 @@ itemtype =
 
 k :: Array (B.Node (Effect Unit))
 k =
-  [ B.hkern [ B.k 0 ] B.none
+  [ B.hkern [ B.k 0.0 ] B.none
   ]
 
 k1 :: Array (B.Node (Effect Unit))
 k1 =
-  [ B.feComposite [ B.k1 0 ] B.none
+  [ B.feComposite [ B.k1 0.0 ] B.none
   ]
 
 k2 :: Array (B.Node (Effect Unit))
 k2 =
-  [ B.feComposite [ B.k2 0 ] B.none
+  [ B.feComposite [ B.k2 0.0 ] B.none
   ]
 
 k3 :: Array (B.Node (Effect Unit))
 k3 =
-  [ B.feComposite [ B.k3 0 ] B.none
+  [ B.feComposite [ B.k3 0.0 ] B.none
   ]
 
 k4 :: Array (B.Node (Effect Unit))
 k4 =
-  [ B.feComposite [ B.k4 0 ] B.none
+  [ B.feComposite [ B.k4 0.0 ] B.none
   ]
 
 kernelMatrix :: Array (B.Node (Effect Unit))
@@ -1672,7 +1672,7 @@ lightingColor =
 
 limitingConeAngle :: Array (B.Node (Effect Unit))
 limitingConeAngle =
-  [ B.feSpotLight [ B.limitingConeAngle 0 ] B.none
+  [ B.feSpotLight [ B.limitingConeAngle 0.0 ] B.none
   ]
 
 linkAttr :: Array (B.Node (Effect Unit))
@@ -1707,7 +1707,7 @@ loop =
 
 low :: Array (B.Node (Effect Unit))
 low =
-  [ B.meter [ B.low 0 ] B.none
+  [ B.meter [ B.low 0.0 ] B.none
   ]
 
 manifest :: Array (B.Node (Effect Unit))
@@ -1804,7 +1804,7 @@ mediaContentEncodings =
 
 mediaSize :: Array (B.Node (Effect Unit))
 mediaSize =
-  [ B.prefetch [ B.mediaSize 0 ] B.none
+  [ B.prefetch [ B.mediaSize 0.0 ] B.none
   ]
 
 mediaTime :: Array (B.Node (Effect Unit))
@@ -1972,7 +1972,7 @@ operator =
 
 optimum :: Array (B.Node (Effect Unit))
 optimum =
-  [ B.meter [ B.optimum 0 ] B.none
+  [ B.meter [ B.optimum 0.0 ] B.none
   ]
 
 order :: Array (B.Node (Effect Unit))
@@ -2007,12 +2007,12 @@ overlay =
 
 overlinePosition :: Array (B.Node (Effect Unit))
 overlinePosition =
-  [ B.fontFace [ B.overlinePosition 0 ] B.none
+  [ B.fontFace [ B.overlinePosition 0.0 ] B.none
   ]
 
 overlineThickness :: Array (B.Node (Effect Unit))
 overlineThickness =
-  [ B.fontFace [ B.overlineThickness 0 ] B.none
+  [ B.fontFace [ B.overlineThickness 0.0 ] B.none
   ]
 
 paintOrder :: Array (B.Node (Effect Unit))
@@ -2037,7 +2037,7 @@ pathAttr =
 
 pathLength :: Array (B.Node (Effect Unit))
 pathLength =
-  [ B.circle [ B.pathLength 0 ] B.none
+  [ B.circle [ B.pathLength 0.0 ] B.none
   ]
 
 patternAttr :: Array (B.Node (Effect Unit))
@@ -2103,17 +2103,17 @@ points =
 
 pointsAtX :: Array (B.Node (Effect Unit))
 pointsAtX =
-  [ B.feSpotLight [ B.pointsAtX 0 ] B.none
+  [ B.feSpotLight [ B.pointsAtX 0.0 ] B.none
   ]
 
 pointsAtY :: Array (B.Node (Effect Unit))
 pointsAtY =
-  [ B.feSpotLight [ B.pointsAtY 0 ] B.none
+  [ B.feSpotLight [ B.pointsAtY 0.0 ] B.none
   ]
 
 pointsAtZ :: Array (B.Node (Effect Unit))
 pointsAtZ =
-  [ B.feSpotLight [ B.pointsAtZ 0 ] B.none
+  [ B.feSpotLight [ B.pointsAtZ 0.0 ] B.none
   ]
 
 popover :: Array (B.Node (Effect Unit))
@@ -2427,12 +2427,12 @@ spanAttr =
 
 specularConstant :: Array (B.Node (Effect Unit))
 specularConstant =
-  [ B.feSpecularLighting [ B.specularConstant 0 ] B.none
+  [ B.feSpecularLighting [ B.specularConstant 0.0 ] B.none
   ]
 
 specularExponent :: Array (B.Node (Effect Unit))
 specularExponent =
-  [ B.feSpecularLighting [ B.specularExponent 0 ] B.none
+  [ B.feSpecularLighting [ B.specularExponent 0.0 ] B.none
   ]
 
 spellcheck :: Array (B.Node (Effect Unit))
@@ -2517,12 +2517,12 @@ stopOpacity =
 
 strikethroughPosition :: Array (B.Node (Effect Unit))
 strikethroughPosition =
-  [ B.fontFace [ B.strikethroughPosition 0 ] B.none
+  [ B.fontFace [ B.strikethroughPosition 0.0 ] B.none
   ]
 
 strikethroughThickness :: Array (B.Node (Effect Unit))
 strikethroughThickness =
-  [ B.fontFace [ B.strikethroughThickness 0 ] B.none
+  [ B.fontFace [ B.strikethroughThickness 0.0 ] B.none
   ]
 
 string :: Array (B.Node (Effect Unit))
@@ -2557,12 +2557,12 @@ strokeLinejoin =
 
 strokeMiterlimit :: Array (B.Node (Effect Unit))
 strokeMiterlimit =
-  [ B.g [ B.strokeMiterlimit 0 ] B.none
+  [ B.g [ B.strokeMiterlimit 0.0 ] B.none
   ]
 
 strokeOpacity :: Array (B.Node (Effect Unit))
 strokeOpacity =
-  [ B.g [ B.strokeOpacity 0 ] B.none
+  [ B.g [ B.strokeOpacity 0.0 ] B.none
   ]
 
 strokeWidth :: Array (B.Node (Effect Unit))
@@ -2583,7 +2583,7 @@ summaryAttr =
 
 surfaceScale :: Array (B.Node (Effect Unit))
 surfaceScale =
-  [ B.feDiffuseLighting [ B.surfaceScale 0 ] B.none
+  [ B.feDiffuseLighting [ B.surfaceScale 0.0 ] B.none
   ]
 
 syncBehavior :: Array (B.Node (Effect Unit))
@@ -2737,12 +2737,12 @@ u2 =
 
 underlinePosition :: Array (B.Node (Effect Unit))
 underlinePosition =
-  [ B.fontFace [ B.underlinePosition 0 ] B.none
+  [ B.fontFace [ B.underlinePosition 0.0 ] B.none
   ]
 
 underlineThickness :: Array (B.Node (Effect Unit))
 underlineThickness =
-  [ B.fontFace [ B.underlineThickness 0 ] B.none
+  [ B.fontFace [ B.underlineThickness 0.0 ] B.none
   ]
 
 unicode :: Array (B.Node (Effect Unit))
@@ -2762,7 +2762,7 @@ unicodeRange =
 
 unitsPerEm :: Array (B.Node (Effect Unit))
 unitsPerEm =
-  [ B.fontFace [ B.unitsPerEm 0 ] B.none
+  [ B.fontFace [ B.unitsPerEm 0.0 ] B.none
   ]
 
 usemap :: Array (B.Node (Effect Unit))
@@ -2772,22 +2772,22 @@ usemap =
 
 vAlphabetic :: Array (B.Node (Effect Unit))
 vAlphabetic =
-  [ B.fontFace [ B.vAlphabetic 0 ] B.none
+  [ B.fontFace [ B.vAlphabetic 0.0 ] B.none
   ]
 
 vHanging :: Array (B.Node (Effect Unit))
 vHanging =
-  [ B.fontFace [ B.vHanging 0 ] B.none
+  [ B.fontFace [ B.vHanging 0.0 ] B.none
   ]
 
 vIdeographic :: Array (B.Node (Effect Unit))
 vIdeographic =
-  [ B.fontFace [ B.vIdeographic 0 ] B.none
+  [ B.fontFace [ B.vIdeographic 0.0 ] B.none
   ]
 
 vMathematical :: Array (B.Node (Effect Unit))
 vMathematical =
-  [ B.fontFace [ B.vMathematical 0 ] B.none
+  [ B.fontFace [ B.vMathematical 0.0 ] B.none
   ]
 
 valign :: Array (B.Node (Effect Unit))
@@ -2823,17 +2823,17 @@ version =
 
 vertAdvY :: Array (B.Node (Effect Unit))
 vertAdvY =
-  [ B.font [ B.vertAdvY 0 ] B.none
+  [ B.font [ B.vertAdvY 0.0 ] B.none
   ]
 
 vertOriginX :: Array (B.Node (Effect Unit))
 vertOriginX =
-  [ B.font [ B.vertOriginX 0 ] B.none
+  [ B.font [ B.vertOriginX 0.0 ] B.none
   ]
 
 vertOriginY :: Array (B.Node (Effect Unit))
 vertOriginY =
-  [ B.font [ B.vertOriginY 0 ] B.none
+  [ B.font [ B.vertOriginY 0.0 ] B.none
   ]
 
 viewBox :: Array (B.Node (Effect Unit))
@@ -2919,7 +2919,7 @@ xChannelSelector =
 
 xHeight :: Array (B.Node (Effect Unit))
 xHeight =
-  [ B.fontFace [ B.xHeight 0 ] B.none
+  [ B.fontFace [ B.xHeight 0.0 ] B.none
   ]
 
 y :: Array (B.Node (Effect Unit))

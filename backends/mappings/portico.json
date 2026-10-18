@@ -53,8 +53,12 @@
       "type": "forall a. String -> Attr a",
       "code": "P.attribute {name}"
     },
-    "number": {
+    "integer": {
       "type": "forall a. Int -> Attr a",
+      "code": "P.attribute {name} <<< show"
+    },
+    "number": {
+      "type": "forall a. Number -> Attr a",
       "code": "P.attribute {name} <<< show"
     },
     "event": {

@@ -1684,7 +1684,7 @@ export const table = {
       "aria-colcount": {
         "purescript": "ariaColcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1692,7 +1692,7 @@ export const table = {
       "aria-colindex": {
         "purescript": "ariaColindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1700,7 +1700,7 @@ export const table = {
       "aria-colspan": {
         "purescript": "ariaColspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1848,7 +1848,7 @@ export const table = {
       "aria-level": {
         "purescript": "ariaLevel",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1921,7 +1921,7 @@ export const table = {
       "aria-posinset": {
         "purescript": "ariaPosinset",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1979,7 +1979,7 @@ export const table = {
       "aria-rowcount": {
         "purescript": "ariaRowcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1987,7 +1987,7 @@ export const table = {
       "aria-rowindex": {
         "purescript": "ariaRowindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -1995,7 +1995,7 @@ export const table = {
       "aria-rowspan": {
         "purescript": "ariaRowspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2014,7 +2014,7 @@ export const table = {
       "aria-setsize": {
         "purescript": "ariaSetsize",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2168,7 +2168,7 @@ export const table = {
       "border": {
         "purescript": "border",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2304,7 +2304,7 @@ export const table = {
       "cols": {
         "purescript": "cols",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2312,7 +2312,7 @@ export const table = {
       "colspan": {
         "purescript": "colspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2674,7 +2674,7 @@ export const table = {
       "hspace": {
         "purescript": "hspace",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2905,7 +2905,7 @@ export const table = {
       "marginheight": {
         "purescript": "marginheight",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2913,7 +2913,7 @@ export const table = {
       "marginwidth": {
         "purescript": "marginwidth",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2929,7 +2929,7 @@ export const table = {
       "maxlength": {
         "purescript": "maxlength",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -2965,7 +2965,7 @@ export const table = {
       "minlength": {
         "purescript": "minlength",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3250,7 +3250,7 @@ export const table = {
       "rows": {
         "purescript": "rows",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3258,7 +3258,7 @@ export const table = {
       "rowspan": {
         "purescript": "rowspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3386,7 +3386,7 @@ export const table = {
       "size": {
         "purescript": "size",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3410,7 +3410,7 @@ export const table = {
       "span": {
         "purescript": "spanAttr",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3469,7 +3469,7 @@ export const table = {
       "start": {
         "purescript": "start",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3501,7 +3501,7 @@ export const table = {
       "tabindex": {
         "purescript": "tabindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -3654,7 +3654,7 @@ export const table = {
       "vspace": {
         "purescript": "vspace",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8679,7 +8679,7 @@ export const table = {
       "aria-colcount": {
         "purescript": "ariaColcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8687,7 +8687,7 @@ export const table = {
       "aria-colindex": {
         "purescript": "ariaColindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8695,7 +8695,7 @@ export const table = {
       "aria-colspan": {
         "purescript": "ariaColspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8843,7 +8843,7 @@ export const table = {
       "aria-level": {
         "purescript": "ariaLevel",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8916,7 +8916,7 @@ export const table = {
       "aria-posinset": {
         "purescript": "ariaPosinset",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8974,7 +8974,7 @@ export const table = {
       "aria-rowcount": {
         "purescript": "ariaRowcount",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8982,7 +8982,7 @@ export const table = {
       "aria-rowindex": {
         "purescript": "ariaRowindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -8990,7 +8990,7 @@ export const table = {
       "aria-rowspan": {
         "purescript": "ariaRowspan",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -9009,7 +9009,7 @@ export const table = {
       "aria-setsize": {
         "purescript": "ariaSetsize",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -10943,7 +10943,7 @@ export const table = {
       "tabindex": {
         "purescript": "tabindex",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -10967,7 +10967,7 @@ export const table = {
       "targetX": {
         "purescript": "targetX",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}
@@ -10975,7 +10975,7 @@ export const table = {
       "targetY": {
         "purescript": "targetY",
         "type": {
-          "kind": "number",
+          "kind": "integer",
           "values": []
         },
         "elementTypes": {}

@@ -108,7 +108,7 @@ valueTypes :: Effect Unit
 valueTypes = do
   let typeOf ns tag name = _.valueType <$> elementAttribute ns tag name
   assertEqual "disabled" (Just BooleanValue) (typeOf Html "button" "disabled")
-  assertEqual "colspan" (Just NumberValue) (typeOf Html "td" "colspan")
+  assertEqual "colspan" (Just IntegerValue) (typeOf Html "td" "colspan")
   assertEqual "href" (Just StringValue) (typeOf Html "a" "href")
   assertEqual "dir" (Just (Enumeration [ "ltr", "rtl", "auto" ])) (typeOf Html "div" "dir")
   assertEqual "button type" (Just (Enumeration [ "submit", "reset", "button" ])) (typeOf Html "button" "type")
