@@ -1,0 +1,21 @@
+print: identical
+errors: none
+markup:
+  9:3 <div>
+    @tabindex="-1"
+    text "\n    "
+    10:5 <meter>
+      @low="1"
+      @high="0.75"
+      @optimum="-2"
+    text "\n    "
+    11:5 <td>
+      @colspan="2"
+    text "\n    "
+    12:5 <svg>
+      text "\n      "
+      13:7 <circle> (self-closing)
+        @stroke-opacity="0.5"
+        @pathLength="100"
+      text "\n    "
+    text "\n  "

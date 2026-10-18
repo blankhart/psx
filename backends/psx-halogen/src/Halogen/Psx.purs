@@ -1609,7 +1609,7 @@ abbrAttr = attribute "abbr"
 about :: forall r a. String -> Attr r a
 about = attribute "about"
 
-accentHeight :: forall r a. Int -> Attr r a
+accentHeight :: forall r a. Number -> Attr r a
 accentHeight = attribute "accent-height" <<< show
 
 accept :: forall r a. String -> Attr r a
@@ -1654,13 +1654,13 @@ allowusermedia = HH.prop (HH.PropName "allowusermedia")
 alpha :: forall r a. Boolean -> Attr r a
 alpha = HH.prop (HH.PropName "alpha")
 
-alphabetic :: forall r a. Int -> Attr r a
+alphabetic :: forall r a. Number -> Attr r a
 alphabetic = attribute "alphabetic" <<< show
 
 alt :: forall r a. String -> Attr (alt :: String | r) a
 alt = HP.alt
 
-amplitude :: forall r a. Int -> Attr r a
+amplitude :: forall r a. Number -> Attr r a
 amplitude = attribute "amplitude" <<< show
 
 arabicForm :: forall r a. String -> Attr r a
@@ -1801,13 +1801,13 @@ ariaSetsize = attribute "aria-setsize" <<< show
 ariaSort :: forall r a. String -> Attr r a
 ariaSort = attribute "aria-sort"
 
-ariaValuemax :: forall r a. Int -> Attr r a
+ariaValuemax :: forall r a. Number -> Attr r a
 ariaValuemax = attribute "aria-valuemax" <<< show
 
-ariaValuemin :: forall r a. Int -> Attr r a
+ariaValuemin :: forall r a. Number -> Attr r a
 ariaValuemin = attribute "aria-valuemin" <<< show
 
-ariaValuenow :: forall r a. Int -> Attr r a
+ariaValuenow :: forall r a. Number -> Attr r a
 ariaValuenow = attribute "aria-valuenow" <<< show
 
 ariaValuetext :: forall r a. String -> Attr r a
@@ -1816,7 +1816,7 @@ ariaValuetext = attribute "aria-valuetext"
 as :: forall r a. String -> Attr r a
 as = attribute "as"
 
-ascent :: forall r a. Int -> Attr r a
+ascent :: forall r a. Number -> Attr r a
 ascent = attribute "ascent" <<< show
 
 async :: forall r a. Boolean -> Attr r a
@@ -1846,7 +1846,7 @@ autoplay = HP.autoplay
 axis :: forall r a. String -> Attr r a
 axis = attribute "axis"
 
-azimuth :: forall r a. Int -> Attr r a
+azimuth :: forall r a. Number -> Attr r a
 azimuth = attribute "azimuth" <<< show
 
 background :: forall r a. String -> Attr r a
@@ -1873,7 +1873,7 @@ begin = attribute "begin"
 bgcolor :: forall r a. String -> Attr r a
 bgcolor = attribute "bgcolor"
 
-bias :: forall r a. Int -> Attr r a
+bias :: forall r a. Number -> Attr r a
 bias = attribute "bias" <<< show
 
 blocking :: forall r a. String -> Attr r a
@@ -1888,7 +1888,7 @@ by = attribute "by"
 calcMode :: forall r a. String -> Attr r a
 calcMode = attribute "calcMode"
 
-capHeight :: forall r a. Int -> Attr r a
+capHeight :: forall r a. Number -> Attr r a
 capHeight = attribute "cap-height" <<< show
 
 cellpadding :: forall r a. String -> Attr r a
@@ -2035,10 +2035,10 @@ defaultAction = attribute "defaultAction"
 defer :: forall r a. Boolean -> Attr r a
 defer = HH.prop (HH.PropName "defer")
 
-descent :: forall r a. Int -> Attr r a
+descent :: forall r a. Number -> Attr r a
 descent = attribute "descent" <<< show
 
-diffuseConstant :: forall r a. Int -> Attr r a
+diffuseConstant :: forall r a. Number -> Attr r a
 diffuseConstant = attribute "diffuseConstant" <<< show
 
 dirAttr :: forall r a. String -> Attr r a
@@ -2056,7 +2056,7 @@ disabled = HP.disabled
 display :: forall r a. String -> Attr r a
 display = attribute "display"
 
-divisor :: forall r a. Int -> Attr r a
+divisor :: forall r a. Number -> Attr r a
 divisor = attribute "divisor" <<< show
 
 dominantBaseline :: forall r a. String -> Attr r a
@@ -2083,7 +2083,7 @@ edgeMode = attribute "edgeMode"
 editable :: forall r a. String -> Attr r a
 editable = attribute "editable"
 
-elevation :: forall r a. Int -> Attr r a
+elevation :: forall r a. Number -> Attr r a
 elevation = attribute "elevation" <<< show
 
 enableBackground :: forall r a. String -> Attr r a
@@ -2101,7 +2101,7 @@ enterkeyhint = attribute "enterkeyhint"
 event :: forall r a. String -> Attr r a
 event = attribute "event"
 
-exponent :: forall r a. Int -> Attr r a
+exponent :: forall r a. Number -> Attr r a
 exponent = attribute "exponent" <<< show
 
 exportparts :: forall r a. String -> Attr r a
@@ -2119,7 +2119,7 @@ fetchpriority = attribute "fetchpriority"
 fill :: forall r a. String -> Attr r a
 fill = attribute "fill"
 
-fillOpacity :: forall r a. Int -> Attr r a
+fillOpacity :: forall r a. Number -> Attr r a
 fillOpacity = attribute "fill-opacity" <<< show
 
 fillRule :: forall r a. String -> Attr r a
@@ -2236,7 +2236,7 @@ gradientUnits = attribute "gradientUnits"
 handlerAttr :: forall r a. String -> Attr r a
 handlerAttr = attribute "handler"
 
-hanging :: forall r a. Int -> Attr r a
+hanging :: forall r a. Number -> Attr r a
 hanging = attribute "hanging" <<< show
 
 headers :: forall r a. String -> Attr r a
@@ -2248,16 +2248,16 @@ height = attribute "height"
 hidden :: forall r a. Boolean -> Attr r a
 hidden = HH.prop (HH.PropName "hidden")
 
-high :: forall r a. Int -> Attr r a
+high :: forall r a. Number -> Attr r a
 high = attribute "high" <<< show
 
-horizAdvX :: forall r a. Int -> Attr r a
+horizAdvX :: forall r a. Number -> Attr r a
 horizAdvX = attribute "horiz-adv-x" <<< show
 
-horizOriginX :: forall r a. Int -> Attr r a
+horizOriginX :: forall r a. Number -> Attr r a
 horizOriginX = attribute "horiz-origin-x" <<< show
 
-horizOriginY :: forall r a. Int -> Attr r a
+horizOriginY :: forall r a. Number -> Attr r a
 horizOriginY = attribute "horiz-origin-y" <<< show
 
 href :: forall r a. String -> Attr (href :: String | r) a
@@ -2275,7 +2275,7 @@ httpEquiv = attribute "http-equiv"
 id :: forall r a. String -> Attr (id :: String | r) a
 id = HP.id
 
-ideographic :: forall r a. Int -> Attr r a
+ideographic :: forall r a. Number -> Attr r a
 ideographic = attribute "ideographic" <<< show
 
 imageRendering :: forall r a. String -> Attr r a
@@ -2305,7 +2305,7 @@ inputmode = attribute "inputmode"
 integrity :: forall r a. String -> Attr r a
 integrity = attribute "integrity"
 
-intercept :: forall r a. Int -> Attr r a
+intercept :: forall r a. Number -> Attr r a
 intercept = attribute "intercept" <<< show
 
 is :: forall r a. String -> Attr r a
@@ -2329,19 +2329,19 @@ itemscope = HH.prop (HH.PropName "itemscope")
 itemtype :: forall r a. String -> Attr r a
 itemtype = attribute "itemtype"
 
-k :: forall r a. Int -> Attr r a
+k :: forall r a. Number -> Attr r a
 k = attribute "k" <<< show
 
-k1 :: forall r a. Int -> Attr r a
+k1 :: forall r a. Number -> Attr r a
 k1 = attribute "k1" <<< show
 
-k2 :: forall r a. Int -> Attr r a
+k2 :: forall r a. Number -> Attr r a
 k2 = attribute "k2" <<< show
 
-k3 :: forall r a. Int -> Attr r a
+k3 :: forall r a. Number -> Attr r a
 k3 = attribute "k3" <<< show
 
-k4 :: forall r a. Int -> Attr r a
+k4 :: forall r a. Number -> Attr r a
 k4 = attribute "k4" <<< show
 
 kernelMatrix :: forall r a. String -> Attr r a
@@ -2383,7 +2383,7 @@ letterSpacing = attribute "letter-spacing"
 lightingColor :: forall r a. String -> Attr r a
 lightingColor = attribute "lighting-color"
 
-limitingConeAngle :: forall r a. Int -> Attr r a
+limitingConeAngle :: forall r a. Number -> Attr r a
 limitingConeAngle = attribute "limitingConeAngle" <<< show
 
 linkAttr :: forall r a. String -> Attr r a
@@ -2404,7 +2404,7 @@ longdesc = attribute "longdesc"
 loop :: forall r a. Boolean -> Attr (loop :: Boolean | r) a
 loop = HP.loop
 
-low :: forall r a. Int -> Attr r a
+low :: forall r a. Number -> Attr r a
 low = attribute "low" <<< show
 
 manifest :: forall r a. String -> Attr r a
@@ -2461,7 +2461,7 @@ mediaCharacterEncoding = attribute "mediaCharacterEncoding"
 mediaContentEncodings :: forall r a. String -> Attr r a
 mediaContentEncodings = attribute "mediaContentEncodings"
 
-mediaSize :: forall r a. Int -> Attr r a
+mediaSize :: forall r a. Number -> Attr r a
 mediaSize = attribute "mediaSize" <<< show
 
 mediaTime :: forall r a. String -> Attr r a
@@ -2560,7 +2560,7 @@ open = HH.prop (HH.PropName "open")
 operator :: forall r a. String -> Attr r a
 operator = attribute "operator"
 
-optimum :: forall r a. Int -> Attr r a
+optimum :: forall r a. Number -> Attr r a
 optimum = attribute "optimum" <<< show
 
 order :: forall r a. String -> Attr r a
@@ -2581,10 +2581,10 @@ overflow = attribute "overflow"
 overlay :: forall r a. String -> Attr r a
 overlay = attribute "overlay"
 
-overlinePosition :: forall r a. Int -> Attr r a
+overlinePosition :: forall r a. Number -> Attr r a
 overlinePosition = attribute "overline-position" <<< show
 
-overlineThickness :: forall r a. Int -> Attr r a
+overlineThickness :: forall r a. Number -> Attr r a
 overlineThickness = attribute "overline-thickness" <<< show
 
 paintOrder :: forall r a. String -> Attr r a
@@ -2599,7 +2599,7 @@ part = attribute "part"
 pathAttr :: forall r a. String -> Attr r a
 pathAttr = attribute "path"
 
-pathLength :: forall r a. Int -> Attr r a
+pathLength :: forall r a. Number -> Attr r a
 pathLength = attribute "pathLength" <<< show
 
 patternAttr :: forall r a. String -> Attr (pattern :: String | r) a
@@ -2638,13 +2638,13 @@ pointerEvents = attribute "pointer-events"
 points :: forall r a. String -> Attr r a
 points = attribute "points"
 
-pointsAtX :: forall r a. Int -> Attr r a
+pointsAtX :: forall r a. Number -> Attr r a
 pointsAtX = attribute "pointsAtX" <<< show
 
-pointsAtY :: forall r a. Int -> Attr r a
+pointsAtY :: forall r a. Number -> Attr r a
 pointsAtY = attribute "pointsAtY" <<< show
 
-pointsAtZ :: forall r a. Int -> Attr r a
+pointsAtZ :: forall r a. Number -> Attr r a
 pointsAtZ = attribute "pointsAtZ" <<< show
 
 popover :: forall r a. String -> Attr r a
@@ -2830,10 +2830,10 @@ spacing = attribute "spacing"
 spanAttr :: forall r a. Int -> Attr r a
 spanAttr = attribute "span" <<< show
 
-specularConstant :: forall r a. Int -> Attr r a
+specularConstant :: forall r a. Number -> Attr r a
 specularConstant = attribute "specularConstant" <<< show
 
-specularExponent :: forall r a. Int -> Attr r a
+specularExponent :: forall r a. Number -> Attr r a
 specularExponent = attribute "specularExponent" <<< show
 
 spellcheck :: forall r a. String -> Attr (spellcheck :: Boolean | r) a
@@ -2884,10 +2884,10 @@ stopColor = attribute "stop-color"
 stopOpacity :: forall r a. String -> Attr r a
 stopOpacity = attribute "stop-opacity"
 
-strikethroughPosition :: forall r a. Int -> Attr r a
+strikethroughPosition :: forall r a. Number -> Attr r a
 strikethroughPosition = attribute "strikethrough-position" <<< show
 
-strikethroughThickness :: forall r a. Int -> Attr r a
+strikethroughThickness :: forall r a. Number -> Attr r a
 strikethroughThickness = attribute "strikethrough-thickness" <<< show
 
 string :: forall r a. String -> Attr r a
@@ -2908,10 +2908,10 @@ strokeLinecap = attribute "stroke-linecap"
 strokeLinejoin :: forall r a. String -> Attr r a
 strokeLinejoin = attribute "stroke-linejoin"
 
-strokeMiterlimit :: forall r a. Int -> Attr r a
+strokeMiterlimit :: forall r a. Number -> Attr r a
 strokeMiterlimit = attribute "stroke-miterlimit" <<< show
 
-strokeOpacity :: forall r a. Int -> Attr r a
+strokeOpacity :: forall r a. Number -> Attr r a
 strokeOpacity = attribute "stroke-opacity" <<< show
 
 strokeWidth :: forall r a. String -> Attr r a
@@ -2923,7 +2923,7 @@ styleAttr = HP.style
 summaryAttr :: forall r a. String -> Attr r a
 summaryAttr = attribute "summary"
 
-surfaceScale :: forall r a. Int -> Attr r a
+surfaceScale :: forall r a. Number -> Attr r a
 surfaceScale = attribute "surfaceScale" <<< show
 
 syncBehavior :: forall r a. String -> Attr r a
@@ -3013,10 +3013,10 @@ u1 = attribute "u1"
 u2 :: forall r a. String -> Attr r a
 u2 = attribute "u2"
 
-underlinePosition :: forall r a. Int -> Attr r a
+underlinePosition :: forall r a. Number -> Attr r a
 underlinePosition = attribute "underline-position" <<< show
 
-underlineThickness :: forall r a. Int -> Attr r a
+underlineThickness :: forall r a. Number -> Attr r a
 underlineThickness = attribute "underline-thickness" <<< show
 
 unicode :: forall r a. String -> Attr r a
@@ -3028,22 +3028,22 @@ unicodeBidi = attribute "unicode-bidi"
 unicodeRange :: forall r a. String -> Attr r a
 unicodeRange = attribute "unicode-range"
 
-unitsPerEm :: forall r a. Int -> Attr r a
+unitsPerEm :: forall r a. Number -> Attr r a
 unitsPerEm = attribute "units-per-em" <<< show
 
 usemap :: forall r a. String -> Attr r a
 usemap = attribute "usemap"
 
-vAlphabetic :: forall r a. Int -> Attr r a
+vAlphabetic :: forall r a. Number -> Attr r a
 vAlphabetic = attribute "v-alphabetic" <<< show
 
-vHanging :: forall r a. Int -> Attr r a
+vHanging :: forall r a. Number -> Attr r a
 vHanging = attribute "v-hanging" <<< show
 
-vIdeographic :: forall r a. Int -> Attr r a
+vIdeographic :: forall r a. Number -> Attr r a
 vIdeographic = attribute "v-ideographic" <<< show
 
-vMathematical :: forall r a. Int -> Attr r a
+vMathematical :: forall r a. Number -> Attr r a
 vMathematical = attribute "v-mathematical" <<< show
 
 valign :: forall r a. String -> Attr r a
@@ -3064,13 +3064,13 @@ vectorEffect = attribute "vector-effect"
 version :: forall r a. String -> Attr r a
 version = attribute "version"
 
-vertAdvY :: forall r a. Int -> Attr r a
+vertAdvY :: forall r a. Number -> Attr r a
 vertAdvY = attribute "vert-adv-y" <<< show
 
-vertOriginX :: forall r a. Int -> Attr r a
+vertOriginX :: forall r a. Number -> Attr r a
 vertOriginX = attribute "vert-origin-x" <<< show
 
-vertOriginY :: forall r a. Int -> Attr r a
+vertOriginY :: forall r a. Number -> Attr r a
 vertOriginY = attribute "vert-origin-y" <<< show
 
 viewBox :: forall r a. String -> Attr r a
@@ -3121,7 +3121,7 @@ x2 = attribute "x2"
 xChannelSelector :: forall r a. String -> Attr r a
 xChannelSelector = attribute "xChannelSelector"
 
-xHeight :: forall r a. Int -> Attr r a
+xHeight :: forall r a. Number -> Attr r a
 xHeight = attribute "x-height" <<< show
 
 y :: forall r a. String -> Attr r a

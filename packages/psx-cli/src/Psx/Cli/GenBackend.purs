@@ -65,6 +65,7 @@ type Mapping =
   , svgElement :: Maybe Template
   , boolean :: Template
   , string :: Template
+  , integer :: Template
   , number :: Template
   , event :: Template
   , groups :: Array Group
@@ -104,6 +105,7 @@ decodeMapping json = do
   , svgElement: _
   , boolean: _
   , string: _
+  , integer: _
   , number: _
   , event: _
   , groups: _
@@ -121,6 +123,7 @@ decodeMapping json = do
     <*> optionalTemplate "svgElement" ts
     <*> template "boolean" ts
     <*> template "string" ts
+    <*> template "integer" ts
     <*> template "number" ts
     <*> template "event" ts
     <*> (optionalArray "groups" o >>= traverse group)
@@ -233,7 +236,8 @@ attributes = traverse merge (Array.groupAllBy (comparing _.ident) entries)
 
   valueOf = case _ of
     BooleanValue -> { value: "Boolean", literal: "true" }
-    NumberValue -> { value: "Int", literal: "0" }
+    IntegerValue -> { value: "Int", literal: "0" }
+    NumberValue -> { value: "Number", literal: "0.0" }
     StringValue -> { value: "String", literal: "\"\"" }
     Enumeration values -> { value: "String", literal: maybe "\"\"" show (Array.head values) }
 
@@ -283,7 +287,8 @@ definition m name = do
         | otherwise -> m.element
       AttributeKind -> case name.value of
         "Boolean" -> m.boolean
-        "Int" -> m.number
+        "Int" -> m.integer
+        "Number" -> m.number
         _ -> m.string
       EventKind -> m.event
     fromGroup = Array.find (Array.elem name.ident <<< _.names) m.groups

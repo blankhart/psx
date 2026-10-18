@@ -822,6 +822,7 @@ emitAttr src ctx ns tag a = do
         Just { value: AttrRaw _ } -> pure unit
         Nothing -> case attr.valueType of
           BooleanValue -> emitFor range ("B." <> attr.purescript <> " true")
+          IntegerValue -> failAt range ("`" <> name <> "` needs a number: " <> name <> "=\"1\" or " <> name <> "={...}")
           NumberValue -> failAt range ("`" <> name <> "` needs a number: " <> name <> "=\"1\" or " <> name <> "={...}")
           _ -> emitFor range ("B." <> attr.purescript <> " \"\"")
       Nothing -> do
@@ -841,8 +842,13 @@ emitAttr src ctx ns tag a = do
     let value = Entities.decode (unquote t.text)
     case attr.valueType of
       BooleanValue -> emitFor range ("B." <> attr.purescript <> " true")
+      -- An `Int` literal.
+      IntegerValue
+        | isInteger value -> emitFor range ("B." <> attr.purescript <> " " <> parenthesise value)
+        | otherwise -> failAt t.range ("`" <> a.name.text <> "` takes a whole number, not " <> show value)
+      -- A `Number` literal, so `step="1"` is `1.0`.
       NumberValue
-        | isNumber value -> emitFor range ("B." <> attr.purescript <> " " <> if SCU.take 1 value == "-" then "(" <> value <> ")" else value)
+        | isNumber value -> emitFor range ("B." <> attr.purescript <> " " <> parenthesise (if isInteger value then value <> ".0" else value))
         | otherwise -> failAt t.range ("`" <> a.name.text <> "` takes a number, not " <> show value)
       _ -> emitFor range ("B." <> attr.purescript <> " " <> stringLiteral value)
 
@@ -858,6 +864,13 @@ attrRange a =
 
 isNumber :: String -> Boolean
 isNumber = Regex.test (Regex.unsafeRegex "^-?[0-9]+(\\.[0-9]+)?$" Regex.noFlags)
+
+isInteger :: String -> Boolean
+isInteger = Regex.test (Regex.unsafeRegex "^-?[0-9]+$" Regex.noFlags)
+
+-- | A negative literal in parentheses, so it is one argument.
+parenthesise :: String -> String
+parenthesise value = if SCU.take 1 value == "-" then "(" <> value <> ")" else value
 
 unquote :: String -> String
 unquote s = SCU.drop 1 (SCU.dropRight 1 s)

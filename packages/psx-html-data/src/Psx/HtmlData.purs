@@ -45,6 +45,9 @@ instance Show Namespace where
 data ValueType
   = BooleanValue
   | StringValue
+  -- | A whole number, such as `tabindex`.
+  | IntegerValue
+  -- | A real number, such as `<meter low>` or SVG's `stroke-opacity`.
   | NumberValue
   -- | An enumerated attribute, with its keywords.
   | Enumeration (Array String)
@@ -54,6 +57,7 @@ derive instance Eq ValueType
 instance Show ValueType where
   show BooleanValue = "BooleanValue"
   show StringValue = "StringValue"
+  show IntegerValue = "IntegerValue"
   show NumberValue = "NumberValue"
   show (Enumeration values) = "(Enumeration " <> show values <> ")"
 
@@ -96,6 +100,7 @@ namespaceEntry Svg = table.svg
 valueType :: ValueTypeEntry -> ValueType
 valueType t = case t.kind of
   "boolean" -> BooleanValue
+  "integer" -> IntegerValue
   "number" -> NumberValue
   "enumeration" -> Enumeration t.values
   _ -> StringValue

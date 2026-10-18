@@ -87,6 +87,9 @@ stringType = { kind: "string", values: [] }
 numberType :: ValueType
 numberType = { kind: "number", values: [] }
 
+integerType :: ValueType
+integerType = { kind: "integer", values: [] }
+
 enumeration :: Array String -> ValueType
 enumeration values = { kind: "enumeration", values }
 
@@ -171,13 +174,28 @@ overrides =
   formMethods = enumeration [ "get", "post", "dialog" ]
   tristate = enumeration [ "false", "mixed", "true" ]
 
--- | The type the datasets give an attribute.
-datasetType :: Info -> ValueType
-datasetType info
+-- | The type the datasets give an attribute. The datasets don't say whether
+-- | a number is whole, so `integerAttributes` does.
+datasetType :: String -> Info -> ValueType
+datasetType attribute info
   | info.boolean = booleanType
-  | info.number && not info.list = numberType
+  | info.number && not info.list =
+      if Array.elem attribute integerAttributes then integerType else numberType
   | info.booleanish = enumeration [ "false", "true" ]
   | otherwise = stringType
+
+-- | The numeric attributes whose values are whole numbers, in either
+-- | namespace: HTML's "valid integer" and "valid non-negative integer"
+-- | attributes, and ARIA's integer properties. Every other numeric attribute
+-- | is a real number (`<meter low>`, `aria-valuenow`, SVG's numbers).
+integerAttributes :: Array String
+integerAttributes =
+  [ "aria-colcount", "aria-colindex", "aria-colspan", "aria-level", "aria-posinset"
+  , "aria-rowcount", "aria-rowindex", "aria-rowspan", "aria-setsize"
+  , "border", "cols", "colspan", "hspace", "marginheight", "marginwidth", "maxlength"
+  , "minlength", "rows", "rowspan", "size", "span", "start", "tabindex", "vspace"
+  , "targetX", "targetY"
+  ]
 
 -- Namespaces ------------------------------------------------------------------
 
@@ -220,7 +238,7 @@ attributeType :: Namespace -> String -> ValueType
 attributeType ns attribute =
   case Array.find (\o -> o.namespace == ns.name && o.attribute == attribute && Array.null o.elements) overrides of
     Just o -> o.type
-    Nothing -> datasetType (ns.info attribute)
+    Nothing -> datasetType attribute (ns.info attribute)
 
 elementTypes :: Namespace -> String -> Array (Tuple String ValueType)
 elementTypes ns attribute = Array.sortWith (\(Tuple e _) -> e) do
