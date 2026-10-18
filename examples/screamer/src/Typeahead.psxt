@@ -149,7 +149,7 @@ chosenText c = if c == "" then "" else "Chosen: " <> c
 foreign import view :: Props -> Markup (Effect Unit)
 </script>
 
-<template name="view" args="props">
+<template name="view props">
   <div>
     <input id="search" type="text" placeholder="Search fruit" autocomplete="off" oninput={props.onQuery} onkeydown={props.onKey}>
     <p id="status">{props.status}</p>

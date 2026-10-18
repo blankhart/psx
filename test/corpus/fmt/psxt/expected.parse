@@ -2,9 +2,9 @@ print: identical
 errors: none
 script: 3:1-11:10, module Fmt.Psxt where
 template "card" at 12:1, args "title" (1 binders), defines the foreign import at 9:1 (1 arrows)
-  12:36 <article>
+  12:29 <article>
     @class="card"
-    12:58 <h2>
+    12:51 <h2>
       hole {title}
     hole {badge 3}
 template "badge" at 16:1, args "n" (1 binders), defines the foreign import at 10:1 (1 arrows)

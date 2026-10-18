@@ -112,7 +112,7 @@ corpus = do
 psxt :: Effect Unit
 psxt = do
   let
-    input = "<!-- x -->\n<script type=\"text/purescript\">\nmodule M where\n\nimport Portico.Psx (Markup)\n\nforeign import a :: Markup Unit\n</script>\n<template name=\"a\"><p/></template>\n<template name=\"b\" args=\"x y\"><p>{x}</p></template>\n"
+    input = "<!-- x -->\n<script type=\"text/purescript\">\nmodule M where\n\nimport Portico.Psx (Markup)\n\nforeign import a :: Markup Unit\n</script>\n<template name=\"a\"><p/></template>\n<template name=\"b x y\"><p>{x}</p></template>\n"
     result = parsePsxt input
   case result.file of
     Nothing -> throw "FAIL the .psxt example parses"

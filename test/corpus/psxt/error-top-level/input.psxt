@@ -10,4 +10,4 @@ stray text
 <script>console.log("not PureScript")</script>
 <template name="view"><p>one</p></template>
 <template name="view"><p>two</p></template>
-<template args="x"><p>{x}</p></template>
+<template><p>unnamed</p></template>

@@ -12,7 +12,7 @@ data Msg = Increment | Decrement | Reset
 foreign import view :: Props -> Int -> Markup Msg
 </script>
 
-<template name="view" args="props n">
+<template name="view props n">
   <section class="counter">
     <h2>{props.label}: {show n}</h2>
     <button onclick={Decrement} disabled={n <= 0}>-</button>

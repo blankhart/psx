@@ -1,0 +1,11 @@
+<!-- A template's arguments follow its name in `name`; `args` is not an
+     attribute of a template. -->
+<script type="text/purescript">
+module App.Args where
+
+import Prelude
+import Portico.Psx (Markup)
+
+foreign import view :: Int -> Markup Unit
+</script>
+<template name="view" args="n"><p>{show n}</p></template>
