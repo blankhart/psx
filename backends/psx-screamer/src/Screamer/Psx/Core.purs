@@ -93,6 +93,9 @@ elementOf build attrs = build attrs <<< content
 none :: forall a. Markup a
 none = []
 
+-- | Keys a child for its parent's keyed child list. A key belongs to the
+-- | list, not to the element, so it is never an `Attr`: write `key` on the
+-- | element in markup, never a key in a trait hole.
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) node
 
