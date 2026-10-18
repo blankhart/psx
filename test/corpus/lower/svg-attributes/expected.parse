@@ -1,0 +1,27 @@
+print: identical
+errors: none
+markup:
+  9:3 <figure>
+    @class="chart"
+    text "\n    "
+    10:5 <img> (no close)
+      @src="chart.png"
+      @width="640"
+      @height="480"
+    text "\n    "
+    11:5 <svg>
+      @class="plot"
+      @width="100%"
+      @height="10em"
+      text "\n      "
+      12:7 <rect> (self-closing)
+        @class="bar"
+        @width="4"
+        @height="8"
+      text "\n      "
+      13:7 <foreignObject>
+        13:22 <canvas>
+          @class="overlay"
+          @width="10"
+      text "\n    "
+    text "\n  "

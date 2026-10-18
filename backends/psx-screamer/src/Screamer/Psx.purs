@@ -682,6 +682,9 @@ module Screamer.Psx
   , styleAttr
   , summaryAttr
   , surfaceScale
+  , svgClass
+  , svgHeight
+  , svgWidth
   , syncBehavior
   , syncBehaviorDefault
   , syncMaster
@@ -2226,8 +2229,8 @@ hanging = S.attribute "hanging" <<< Prelude.map show <<< S.toSignal
 headers :: forall v a. S.AttrValue v String => v -> Attr a
 headers = S.attribute "headers" <<< S.toSignal
 
-height :: forall v a. S.AttrValue v String => v -> Attr a
-height = S.attribute "height" <<< S.toSignal
+height :: forall v a. S.AttrValue v Int => v -> Attr a
+height = S.attribute "height" <<< Prelude.map show <<< S.toSignal
 
 hidden :: forall v a. S.AttrValue v Boolean => v -> Attr a
 hidden = S.booleanAttribute "hidden" <<< S.toSignal
@@ -2910,6 +2913,15 @@ summaryAttr = S.attribute "summary" <<< S.toSignal
 surfaceScale :: forall v a. S.AttrValue v Number => v -> Attr a
 surfaceScale = S.attribute "surfaceScale" <<< Prelude.map show <<< S.toSignal
 
+svgClass :: forall v a. S.AttrValue v String => v -> Attr a
+svgClass = S.attribute "class" <<< S.toSignal
+
+svgHeight :: forall v a. S.AttrValue v String => v -> Attr a
+svgHeight = S.attribute "height" <<< S.toSignal
+
+svgWidth :: forall v a. S.AttrValue v String => v -> Attr a
+svgWidth = S.attribute "width" <<< S.toSignal
+
 syncBehavior :: forall v a. S.AttrValue v String => v -> Attr a
 syncBehavior = S.attribute "syncBehavior" <<< S.toSignal
 
@@ -3075,8 +3087,8 @@ vspace = S.attribute "vspace" <<< Prelude.map show <<< S.toSignal
 whiteSpace :: forall v a. S.AttrValue v String => v -> Attr a
 whiteSpace = S.attribute "white-space" <<< S.toSignal
 
-width :: forall v a. S.AttrValue v String => v -> Attr a
-width = S.attribute "width" <<< S.toSignal
+width :: forall v a. S.AttrValue v Int => v -> Attr a
+width = S.attribute "width" <<< Prelude.map show <<< S.toSignal
 
 widths :: forall v a. S.AttrValue v String => v -> Attr a
 widths = S.attribute "widths" <<< S.toSignal

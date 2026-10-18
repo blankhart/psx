@@ -872,7 +872,6 @@ citeAttr =
 class_ :: forall a. Array (B.Node a)
 class_ =
   [ B.div [ B.class_ "" ] B.none
-  , B.g [ B.class_ "" ] B.none
   ]
 
 classid :: forall a. Array (B.Node a)
@@ -1426,8 +1425,7 @@ headers =
 
 height :: forall a. Array (B.Node a)
 height =
-  [ B.applet [ B.height "" ] B.none
-  , B.animation [ B.height "" ] B.none
+  [ B.applet [ B.height 0 ] B.none
   ]
 
 hidden :: forall a. Array (B.Node a)
@@ -2580,6 +2578,21 @@ surfaceScale =
   [ B.feDiffuseLighting [ B.surfaceScale 0.0 ] B.none
   ]
 
+svgClass :: forall a. Array (B.Node a)
+svgClass =
+  [ B.g [ B.svgClass "" ] B.none
+  ]
+
+svgHeight :: forall a. Array (B.Node a)
+svgHeight =
+  [ B.animation [ B.svgHeight "" ] B.none
+  ]
+
+svgWidth :: forall a. Array (B.Node a)
+svgWidth =
+  [ B.animation [ B.svgWidth "" ] B.none
+  ]
+
 syncBehavior :: forall a. Array (B.Node a)
 syncBehavior =
   [ B.animation [ B.syncBehavior "" ] B.none
@@ -2862,8 +2875,7 @@ whiteSpace =
 
 width :: forall a. Array (B.Node a)
 width =
-  [ B.applet [ B.width "" ] B.none
-  , B.animation [ B.width "" ] B.none
+  [ B.applet [ B.width 0 ] B.none
   ]
 
 widths :: forall a. Array (B.Node a)

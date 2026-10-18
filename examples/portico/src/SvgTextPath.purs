@@ -25,7 +25,7 @@ view :: Model -> Markup Msg
 view model =
   [ B.main [] ([
     B.button [ B.onClick (Toggle) ] (B.children (if model.visible then "Hide" else "Show")),
-    B.svg [ B.viewBox "0 0 500 200", B.width "500", B.height "200" ] ([
+    B.svg [ B.viewBox "0 0 500 200", B.svgWidth "500", B.svgHeight "200" ] ([
       B.keyed "curve" (B.path [ B.id "curve", B.d "M 20 150 C 120 20, 380 20, 480 150", B.fill "none", B.stroke "lightgray" ] B.none) ] <> B.children (
        if model.visible then
           [ B.keyed "text" (B.textEl [ (P.transition "fade"), B.fontSize "24" ] ([

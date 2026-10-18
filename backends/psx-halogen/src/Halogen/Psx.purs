@@ -683,6 +683,9 @@ module Halogen.Psx
   , styleAttr
   , summaryAttr
   , surfaceScale
+  , svgClass
+  , svgHeight
+  , svgWidth
   , syncBehavior
   , syncBehaviorDefault
   , syncMaster
@@ -2242,8 +2245,8 @@ hanging = attribute "hanging" <<< show
 headers :: forall r a. String -> Attr r a
 headers = attribute "headers"
 
-height :: forall r a. String -> Attr (height :: I.CSSPixel | r) a
-height = attribute "height"
+height :: forall r a. Int -> Attr (height :: I.CSSPixel | r) a
+height = HP.height
 
 hidden :: forall r a. Boolean -> Attr r a
 hidden = HH.prop (HH.PropName "hidden")
@@ -2926,6 +2929,15 @@ summaryAttr = attribute "summary"
 surfaceScale :: forall r a. Number -> Attr r a
 surfaceScale = attribute "surfaceScale" <<< show
 
+svgClass :: forall r a. String -> Attr r a
+svgClass = attribute "class"
+
+svgHeight :: forall r a. String -> Attr r a
+svgHeight = attribute "height"
+
+svgWidth :: forall r a. String -> Attr r a
+svgWidth = attribute "width"
+
 syncBehavior :: forall r a. String -> Attr r a
 syncBehavior = attribute "syncBehavior"
 
@@ -3091,8 +3103,8 @@ vspace = attribute "vspace" <<< show
 whiteSpace :: forall r a. String -> Attr r a
 whiteSpace = attribute "white-space"
 
-width :: forall r a. String -> Attr (width :: I.CSSPixel | r) a
-width = attribute "width"
+width :: forall r a. Int -> Attr (width :: I.CSSPixel | r) a
+width = HP.width
 
 widths :: forall r a. String -> Attr r a
 widths = attribute "widths"
