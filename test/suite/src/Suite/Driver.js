@@ -1,5 +1,6 @@
-// Playwright and esbuild, as little of them as the driver needs.
+// Playwright, esbuild and purs-backend-es, as little of them as the driver needs.
 
+import { spawnSync } from 'node:child_process';
 import { gzipSync } from 'node:zlib';
 import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
@@ -30,6 +31,18 @@ export const bundleImpl = (module) => (outfile) =>
       outfile,
     }).then(() => {})
   );
+
+export const buildEsImpl = (root) => () => {
+  const result = spawnSync(
+    'node_modules/.bin/purs-backend-es',
+    ['build', '--corefn-dir', 'output', '--output-dir', 'output-es'],
+    { cwd: root, encoding: 'utf8' }
+  );
+  return {
+    ok: result.status === 0,
+    output: `${result.stdout ?? ''}${result.stderr ?? ''}${result.error ? String(result.error) : ''}`,
+  };
+};
 
 export const launchImpl = (executablePath) =>
   aff(() => chromium.launch(executablePath === '' ? {} : { executablePath }));
