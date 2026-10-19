@@ -2,4 +2,4 @@
 -- 20:1 This <template head="apart …"> is another equation of apart, so it goes right after apart's other templates
 -- 23:1 This equation of arity has 1 binder but its first has 2 binders; every equation takes the same number
 -- 26:1 A second <template head="none">: none has no arguments, so it has one equation
--- 28:25 The words after a template's name are PureScript binders, as in the head of an equation: head="f { title } (Just n)"
+-- 28:25 The words after a template's name are PureScript binders, as in the head of an equation, and may end in a guard: head="f { title } (Just n) | n > 0"
