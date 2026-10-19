@@ -13,6 +13,7 @@ data Status = Loading | Failed String | Loaded (Array String)
 
 
 
+
 status :: Status -> Markup Unit
 status Loading =
   [ B.p [] ([ B.text "Loading…" ]) ]
@@ -29,4 +30,14 @@ pair (Tuple label (Just n)) =
 
 pair (Tuple label Nothing) =
   [ B.p [] (B.children (label)) ]
+
+badge :: Int -> Markup Unit
+badge n | n > 99 =
+  [ B.span [ B.class_ "badge" ] ([ B.text "99+" ]) ]
+
+badge n | n > 0, n < 10 =
+  [ B.span [ B.class_ "badge" ] (B.children (show n)) ]
+
+badge _ =
+  [ B.span [ B.class_ "badge" ] (B.children ("many")) ]
 

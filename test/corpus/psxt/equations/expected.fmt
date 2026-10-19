@@ -1,5 +1,5 @@
 <!-- Templates with one name are the equations of one function, one per
-     pattern, and lower to its equations in order. -->
+     pattern or guard, and lower to its equations in order. -->
 <script type="text/purescript">
 module App.Status where
 
@@ -13,6 +13,7 @@ data Status = Loading | Failed String | Loaded (Array String)
 
 foreign import status :: Status -> Markup Unit
 foreign import pair :: Tuple String (Maybe Int) -> Markup Unit
+foreign import badge :: Int -> Markup Unit
 </script>
 
 <template head="status Loading">
@@ -33,4 +34,16 @@ foreign import pair :: Tuple String (Maybe Int) -> Markup Unit
 
 <template head="pair (Tuple label Nothing)">
   <p>{label}</p>
+</template>
+
+<template head="badge n | n > 99">
+  <span class="badge">99+</span>
+</template>
+
+<template head="badge n | n > 0, n < 10">
+  <span class="badge">{show n}</span>
+</template>
+
+<template head="badge _">
+  <span class="badge">{"many"}</span>
 </template>
