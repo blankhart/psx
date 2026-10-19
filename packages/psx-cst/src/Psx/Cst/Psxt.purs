@@ -2,9 +2,9 @@
 -- | `<script type="text/purescript">` holds a PureScript module and whose
 -- | `<template head="f x y">` elements are the bodies of that module's
 -- | `foreign import f :: T` declarations. `head` holds the head of the
--- | equation, the function's name and then PureScript binders, and is copied
--- | into the lowering as written: `<template head="H">…</template>` is the
--- | equation `H = […]`.
+-- | equation, the function's name, PureScript binders and an optional guard,
+-- | and is copied into the lowering as written: `<template head="H">…</template>`
+-- | is the equation `H = […]`.
 -- |
 -- | At the top level a file holds the script, templates, `<style>` elements,
 -- | comments and whitespace. Every top-level element is scanned as markup,
@@ -16,7 +16,8 @@
 -- | which it then defines; a template without one is an error whose fix
 -- | inserts `foreign import f :: _` for the author to complete. A
 -- | `foreign import` without a template stays real FFI. The words after the
--- | name are PureScript binders, no more of them than the type has arrows.
+-- | name are PureScript binders, no more of them than the type has arrows,
+-- | and may end in a guard.
 -- | Several templates with one name are that function's equations, in order:
 -- | they follow one another, on the same side of the script, and take the
 -- | same number of binders.
@@ -310,7 +311,7 @@ resolve src script foreigns el = do
         | otherwise -> []
     argsErrors = case argsAttr, args, binders of
       Just a, _, _ -> [ { range: attrRange a, message: "A template's name and arguments are the head of its equation: head=\"f x y\" rather than " <> a.name.text, fix: Nothing } ]
-      _, Just a, Just Nothing -> [ { range: a.range, message: "The words after a template's name are PureScript binders, as in the head of an equation: head=\"f { title } (Just n)\"", fix: Nothing } ]
+      _, Just a, Just Nothing -> [ { range: a.range, message: "The words after a template's name are PureScript binders, as in the head of an equation, and may end in a guard: head=\"f { title } (Just n) | n > 0\"", fix: Nothing } ]
       _, Just a, Just (Just n)
         | Just f <- found
         , not (endsInWildcard f.declaration.type)
@@ -367,9 +368,7 @@ equationErrors src scriptStart resolved =
   -- Nothing when the binders don't parse, which is already an error.
   arity r = case r.template.args of
     Nothing -> Just 0
-    Just a
-      | a.binders == 0 -> Nothing
-      | otherwise -> Just a.binders
+    Just a -> countBinders a.text
   check i r = firstOf i r >>= \f -> case Array.index resolved (i - 1), arity f, arity r of
     Just p, _, _
       | name p /= name r || beforeScript p /= beforeScript r ->
@@ -400,10 +399,11 @@ splitName src start value = do
   , args: if text == "" then Nothing else Just { text, start: argsStart, end: argsEnd, range: { start: posOf src argsStart, end: posOf src argsEnd } }
   }
 
--- | The number of binders, or nothing if they don't parse as binders alone.
+-- | The number of binders, or nothing if they don't parse as binders and an
+-- | optional guard.
 countBinders :: String -> Maybe Int
 countBinders args = case CST.parseDecl ("f " <> args <> " = f") of
-  CST.ParseSucceeded (CSTTypes.DeclValue v@{ guarded: CSTTypes.Unconditional _ _ }) -> Just (Array.length v.binders)
+  CST.ParseSucceeded (CSTTypes.DeclValue v) -> Just (Array.length v.binders)
   _ -> Nothing
 
 -- | Whether the type ends in `_` or `?hole`, as the quick fix leaves it, so
