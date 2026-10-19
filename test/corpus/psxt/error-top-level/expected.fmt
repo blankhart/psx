@@ -2,5 +2,5 @@
 -- 8:1 Text at the top of a .psxt file belongs in a <template>
 -- 9:1 <div> cannot stand at the top of a .psxt file: it belongs in a <template>
 -- 10:1 A .psxt file's only <script> is its module: <script type="text/purescript">
--- 12:1 A second <template name="view">: a name has one template
--- 13:1 A <template> needs a name: <template name="f">, for its module's foreign import f
+-- 12:1 A second <template head="view">: view has no arguments, so it has one equation
+-- 13:1 A <template> needs a head: <template head="f">, for its module's foreign import f, or head="f x y" with its arguments

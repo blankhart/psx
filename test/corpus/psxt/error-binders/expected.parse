@@ -1,7 +1,7 @@
 print: identical
 errors:
-  10:21-10:24 <template name="one a b"> has 2 binders but the type of one has 1 arrow
-  11:21-11:23 The words after a template's name are PureScript binders, as a function's arguments: name="f props n"
+  10:21-10:24 <template head="one a b"> has 2 binders but the type of one has 1 arrow
+  11:21-11:23 The words after a template's name are PureScript binders, as in the head of an equation: head="f { title } (Just n)"
 script: 1:1-8:10, module App.Binders where
 template "one" at 10:1, args "a b" (2 binders), defines the foreign import at 6:1 (1 arrows)
   10:26 <p>

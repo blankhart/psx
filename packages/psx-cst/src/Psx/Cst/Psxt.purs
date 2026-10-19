@@ -1,8 +1,10 @@
 -- | Parses `.psxt` files: an HTML document whose
 -- | `<script type="text/purescript">` holds a PureScript module and whose
--- | `<template name="f x y">` elements are the bodies of that module's
--- | `foreign import f :: T` declarations. `name` holds the left side of the
--- | equation: the template's name, then its arguments.
+-- | `<template head="f x y">` elements are the bodies of that module's
+-- | `foreign import f :: T` declarations. `head` holds the head of the
+-- | equation, the function's name and then PureScript binders, and is copied
+-- | into the lowering as written: `<template head="H">…</template>` is the
+-- | equation `H = […]`.
 -- |
 -- | At the top level a file holds the script, templates, `<style>` elements,
 -- | comments and whitespace. Every top-level element is scanned as markup,
@@ -15,6 +17,9 @@
 -- | inserts `foreign import f :: _` for the author to complete. A
 -- | `foreign import` without a template stays real FFI. The words after the
 -- | name are PureScript binders, no more of them than the type has arrows.
+-- | Several templates with one name are that function's equations, in order:
+-- | they follow one another, on the same side of the script, and take the
+-- | same number of binders.
 module Psx.Cst.Psxt
   ( PsxtResult
   , Psxt
@@ -32,7 +37,7 @@ import Prelude
 
 import Data.Array as Array
 import Data.Foldable (foldMap)
-import Data.Maybe (Maybe(..), fromMaybe, isNothing)
+import Data.Maybe (Maybe(..), fromMaybe, isJust, isNothing)
 import Data.String as String
 import Data.String.CodeUnits as SCU
 import Data.String.Regex (replace) as Regex
@@ -77,11 +82,14 @@ type Template =
   { element :: Element Psx
   , name :: String
   , args :: Maybe Args
+  -- | Whether this is its function's first equation, which carries the
+  -- | signature.
+  , first :: Boolean
   -- | The `foreign import` the template defines, if there is one.
   , declaration :: Maybe ForeignDecl
   }
 
--- | The binders after the name in `name`'s value, and where they are.
+-- | The binders after the name in `head`'s value, and where they are.
 type Args =
   { text :: String
   , start :: Int
@@ -127,14 +135,14 @@ parsePsxt text = do
           let
             foreigns = foreignValues m
             resolved = map (resolve src el foreigns) templates
-            duplicates = duplicateErrors resolved
+            equations = equationErrors src start resolved
           { items: top.items
           , file: Just
               { script: { element: el, contentStart: start, contentEnd: end, module: m }
-              , templates: map _.template resolved
+              , templates: equations.templates
               , styles
               }
-          , errors: sortErrors (top.errors <> parsed.errors <> foldMap _.errors resolved <> duplicates)
+          , errors: sortErrors (top.errors <> parsed.errors <> foldMap _.errors resolved <> equations.errors)
           }
     [] ->
       { items: top.items
@@ -276,9 +284,9 @@ type Resolved = { template :: Template, errors :: Array PsxError }
 resolve :: Source -> Element Psx -> Array ForeignValue -> Element Psx -> Resolved
 resolve src script foreigns el = do
   let
-    nameAttr = Array.find (\a -> a.name.text == "name") (namedAttrs el.attrs)
-    argsAttr = Array.find (\a -> a.name.text == "args") (namedAttrs el.attrs)
-    -- `name`'s value: the first word is the name, the rest are binders.
+    nameAttr = Array.find (\a -> a.name.text == "head") (namedAttrs el.attrs)
+    argsAttr = Array.find (\a -> a.name.text == "name" || a.name.text == "args") (namedAttrs el.attrs)
+    -- `head`'s value: the first word is the name, the rest are binders.
     lhs = nameAttr >>= \a -> case a.value of
       Just { value: AttrString t } -> Just (splitName src (offsetOf src t.range.start + 1) (unquote t.text))
       _ -> Nothing
@@ -287,25 +295,28 @@ resolve src script foreigns el = do
     args = lhs >>= _.args
     binders = args <#> \a -> countBinders a.text
     nameErrors = case nameAttr, name of
-      Nothing, _ -> [ errorAt el "A <template> needs a name: <template name=\"f\">, for its module's foreign import f" ]
-      Just a, Nothing -> [ { range: a.name.range, message: "A template's name is a string: name=\"f\", or name=\"f x y\" with its arguments", fix: Nothing } ]
+      -- `name` or `args` in place of `head` is reported once, below.
+      Nothing, _
+        | isJust argsAttr -> []
+        | otherwise -> [ errorAt el "A <template> needs a head: <template head=\"f\">, for its module's foreign import f, or head=\"f x y\" with its arguments" ]
+      Just a, Nothing -> [ { range: a.name.range, message: "A template's head is a string: head=\"f\", or head=\"f x y\" with its arguments", fix: Nothing } ]
       _, Just n
         | isNothing found ->
             [ { range: maybe' (tagRange el) (\a -> attrRange a) nameAttr
-              , message: "<template name=\"" <> n <> "\"> has no foreign import " <> n <> " :: T in the script to define"
+              , message: "<template head=\"" <> n <> "\"> has no foreign import " <> n <> " :: T in the script to define"
               , fix: Just { message: "Declare foreign import " <> n <> " :: _", edits: [ insertForeign n ] }
               }
             ]
         | otherwise -> []
     argsErrors = case argsAttr, args, binders of
-      Just a, _, _ -> [ { range: attrRange a, message: "A template's arguments follow its name: name=\"f x y\" rather than args", fix: Nothing } ]
-      _, Just a, Just Nothing -> [ { range: a.range, message: "The words after a template's name are PureScript binders, as a function's arguments: name=\"f props n\"", fix: Nothing } ]
+      Just a, _, _ -> [ { range: attrRange a, message: "A template's name and arguments are the head of its equation: head=\"f x y\" rather than " <> a.name.text, fix: Nothing } ]
+      _, Just a, Just Nothing -> [ { range: a.range, message: "The words after a template's name are PureScript binders, as in the head of an equation: head=\"f { title } (Just n)\"", fix: Nothing } ]
       _, Just a, Just (Just n)
         | Just f <- found
         , not (endsInWildcard f.declaration.type)
         , n > typeArrows f.declaration.type ->
             [ { range: a.range
-              , message: "<template name=\"" <> f.name <> " " <> a.text <> "\"> has " <> count n "binder" <> " but the type of " <> f.name <> " has " <> count (typeArrows f.declaration.type) "arrow"
+              , message: "<template head=\"" <> f.name <> " " <> a.text <> "\"> has " <> count n "binder" <> " but the type of " <> f.name <> " has " <> count (typeArrows f.declaration.type) "arrow"
               , fix: Nothing
               }
             ]
@@ -314,6 +325,7 @@ resolve src script foreigns el = do
       { element: el
       , name: fromMaybe "" name
       , args: args <#> \a -> { text: a.text, start: a.start, end: a.end, binders: fromMaybe 0 (join binders) }
+      , first: true
       , declaration: _.declaration <$> found
       }
   , errors: nameErrors <> argsErrors
@@ -338,16 +350,39 @@ resolve src script foreigns el = do
       text = "foreign import " <> n <> " :: _\n"
     { range: { start: at, end: at }, text: if at.column == 0 then text else "\n" <> text }
 
-duplicateErrors :: Array Resolved -> Array PsxError
-duplicateErrors resolved = Array.catMaybes $ Array.mapWithIndex dup resolved
+-- | Several templates with one name are the equations of one function. Each
+-- | after the first must follow one with the same name, on the same side of
+-- | the script, and take as many binders; it is then not the first.
+equationErrors :: Source -> Int -> Array Resolved -> { templates :: Array Template, errors :: Array PsxError }
+equationErrors src scriptStart resolved =
+  { templates: Array.mapWithIndex (\i r -> r.template { first = isNothing (firstOf i r) }) resolved
+  , errors: Array.catMaybes (Array.mapWithIndex check resolved)
+  }
   where
-  dup i r
-    | r.template.name /= ""
-    , Array.any (\p -> p.template.name == r.template.name) (Array.take i resolved) =
-        Just (errorAt r.template.element ("A second <template name=\"" <> r.template.name <> "\">: a name has one template"))
-    | otherwise = Nothing
+  name r = r.template.name
+  firstOf i r
+    | name r == "" = Nothing
+    | otherwise = Array.find (\p -> name p == name r) (Array.take i resolved)
+  beforeScript r = offsetOf src r.template.element.open.range.start < scriptStart
+  -- Nothing when the binders don't parse, which is already an error.
+  arity r = case r.template.args of
+    Nothing -> Just 0
+    Just a
+      | a.binders == 0 -> Nothing
+      | otherwise -> Just a.binders
+  check i r = firstOf i r >>= \f -> case Array.index resolved (i - 1), arity f, arity r of
+    Just p, _, _
+      | name p /= name r || beforeScript p /= beforeScript r ->
+          Just (errorAt r.template.element ("This <template head=\"" <> name r <> " …\"> is another equation of " <> name r <> ", so it goes right after " <> name r <> "'s other templates"))
+    _, Just 0, Just 0 ->
+      Just (errorAt r.template.element ("A second <template head=\"" <> name r <> "\">: " <> name r <> " has no arguments, so it has one equation"))
+    _, Just m, Just n
+      | m /= n ->
+          Just (errorAt r.template.element ("This equation of " <> name r <> " has " <> count n <> " but its first has " <> count m <> "; every equation takes the same number"))
+    _, _, _ -> Nothing
+  count n = show n <> " binder" <> if n == 1 then "" else "s"
 
--- | Splits `name`'s value, which starts at `start`, into the template's name
+-- | Splits `head`'s value, which starts at `start`, into the template's name
 -- | and the binders after it, with where they are.
 splitName :: Source -> Int -> String -> { name :: Maybe String, args :: Maybe { text :: String, start :: Int, end :: Int, range :: SourceRange } }
 splitName src start value = do
@@ -365,10 +400,10 @@ splitName src start value = do
   , args: if text == "" then Nothing else Just { text, start: argsStart, end: argsEnd, range: { start: posOf src argsStart, end: posOf src argsEnd } }
   }
 
--- | The number of binders, or nothing if they don't parse.
+-- | The number of binders, or nothing if they don't parse as binders alone.
 countBinders :: String -> Maybe Int
 countBinders args = case CST.parseDecl ("f " <> args <> " = f") of
-  CST.ParseSucceeded (CSTTypes.DeclValue v) -> Just (Array.length v.binders)
+  CST.ParseSucceeded (CSTTypes.DeclValue v@{ guarded: CSTTypes.Unconditional _ _ }) -> Just (Array.length v.binders)
   _ -> Nothing
 
 -- | Whether the type ends in `_` or `?hole`, as the quick fix leaves it, so

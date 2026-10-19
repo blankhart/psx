@@ -1,0 +1,36 @@
+<!-- Templates with one name are the equations of one function, one per
+     pattern, and lower to its equations in order. -->
+<script type="text/purescript">
+module App.Status where
+
+import Prelude
+
+import Data.Maybe (Maybe(..))
+import Data.Tuple (Tuple(..))
+import Portico.Psx (Markup)
+
+data Status = Loading | Failed String | Loaded (Array String)
+
+foreign import status :: Status -> Markup Unit
+foreign import pair :: Tuple String (Maybe Int) -> Markup Unit
+</script>
+
+<template head="status Loading">
+  <p>Loading…</p>
+</template>
+
+<template head="status (Failed reason)">
+  <p class="error">{reason}</p>
+</template>
+
+<template head="status (Loaded items)">
+  <ul>{map (\item -> <li>{item}</li>) items}</ul>
+</template>
+
+<template head="pair (Tuple label (Just n))">
+  <p>{label}: {show n}</p>
+</template>
+
+<template head="pair (Tuple label Nothing)">
+  <p>{label}</p>
+</template>
