@@ -6,3 +6,4 @@ examples/screamer/dist/
 test/check/actual.txt
 test/check/positions.txt
 test/suite/dist/
+output-es/

@@ -15,11 +15,16 @@
 -- |   or `B.attribute "<name>"` for one the table does not have;
 -- | - a trait hole `{e}` among the attributes is `(e)`, one element of the
 -- |   attribute array. Attributes are always one array literal, never a
--- |   concatenation, so purs holds a trait hole to exactly one `Attr`;
+-- |   concatenation, so purs holds a trait hole to exactly one `Attr`. An
+-- |   `Attr` can't change its element's type, so a key can't go in a trait
+-- |   hole unless the framework keys by an attribute of the element itself
+-- |   (Portico's `P.key`), and the lowering doesn't track one that does;
 -- | - text is `B.text "..."` after the whitespace policy
 -- |   (`Psx.Lower.Whitespace`) and character references;
 -- | - a literal denotes `Markup a`, an array of nodes, and a literal whose
--- |   root carries `key` denotes an array of `B.keyed k node`.
+-- |   root carries `key` denotes an array of `B.keyed k node`. A key
+-- |   belongs to the parent's child list, not to the element: keyed
+-- |   children are what make the parent a keyed element.
 -- |
 -- | Lowering preserves lines: each piece of markup's code starts on the line
 -- | the markup is on, and each hole's expression on its own line, at its own

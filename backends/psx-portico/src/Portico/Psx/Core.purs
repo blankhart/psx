@@ -84,7 +84,9 @@ none :: forall a. Markup a
 none = []
 
 -- | The node with the key added to its traits, as `P.key` would have put it
--- | there.
+-- | there. Portico keys by an attribute of the element itself, so `P.key` in
+-- | a trait hole also keys, but the lowering doesn't track it: it can't check
+-- | that every sibling has a key. Write `key` on the element instead.
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) (runFn2 withKey_ (P.key (toKey k)) node)
 
