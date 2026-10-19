@@ -126,7 +126,7 @@ main fixture = do
   void $ mount "#root" (typeahead fixture)
 </script>
 
-<template name="view props">
+<template head="view props">
   <div class="typeahead" data-testid="typeahead">
     <input type="text" data-testid="search" placeholder="Search fruit" oninput={props.onQuery} onkeydown={props.onKey}>
     <p data-testid="status">{props.status}</p>
@@ -137,6 +137,6 @@ main fixture = do
   </div>
 </template>
 
-<template name="result props index row">
+<template head="result props index row">
   <li data-testid={"result-" <> show index} class={selected <$> row <*> props.selection}>{_.name <$> row}</li>
 </template>

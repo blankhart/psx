@@ -1,5 +1,5 @@
 <!-- A template may come before the script; it is defined after the others. -->
-<template name="footer">
+<template head="footer">
   <footer>Rows: {"many"}</footer>
 </template>
 
@@ -20,13 +20,13 @@ foreign import footer :: Markup Unit
 foreign import now :: Int
 </script>
 
-<template name="table { title, rows } extra">
+<template head="table { title, rows } extra">
   <table>
     <caption>{title} ({show extra})</caption>
     {map row rows}
   </table>
   {footer}
 </template>
-<template name="row r">
+<template head="row r">
   <tr><td>{show r.id}</td><td>{r.label}</td></tr>
 </template>

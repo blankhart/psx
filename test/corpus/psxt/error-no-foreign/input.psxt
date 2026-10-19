@@ -6,5 +6,5 @@ import Portico.Psx (Markup)
 foreign import shown :: Markup Unit
 </script>
 
-<template name="shown"><p>shown</p></template>
-<template name="hidden x"><p>{x}</p></template>
+<template head="shown"><p>shown</p></template>
+<template head="hidden x"><p>{x}</p></template>

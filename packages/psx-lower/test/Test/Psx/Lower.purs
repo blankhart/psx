@@ -195,7 +195,7 @@ psxt = do
       , "foreign import view :: Int -> Markup Unit"
       , "</script>"
       , ""
-      , "<template name=\"view n\">"
+      , "<template head=\"view n\">"
       , "  <p>{show n}</p>"
       , "</template>"
       , "<style>p { color: red; }</style>"

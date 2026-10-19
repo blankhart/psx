@@ -1,0 +1,33 @@
+print: identical
+errors: none
+script: 3:1-15:10, module App.Status where
+template "status" at 17:1, args "Loading" (1 binders), defines the foreign import at 13:1 (1 arrows)
+  text "\n  "
+  18:3 <p>
+    text "Loading…"
+  text "\n"
+template "status" at 20:1, args "(Failed reason)" (1 binders), defines the foreign import at 13:1 (1 arrows)
+  text "\n  "
+  21:3 <p>
+    @class="error"
+    hole {reason}
+  text "\n"
+template "status" at 23:1, args "(Loaded items)" (1 binders), defines the foreign import at 13:1 (1 arrows)
+  text "\n  "
+  24:3 <ul>
+    hole {map (\item -> <li>{item}</li>) items}
+      24:22 <li>
+        hole {item}
+  text "\n"
+template "pair" at 27:1, args "(Tuple label (Just n))" (1 binders), defines the foreign import at 14:1 (1 arrows)
+  text "\n  "
+  28:3 <p>
+    hole {label}
+    text ": "
+    hole {show n}
+  text "\n"
+template "pair" at 30:1, args "(Tuple label Nothing)" (1 binders), defines the foreign import at 14:1 (1 arrows)
+  text "\n  "
+  31:3 <p>
+    hole {label}
+  text "\n"
