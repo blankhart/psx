@@ -683,6 +683,9 @@ module Portico.Psx
   , styleAttr
   , summaryAttr
   , surfaceScale
+  , svgClass
+  , svgHeight
+  , svgWidth
   , syncBehavior
   , syncBehaviorDefault
   , syncMaster
@@ -883,7 +886,7 @@ module Portico.Psx
 import Prelude (pure, show, (<<<))
 import Data.Maybe (Maybe)
 import Portico as P
-import Portico.Psx.Core (class Content, Attr, Node, booleanAttribute, elementOf, svgElement)
+import Portico.Psx.Core (class Content, Attr, Node, booleanAttribute, elementOf)
 import Portico.Psx.Core (class Children, class Content, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, none, root, text, toKey) as Core
 
 -- Elements --------------------------------------------------------------------
@@ -1276,7 +1279,7 @@ sup :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 sup = elementOf (P.element "sup")
 
 svg :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-svg = svgElement "svg"
+svg = elementOf (P.element "svg")
 
 table :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 table = elementOf (P.element "table")
@@ -1336,253 +1339,253 @@ xmp :: forall c a. Content c a => Array (Attr a) -> c -> Node a
 xmp = elementOf (P.element "xmp")
 
 altGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-altGlyph = svgElement "altGlyph"
+altGlyph = elementOf (P.element "altGlyph")
 
 altGlyphDef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-altGlyphDef = svgElement "altGlyphDef"
+altGlyphDef = elementOf (P.element "altGlyphDef")
 
 altGlyphItem :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-altGlyphItem = svgElement "altGlyphItem"
+altGlyphItem = elementOf (P.element "altGlyphItem")
 
 animate :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animate = svgElement "animate"
+animate = elementOf (P.element "animate")
 
 animateColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animateColor = svgElement "animateColor"
+animateColor = elementOf (P.element "animateColor")
 
 animateMotion :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animateMotion = svgElement "animateMotion"
+animateMotion = elementOf (P.element "animateMotion")
 
 animateTransform :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animateTransform = svgElement "animateTransform"
+animateTransform = elementOf (P.element "animateTransform")
 
 animation :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-animation = svgElement "animation"
+animation = elementOf (P.element "animation")
 
 circle :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-circle = svgElement "circle"
+circle = elementOf (P.element "circle")
 
 clipPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-clipPath = svgElement "clipPath"
+clipPath = elementOf (P.element "clipPath")
 
 colorProfile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-colorProfile = svgElement "color-profile"
+colorProfile = elementOf (P.element "color-profile")
 
 cursor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-cursor = svgElement "cursor"
+cursor = elementOf (P.element "cursor")
 
 defs :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-defs = svgElement "defs"
+defs = elementOf (P.element "defs")
 
 desc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-desc = svgElement "desc"
+desc = elementOf (P.element "desc")
 
 discard :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-discard = svgElement "discard"
+discard = elementOf (P.element "discard")
 
 ellipse :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-ellipse = svgElement "ellipse"
+ellipse = elementOf (P.element "ellipse")
 
 feBlend :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feBlend = svgElement "feBlend"
+feBlend = elementOf (P.element "feBlend")
 
 feColorMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feColorMatrix = svgElement "feColorMatrix"
+feColorMatrix = elementOf (P.element "feColorMatrix")
 
 feComponentTransfer :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feComponentTransfer = svgElement "feComponentTransfer"
+feComponentTransfer = elementOf (P.element "feComponentTransfer")
 
 feComposite :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feComposite = svgElement "feComposite"
+feComposite = elementOf (P.element "feComposite")
 
 feConvolveMatrix :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feConvolveMatrix = svgElement "feConvolveMatrix"
+feConvolveMatrix = elementOf (P.element "feConvolveMatrix")
 
 feDiffuseLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDiffuseLighting = svgElement "feDiffuseLighting"
+feDiffuseLighting = elementOf (P.element "feDiffuseLighting")
 
 feDisplacementMap :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDisplacementMap = svgElement "feDisplacementMap"
+feDisplacementMap = elementOf (P.element "feDisplacementMap")
 
 feDistantLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDistantLight = svgElement "feDistantLight"
+feDistantLight = elementOf (P.element "feDistantLight")
 
 feDropShadow :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feDropShadow = svgElement "feDropShadow"
+feDropShadow = elementOf (P.element "feDropShadow")
 
 feFlood :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFlood = svgElement "feFlood"
+feFlood = elementOf (P.element "feFlood")
 
 feFuncA :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncA = svgElement "feFuncA"
+feFuncA = elementOf (P.element "feFuncA")
 
 feFuncB :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncB = svgElement "feFuncB"
+feFuncB = elementOf (P.element "feFuncB")
 
 feFuncG :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncG = svgElement "feFuncG"
+feFuncG = elementOf (P.element "feFuncG")
 
 feFuncR :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feFuncR = svgElement "feFuncR"
+feFuncR = elementOf (P.element "feFuncR")
 
 feGaussianBlur :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feGaussianBlur = svgElement "feGaussianBlur"
+feGaussianBlur = elementOf (P.element "feGaussianBlur")
 
 feImage :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feImage = svgElement "feImage"
+feImage = elementOf (P.element "feImage")
 
 feMerge :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feMerge = svgElement "feMerge"
+feMerge = elementOf (P.element "feMerge")
 
 feMergeNode :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feMergeNode = svgElement "feMergeNode"
+feMergeNode = elementOf (P.element "feMergeNode")
 
 feMorphology :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feMorphology = svgElement "feMorphology"
+feMorphology = elementOf (P.element "feMorphology")
 
 feOffset :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feOffset = svgElement "feOffset"
+feOffset = elementOf (P.element "feOffset")
 
 fePointLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fePointLight = svgElement "fePointLight"
+fePointLight = elementOf (P.element "fePointLight")
 
 feSpecularLighting :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feSpecularLighting = svgElement "feSpecularLighting"
+feSpecularLighting = elementOf (P.element "feSpecularLighting")
 
 feSpotLight :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feSpotLight = svgElement "feSpotLight"
+feSpotLight = elementOf (P.element "feSpotLight")
 
 feTile :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feTile = svgElement "feTile"
+feTile = elementOf (P.element "feTile")
 
 feTurbulence :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-feTurbulence = svgElement "feTurbulence"
+feTurbulence = elementOf (P.element "feTurbulence")
 
 filter :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-filter = svgElement "filter"
+filter = elementOf (P.element "filter")
 
 fontFace :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFace = svgElement "font-face"
+fontFace = elementOf (P.element "font-face")
 
 fontFaceFormat :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceFormat = svgElement "font-face-format"
+fontFaceFormat = elementOf (P.element "font-face-format")
 
 fontFaceName :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceName = svgElement "font-face-name"
+fontFaceName = elementOf (P.element "font-face-name")
 
 fontFaceSrc :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceSrc = svgElement "font-face-src"
+fontFaceSrc = elementOf (P.element "font-face-src")
 
 fontFaceUri :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-fontFaceUri = svgElement "font-face-uri"
+fontFaceUri = elementOf (P.element "font-face-uri")
 
 foreignObject :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-foreignObject = svgElement "foreignObject"
+foreignObject = elementOf (P.element "foreignObject")
 
 g :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-g = svgElement "g"
+g = elementOf (P.element "g")
 
 glyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-glyph = svgElement "glyph"
+glyph = elementOf (P.element "glyph")
 
 glyphRef :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-glyphRef = svgElement "glyphRef"
+glyphRef = elementOf (P.element "glyphRef")
 
 handler :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-handler = svgElement "handler"
+handler = elementOf (P.element "handler")
 
 hkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-hkern = svgElement "hkern"
+hkern = elementOf (P.element "hkern")
 
 line :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-line = svgElement "line"
+line = elementOf (P.element "line")
 
 linearGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-linearGradient = svgElement "linearGradient"
+linearGradient = elementOf (P.element "linearGradient")
 
 listener :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-listener = svgElement "listener"
+listener = elementOf (P.element "listener")
 
 marker :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-marker = svgElement "marker"
+marker = elementOf (P.element "marker")
 
 mask :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-mask = svgElement "mask"
+mask = elementOf (P.element "mask")
 
 metadata :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-metadata = svgElement "metadata"
+metadata = elementOf (P.element "metadata")
 
 missingGlyph :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-missingGlyph = svgElement "missing-glyph"
+missingGlyph = elementOf (P.element "missing-glyph")
 
 mpath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-mpath = svgElement "mpath"
+mpath = elementOf (P.element "mpath")
 
 path :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-path = svgElement "path"
+path = elementOf (P.element "path")
 
 pattern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-pattern = svgElement "pattern"
+pattern = elementOf (P.element "pattern")
 
 polygon :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-polygon = svgElement "polygon"
+polygon = elementOf (P.element "polygon")
 
 polyline :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-polyline = svgElement "polyline"
+polyline = elementOf (P.element "polyline")
 
 prefetch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-prefetch = svgElement "prefetch"
+prefetch = elementOf (P.element "prefetch")
 
 radialGradient :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-radialGradient = svgElement "radialGradient"
+radialGradient = elementOf (P.element "radialGradient")
 
 rect :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-rect = svgElement "rect"
+rect = elementOf (P.element "rect")
 
 set :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-set = svgElement "set"
+set = elementOf (P.element "set")
 
 solidColor :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-solidColor = svgElement "solidColor"
+solidColor = elementOf (P.element "solidColor")
 
 stop :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-stop = svgElement "stop"
+stop = elementOf (P.element "stop")
 
 switch :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-switch = svgElement "switch"
+switch = elementOf (P.element "switch")
 
 symbol :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-symbol = svgElement "symbol"
+symbol = elementOf (P.element "symbol")
 
 tbreak :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-tbreak = svgElement "tbreak"
+tbreak = elementOf (P.element "tbreak")
 
 textEl :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-textEl = svgElement "text"
+textEl = elementOf (P.element "text")
 
 textArea :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-textArea = svgElement "textArea"
+textArea = elementOf (P.element "textArea")
 
 textPath :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-textPath = svgElement "textPath"
+textPath = elementOf (P.element "textPath")
 
 tref :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-tref = svgElement "tref"
+tref = elementOf (P.element "tref")
 
 tspan :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-tspan = svgElement "tspan"
+tspan = elementOf (P.element "tspan")
 
 unknown :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-unknown = svgElement "unknown"
+unknown = elementOf (P.element "unknown")
 
 use :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-use = svgElement "use"
+use = elementOf (P.element "use")
 
 view :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-view = svgElement "view"
+view = elementOf (P.element "view")
 
 vkern :: forall c a. Content c a => Array (Attr a) -> c -> Node a
-vkern = svgElement "vkern"
+vkern = elementOf (P.element "vkern")
 
 -- Attributes ------------------------------------------------------------------
 
@@ -1592,7 +1595,7 @@ abbrAttr = P.attribute "abbr"
 about :: forall a. String -> Attr a
 about = P.attribute "about"
 
-accentHeight :: forall a. Int -> Attr a
+accentHeight :: forall a. Number -> Attr a
 accentHeight = P.attribute "accent-height" <<< show
 
 accept :: forall a. String -> Attr a
@@ -1637,13 +1640,13 @@ allowusermedia = booleanAttribute "allowusermedia"
 alpha :: forall a. Boolean -> Attr a
 alpha = booleanAttribute "alpha"
 
-alphabetic :: forall a. Int -> Attr a
+alphabetic :: forall a. Number -> Attr a
 alphabetic = P.attribute "alphabetic" <<< show
 
 alt :: forall a. String -> Attr a
 alt = P.attribute "alt"
 
-amplitude :: forall a. Int -> Attr a
+amplitude :: forall a. Number -> Attr a
 amplitude = P.attribute "amplitude" <<< show
 
 arabicForm :: forall a. String -> Attr a
@@ -1784,13 +1787,13 @@ ariaSetsize = P.attribute "aria-setsize" <<< show
 ariaSort :: forall a. String -> Attr a
 ariaSort = P.attribute "aria-sort"
 
-ariaValuemax :: forall a. Int -> Attr a
+ariaValuemax :: forall a. Number -> Attr a
 ariaValuemax = P.attribute "aria-valuemax" <<< show
 
-ariaValuemin :: forall a. Int -> Attr a
+ariaValuemin :: forall a. Number -> Attr a
 ariaValuemin = P.attribute "aria-valuemin" <<< show
 
-ariaValuenow :: forall a. Int -> Attr a
+ariaValuenow :: forall a. Number -> Attr a
 ariaValuenow = P.attribute "aria-valuenow" <<< show
 
 ariaValuetext :: forall a. String -> Attr a
@@ -1799,7 +1802,7 @@ ariaValuetext = P.attribute "aria-valuetext"
 as :: forall a. String -> Attr a
 as = P.attribute "as"
 
-ascent :: forall a. Int -> Attr a
+ascent :: forall a. Number -> Attr a
 ascent = P.attribute "ascent" <<< show
 
 async :: forall a. Boolean -> Attr a
@@ -1829,7 +1832,7 @@ autoplay = booleanAttribute "autoplay"
 axis :: forall a. String -> Attr a
 axis = P.attribute "axis"
 
-azimuth :: forall a. Int -> Attr a
+azimuth :: forall a. Number -> Attr a
 azimuth = P.attribute "azimuth" <<< show
 
 background :: forall a. String -> Attr a
@@ -1856,7 +1859,7 @@ begin = P.attribute "begin"
 bgcolor :: forall a. String -> Attr a
 bgcolor = P.attribute "bgcolor"
 
-bias :: forall a. Int -> Attr a
+bias :: forall a. Number -> Attr a
 bias = P.attribute "bias" <<< show
 
 blocking :: forall a. String -> Attr a
@@ -1871,7 +1874,7 @@ by = P.attribute "by"
 calcMode :: forall a. String -> Attr a
 calcMode = P.attribute "calcMode"
 
-capHeight :: forall a. Int -> Attr a
+capHeight :: forall a. Number -> Attr a
 capHeight = P.attribute "cap-height" <<< show
 
 cellpadding :: forall a. String -> Attr a
@@ -2018,10 +2021,10 @@ defaultAction = P.attribute "defaultAction"
 defer :: forall a. Boolean -> Attr a
 defer = booleanAttribute "defer"
 
-descent :: forall a. Int -> Attr a
+descent :: forall a. Number -> Attr a
 descent = P.attribute "descent" <<< show
 
-diffuseConstant :: forall a. Int -> Attr a
+diffuseConstant :: forall a. Number -> Attr a
 diffuseConstant = P.attribute "diffuseConstant" <<< show
 
 dirAttr :: forall a. String -> Attr a
@@ -2039,7 +2042,7 @@ disabled = P.disabled
 display :: forall a. String -> Attr a
 display = P.attribute "display"
 
-divisor :: forall a. Int -> Attr a
+divisor :: forall a. Number -> Attr a
 divisor = P.attribute "divisor" <<< show
 
 dominantBaseline :: forall a. String -> Attr a
@@ -2066,7 +2069,7 @@ edgeMode = P.attribute "edgeMode"
 editable :: forall a. String -> Attr a
 editable = P.attribute "editable"
 
-elevation :: forall a. Int -> Attr a
+elevation :: forall a. Number -> Attr a
 elevation = P.attribute "elevation" <<< show
 
 enableBackground :: forall a. String -> Attr a
@@ -2084,7 +2087,7 @@ enterkeyhint = P.attribute "enterkeyhint"
 event :: forall a. String -> Attr a
 event = P.attribute "event"
 
-exponent :: forall a. Int -> Attr a
+exponent :: forall a. Number -> Attr a
 exponent = P.attribute "exponent" <<< show
 
 exportparts :: forall a. String -> Attr a
@@ -2102,7 +2105,7 @@ fetchpriority = P.attribute "fetchpriority"
 fill :: forall a. String -> Attr a
 fill = P.attribute "fill"
 
-fillOpacity :: forall a. Int -> Attr a
+fillOpacity :: forall a. Number -> Attr a
 fillOpacity = P.attribute "fill-opacity" <<< show
 
 fillRule :: forall a. String -> Attr a
@@ -2219,28 +2222,28 @@ gradientUnits = P.attribute "gradientUnits"
 handlerAttr :: forall a. String -> Attr a
 handlerAttr = P.attribute "handler"
 
-hanging :: forall a. Int -> Attr a
+hanging :: forall a. Number -> Attr a
 hanging = P.attribute "hanging" <<< show
 
 headers :: forall a. String -> Attr a
 headers = P.attribute "headers"
 
-height :: forall a. String -> Attr a
-height = P.attribute "height"
+height :: forall a. Int -> Attr a
+height = P.attribute "height" <<< show
 
 hidden :: forall a. Boolean -> Attr a
 hidden = booleanAttribute "hidden"
 
-high :: forall a. Int -> Attr a
+high :: forall a. Number -> Attr a
 high = P.attribute "high" <<< show
 
-horizAdvX :: forall a. Int -> Attr a
+horizAdvX :: forall a. Number -> Attr a
 horizAdvX = P.attribute "horiz-adv-x" <<< show
 
-horizOriginX :: forall a. Int -> Attr a
+horizOriginX :: forall a. Number -> Attr a
 horizOriginX = P.attribute "horiz-origin-x" <<< show
 
-horizOriginY :: forall a. Int -> Attr a
+horizOriginY :: forall a. Number -> Attr a
 horizOriginY = P.attribute "horiz-origin-y" <<< show
 
 href :: forall a. String -> Attr a
@@ -2258,7 +2261,7 @@ httpEquiv = P.attribute "http-equiv"
 id :: forall a. String -> Attr a
 id = P.id
 
-ideographic :: forall a. Int -> Attr a
+ideographic :: forall a. Number -> Attr a
 ideographic = P.attribute "ideographic" <<< show
 
 imageRendering :: forall a. String -> Attr a
@@ -2288,7 +2291,7 @@ inputmode = P.attribute "inputmode"
 integrity :: forall a. String -> Attr a
 integrity = P.attribute "integrity"
 
-intercept :: forall a. Int -> Attr a
+intercept :: forall a. Number -> Attr a
 intercept = P.attribute "intercept" <<< show
 
 is :: forall a. String -> Attr a
@@ -2312,19 +2315,19 @@ itemscope = booleanAttribute "itemscope"
 itemtype :: forall a. String -> Attr a
 itemtype = P.attribute "itemtype"
 
-k :: forall a. Int -> Attr a
+k :: forall a. Number -> Attr a
 k = P.attribute "k" <<< show
 
-k1 :: forall a. Int -> Attr a
+k1 :: forall a. Number -> Attr a
 k1 = P.attribute "k1" <<< show
 
-k2 :: forall a. Int -> Attr a
+k2 :: forall a. Number -> Attr a
 k2 = P.attribute "k2" <<< show
 
-k3 :: forall a. Int -> Attr a
+k3 :: forall a. Number -> Attr a
 k3 = P.attribute "k3" <<< show
 
-k4 :: forall a. Int -> Attr a
+k4 :: forall a. Number -> Attr a
 k4 = P.attribute "k4" <<< show
 
 kernelMatrix :: forall a. String -> Attr a
@@ -2366,7 +2369,7 @@ letterSpacing = P.attribute "letter-spacing"
 lightingColor :: forall a. String -> Attr a
 lightingColor = P.attribute "lighting-color"
 
-limitingConeAngle :: forall a. Int -> Attr a
+limitingConeAngle :: forall a. Number -> Attr a
 limitingConeAngle = P.attribute "limitingConeAngle" <<< show
 
 linkAttr :: forall a. String -> Attr a
@@ -2387,7 +2390,7 @@ longdesc = P.attribute "longdesc"
 loop :: forall a. Boolean -> Attr a
 loop = booleanAttribute "loop"
 
-low :: forall a. Int -> Attr a
+low :: forall a. Number -> Attr a
 low = P.attribute "low" <<< show
 
 manifest :: forall a. String -> Attr a
@@ -2444,7 +2447,7 @@ mediaCharacterEncoding = P.attribute "mediaCharacterEncoding"
 mediaContentEncodings :: forall a. String -> Attr a
 mediaContentEncodings = P.attribute "mediaContentEncodings"
 
-mediaSize :: forall a. Int -> Attr a
+mediaSize :: forall a. Number -> Attr a
 mediaSize = P.attribute "mediaSize" <<< show
 
 mediaTime :: forall a. String -> Attr a
@@ -2543,7 +2546,7 @@ open = booleanAttribute "open"
 operator :: forall a. String -> Attr a
 operator = P.attribute "operator"
 
-optimum :: forall a. Int -> Attr a
+optimum :: forall a. Number -> Attr a
 optimum = P.attribute "optimum" <<< show
 
 order :: forall a. String -> Attr a
@@ -2564,10 +2567,10 @@ overflow = P.attribute "overflow"
 overlay :: forall a. String -> Attr a
 overlay = P.attribute "overlay"
 
-overlinePosition :: forall a. Int -> Attr a
+overlinePosition :: forall a. Number -> Attr a
 overlinePosition = P.attribute "overline-position" <<< show
 
-overlineThickness :: forall a. Int -> Attr a
+overlineThickness :: forall a. Number -> Attr a
 overlineThickness = P.attribute "overline-thickness" <<< show
 
 paintOrder :: forall a. String -> Attr a
@@ -2582,7 +2585,7 @@ part = P.attribute "part"
 pathAttr :: forall a. String -> Attr a
 pathAttr = P.attribute "path"
 
-pathLength :: forall a. Int -> Attr a
+pathLength :: forall a. Number -> Attr a
 pathLength = P.attribute "pathLength" <<< show
 
 patternAttr :: forall a. String -> Attr a
@@ -2621,13 +2624,13 @@ pointerEvents = P.attribute "pointer-events"
 points :: forall a. String -> Attr a
 points = P.attribute "points"
 
-pointsAtX :: forall a. Int -> Attr a
+pointsAtX :: forall a. Number -> Attr a
 pointsAtX = P.attribute "pointsAtX" <<< show
 
-pointsAtY :: forall a. Int -> Attr a
+pointsAtY :: forall a. Number -> Attr a
 pointsAtY = P.attribute "pointsAtY" <<< show
 
-pointsAtZ :: forall a. Int -> Attr a
+pointsAtZ :: forall a. Number -> Attr a
 pointsAtZ = P.attribute "pointsAtZ" <<< show
 
 popover :: forall a. String -> Attr a
@@ -2813,10 +2816,10 @@ spacing = P.attribute "spacing"
 spanAttr :: forall a. Int -> Attr a
 spanAttr = P.attribute "span" <<< show
 
-specularConstant :: forall a. Int -> Attr a
+specularConstant :: forall a. Number -> Attr a
 specularConstant = P.attribute "specularConstant" <<< show
 
-specularExponent :: forall a. Int -> Attr a
+specularExponent :: forall a. Number -> Attr a
 specularExponent = P.attribute "specularExponent" <<< show
 
 spellcheck :: forall a. String -> Attr a
@@ -2867,10 +2870,10 @@ stopColor = P.attribute "stop-color"
 stopOpacity :: forall a. String -> Attr a
 stopOpacity = P.attribute "stop-opacity"
 
-strikethroughPosition :: forall a. Int -> Attr a
+strikethroughPosition :: forall a. Number -> Attr a
 strikethroughPosition = P.attribute "strikethrough-position" <<< show
 
-strikethroughThickness :: forall a. Int -> Attr a
+strikethroughThickness :: forall a. Number -> Attr a
 strikethroughThickness = P.attribute "strikethrough-thickness" <<< show
 
 string :: forall a. String -> Attr a
@@ -2891,10 +2894,10 @@ strokeLinecap = P.attribute "stroke-linecap"
 strokeLinejoin :: forall a. String -> Attr a
 strokeLinejoin = P.attribute "stroke-linejoin"
 
-strokeMiterlimit :: forall a. Int -> Attr a
+strokeMiterlimit :: forall a. Number -> Attr a
 strokeMiterlimit = P.attribute "stroke-miterlimit" <<< show
 
-strokeOpacity :: forall a. Int -> Attr a
+strokeOpacity :: forall a. Number -> Attr a
 strokeOpacity = P.attribute "stroke-opacity" <<< show
 
 strokeWidth :: forall a. String -> Attr a
@@ -2906,8 +2909,17 @@ styleAttr = P.attribute "style"
 summaryAttr :: forall a. String -> Attr a
 summaryAttr = P.attribute "summary"
 
-surfaceScale :: forall a. Int -> Attr a
+surfaceScale :: forall a. Number -> Attr a
 surfaceScale = P.attribute "surfaceScale" <<< show
+
+svgClass :: forall a. String -> Attr a
+svgClass = P.attribute "class"
+
+svgHeight :: forall a. String -> Attr a
+svgHeight = P.attribute "height"
+
+svgWidth :: forall a. String -> Attr a
+svgWidth = P.attribute "width"
 
 syncBehavior :: forall a. String -> Attr a
 syncBehavior = P.attribute "syncBehavior"
@@ -2996,10 +3008,10 @@ u1 = P.attribute "u1"
 u2 :: forall a. String -> Attr a
 u2 = P.attribute "u2"
 
-underlinePosition :: forall a. Int -> Attr a
+underlinePosition :: forall a. Number -> Attr a
 underlinePosition = P.attribute "underline-position" <<< show
 
-underlineThickness :: forall a. Int -> Attr a
+underlineThickness :: forall a. Number -> Attr a
 underlineThickness = P.attribute "underline-thickness" <<< show
 
 unicode :: forall a. String -> Attr a
@@ -3011,22 +3023,22 @@ unicodeBidi = P.attribute "unicode-bidi"
 unicodeRange :: forall a. String -> Attr a
 unicodeRange = P.attribute "unicode-range"
 
-unitsPerEm :: forall a. Int -> Attr a
+unitsPerEm :: forall a. Number -> Attr a
 unitsPerEm = P.attribute "units-per-em" <<< show
 
 usemap :: forall a. String -> Attr a
 usemap = P.attribute "usemap"
 
-vAlphabetic :: forall a. Int -> Attr a
+vAlphabetic :: forall a. Number -> Attr a
 vAlphabetic = P.attribute "v-alphabetic" <<< show
 
-vHanging :: forall a. Int -> Attr a
+vHanging :: forall a. Number -> Attr a
 vHanging = P.attribute "v-hanging" <<< show
 
-vIdeographic :: forall a. Int -> Attr a
+vIdeographic :: forall a. Number -> Attr a
 vIdeographic = P.attribute "v-ideographic" <<< show
 
-vMathematical :: forall a. Int -> Attr a
+vMathematical :: forall a. Number -> Attr a
 vMathematical = P.attribute "v-mathematical" <<< show
 
 valign :: forall a. String -> Attr a
@@ -3047,13 +3059,13 @@ vectorEffect = P.attribute "vector-effect"
 version :: forall a. String -> Attr a
 version = P.attribute "version"
 
-vertAdvY :: forall a. Int -> Attr a
+vertAdvY :: forall a. Number -> Attr a
 vertAdvY = P.attribute "vert-adv-y" <<< show
 
-vertOriginX :: forall a. Int -> Attr a
+vertOriginX :: forall a. Number -> Attr a
 vertOriginX = P.attribute "vert-origin-x" <<< show
 
-vertOriginY :: forall a. Int -> Attr a
+vertOriginY :: forall a. Number -> Attr a
 vertOriginY = P.attribute "vert-origin-y" <<< show
 
 viewBox :: forall a. String -> Attr a
@@ -3074,8 +3086,8 @@ vspace = P.attribute "vspace" <<< show
 whiteSpace :: forall a. String -> Attr a
 whiteSpace = P.attribute "white-space"
 
-width :: forall a. String -> Attr a
-width = P.attribute "width"
+width :: forall a. Int -> Attr a
+width = P.attribute "width" <<< show
 
 widths :: forall a. String -> Attr a
 widths = P.attribute "widths"
@@ -3104,7 +3116,7 @@ x2 = P.attribute "x2"
 xChannelSelector :: forall a. String -> Attr a
 xChannelSelector = P.attribute "xChannelSelector"
 
-xHeight :: forall a. Int -> Attr a
+xHeight :: forall a. Number -> Attr a
 xHeight = P.attribute "x-height" <<< show
 
 y :: forall a. String -> Attr a

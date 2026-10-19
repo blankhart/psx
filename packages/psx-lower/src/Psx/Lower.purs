@@ -15,11 +15,16 @@
 -- |   or `B.attribute "<name>"` for one the table does not have;
 -- | - a trait hole `{e}` among the attributes is `(e)`, one element of the
 -- |   attribute array. Attributes are always one array literal, never a
--- |   concatenation, so purs holds a trait hole to exactly one `Attr`;
+-- |   concatenation, so purs holds a trait hole to exactly one `Attr`. An
+-- |   `Attr` can't change its element's type, so a key can't go in a trait
+-- |   hole unless the framework keys by an attribute of the element itself
+-- |   (Portico's `P.key`), and the lowering doesn't track one that does;
 -- | - text is `B.text "..."` after the whitespace policy
 -- |   (`Psx.Lower.Whitespace`) and character references;
 -- | - a literal denotes `Markup a`, an array of nodes, and a literal whose
--- |   root carries `key` denotes an array of `B.keyed k node`.
+-- |   root carries `key` denotes an array of `B.keyed k node`. A key
+-- |   belongs to the parent's child list, not to the element: keyed
+-- |   children are what make the parent a keyed element.
 -- |
 -- | Lowering preserves lines: each piece of markup's code starts on the line
 -- | the markup is on, and each hole's expression on its own line, at its own
@@ -94,7 +99,7 @@ type Names = { sourceName :: String, generatedName :: String }
 
 -- | The modules a `.psx` file may take its markup functions from.
 backendModules :: Array String
-backendModules = [ "Portico.Psx", "Halogen.Psx", "Screamer.Psx", "Screamer.Psx.Sink", "Psx.Static" ]
+backendModules = [ "Portico.Psx", "Halogen.Psx", "Screamer.Psx", "Psx.Static" ]
 
 -- | The first line of every generated file.
 header :: String -> String
@@ -822,6 +827,7 @@ emitAttr src ctx ns tag a = do
         Just { value: AttrRaw _ } -> pure unit
         Nothing -> case attr.valueType of
           BooleanValue -> emitFor range ("B." <> attr.purescript <> " true")
+          IntegerValue -> failAt range ("`" <> name <> "` needs a number: " <> name <> "=\"1\" or " <> name <> "={...}")
           NumberValue -> failAt range ("`" <> name <> "` needs a number: " <> name <> "=\"1\" or " <> name <> "={...}")
           _ -> emitFor range ("B." <> attr.purescript <> " \"\"")
       Nothing -> do
@@ -841,8 +847,13 @@ emitAttr src ctx ns tag a = do
     let value = Entities.decode (unquote t.text)
     case attr.valueType of
       BooleanValue -> emitFor range ("B." <> attr.purescript <> " true")
+      -- An `Int` literal.
+      IntegerValue
+        | isInteger value -> emitFor range ("B." <> attr.purescript <> " " <> parenthesise value)
+        | otherwise -> failAt t.range ("`" <> a.name.text <> "` takes a whole number, not " <> show value)
+      -- A `Number` literal, so `step="1"` is `1.0`.
       NumberValue
-        | isNumber value -> emitFor range ("B." <> attr.purescript <> " " <> if SCU.take 1 value == "-" then "(" <> value <> ")" else value)
+        | isNumber value -> emitFor range ("B." <> attr.purescript <> " " <> parenthesise (if isInteger value then value <> ".0" else value))
         | otherwise -> failAt t.range ("`" <> a.name.text <> "` takes a number, not " <> show value)
       _ -> emitFor range ("B." <> attr.purescript <> " " <> stringLiteral value)
 
@@ -858,6 +869,13 @@ attrRange a =
 
 isNumber :: String -> Boolean
 isNumber = Regex.test (Regex.unsafeRegex "^-?[0-9]+(\\.[0-9]+)?$" Regex.noFlags)
+
+isInteger :: String -> Boolean
+isInteger = Regex.test (Regex.unsafeRegex "^-?[0-9]+$" Regex.noFlags)
+
+-- | A negative literal in parentheses, so it is one argument.
+parenthesise :: String -> String
+parenthesise value = if SCU.take 1 value == "-" then "(" <> value <> ")" else value
 
 unquote :: String -> String
 unquote s = SCU.drop 1 (SCU.dropRight 1 s)

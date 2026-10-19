@@ -70,8 +70,12 @@
       "type": "forall r a. String -> Attr r a",
       "code": "attribute {name}"
     },
-    "number": {
+    "integer": {
       "type": "forall r a. Int -> Attr r a",
+      "code": "attribute {name} <<< show"
+    },
+    "number": {
+      "type": "forall r a. Number -> Attr r a",
       "code": "attribute {name} <<< show"
     },
     "event": {
@@ -266,7 +270,7 @@
     },
     "height": {
       "type": "forall r a. {value} -> Attr (height :: I.CSSPixel | r) a",
-      "code": "attribute {name}"
+      "code": "HP.height"
     },
     "href": {
       "type": "forall r a. {value} -> Attr (href :: String | r) a",
@@ -560,7 +564,7 @@
     },
     "width": {
       "type": "forall r a. {value} -> Attr (width :: I.CSSPixel | r) a",
-      "code": "attribute {name}"
+      "code": "HP.width"
     }
   },
   "conformance": {

@@ -87,6 +87,9 @@ stringType = { kind: "string", values: [] }
 numberType :: ValueType
 numberType = { kind: "number", values: [] }
 
+integerType :: ValueType
+integerType = { kind: "integer", values: [] }
+
 enumeration :: Array String -> ValueType
 enumeration values = { kind: "enumeration", values }
 
@@ -127,9 +130,6 @@ overrides =
   , html "formmethod" [] formMethods
   -- An overloaded boolean (`until-found` is its one other value) used as a boolean.
   , html "hidden" [] booleanType
-  -- SVG's `width` and `height` are lengths, and one identifier serves both
-  -- namespaces, so HTML's take a string too: a backend has one function each.
-  , html "height" [] stringType
   , html "inputmode" [] $ enumeration [ "none", "text", "decimal", "numeric", "tel", "search", "email", "url" ]
   , html "kind" [ "track" ] $ enumeration [ "subtitles", "captions", "descriptions", "chapters", "metadata" ]
   , html "loading" [] $ enumeration [ "lazy", "eager" ]
@@ -156,7 +156,6 @@ overrides =
   -- `property-information` marks `value` booleanish for hast's sake.
   , html "value" [] stringType
   , html "wrap" [] $ enumeration [ "soft", "hard" ]
-  , html "width" [] stringType
   , html "writingsuggestions" [] $ enumeration [ "true", "false" ]
   , html "aria-checked" [] tristate
   , html "aria-pressed" [] tristate
@@ -171,13 +170,28 @@ overrides =
   formMethods = enumeration [ "get", "post", "dialog" ]
   tristate = enumeration [ "false", "mixed", "true" ]
 
--- | The type the datasets give an attribute.
-datasetType :: Info -> ValueType
-datasetType info
+-- | The type the datasets give an attribute. The datasets don't say whether
+-- | a number is whole, so `integerAttributes` does.
+datasetType :: String -> Info -> ValueType
+datasetType attribute info
   | info.boolean = booleanType
-  | info.number && not info.list = numberType
+  | info.number && not info.list =
+      if Array.elem attribute integerAttributes then integerType else numberType
   | info.booleanish = enumeration [ "false", "true" ]
   | otherwise = stringType
+
+-- | The numeric attributes whose values are whole numbers, in either
+-- | namespace: HTML's "valid integer" and "valid non-negative integer"
+-- | attributes, and ARIA's integer properties. Every other numeric attribute
+-- | is a real number (`<meter low>`, `aria-valuenow`, SVG's numbers).
+integerAttributes :: Array String
+integerAttributes =
+  [ "aria-colcount", "aria-colindex", "aria-colspan", "aria-level", "aria-posinset"
+  , "aria-rowcount", "aria-rowindex", "aria-rowspan", "aria-setsize"
+  , "border", "cols", "colspan", "hspace", "marginheight", "marginwidth", "maxlength"
+  , "minlength", "rows", "rowspan", "size", "span", "start", "tabindex", "vspace"
+  , "targetX", "targetY", "width", "height"
+  ]
 
 -- Namespaces ------------------------------------------------------------------
 
@@ -220,7 +234,7 @@ attributeType :: Namespace -> String -> ValueType
 attributeType ns attribute =
   case Array.find (\o -> o.namespace == ns.name && o.attribute == attribute && Array.null o.elements) overrides of
     Just o -> o.type
-    Nothing -> datasetType (ns.info attribute)
+    Nothing -> datasetType attribute (ns.info attribute)
 
 elementTypes :: Namespace -> String -> Array (Tuple String ValueType)
 elementTypes ns attribute = Array.sortWith (\(Tuple e _) -> e) do
@@ -339,6 +353,23 @@ attributeIdentifier :: Set.Set String -> String -> String
 attributeIdentifier taken attribute =
   let id = identifier attribute in if Set.member id taken then camelCase attribute <> "Attr" else id
 
+-- | An attribute's identifier in a namespace. An SVG attribute whose value
+-- | type differs from the HTML attribute of the same name gets its own, `svg` and
+-- | the capitalised name (`svgWidth`), so each can have its own type. So does
+-- | SVG's `class` (`svgClass`), which a backend may have to set differently:
+-- | the `className` property does nothing on SVG.
+namespacedIdentifier :: Set.Set String -> Namespace -> String -> String
+namespacedIdentifier taken ns attribute =
+  if ns.name == "svg" && (attribute == "class" || differsFromHtml) then "svg" <> capitalise (camelCase attribute)
+  else attributeIdentifier taken attribute
+  where
+  differsFromHtml = case Array.head namespaces of
+    Just htmlNs | Array.elem attribute (allAttributes htmlNs) ->
+      valueKind (attributeType htmlNs attribute) /= valueKind (attributeType ns attribute)
+    _ -> false
+  -- An enumeration's values are strings.
+  valueKind t = if t.kind == "enumeration" then "string" else t.kind
+
 -- | Fails if two different names were given one identifier.
 checkUnique :: String -> Array (Tuple String String) -> Effect Unit
 checkUnique what pairs = do
@@ -399,7 +430,7 @@ main = do
     tagPairs = Array.concatMap (\ns -> map (\t -> Tuple t (elementIdentifier t)) ns.tags) namespaces
     elementIds = Set.fromFoldable (map (\(Tuple _ id) -> id) tagPairs <> signatureNames)
     attributePairs = Array.nub $ Array.concatMap
-      (\ns -> map (\a -> Tuple a (attributeIdentifier elementIds a)) (allAttributes ns))
+      (\ns -> map (\a -> Tuple a (namespacedIdentifier elementIds ns a)) (allAttributes ns))
       namespaces
     eventPairs = map (\e -> Tuple ("on" <> e.name) e.id) events
   checkUnique "elements" (Array.nub tagPairs)
@@ -422,7 +453,7 @@ main = do
           ]
       , Tuple "globalAttributes" (strings (globalAttributes ns))
       , Tuple "attributes" $ object $ allAttributes ns <#> \attribute -> Tuple attribute $ object
-          [ Tuple "purescript" (Json.fromString (attributeIdentifier elementIds attribute))
+          [ Tuple "purescript" (Json.fromString (namespacedIdentifier elementIds ns attribute))
           , Tuple "type" (valueTypeJson (attributeType ns attribute))
           , Tuple "elementTypes" $ object $ map valueTypeJson <$> elementTypes ns attribute
           ]

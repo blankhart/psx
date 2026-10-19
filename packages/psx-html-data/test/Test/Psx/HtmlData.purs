@@ -71,7 +71,9 @@ nameMapping = do
     el ns name = _.purescript <$> element ns name
     ev name = _.purescript <$> eventByAttribute name
   assertEqual "class" (Just "class_") (attr Html "class")
-  assertEqual "SVG class" (Just "class_") (attr Svg "class")
+  assertEqual "SVG class" (Just "svgClass") (attr Svg "class")
+  assertEqual "SVG width has its own identifier" (Just "svgWidth") (attr Svg "width")
+  assertEqual "an SVG-only attribute keeps its name" (Just "x") (attr Svg "x")
   assertEqual "type" (Just "type'") (attr Html "type")
   assertEqual "for" (Just "for") (attr Html "for")
   assertEqual "accept-charset" (Just "acceptCharset") (attr Html "accept-charset")
@@ -108,7 +110,7 @@ valueTypes :: Effect Unit
 valueTypes = do
   let typeOf ns tag name = _.valueType <$> elementAttribute ns tag name
   assertEqual "disabled" (Just BooleanValue) (typeOf Html "button" "disabled")
-  assertEqual "colspan" (Just NumberValue) (typeOf Html "td" "colspan")
+  assertEqual "colspan" (Just IntegerValue) (typeOf Html "td" "colspan")
   assertEqual "href" (Just StringValue) (typeOf Html "a" "href")
   assertEqual "dir" (Just (Enumeration [ "ltr", "rtl", "auto" ])) (typeOf Html "div" "dir")
   assertEqual "button type" (Just (Enumeration [ "submit", "reset", "button" ])) (typeOf Html "button" "type")
@@ -119,6 +121,7 @@ valueTypes = do
   assertEqual "hidden" (Just BooleanValue) (typeOf Html "p" "hidden")
   assertEqual "value" (Just StringValue) (typeOf Html "input" "value")
   assertEqual "SVG width" (Just StringValue) (typeOf Svg "rect" "width")
+  assertEqual "HTML width" (Just IntegerValue) (typeOf Html "img" "width")
   assertEqual "SVG pathLength" (Just NumberValue) (typeOf Svg "path" "pathLength")
   assertEqual "role is global" (Just StringValue) (typeOf Html "div" "role")
   assertEqual "div does not take href" Nothing (typeOf Html "div" "href")

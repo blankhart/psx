@@ -54,8 +54,12 @@
       "type": "forall v a. S.AttrValue v String => v -> Attr a",
       "code": "S.attribute {name} <<< S.toSignal"
     },
-    "number": {
+    "integer": {
       "type": "forall v a. S.AttrValue v Int => v -> Attr a",
+      "code": "S.attribute {name} <<< Prelude.map show <<< S.toSignal"
+    },
+    "number": {
+      "type": "forall v a. S.AttrValue v Number => v -> Attr a",
       "code": "S.attribute {name} <<< Prelude.map show <<< S.toSignal"
     },
     "event": {

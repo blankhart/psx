@@ -1,0 +1,7 @@
+module Lower.ErrorFractionalInteger where
+
+import Portico.Psx (Markup)
+
+-- `tabindex` is a whole number.
+view :: forall a. Markup a
+view = <div tabindex="1.5"></div>

@@ -11,7 +11,6 @@ module Portico.Psx.Core
   , toKey
   , text
   , element
-  , svgElement
   , class Content
   , content
   , elementOf
@@ -63,13 +62,6 @@ text = P.text
 element :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
 element tag = elementOf (P.element tag)
 
--- | An SVG element. Portico sets `class` as the `className` property, which
--- | does nothing on SVG, so here it is the `class` attribute.
-svgElement :: forall c a. Content c a => String -> Array (Attr a) -> c -> Node a
-svgElement tag attrs = P.element tag (svgTraits_ attrs) <<< content
-
-foreign import svgTraits_ :: forall a. Array (Attr a) -> Array (Attr a)
-
 -- | What an element's children are: nodes, or keyed nodes. Which one is the
 -- | type's business, so a list keyed in a function a hole calls is keyed
 -- | too. Portico keys a list through its children, so the keys are already
@@ -92,7 +84,9 @@ none :: forall a. Markup a
 none = []
 
 -- | The node with the key added to its traits, as `P.key` would have put it
--- | there.
+-- | there. Portico keys by an attribute of the element itself, so `P.key` in
+-- | a trait hole also keys, but the lowering doesn't track it: it can't check
+-- | that every sibling has a key. Write `key` on the element instead.
 keyed :: forall k a. ToKey k => k -> Node a -> Tuple Key (Node a)
 keyed k node = Tuple (toKey k) (runFn2 withKey_ (P.key (toKey k)) node)
 

@@ -58,6 +58,7 @@ valueTypeName :: ValueType -> String
 valueTypeName = case _ of
   BooleanValue -> "boolean"
   StringValue -> "string"
+  IntegerValue -> "integer"
   NumberValue -> "number"
   Enumeration values -> String.joinWith " | " (map show values)
 

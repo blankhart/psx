@@ -682,6 +682,9 @@ module Screamer.Psx
   , styleAttr
   , summaryAttr
   , surfaceScale
+  , svgClass
+  , svgHeight
+  , svgWidth
   , syncBehavior
   , syncBehaviorDefault
   , syncMaster
@@ -1593,7 +1596,7 @@ abbrAttr = S.attribute "abbr" <<< S.toSignal
 about :: forall v a. S.AttrValue v String => v -> Attr a
 about = S.attribute "about" <<< S.toSignal
 
-accentHeight :: forall v a. S.AttrValue v Int => v -> Attr a
+accentHeight :: forall v a. S.AttrValue v Number => v -> Attr a
 accentHeight = S.attribute "accent-height" <<< Prelude.map show <<< S.toSignal
 
 accept :: forall v a. S.AttrValue v String => v -> Attr a
@@ -1638,13 +1641,13 @@ allowusermedia = S.booleanAttribute "allowusermedia" <<< S.toSignal
 alpha :: forall v a. S.AttrValue v Boolean => v -> Attr a
 alpha = S.booleanAttribute "alpha" <<< S.toSignal
 
-alphabetic :: forall v a. S.AttrValue v Int => v -> Attr a
+alphabetic :: forall v a. S.AttrValue v Number => v -> Attr a
 alphabetic = S.attribute "alphabetic" <<< Prelude.map show <<< S.toSignal
 
 alt :: forall v a. S.AttrValue v String => v -> Attr a
 alt = S.attribute "alt" <<< S.toSignal
 
-amplitude :: forall v a. S.AttrValue v Int => v -> Attr a
+amplitude :: forall v a. S.AttrValue v Number => v -> Attr a
 amplitude = S.attribute "amplitude" <<< Prelude.map show <<< S.toSignal
 
 arabicForm :: forall v a. S.AttrValue v String => v -> Attr a
@@ -1785,13 +1788,13 @@ ariaSetsize = S.attribute "aria-setsize" <<< Prelude.map show <<< S.toSignal
 ariaSort :: forall v a. S.AttrValue v String => v -> Attr a
 ariaSort = S.attribute "aria-sort" <<< S.toSignal
 
-ariaValuemax :: forall v a. S.AttrValue v Int => v -> Attr a
+ariaValuemax :: forall v a. S.AttrValue v Number => v -> Attr a
 ariaValuemax = S.attribute "aria-valuemax" <<< Prelude.map show <<< S.toSignal
 
-ariaValuemin :: forall v a. S.AttrValue v Int => v -> Attr a
+ariaValuemin :: forall v a. S.AttrValue v Number => v -> Attr a
 ariaValuemin = S.attribute "aria-valuemin" <<< Prelude.map show <<< S.toSignal
 
-ariaValuenow :: forall v a. S.AttrValue v Int => v -> Attr a
+ariaValuenow :: forall v a. S.AttrValue v Number => v -> Attr a
 ariaValuenow = S.attribute "aria-valuenow" <<< Prelude.map show <<< S.toSignal
 
 ariaValuetext :: forall v a. S.AttrValue v String => v -> Attr a
@@ -1800,7 +1803,7 @@ ariaValuetext = S.attribute "aria-valuetext" <<< S.toSignal
 as :: forall v a. S.AttrValue v String => v -> Attr a
 as = S.attribute "as" <<< S.toSignal
 
-ascent :: forall v a. S.AttrValue v Int => v -> Attr a
+ascent :: forall v a. S.AttrValue v Number => v -> Attr a
 ascent = S.attribute "ascent" <<< Prelude.map show <<< S.toSignal
 
 async :: forall v a. S.AttrValue v Boolean => v -> Attr a
@@ -1830,7 +1833,7 @@ autoplay = S.booleanAttribute "autoplay" <<< S.toSignal
 axis :: forall v a. S.AttrValue v String => v -> Attr a
 axis = S.attribute "axis" <<< S.toSignal
 
-azimuth :: forall v a. S.AttrValue v Int => v -> Attr a
+azimuth :: forall v a. S.AttrValue v Number => v -> Attr a
 azimuth = S.attribute "azimuth" <<< Prelude.map show <<< S.toSignal
 
 background :: forall v a. S.AttrValue v String => v -> Attr a
@@ -1857,7 +1860,7 @@ begin = S.attribute "begin" <<< S.toSignal
 bgcolor :: forall v a. S.AttrValue v String => v -> Attr a
 bgcolor = S.attribute "bgcolor" <<< S.toSignal
 
-bias :: forall v a. S.AttrValue v Int => v -> Attr a
+bias :: forall v a. S.AttrValue v Number => v -> Attr a
 bias = S.attribute "bias" <<< Prelude.map show <<< S.toSignal
 
 blocking :: forall v a. S.AttrValue v String => v -> Attr a
@@ -1872,7 +1875,7 @@ by = S.attribute "by" <<< S.toSignal
 calcMode :: forall v a. S.AttrValue v String => v -> Attr a
 calcMode = S.attribute "calcMode" <<< S.toSignal
 
-capHeight :: forall v a. S.AttrValue v Int => v -> Attr a
+capHeight :: forall v a. S.AttrValue v Number => v -> Attr a
 capHeight = S.attribute "cap-height" <<< Prelude.map show <<< S.toSignal
 
 cellpadding :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2019,10 +2022,10 @@ defaultAction = S.attribute "defaultAction" <<< S.toSignal
 defer :: forall v a. S.AttrValue v Boolean => v -> Attr a
 defer = S.booleanAttribute "defer" <<< S.toSignal
 
-descent :: forall v a. S.AttrValue v Int => v -> Attr a
+descent :: forall v a. S.AttrValue v Number => v -> Attr a
 descent = S.attribute "descent" <<< Prelude.map show <<< S.toSignal
 
-diffuseConstant :: forall v a. S.AttrValue v Int => v -> Attr a
+diffuseConstant :: forall v a. S.AttrValue v Number => v -> Attr a
 diffuseConstant = S.attribute "diffuseConstant" <<< Prelude.map show <<< S.toSignal
 
 dirAttr :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2040,7 +2043,7 @@ disabled = S.booleanAttribute "disabled" <<< S.toSignal
 display :: forall v a. S.AttrValue v String => v -> Attr a
 display = S.attribute "display" <<< S.toSignal
 
-divisor :: forall v a. S.AttrValue v Int => v -> Attr a
+divisor :: forall v a. S.AttrValue v Number => v -> Attr a
 divisor = S.attribute "divisor" <<< Prelude.map show <<< S.toSignal
 
 dominantBaseline :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2067,7 +2070,7 @@ edgeMode = S.attribute "edgeMode" <<< S.toSignal
 editable :: forall v a. S.AttrValue v String => v -> Attr a
 editable = S.attribute "editable" <<< S.toSignal
 
-elevation :: forall v a. S.AttrValue v Int => v -> Attr a
+elevation :: forall v a. S.AttrValue v Number => v -> Attr a
 elevation = S.attribute "elevation" <<< Prelude.map show <<< S.toSignal
 
 enableBackground :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2085,7 +2088,7 @@ enterkeyhint = S.attribute "enterkeyhint" <<< S.toSignal
 event :: forall v a. S.AttrValue v String => v -> Attr a
 event = S.attribute "event" <<< S.toSignal
 
-exponent :: forall v a. S.AttrValue v Int => v -> Attr a
+exponent :: forall v a. S.AttrValue v Number => v -> Attr a
 exponent = S.attribute "exponent" <<< Prelude.map show <<< S.toSignal
 
 exportparts :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2103,7 +2106,7 @@ fetchpriority = S.attribute "fetchpriority" <<< S.toSignal
 fill :: forall v a. S.AttrValue v String => v -> Attr a
 fill = S.attribute "fill" <<< S.toSignal
 
-fillOpacity :: forall v a. S.AttrValue v Int => v -> Attr a
+fillOpacity :: forall v a. S.AttrValue v Number => v -> Attr a
 fillOpacity = S.attribute "fill-opacity" <<< Prelude.map show <<< S.toSignal
 
 fillRule :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2220,28 +2223,28 @@ gradientUnits = S.attribute "gradientUnits" <<< S.toSignal
 handlerAttr :: forall v a. S.AttrValue v String => v -> Attr a
 handlerAttr = S.attribute "handler" <<< S.toSignal
 
-hanging :: forall v a. S.AttrValue v Int => v -> Attr a
+hanging :: forall v a. S.AttrValue v Number => v -> Attr a
 hanging = S.attribute "hanging" <<< Prelude.map show <<< S.toSignal
 
 headers :: forall v a. S.AttrValue v String => v -> Attr a
 headers = S.attribute "headers" <<< S.toSignal
 
-height :: forall v a. S.AttrValue v String => v -> Attr a
-height = S.attribute "height" <<< S.toSignal
+height :: forall v a. S.AttrValue v Int => v -> Attr a
+height = S.attribute "height" <<< Prelude.map show <<< S.toSignal
 
 hidden :: forall v a. S.AttrValue v Boolean => v -> Attr a
 hidden = S.booleanAttribute "hidden" <<< S.toSignal
 
-high :: forall v a. S.AttrValue v Int => v -> Attr a
+high :: forall v a. S.AttrValue v Number => v -> Attr a
 high = S.attribute "high" <<< Prelude.map show <<< S.toSignal
 
-horizAdvX :: forall v a. S.AttrValue v Int => v -> Attr a
+horizAdvX :: forall v a. S.AttrValue v Number => v -> Attr a
 horizAdvX = S.attribute "horiz-adv-x" <<< Prelude.map show <<< S.toSignal
 
-horizOriginX :: forall v a. S.AttrValue v Int => v -> Attr a
+horizOriginX :: forall v a. S.AttrValue v Number => v -> Attr a
 horizOriginX = S.attribute "horiz-origin-x" <<< Prelude.map show <<< S.toSignal
 
-horizOriginY :: forall v a. S.AttrValue v Int => v -> Attr a
+horizOriginY :: forall v a. S.AttrValue v Number => v -> Attr a
 horizOriginY = S.attribute "horiz-origin-y" <<< Prelude.map show <<< S.toSignal
 
 href :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2259,7 +2262,7 @@ httpEquiv = S.attribute "http-equiv" <<< S.toSignal
 id :: forall v a. S.AttrValue v String => v -> Attr a
 id = S.attribute "id" <<< S.toSignal
 
-ideographic :: forall v a. S.AttrValue v Int => v -> Attr a
+ideographic :: forall v a. S.AttrValue v Number => v -> Attr a
 ideographic = S.attribute "ideographic" <<< Prelude.map show <<< S.toSignal
 
 imageRendering :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2289,7 +2292,7 @@ inputmode = S.attribute "inputmode" <<< S.toSignal
 integrity :: forall v a. S.AttrValue v String => v -> Attr a
 integrity = S.attribute "integrity" <<< S.toSignal
 
-intercept :: forall v a. S.AttrValue v Int => v -> Attr a
+intercept :: forall v a. S.AttrValue v Number => v -> Attr a
 intercept = S.attribute "intercept" <<< Prelude.map show <<< S.toSignal
 
 is :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2313,19 +2316,19 @@ itemscope = S.booleanAttribute "itemscope" <<< S.toSignal
 itemtype :: forall v a. S.AttrValue v String => v -> Attr a
 itemtype = S.attribute "itemtype" <<< S.toSignal
 
-k :: forall v a. S.AttrValue v Int => v -> Attr a
+k :: forall v a. S.AttrValue v Number => v -> Attr a
 k = S.attribute "k" <<< Prelude.map show <<< S.toSignal
 
-k1 :: forall v a. S.AttrValue v Int => v -> Attr a
+k1 :: forall v a. S.AttrValue v Number => v -> Attr a
 k1 = S.attribute "k1" <<< Prelude.map show <<< S.toSignal
 
-k2 :: forall v a. S.AttrValue v Int => v -> Attr a
+k2 :: forall v a. S.AttrValue v Number => v -> Attr a
 k2 = S.attribute "k2" <<< Prelude.map show <<< S.toSignal
 
-k3 :: forall v a. S.AttrValue v Int => v -> Attr a
+k3 :: forall v a. S.AttrValue v Number => v -> Attr a
 k3 = S.attribute "k3" <<< Prelude.map show <<< S.toSignal
 
-k4 :: forall v a. S.AttrValue v Int => v -> Attr a
+k4 :: forall v a. S.AttrValue v Number => v -> Attr a
 k4 = S.attribute "k4" <<< Prelude.map show <<< S.toSignal
 
 kernelMatrix :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2367,7 +2370,7 @@ letterSpacing = S.attribute "letter-spacing" <<< S.toSignal
 lightingColor :: forall v a. S.AttrValue v String => v -> Attr a
 lightingColor = S.attribute "lighting-color" <<< S.toSignal
 
-limitingConeAngle :: forall v a. S.AttrValue v Int => v -> Attr a
+limitingConeAngle :: forall v a. S.AttrValue v Number => v -> Attr a
 limitingConeAngle = S.attribute "limitingConeAngle" <<< Prelude.map show <<< S.toSignal
 
 linkAttr :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2388,7 +2391,7 @@ longdesc = S.attribute "longdesc" <<< S.toSignal
 loop :: forall v a. S.AttrValue v Boolean => v -> Attr a
 loop = S.booleanAttribute "loop" <<< S.toSignal
 
-low :: forall v a. S.AttrValue v Int => v -> Attr a
+low :: forall v a. S.AttrValue v Number => v -> Attr a
 low = S.attribute "low" <<< Prelude.map show <<< S.toSignal
 
 manifest :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2445,7 +2448,7 @@ mediaCharacterEncoding = S.attribute "mediaCharacterEncoding" <<< S.toSignal
 mediaContentEncodings :: forall v a. S.AttrValue v String => v -> Attr a
 mediaContentEncodings = S.attribute "mediaContentEncodings" <<< S.toSignal
 
-mediaSize :: forall v a. S.AttrValue v Int => v -> Attr a
+mediaSize :: forall v a. S.AttrValue v Number => v -> Attr a
 mediaSize = S.attribute "mediaSize" <<< Prelude.map show <<< S.toSignal
 
 mediaTime :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2544,7 +2547,7 @@ open = S.booleanAttribute "open" <<< S.toSignal
 operator :: forall v a. S.AttrValue v String => v -> Attr a
 operator = S.attribute "operator" <<< S.toSignal
 
-optimum :: forall v a. S.AttrValue v Int => v -> Attr a
+optimum :: forall v a. S.AttrValue v Number => v -> Attr a
 optimum = S.attribute "optimum" <<< Prelude.map show <<< S.toSignal
 
 order :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2565,10 +2568,10 @@ overflow = S.attribute "overflow" <<< S.toSignal
 overlay :: forall v a. S.AttrValue v String => v -> Attr a
 overlay = S.attribute "overlay" <<< S.toSignal
 
-overlinePosition :: forall v a. S.AttrValue v Int => v -> Attr a
+overlinePosition :: forall v a. S.AttrValue v Number => v -> Attr a
 overlinePosition = S.attribute "overline-position" <<< Prelude.map show <<< S.toSignal
 
-overlineThickness :: forall v a. S.AttrValue v Int => v -> Attr a
+overlineThickness :: forall v a. S.AttrValue v Number => v -> Attr a
 overlineThickness = S.attribute "overline-thickness" <<< Prelude.map show <<< S.toSignal
 
 paintOrder :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2583,7 +2586,7 @@ part = S.attribute "part" <<< S.toSignal
 pathAttr :: forall v a. S.AttrValue v String => v -> Attr a
 pathAttr = S.attribute "path" <<< S.toSignal
 
-pathLength :: forall v a. S.AttrValue v Int => v -> Attr a
+pathLength :: forall v a. S.AttrValue v Number => v -> Attr a
 pathLength = S.attribute "pathLength" <<< Prelude.map show <<< S.toSignal
 
 patternAttr :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2622,13 +2625,13 @@ pointerEvents = S.attribute "pointer-events" <<< S.toSignal
 points :: forall v a. S.AttrValue v String => v -> Attr a
 points = S.attribute "points" <<< S.toSignal
 
-pointsAtX :: forall v a. S.AttrValue v Int => v -> Attr a
+pointsAtX :: forall v a. S.AttrValue v Number => v -> Attr a
 pointsAtX = S.attribute "pointsAtX" <<< Prelude.map show <<< S.toSignal
 
-pointsAtY :: forall v a. S.AttrValue v Int => v -> Attr a
+pointsAtY :: forall v a. S.AttrValue v Number => v -> Attr a
 pointsAtY = S.attribute "pointsAtY" <<< Prelude.map show <<< S.toSignal
 
-pointsAtZ :: forall v a. S.AttrValue v Int => v -> Attr a
+pointsAtZ :: forall v a. S.AttrValue v Number => v -> Attr a
 pointsAtZ = S.attribute "pointsAtZ" <<< Prelude.map show <<< S.toSignal
 
 popover :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2814,10 +2817,10 @@ spacing = S.attribute "spacing" <<< S.toSignal
 spanAttr :: forall v a. S.AttrValue v Int => v -> Attr a
 spanAttr = S.attribute "span" <<< Prelude.map show <<< S.toSignal
 
-specularConstant :: forall v a. S.AttrValue v Int => v -> Attr a
+specularConstant :: forall v a. S.AttrValue v Number => v -> Attr a
 specularConstant = S.attribute "specularConstant" <<< Prelude.map show <<< S.toSignal
 
-specularExponent :: forall v a. S.AttrValue v Int => v -> Attr a
+specularExponent :: forall v a. S.AttrValue v Number => v -> Attr a
 specularExponent = S.attribute "specularExponent" <<< Prelude.map show <<< S.toSignal
 
 spellcheck :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2868,10 +2871,10 @@ stopColor = S.attribute "stop-color" <<< S.toSignal
 stopOpacity :: forall v a. S.AttrValue v String => v -> Attr a
 stopOpacity = S.attribute "stop-opacity" <<< S.toSignal
 
-strikethroughPosition :: forall v a. S.AttrValue v Int => v -> Attr a
+strikethroughPosition :: forall v a. S.AttrValue v Number => v -> Attr a
 strikethroughPosition = S.attribute "strikethrough-position" <<< Prelude.map show <<< S.toSignal
 
-strikethroughThickness :: forall v a. S.AttrValue v Int => v -> Attr a
+strikethroughThickness :: forall v a. S.AttrValue v Number => v -> Attr a
 strikethroughThickness = S.attribute "strikethrough-thickness" <<< Prelude.map show <<< S.toSignal
 
 string :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2892,10 +2895,10 @@ strokeLinecap = S.attribute "stroke-linecap" <<< S.toSignal
 strokeLinejoin :: forall v a. S.AttrValue v String => v -> Attr a
 strokeLinejoin = S.attribute "stroke-linejoin" <<< S.toSignal
 
-strokeMiterlimit :: forall v a. S.AttrValue v Int => v -> Attr a
+strokeMiterlimit :: forall v a. S.AttrValue v Number => v -> Attr a
 strokeMiterlimit = S.attribute "stroke-miterlimit" <<< Prelude.map show <<< S.toSignal
 
-strokeOpacity :: forall v a. S.AttrValue v Int => v -> Attr a
+strokeOpacity :: forall v a. S.AttrValue v Number => v -> Attr a
 strokeOpacity = S.attribute "stroke-opacity" <<< Prelude.map show <<< S.toSignal
 
 strokeWidth :: forall v a. S.AttrValue v String => v -> Attr a
@@ -2907,8 +2910,17 @@ styleAttr = S.attribute "style" <<< S.toSignal
 summaryAttr :: forall v a. S.AttrValue v String => v -> Attr a
 summaryAttr = S.attribute "summary" <<< S.toSignal
 
-surfaceScale :: forall v a. S.AttrValue v Int => v -> Attr a
+surfaceScale :: forall v a. S.AttrValue v Number => v -> Attr a
 surfaceScale = S.attribute "surfaceScale" <<< Prelude.map show <<< S.toSignal
+
+svgClass :: forall v a. S.AttrValue v String => v -> Attr a
+svgClass = S.attribute "class" <<< S.toSignal
+
+svgHeight :: forall v a. S.AttrValue v String => v -> Attr a
+svgHeight = S.attribute "height" <<< S.toSignal
+
+svgWidth :: forall v a. S.AttrValue v String => v -> Attr a
+svgWidth = S.attribute "width" <<< S.toSignal
 
 syncBehavior :: forall v a. S.AttrValue v String => v -> Attr a
 syncBehavior = S.attribute "syncBehavior" <<< S.toSignal
@@ -2997,10 +3009,10 @@ u1 = S.attribute "u1" <<< S.toSignal
 u2 :: forall v a. S.AttrValue v String => v -> Attr a
 u2 = S.attribute "u2" <<< S.toSignal
 
-underlinePosition :: forall v a. S.AttrValue v Int => v -> Attr a
+underlinePosition :: forall v a. S.AttrValue v Number => v -> Attr a
 underlinePosition = S.attribute "underline-position" <<< Prelude.map show <<< S.toSignal
 
-underlineThickness :: forall v a. S.AttrValue v Int => v -> Attr a
+underlineThickness :: forall v a. S.AttrValue v Number => v -> Attr a
 underlineThickness = S.attribute "underline-thickness" <<< Prelude.map show <<< S.toSignal
 
 unicode :: forall v a. S.AttrValue v String => v -> Attr a
@@ -3012,22 +3024,22 @@ unicodeBidi = S.attribute "unicode-bidi" <<< S.toSignal
 unicodeRange :: forall v a. S.AttrValue v String => v -> Attr a
 unicodeRange = S.attribute "unicode-range" <<< S.toSignal
 
-unitsPerEm :: forall v a. S.AttrValue v Int => v -> Attr a
+unitsPerEm :: forall v a. S.AttrValue v Number => v -> Attr a
 unitsPerEm = S.attribute "units-per-em" <<< Prelude.map show <<< S.toSignal
 
 usemap :: forall v a. S.AttrValue v String => v -> Attr a
 usemap = S.attribute "usemap" <<< S.toSignal
 
-vAlphabetic :: forall v a. S.AttrValue v Int => v -> Attr a
+vAlphabetic :: forall v a. S.AttrValue v Number => v -> Attr a
 vAlphabetic = S.attribute "v-alphabetic" <<< Prelude.map show <<< S.toSignal
 
-vHanging :: forall v a. S.AttrValue v Int => v -> Attr a
+vHanging :: forall v a. S.AttrValue v Number => v -> Attr a
 vHanging = S.attribute "v-hanging" <<< Prelude.map show <<< S.toSignal
 
-vIdeographic :: forall v a. S.AttrValue v Int => v -> Attr a
+vIdeographic :: forall v a. S.AttrValue v Number => v -> Attr a
 vIdeographic = S.attribute "v-ideographic" <<< Prelude.map show <<< S.toSignal
 
-vMathematical :: forall v a. S.AttrValue v Int => v -> Attr a
+vMathematical :: forall v a. S.AttrValue v Number => v -> Attr a
 vMathematical = S.attribute "v-mathematical" <<< Prelude.map show <<< S.toSignal
 
 valign :: forall v a. S.AttrValue v String => v -> Attr a
@@ -3048,13 +3060,13 @@ vectorEffect = S.attribute "vector-effect" <<< S.toSignal
 version :: forall v a. S.AttrValue v String => v -> Attr a
 version = S.attribute "version" <<< S.toSignal
 
-vertAdvY :: forall v a. S.AttrValue v Int => v -> Attr a
+vertAdvY :: forall v a. S.AttrValue v Number => v -> Attr a
 vertAdvY = S.attribute "vert-adv-y" <<< Prelude.map show <<< S.toSignal
 
-vertOriginX :: forall v a. S.AttrValue v Int => v -> Attr a
+vertOriginX :: forall v a. S.AttrValue v Number => v -> Attr a
 vertOriginX = S.attribute "vert-origin-x" <<< Prelude.map show <<< S.toSignal
 
-vertOriginY :: forall v a. S.AttrValue v Int => v -> Attr a
+vertOriginY :: forall v a. S.AttrValue v Number => v -> Attr a
 vertOriginY = S.attribute "vert-origin-y" <<< Prelude.map show <<< S.toSignal
 
 viewBox :: forall v a. S.AttrValue v String => v -> Attr a
@@ -3075,8 +3087,8 @@ vspace = S.attribute "vspace" <<< Prelude.map show <<< S.toSignal
 whiteSpace :: forall v a. S.AttrValue v String => v -> Attr a
 whiteSpace = S.attribute "white-space" <<< S.toSignal
 
-width :: forall v a. S.AttrValue v String => v -> Attr a
-width = S.attribute "width" <<< S.toSignal
+width :: forall v a. S.AttrValue v Int => v -> Attr a
+width = S.attribute "width" <<< Prelude.map show <<< S.toSignal
 
 widths :: forall v a. S.AttrValue v String => v -> Attr a
 widths = S.attribute "widths" <<< S.toSignal
@@ -3105,7 +3117,7 @@ x2 = S.attribute "x2" <<< S.toSignal
 xChannelSelector :: forall v a. S.AttrValue v String => v -> Attr a
 xChannelSelector = S.attribute "xChannelSelector" <<< S.toSignal
 
-xHeight :: forall v a. S.AttrValue v Int => v -> Attr a
+xHeight :: forall v a. S.AttrValue v Number => v -> Attr a
 xHeight = S.attribute "x-height" <<< Prelude.map show <<< S.toSignal
 
 y :: forall v a. S.AttrValue v String => v -> Attr a

@@ -4,6 +4,7 @@ module Suite.Driver
   ( Browser
   , Page
   , bundle
+  , buildEs
   , launch
   , close
   , open
@@ -35,6 +36,7 @@ foreign import data Browser :: Type
 foreign import data Page :: Type
 
 foreign import bundleImpl :: String -> String -> EffectFnAff Unit
+foreign import buildEsImpl :: String -> Effect { ok :: Boolean, output :: String }
 foreign import launchImpl :: String -> EffectFnAff Browser
 foreign import closeImpl :: Browser -> EffectFnAff Unit
 foreign import openImpl :: Browser -> String -> EffectFnAff Page
@@ -58,6 +60,14 @@ foreign import toNodes
 -- | into one minified script.
 bundle :: { module :: String, outfile :: String } -> Aff Unit
 bundle { module: m, outfile } = fromEffectFnAff (bundleImpl m outfile)
+
+-- | Compiles the workspace's `output/corefn.json` files to ES modules in
+-- | `output-es/` with purs-backend-es, a second code generator, so that each
+-- | app can also be bundled from its output. The directory has to sit beside
+-- | `output/`, because purs-backend-es finds each module's foreign file from
+-- | its source path relative to the parent of its output directory.
+buildEs :: String -> Effect { ok :: Boolean, output :: String }
+buildEs = buildEsImpl
 
 -- | Chromium at the given path, or Playwright's own when the path is empty.
 launch :: String -> Aff Browser

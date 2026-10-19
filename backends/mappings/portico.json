@@ -34,16 +34,12 @@
     "Prelude (pure, show, (<<<))",
     "Data.Maybe (Maybe)",
     "Portico as P",
-    "Portico.Psx.Core (class Content, Attr, Node, booleanAttribute, elementOf, svgElement)"
+    "Portico.Psx.Core (class Content, Attr, Node, booleanAttribute, elementOf)"
   ],
   "templates": {
     "element": {
       "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
       "code": "elementOf (P.element {name})"
-    },
-    "svgElement": {
-      "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
-      "code": "svgElement {name}"
     },
     "boolean": {
       "type": "forall a. Boolean -> Attr a",
@@ -53,8 +49,12 @@
       "type": "forall a. String -> Attr a",
       "code": "P.attribute {name}"
     },
-    "number": {
+    "integer": {
       "type": "forall a. Int -> Attr a",
+      "code": "P.attribute {name} <<< show"
+    },
+    "number": {
+      "type": "forall a. Number -> Attr a",
       "code": "P.attribute {name} <<< show"
     },
     "event": {

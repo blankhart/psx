@@ -46,17 +46,17 @@ trend values = String.joinWith " " (Array.mapWithIndex point values)
 view :: forall w. State -> Markup w Action
 view state =
   [ B.figure [ B.class_ "chart", B.attribute "data-testid" "chart" ] ([
-    B.svg [ B.viewBox "0 0 120 60", B.width "360", B.height "180" ] ([
-      B.g [ B.class_ "bars" ] (B.children (
+    B.svg [ B.viewBox "0 0 120 60", B.svgWidth "360", B.svgHeight "180" ] ([
+      B.g [ B.svgClass "bars" ] (B.children (
 
           Array.mapWithIndex
             ( \i v ->
-                [ B.keyed (i) (B.rect [ B.attribute "data-testid" ("bar-" <> show i), B.x (show (left i)), B.y (show (barTop v)), B.width "16", B.height (show (4 * v)), B.fill (if state.selected == Just i then "orange" else "steelblue"), B.onClick (Select i) ] B.none) ]
+                [ B.keyed (i) (B.rect [ B.attribute "data-testid" ("bar-" <> show i), B.x (show (left i)), B.y (show (barTop v)), B.svgWidth "16", B.svgHeight (show (4 * v)), B.fill (if state.selected == Just i then "orange" else "steelblue"), B.onClick (Select i) ] B.none) ]
             )
             state.values)
 
    ),
-      B.path [ B.class_ "trend", B.d (trend state.values), B.fill "none", B.stroke "gray" ] B.none,
+      B.path [ B.svgClass "trend", B.d (trend state.values), B.fill "none", B.stroke "gray" ] B.none,
       B.line [ B.x1 "5", B.y1 "55", B.x2 "115", B.y2 "55", B.stroke "black" ] B.none ] <> B.children (
 
         case state.selected of
