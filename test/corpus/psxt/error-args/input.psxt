@@ -1,5 +1,5 @@
-<!-- A template's arguments follow its name in `name`; `args` is not an
-     attribute of a template. -->
+<!-- A template's name and arguments are the head of its equation, in
+     `head`; `name` and `args` are not attributes of a template. -->
 <script type="text/purescript">
 module App.Args where
 
@@ -7,5 +7,7 @@ import Prelude
 import Portico.Psx (Markup)
 
 foreign import view :: Int -> Markup Unit
+foreign import card :: Int -> Markup Unit
 </script>
-<template name="view" args="n"><p>{show n}</p></template>
+<template name="view n"><p>{show n}</p></template>
+<template head="card" args="n"><p>{show n}</p></template>

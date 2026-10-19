@@ -1,0 +1,31 @@
+print: identical
+errors:
+  20:1-20:10 This <template head="apart …"> is another equation of apart, so it goes right after apart's other templates
+  23:1-23:10 This equation of arity has 1 binder but its first has 2 binders; every equation takes the same number
+  26:1-26:10 A second <template head="none">: none has no arguments, so it has one equation
+  28:25-28:34 The words after a template's name are PureScript binders, as in the head of an equation: head="f { title } (Just n)"
+script: 4:1-16:10, module App.Equations where
+template "apart" at 18:1, args "Nothing" (1 binders), defines the foreign import at 11:1 (1 arrows)
+  18:32 <p>
+    text "none"
+template "other" at 19:1, defines the foreign import at 12:1 (0 arrows)
+  19:24 <p>
+    text "other"
+template "apart" at 20:1, args "(Just n)" (1 binders), defines the foreign import at 11:1 (1 arrows)
+  20:33 <p>
+    hole {show n}
+template "arity" at 22:1, args "Nothing n" (2 binders), defines the foreign import at 13:1 (2 arrows)
+  22:34 <p>
+    hole {show n}
+template "arity" at 23:1, args "(Just m)" (1 binders), defines the foreign import at 13:1 (2 arrows)
+  23:33 <p>
+    hole {show m}
+template "none" at 25:1, defines the foreign import at 14:1 (0 arrows)
+  25:23 <p>
+    text "one"
+template "none" at 26:1, defines the foreign import at 14:1 (0 arrows)
+  26:23 <p>
+    text "two"
+template "guarded" at 28:1, args "n | n > 0" (0 binders), defines the foreign import at 15:1 (1 arrows)
+  28:36 <p>
+    hole {show n}

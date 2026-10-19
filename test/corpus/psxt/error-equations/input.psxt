@@ -1,0 +1,28 @@
+<!-- An equation apart from its function's others, one with a different
+     number of binders, a second equation of a function without arguments,
+     and a guard in a head. -->
+<script type="text/purescript">
+module App.Equations where
+
+import Prelude
+import Data.Maybe (Maybe(..))
+import Portico.Psx (Markup)
+
+foreign import apart :: Maybe Int -> Markup Unit
+foreign import other :: Markup Unit
+foreign import arity :: Maybe Int -> Int -> Markup Unit
+foreign import none :: Markup Unit
+foreign import guarded :: Int -> Markup Unit
+</script>
+
+<template head="apart Nothing"><p>none</p></template>
+<template head="other"><p>other</p></template>
+<template head="apart (Just n)"><p>{show n}</p></template>
+
+<template head="arity Nothing n"><p>{show n}</p></template>
+<template head="arity (Just m)"><p>{show m}</p></template>
+
+<template head="none"><p>one</p></template>
+<template head="none"><p>two</p></template>
+
+<template head="guarded n | n > 0"><p>{show n}</p></template>

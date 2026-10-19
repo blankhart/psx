@@ -1,6 +1,6 @@
 print: identical
 errors:
-  10:11-10:26 <template name="hidden"> has no foreign import hidden :: T in the script to define
+  10:11-10:26 <template head="hidden"> has no foreign import hidden :: T in the script to define
     fix: Declare foreign import hidden :: _: insert "foreign import hidden :: _\n" at 7:1
 script: 1:1-7:10, module App.Missing where
 template "shown" at 9:1, defines the foreign import at 6:1 (0 arrows)

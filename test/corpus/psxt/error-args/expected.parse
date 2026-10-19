@@ -1,7 +1,11 @@
 print: identical
 errors:
-  11:23-11:31 A template's arguments follow its name: name="f x y" rather than args
-script: 3:1-10:10, module App.Args where
-template "view" at 11:1, defines the foreign import at 9:1 (1 arrows)
-  11:32 <p>
+  12:11-12:24 A template's name and arguments are the head of its equation: head="f x y" rather than name
+  13:23-13:31 A template's name and arguments are the head of its equation: head="f x y" rather than args
+script: 3:1-11:10, module App.Args where
+template "" at 12:1, no foreign import
+  12:25 <p>
+    hole {show n}
+template "card" at 13:1, defines the foreign import at 10:1 (1 arrows)
+  13:32 <p>
     hole {show n}

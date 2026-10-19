@@ -118,9 +118,11 @@ lower names text = case parseModule text of
 
 -- | Lowers a `.psxt` file. The script's module is copied as a `.psx` module
 -- | is; each template's `foreign import f :: T` becomes blank, and the
--- | template becomes `f :: T` and `f args = ...` on the lines of its
--- | `<template>` tag (the signature on the blank line before it when there
--- | is one). Templates written before the script follow the last one.
+-- | template is a syntactic transformation: `<template head="H">…</template>`
+-- | becomes the equation `H = […]`, its head copied as written, on the lines
+-- | of its `<template>` tag. The first equation of `f` is preceded by
+-- | `f :: T` (on the blank line before it when there is one). Templates
+-- | written before the script follow the last one.
 -- | Lines outside the script and the templates are blank.
 lowerPsxt :: Names -> String -> Either (Array PsxError) Lowered
 lowerPsxt names text = case parsePsxt text of
@@ -254,7 +256,7 @@ templateEvents :: Source -> PsxtFile -> Array Event
 templateEvents src p = do
   let
     sc = p.file.script
-    defined = Array.mapMaybe _.declaration p.file.templates
+    defined = Array.mapMaybe _.declaration (Array.filter _.first p.file.templates)
     after = Array.filter (\t -> offsetOf src t.element.open.range.start >= sc.contentEnd) p.file.templates
     ends = Array.cons sc.contentEnd (map (\t -> offsetOf src (elementEnd t.element)) after)
     starts = Array.snoc (map (\t -> offsetOf src t.element.open.range.start) after) (SCU.length src.text)
@@ -540,7 +542,8 @@ retreat = modify_ \st -> case st.chunks of
 
 -- Templates --------------------------------------------------------------------
 
--- | `f :: T` and `f args =` for a template, then its children as a literal.
+-- | `f :: T` before a function's first equation, then `f args =` for the
+-- | template and its children as a literal.
 lowerTemplate :: Source -> Context -> Maybe String -> Template -> M Unit
 lowerTemplate src outer stamp t = for_ t.declaration \decl -> do
   let
@@ -548,12 +551,14 @@ lowerTemplate src outer stamp t = for_ t.declaration \decl -> do
     tagRange = { start: el.open.range.start, end: el.end.range.end }
     tagLine = el.open.range.start.line
   st0 <- get
-  blankBefore <- previousLineBlank
-  if blankBefore then retreat else when (st0.column > 0) (emit "\n")
-  emitFor tagRange t.name
-  emit " :: "
-  copy src (offsetOf src (rangeOf decl.type).start) (offsetOf src (rangeOf decl.type).end)
-  emit "\n"
+  when t.first do
+    blankBefore <- previousLineBlank
+    if blankBefore then retreat else when (st0.column > 0) (emit "\n")
+    emitFor tagRange t.name
+    emit " :: "
+    copy src (offsetOf src (rangeOf decl.type).start) (offsetOf src (rangeOf decl.type).end)
+    emit "\n"
+  unless t.first (when (st0.column > 0) (emit "\n"))
   emitFor tagRange t.name
   for_ t.args \a -> when (String.trim a.text /= "") do
     emit " "

@@ -57,7 +57,7 @@ main = do
   A transition group is a Portico trait with no HTML attribute, so it is a
   trait hole. The items are keyed literals, so the list is keyed.
 -->
-<template name="view model">
+<template head="view model">
   <main id="main">
     <button onclick={Add}>Add</button>
     <button onclick={Shuffle}>Shuffle</button>
@@ -65,7 +65,7 @@ main = do
   </main>
 </template>
 
-<template name="item index value">
+<template head="item index value">
   <div key={show value} onclick={Remove index}>{show value}</div>
 </template>
 
