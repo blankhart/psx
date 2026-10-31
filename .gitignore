@@ -1,8 +1,7 @@
 node_modules/
 .spago/
 output/
-examples/portico/examples/dist/
-examples/screamer/dist/
+examples/react/dist/
 test/check/actual.txt
 test/check/positions.txt
 test/suite/dist/

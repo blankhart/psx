@@ -104,7 +104,7 @@ sources = do
   root <- workspaceRoot
   let
     areas = [ "lower", "psxt" ]
-    examples = Path.concat [ root, "examples", "portico", "src" ]
+    examples = Path.concat [ root, "examples", "react", "src" ]
   corpus <- Array.concat <$> for areas \area -> do
     let dir = Path.concat [ root, "test", "corpus", area ]
     cases <- FS.readdir dir

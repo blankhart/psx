@@ -1,0 +1,10 @@
+package:
+  name: psx-examples-react
+  dependencies:
+    - effect
+    - prelude
+    - psx-react-basic-hooks
+    - psx-suite-react
+    - psx-halogen
+    - halogen
+    - react-basic-dom

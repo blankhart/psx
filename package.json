@@ -12,28 +12,25 @@
     "corpus:accept": "spago run -p psx-corpus -- --accept",
     "psx": "node packages/psx-cli/bin/psx.mjs",
     "gen-backend": "node packages/psx-cli/bin/psx.mjs gen-backend",
-    "examples:portico": "node packages/psx-cli/bin/psx.mjs build examples/portico/src && spago build -p psx-examples-portico && node examples/portico/scripts/build-examples.mjs && node examples/portico/scripts/smoke-test.mjs",
-    "examples:screamer": "node packages/psx-cli/bin/psx.mjs build examples/screamer/src && spago build -p psx-examples-screamer && node examples/screamer/scripts/build-examples.mjs && node examples/screamer/scripts/smoke-test.mjs",
     "suite": "spago run -p psx-suite --",
-    "suite:accept": "spago run -p psx-suite -- --accept"
+    "suite:accept": "spago run -p psx-suite -- --accept",
+    "examples:react": "node packages/psx-cli/bin/psx.mjs build examples/react/src && spago build -p psx-examples-react && node examples/react/scripts/build-examples.mjs && node examples/react/scripts/smoke-test.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.64.1",
     "@webref/events": "1.27.1",
     "@webref/idl": "3.85.2",
     "esbuild": "0.28.2",
     "html-element-attributes": "3.5.0",
     "html-tag-names": "2.1.0",
     "html-void-elements": "3.0.0",
-    "playwright": "^1.64.1",
     "playwright-core": "^1.64.1",
     "property-information": "7.2.0",
-    "puppeteer-core": "25.13.0",
     "purescript": "0.15.15",
     "purs-backend-es": "1.4.3",
-    "snabbdom": "3.6.4",
     "spago": "1.0.5",
     "svg-element-attributes": "2.2.0",
-    "svg-tag-names": "3.0.1"
+    "svg-tag-names": "3.0.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   }
 }

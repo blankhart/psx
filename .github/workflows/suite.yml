@@ -43,15 +43,6 @@ jobs:
           node-version: 22
           cache: npm
 
-      # Portico and Screamer are private (see ci.yml).
-      - name: Allow reading the private framework repositories
-        env:
-          TOKEN: ${{ secrets.PSX_DEPS_TOKEN }}
-        run: |
-          if [ -n "$TOKEN" ]; then
-            git config --global url."https://x-access-token:${TOKEN}@github.com/blankhart/".insteadOf "https://github.com/blankhart/"
-          fi
-
       - run: npm ci
 
       - uses: actions/cache@v4
@@ -107,15 +98,6 @@ jobs:
         with:
           node-version: 22
           cache: npm
-
-      # Portico and Screamer are private (see ci.yml).
-      - name: Allow reading the private framework repositories
-        env:
-          TOKEN: ${{ secrets.PSX_DEPS_TOKEN }}
-        run: |
-          if [ -n "$TOKEN" ]; then
-            git config --global url."https://x-access-token:${TOKEN}@github.com/blankhart/".insteadOf "https://github.com/blankhart/"
-          fi
 
       - run: npm ci
 

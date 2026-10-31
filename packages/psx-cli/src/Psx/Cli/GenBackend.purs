@@ -45,7 +45,7 @@ import Psx.HtmlData.Table (table)
 
 type Template = { type :: String, code :: String }
 
--- | A name's own entry; `sample` is the handler the conformance module
+-- | A name's own entry; `sample` overrides the value or handler the conformance module
 -- | passes an event, written with `msg` for the message.
 type NameEntry = { type :: Maybe String, code :: String, sample :: Maybe String }
 
@@ -354,7 +354,7 @@ conformanceModule source m els attrs evs = lines
       <> list (map (\e -> "B." <> e.ident <> " [] B.none") els)
       <> [ "", "-- Attributes, each with a literal value on an element that takes it" ]
       <> Array.concatMap
-        (\a -> declaration a.ident m.conformance.nodes (map (\u -> on u ("B." <> a.ident <> " " <> u.literal)) a.uses))
+        (\a -> declaration a.ident m.conformance.nodes (map (\u -> on u ("B." <> a.ident <> " " <> fromMaybe u.literal (Object.lookup a.ident m.names >>= _.sample))) a.uses))
         attrs
       <> [ "", "-- Events, each handled by `msg`" ]
       <> Array.concatMap

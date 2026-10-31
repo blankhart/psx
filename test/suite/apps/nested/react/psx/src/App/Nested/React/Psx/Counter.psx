@@ -1,0 +1,30 @@
+-- | The child: a counter with its own model, messages and view, which the
+-- | parent composes.
+module App.Nested.React.Psx.Counter
+  ( Model
+  , Msg
+  , update
+  , view
+  ) where
+
+import Prelude
+import Effect (Effect)
+
+import React.Basic.Hooks.Psx (Markup)
+
+type Model = Int
+
+data Msg = Increment | Decrement
+
+update :: Model -> Msg -> Model
+update n = case _ of
+  Increment -> n + 1
+  Decrement -> n - 1
+
+view :: (Msg -> Effect Unit) -> Int -> String -> Model -> Markup (Effect Unit)
+view dispatch id label n =
+  <div class="counter" data-testid={"counter-" <> show id}>
+    <span class="count">{label}: {show n}</span>
+    <button data-testid={"decrement-" <> show id} onclick={dispatch (Decrement)}>-</button>
+    <button data-testid={"increment-" <> show id} onclick={dispatch (Increment)}>+</button>
+  </div>
