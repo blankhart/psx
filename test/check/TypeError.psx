@@ -2,10 +2,10 @@ module Examples.CheckTypeError where
 
 import Prelude
 
-import Portico.Psx (Markup)
+import Halogen.Psx (Markup)
 
 -- Inside a hole, an error is reported at its own line and column.
-label :: Int -> Markup Unit
+label :: Int -> Markup Unit Unit
 label count =
   <p class="count">
     {"Count: " <> count}

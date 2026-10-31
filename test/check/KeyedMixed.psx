@@ -2,10 +2,10 @@ module Examples.CheckKeyedMixed where
 
 import Prelude
 
-import Portico.Psx (Markup)
+import Halogen.Psx (Markup)
 
 -- Keyed children from a hole can't sit beside unkeyed ones.
-list :: Array Int -> Markup Unit
+list :: Array Int -> Markup Unit Unit
 list values =
   <ul>
     <li>First</li>

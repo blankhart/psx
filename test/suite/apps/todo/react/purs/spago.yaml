@@ -1,0 +1,14 @@
+package:
+  name: psx-suite-todo-react-purs
+  dependencies:
+    - aff
+    - arrays
+    - effect
+    - foldable-traversable
+    - integers
+    - maybe
+    - prelude
+    - psx-suite-react
+    - psx-suite-shared
+    - strings
+    - tuples

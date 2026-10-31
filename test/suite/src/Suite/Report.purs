@@ -59,6 +59,7 @@ import Node.FS.Perms (permsAll)
 import Node.FS.Stats as Stats
 import Node.FS.Sync as FS
 import Node.Path as Path
+import Node.Process as Process
 import Suite.Stats (Summary, summarise)
 
 -- | What running one app gave. `control` marks the second run of a
@@ -296,12 +297,13 @@ changedLines as bs = Array.length as + Array.length bs - 2 * lcs
 
 buildTime :: String -> AppResult -> Effect Build
 buildTime root r = do
+  cli <- fromMaybe "packages/psx-cli/bin/psx.mjs" <$> Process.lookupEnv "PSX_SUITE_CLI"
   let
     appDir = Path.concat [ "test/suite/apps", r.scenario, r.framework, r.variant ]
     package = "psx-suite-" <> r.scenario <> "-" <> r.framework <> "-" <> r.variant
   psx <-
     if r.variant == "psx" then do
-      t <- timeCommand root "node" [ "packages/psx-cli/bin/psx.mjs", "build", appDir ]
+      t <- timeCommand root "node" [ cli, "build", appDir ]
       when (not t.ok) $ log ("     psx build " <> appDir <> " failed:\n" <> t.output)
       pure (Just t.seconds)
     else pure Nothing

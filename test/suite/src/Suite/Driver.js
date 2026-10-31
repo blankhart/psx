@@ -3,7 +3,7 @@
 import { spawnSync } from 'node:child_process';
 import { gzipSync } from 'node:zlib';
 import { readFileSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
+import { basename, dirname, join } from 'node:path';
 import { build } from 'esbuild';
 import { chromium } from 'playwright-core';
 
@@ -60,7 +60,13 @@ export const openImpl = (browser) => (file) =>
       if (message.type() === 'error') errors.push(message.text());
     });
     page.psxErrors = errors;
-    await page.goto(pathToFileURL(file).href);
+    // A routed HTTP origin also works where Chromium disallows file: URLs.
+    await page.route('http://psx.test/**', route => {
+      const name = basename(new URL(route.request().url()).pathname);
+      const contentType = name.endsWith('.js') ? 'text/javascript' : name.endsWith('.css') ? 'text/css' : 'text/html';
+      return route.fulfill({ path: join(dirname(file), name), contentType });
+    });
+    await page.goto('http://psx.test/' + basename(file));
     return page;
   });
 

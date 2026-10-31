@@ -116,63 +116,17 @@
           "dependencies": []
         }
       },
-      "psx-examples-portico": {
-        "path": "examples/portico",
+      "psx-examples-react": {
+        "path": "examples/react",
         "core": {
           "dependencies": [
-            "aff",
-            "affjax",
-            "affjax-web",
-            "arrays",
             "effect",
-            "either",
-            "foldable-traversable",
-            "foreign",
-            "integers",
-            "maybe",
-            "portico",
+            "halogen",
             "prelude",
-            "psx-portico",
-            "random",
-            "strings",
-            "tailrec",
-            "transformers",
-            "tuples",
-            "unfoldable",
-            "web-dom",
-            "web-events",
-            "web-html",
-            "web-socket",
-            "windrose-router"
-          ]
-        },
-        "test": {
-          "dependencies": [
-            "assert",
-            "console"
-          ]
-        }
-      },
-      "psx-examples-screamer": {
-        "path": "examples/screamer",
-        "core": {
-          "dependencies": [
-            "aff",
-            "arrays",
-            "control",
-            "datetime",
-            "effect",
-            "filterable",
-            "integers",
-            "maybe",
-            "prelude",
-            "psx-screamer",
-            "random",
-            "refs",
-            "screamer",
-            "strings",
-            "web-events",
-            "web-uievents"
+            "psx-halogen",
+            "psx-react-basic-hooks",
+            "psx-suite-react",
+            "react-basic-dom"
           ]
         },
         "test": {
@@ -328,44 +282,25 @@
           ]
         }
       },
-      "psx-portico": {
-        "path": "backends/psx-portico",
+      "psx-react-basic-hooks": {
+        "path": "backends/psx-react-basic-hooks",
         "core": {
           "dependencies": [
             "arrays",
-            "functions",
+            "effect",
             "maybe",
-            "portico",
             "prelude",
-            "tuples",
-            "unsafe-coerce"
+            "react-basic",
+            "react-basic-dom",
+            "react-basic-hooks",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect",
-            "exceptions"
-          ]
-        }
-      },
-      "psx-screamer": {
-        "path": "backends/psx-screamer",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "maybe",
-            "prelude",
-            "screamer",
-            "tuples",
-            "web-events",
-            "web-uievents"
-          ]
-        },
-        "test": {
-          "dependencies": [
-            "console"
+            "exceptions",
+            "refs"
           ]
         }
       },
@@ -461,60 +396,43 @@
           "dependencies": []
         }
       },
-      "psx-suite-counter-portico-psx": {
-        "path": "test/suite/apps/counter/portico/psx",
+      "psx-suite-counter-react-psx": {
+        "path": "test/suite/apps/counter/react/psx",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
             "effect",
-            "portico",
+            "foldable-traversable",
+            "integers",
+            "maybe",
             "prelude",
-            "psx-portico"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-counter-portico-purs": {
-        "path": "test/suite/apps/counter/portico/purs",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "portico",
-            "prelude"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-counter-screamer-psx": {
-        "path": "test/suite/apps/counter/screamer/psx",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "prelude",
-            "psx-screamer",
+            "psx-react-basic-hooks",
+            "psx-suite-react",
             "psx-suite-shared",
-            "screamer"
+            "strings",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": []
         }
       },
-      "psx-suite-counter-screamer-purs": {
-        "path": "test/suite/apps/counter/screamer/purs",
+      "psx-suite-counter-react-purs": {
+        "path": "test/suite/apps/counter/react/purs",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
             "effect",
+            "foldable-traversable",
+            "integers",
+            "maybe",
             "prelude",
+            "psx-suite-react",
             "psx-suite-shared",
-            "screamer"
+            "strings",
+            "tuples"
           ]
         },
         "test": {
@@ -566,52 +484,21 @@
           "dependencies": []
         }
       },
-      "psx-suite-nested-portico-psx": {
-        "path": "test/suite/apps/nested/portico/psx",
+      "psx-suite-nested-react-psx": {
+        "path": "test/suite/apps/nested/react/psx",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
             "effect",
             "foldable-traversable",
+            "integers",
             "maybe",
-            "portico",
             "prelude",
-            "psx-portico"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-nested-portico-purs": {
-        "path": "test/suite/apps/nested/portico/purs",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "foldable-traversable",
-            "maybe",
-            "portico",
-            "prelude"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-nested-screamer-psx": {
-        "path": "test/suite/apps/nested/screamer/psx",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "foldable-traversable",
-            "ordered-collections",
-            "prelude",
-            "psx-screamer",
+            "psx-react-basic-hooks",
+            "psx-suite-react",
             "psx-suite-shared",
-            "refs",
-            "screamer",
+            "strings",
             "tuples"
           ]
         },
@@ -619,19 +506,45 @@
           "dependencies": []
         }
       },
-      "psx-suite-nested-screamer-purs": {
-        "path": "test/suite/apps/nested/screamer/purs",
+      "psx-suite-nested-react-purs": {
+        "path": "test/suite/apps/nested/react/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "integers",
+            "maybe",
+            "prelude",
+            "psx-suite-react",
+            "psx-suite-shared",
+            "strings",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-react": {
+        "path": "test/suite/react",
         "core": {
           "dependencies": [
             "arrays",
             "effect",
+            "exceptions",
             "foldable-traversable",
-            "ordered-collections",
+            "foreign-object",
+            "maybe",
             "prelude",
-            "psx-suite-shared",
-            "refs",
-            "screamer",
-            "tuples"
+            "react-basic",
+            "react-basic-dom",
+            "react-basic-hooks",
+            "tuples",
+            "unsafe-coerce",
+            "web-dom",
+            "web-html"
           ]
         },
         "test": {
@@ -703,70 +616,43 @@
           "dependencies": []
         }
       },
-      "psx-suite-svg-portico-psx": {
-        "path": "test/suite/apps/svg/portico/psx",
+      "psx-suite-svg-react-psx": {
+        "path": "test/suite/apps/svg/react/psx",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
             "effect",
-            "maybe",
-            "portico",
-            "prelude",
-            "psx-portico",
-            "strings"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-svg-portico-purs": {
-        "path": "test/suite/apps/svg/portico/purs",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "maybe",
-            "portico",
-            "prelude",
-            "strings"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-svg-screamer-psx": {
-        "path": "test/suite/apps/svg/screamer/psx",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "control",
-            "effect",
+            "foldable-traversable",
+            "integers",
             "maybe",
             "prelude",
-            "psx-screamer",
+            "psx-react-basic-hooks",
+            "psx-suite-react",
             "psx-suite-shared",
-            "screamer",
-            "strings"
+            "strings",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": []
         }
       },
-      "psx-suite-svg-screamer-purs": {
-        "path": "test/suite/apps/svg/screamer/purs",
+      "psx-suite-svg-react-purs": {
+        "path": "test/suite/apps/svg/react/purs",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
-            "control",
             "effect",
+            "foldable-traversable",
+            "integers",
             "maybe",
             "prelude",
+            "psx-suite-react",
             "psx-suite-shared",
-            "screamer",
-            "strings"
+            "strings",
+            "tuples"
           ]
         },
         "test": {
@@ -815,68 +701,43 @@
           "dependencies": []
         }
       },
-      "psx-suite-table-portico-psx": {
-        "path": "test/suite/apps/table/portico/psx",
+      "psx-suite-table-react-psx": {
+        "path": "test/suite/apps/table/react/psx",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
             "effect",
-            "maybe",
-            "portico",
-            "prelude",
-            "psx-portico",
-            "psx-suite-shared"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-table-portico-purs": {
-        "path": "test/suite/apps/table/portico/purs",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "maybe",
-            "portico",
-            "prelude",
-            "psx-suite-shared"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-table-screamer-psx": {
-        "path": "test/suite/apps/table/screamer/psx",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
+            "foldable-traversable",
+            "integers",
             "maybe",
             "prelude",
-            "psx-screamer",
+            "psx-react-basic-hooks",
+            "psx-suite-react",
             "psx-suite-shared",
-            "refs",
-            "screamer"
+            "strings",
+            "tuples"
           ]
         },
         "test": {
           "dependencies": []
         }
       },
-      "psx-suite-table-screamer-purs": {
-        "path": "test/suite/apps/table/screamer/purs",
+      "psx-suite-table-react-purs": {
+        "path": "test/suite/apps/table/react/purs",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
             "effect",
+            "foldable-traversable",
+            "integers",
             "maybe",
             "prelude",
+            "psx-suite-react",
             "psx-suite-shared",
-            "refs",
-            "screamer"
+            "strings",
+            "tuples"
           ]
         },
         "test": {
@@ -923,69 +784,43 @@
           "dependencies": []
         }
       },
-      "psx-suite-todo-portico-psx": {
-        "path": "test/suite/apps/todo/portico/psx",
+      "psx-suite-todo-react-psx": {
+        "path": "test/suite/apps/todo/react/psx",
         "core": {
           "dependencies": [
+            "aff",
             "arrays",
             "effect",
             "foldable-traversable",
-            "portico",
-            "prelude",
-            "psx-portico"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-todo-portico-purs": {
-        "path": "test/suite/apps/todo/portico/purs",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "foldable-traversable",
-            "portico",
-            "prelude"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-todo-screamer-psx": {
-        "path": "test/suite/apps/todo/screamer/psx",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "foldable-traversable",
-            "prelude",
-            "psx-screamer",
-            "psx-suite-shared",
-            "refs",
-            "screamer"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-todo-screamer-purs": {
-        "path": "test/suite/apps/todo/screamer/purs",
-        "core": {
-          "dependencies": [
-            "arrays",
-            "effect",
-            "foldable-traversable",
+            "integers",
             "maybe",
             "prelude",
+            "psx-react-basic-hooks",
+            "psx-suite-react",
             "psx-suite-shared",
-            "refs",
-            "screamer",
-            "web-events",
-            "web-html"
+            "strings",
+            "tuples"
+          ]
+        },
+        "test": {
+          "dependencies": []
+        }
+      },
+      "psx-suite-todo-react-purs": {
+        "path": "test/suite/apps/todo/react/purs",
+        "core": {
+          "dependencies": [
+            "aff",
+            "arrays",
+            "effect",
+            "foldable-traversable",
+            "integers",
+            "maybe",
+            "prelude",
+            "psx-suite-react",
+            "psx-suite-shared",
+            "strings",
+            "tuples"
           ]
         },
         "test": {
@@ -1040,17 +875,19 @@
           "dependencies": []
         }
       },
-      "psx-suite-typeahead-portico-psx": {
-        "path": "test/suite/apps/typeahead/portico/psx",
+      "psx-suite-typeahead-react-psx": {
+        "path": "test/suite/apps/typeahead/react/psx",
         "core": {
           "dependencies": [
             "aff",
             "arrays",
             "effect",
+            "foldable-traversable",
+            "integers",
             "maybe",
-            "portico",
             "prelude",
-            "psx-portico",
+            "psx-react-basic-hooks",
+            "psx-suite-react",
             "psx-suite-shared",
             "strings",
             "tuples"
@@ -1060,66 +897,21 @@
           "dependencies": []
         }
       },
-      "psx-suite-typeahead-portico-purs": {
-        "path": "test/suite/apps/typeahead/portico/purs",
+      "psx-suite-typeahead-react-purs": {
+        "path": "test/suite/apps/typeahead/react/purs",
         "core": {
           "dependencies": [
             "aff",
             "arrays",
             "effect",
+            "foldable-traversable",
+            "integers",
             "maybe",
-            "portico",
             "prelude",
+            "psx-suite-react",
             "psx-suite-shared",
             "strings",
             "tuples"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-typeahead-screamer-psx": {
-        "path": "test/suite/apps/typeahead/screamer/psx",
-        "core": {
-          "dependencies": [
-            "aff",
-            "arrays",
-            "control",
-            "datetime",
-            "effect",
-            "filterable",
-            "maybe",
-            "prelude",
-            "psx-screamer",
-            "psx-suite-shared",
-            "screamer",
-            "strings",
-            "web-uievents"
-          ]
-        },
-        "test": {
-          "dependencies": []
-        }
-      },
-      "psx-suite-typeahead-screamer-purs": {
-        "path": "test/suite/apps/typeahead/screamer/purs",
-        "core": {
-          "dependencies": [
-            "aff",
-            "arrays",
-            "control",
-            "datetime",
-            "effect",
-            "filterable",
-            "maybe",
-            "prelude",
-            "psx-suite-shared",
-            "screamer",
-            "strings",
-            "web-events",
-            "web-html",
-            "web-uievents"
           ]
         },
         "test": {
@@ -1789,20 +1581,7 @@
         "zipperarray": "2.0.0"
       }
     },
-    "extra_packages": {
-      "portico": {
-        "git": "https://github.com/blankhart/purescript-portico.git",
-        "ref": "734f177437f77a22616028b4cf38c5065348ac90"
-      },
-      "screamer": {
-        "git": "https://github.com/blankhart/purescript-screamer.git",
-        "ref": "103ce5c3b395a19f8221c28af25dde67dec7bba2"
-      },
-      "windrose-router": {
-        "git": "https://github.com/blankhart/purescript-windrose-router.git",
-        "ref": "6199237cf42d35b8ca3d89ceaba40efb83966ac3"
-      }
-    }
+    "extra_packages": {}
   },
   "packages": {
     "aff": {
@@ -1826,46 +1605,19 @@
         "unsafe-coerce"
       ]
     },
-    "affjax": {
+    "aff-promise": {
       "type": "registry",
-      "version": "13.0.0",
-      "integrity": "sha256-dpOV8ELNqUVBwxE6eKFdnFky+sLwPFANrFUzIxQablk=",
+      "version": "4.0.0",
+      "integrity": "sha256-Jgp3y+NWuuAmwz2V3LlWoX+AvxqfVglY77N5zTw8xnI=",
       "dependencies": [
         "aff",
-        "argonaut-core",
-        "arraybuffer-types",
-        "arrays",
         "control",
-        "datetime",
+        "effect",
         "either",
         "exceptions",
-        "foldable-traversable",
         "foreign",
-        "form-urlencoded",
-        "functions",
-        "http-methods",
-        "lists",
-        "maybe",
-        "media-types",
-        "newtype",
-        "nullable",
         "prelude",
-        "transformers",
-        "web-dom",
-        "web-file",
-        "web-xhr"
-      ]
-    },
-    "affjax-web": {
-      "type": "registry",
-      "version": "1.0.0",
-      "integrity": "sha256-sHg+G50LDoZYG6UHvUiH1ZLT/UHIXaEF5DUBaPXxtxM=",
-      "dependencies": [
-        "aff",
-        "affjax",
-        "either",
-        "maybe",
-        "prelude"
+        "transformers"
       ]
     },
     "ansi": {
@@ -1921,16 +1673,6 @@
         "tuples",
         "unfoldable",
         "unsafe-coerce"
-      ]
-    },
-    "assert": {
-      "type": "registry",
-      "version": "6.0.0",
-      "integrity": "sha256-hCZ1J8/71nQiRwsSV2j7iicppScOegBFZrLI6sPf9F8=",
-      "dependencies": [
-        "console",
-        "effect",
-        "prelude"
       ]
     },
     "bifunctors": {
@@ -2125,25 +1867,6 @@
         "unsafe-coerce"
       ]
     },
-    "filterable": {
-      "type": "registry",
-      "version": "5.0.0",
-      "integrity": "sha256-be7ci1Bzwud2waqoCtNGsTBZbt7fi+gCLvGddQQRJ3A=",
-      "dependencies": [
-        "arrays",
-        "control",
-        "either",
-        "foldable-traversable",
-        "identity",
-        "lists",
-        "maybe",
-        "newtype",
-        "ordered-collections",
-        "prelude",
-        "st",
-        "tuples"
-      ]
-    },
     "foldable-traversable": {
       "type": "registry",
       "version": "6.0.0",
@@ -2206,20 +1929,6 @@
         "aff",
         "prelude",
         "transformers"
-      ]
-    },
-    "form-urlencoded": {
-      "type": "registry",
-      "version": "7.0.0",
-      "integrity": "sha256-+8F0S6thSLsC1GfQiTdTt6jyTMuhsgKLciBUzde9aFU=",
-      "dependencies": [
-        "foldable-traversable",
-        "js-uri",
-        "maybe",
-        "newtype",
-        "prelude",
-        "strings",
-        "tuples"
       ]
     },
     "free": {
@@ -2391,30 +2100,6 @@
         "web-events"
       ]
     },
-    "heterogeneous": {
-      "type": "registry",
-      "version": "0.7.0",
-      "integrity": "sha256-pQwcFvhWL8noktxaoD7FlLs2F2lYf3QHoyO0VOWO3I0=",
-      "dependencies": [
-        "either",
-        "foldable-traversable",
-        "functors",
-        "prelude",
-        "record",
-        "tuples",
-        "variant"
-      ]
-    },
-    "http-methods": {
-      "type": "registry",
-      "version": "6.1.0",
-      "integrity": "sha256-WbjEmCv6rysY/aKwlrcspyzShi5bIQy+AFpDzPMnSP4=",
-      "dependencies": [
-        "either",
-        "prelude",
-        "strings"
-      ]
-    },
     "identity": {
       "type": "registry",
       "version": "6.0.0",
@@ -2422,6 +2107,15 @@
       "dependencies": [
         "control",
         "invariant",
+        "newtype",
+        "prelude"
+      ]
+    },
+    "indexed-monad": {
+      "type": "registry",
+      "version": "3.0.0",
+      "integrity": "sha256-84PslUkPKyrFUGeq981auE+zODsQO/g8rnqwgcN0zQM=",
+      "dependencies": [
         "newtype",
         "prelude"
       ]
@@ -2471,16 +2165,6 @@
         "functions",
         "maybe",
         "newtype",
-        "prelude"
-      ]
-    },
-    "js-uri": {
-      "type": "registry",
-      "version": "3.1.0",
-      "integrity": "sha256-7waHOctAfqhhw540FNJ7C/YsDMQW9TmA+SpHhduH6Uw=",
-      "dependencies": [
-        "functions",
-        "maybe",
         "prelude"
       ]
     },
@@ -2774,28 +2458,6 @@
       "integrity": "sha256-mdrlJBAgFMh79hNRW39uv7c+BwnnaOrAMmdh7+VhEhs=",
       "dependencies": []
     },
-    "portico": {
-      "type": "git",
-      "url": "https://github.com/blankhart/purescript-portico.git",
-      "rev": "734f177437f77a22616028b4cf38c5065348ac90",
-      "dependencies": [
-        "aff",
-        "arrays",
-        "effect",
-        "foldable-traversable",
-        "functions",
-        "maybe",
-        "nullable",
-        "prelude",
-        "refs",
-        "strings",
-        "tuples",
-        "unsafe-coerce",
-        "web-dom",
-        "web-events",
-        "web-html"
-      ]
-    },
     "posix-types": {
       "type": "registry",
       "version": "6.0.1",
@@ -2827,14 +2489,69 @@
         "tuples"
       ]
     },
-    "random": {
+    "react-basic": {
       "type": "registry",
-      "version": "6.0.0",
-      "integrity": "sha256-7sZRo6P9UIiXDZ9s2QL9T8h3wlIwLdQrR4+oZKOijQw=",
+      "version": "17.0.0",
+      "integrity": "sha256-RZA6jqfbrFHLXYD1ARlnfHp2YkT9IjUTkUwsk7Rqn8s=",
       "dependencies": [
         "effect",
+        "prelude",
+        "record"
+      ]
+    },
+    "react-basic-dom": {
+      "type": "registry",
+      "version": "7.0.0",
+      "integrity": "sha256-q5WQnD1cEVe/hzWDziZfPM9DclgCUBowRgbBg1xReSA=",
+      "dependencies": [
+        "arrays",
+        "effect",
+        "foldable-traversable",
+        "foreign-object",
+        "maybe",
+        "nullable",
+        "prelude",
+        "react-basic",
+        "record",
+        "unsafe-coerce",
+        "web-dom",
+        "web-events",
+        "web-file",
+        "web-html"
+      ]
+    },
+    "react-basic-hooks": {
+      "type": "registry",
+      "version": "9.1.1",
+      "integrity": "sha256-wUZMNNivUj6yJDk3rbgeEgljfv2gq1bPHKHEJbkzyNQ=",
+      "dependencies": [
+        "aff",
+        "aff-promise",
+        "bifunctors",
+        "console",
+        "control",
+        "datetime",
+        "effect",
+        "either",
+        "exceptions",
+        "foldable-traversable",
+        "foreign-object",
+        "functions",
+        "indexed-monad",
         "integers",
-        "prelude"
+        "maybe",
+        "newtype",
+        "now",
+        "nullable",
+        "ordered-collections",
+        "prelude",
+        "react-basic",
+        "refs",
+        "tuples",
+        "type-equality",
+        "unsafe-coerce",
+        "unsafe-reference",
+        "web-html"
       ]
     },
     "record": {
@@ -2862,40 +2579,6 @@
       "integrity": "sha256-EJrxtKt5xC7TYjBZrSBO/J7Aw3DmtilYjt4olpAXWVc=",
       "dependencies": [
         "unsafe-coerce"
-      ]
-    },
-    "screamer": {
-      "type": "git",
-      "url": "https://github.com/blankhart/purescript-screamer.git",
-      "rev": "103ce5c3b395a19f8221c28af25dde67dec7bba2",
-      "dependencies": [
-        "aff",
-        "arrays",
-        "control",
-        "datetime",
-        "effect",
-        "either",
-        "exceptions",
-        "filterable",
-        "foldable-traversable",
-        "maybe",
-        "now",
-        "nullable",
-        "numbers",
-        "prelude",
-        "record",
-        "refs",
-        "strings",
-        "tuples",
-        "typelevel-prelude",
-        "unsafe-coerce",
-        "web-clipboard",
-        "web-dom",
-        "web-events",
-        "web-html",
-        "web-pointerevents",
-        "web-touchevents",
-        "web-uievents"
       ]
     },
     "st": {
@@ -3042,22 +2725,6 @@
         "prelude"
       ]
     },
-    "variant": {
-      "type": "registry",
-      "version": "8.0.0",
-      "integrity": "sha256-Ydrgl8liWEwYQOWW76PdZtg3vxKpoKgsnmFyTLgZkoU=",
-      "dependencies": [
-        "control",
-        "enums",
-        "foldable-traversable",
-        "lists",
-        "maybe",
-        "partial",
-        "prelude",
-        "type-equality",
-        "unsafe-coerce"
-      ]
-    },
     "web-clipboard": {
       "type": "registry",
       "version": "6.0.1",
@@ -3165,24 +2832,6 @@
         "web-uievents"
       ]
     },
-    "web-socket": {
-      "type": "registry",
-      "version": "4.0.1",
-      "integrity": "sha256-oyGnpS7dy3qdhyJ5s/XBEWhClFYxtVDrP8/bA521jtI=",
-      "dependencies": [
-        "arraybuffer-types",
-        "effect",
-        "enums",
-        "foreign",
-        "maybe",
-        "newtype",
-        "partial",
-        "prelude",
-        "unsafe-coerce",
-        "web-events",
-        "web-file"
-      ]
-    },
     "web-storage": {
       "type": "registry",
       "version": "5.0.0",
@@ -3223,49 +2872,6 @@
         "unsafe-coerce",
         "web-events",
         "web-html"
-      ]
-    },
-    "web-xhr": {
-      "type": "registry",
-      "version": "5.0.2",
-      "integrity": "sha256-VRZe4dFkjH4esoV2FB/Jg9FgRH7LMSzn8/brGIGOwAo=",
-      "dependencies": [
-        "arraybuffer-types",
-        "datetime",
-        "effect",
-        "either",
-        "enums",
-        "foreign",
-        "http-methods",
-        "maybe",
-        "media-types",
-        "newtype",
-        "nullable",
-        "prelude",
-        "unsafe-coerce",
-        "web-dom",
-        "web-events",
-        "web-file",
-        "web-html"
-      ]
-    },
-    "windrose-router": {
-      "type": "git",
-      "url": "https://github.com/blankhart/purescript-windrose-router.git",
-      "rev": "6199237cf42d35b8ca3d89ceaba40efb83966ac3",
-      "dependencies": [
-        "arrays",
-        "control",
-        "either",
-        "foldable-traversable",
-        "heterogeneous",
-        "integers",
-        "maybe",
-        "numbers",
-        "prelude",
-        "record",
-        "strings",
-        "tuples"
       ]
     }
   }

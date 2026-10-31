@@ -1,0 +1,17 @@
+package:
+  name: psx-suite-react
+  dependencies:
+    - arrays
+    - effect
+    - exceptions
+    - foldable-traversable
+    - foreign-object
+    - maybe
+    - prelude
+    - react-basic
+    - react-basic-dom
+    - react-basic-hooks
+    - tuples
+    - unsafe-coerce
+    - web-dom
+    - web-html

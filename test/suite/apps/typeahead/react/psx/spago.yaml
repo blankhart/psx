@@ -1,0 +1,15 @@
+package:
+  name: psx-suite-typeahead-react-psx
+  dependencies:
+    - aff
+    - arrays
+    - effect
+    - foldable-traversable
+    - integers
+    - maybe
+    - prelude
+    - psx-suite-react
+    - psx-suite-shared
+    - strings
+    - tuples
+    - psx-react-basic-hooks

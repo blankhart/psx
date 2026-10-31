@@ -1,7 +1,0 @@
-package:
-  name: psx-suite-counter-portico-purs
-  dependencies:
-    - arrays
-    - effect
-    - portico
-    - prelude

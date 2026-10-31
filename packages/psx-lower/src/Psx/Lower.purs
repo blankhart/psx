@@ -99,7 +99,7 @@ type Names = { sourceName :: String, generatedName :: String }
 
 -- | The modules a `.psx` file may take its markup functions from.
 backendModules :: Array String
-backendModules = [ "Portico.Psx", "Halogen.Psx", "Screamer.Psx", "Psx.Static" ]
+backendModules = [ "Portico.Psx", "Halogen.Psx", "Screamer.Psx", "Psx.Static", "React.Basic.Hooks.Psx" ]
 
 -- | The first line of every generated file.
 header :: String -> String
