@@ -1,4 +1,4 @@
-examples/portico/src/CheckHoleType.psx:13:15: error[NoInstanceFound]
-examples/portico/src/CheckKeyedMixed.psx:12:5: error[TypesDoNotUnify]
-examples/portico/src/CheckTraitHoleArray.psx:11:21: error[TypesDoNotUnify]
-examples/portico/src/CheckTypeError.psx:11:19: error[TypesDoNotUnify]
+examples/react/src/CheckHoleType.psx:13:15: error[NoInstanceFound]
+examples/react/src/CheckKeyedMixed.psx:12:5: error[TypesDoNotUnify]
+examples/react/src/CheckTraitHoleArray.psx:11:21: error[TypesDoNotUnify]
+examples/react/src/CheckTypeError.psx:11:19: error[TypesDoNotUnify]

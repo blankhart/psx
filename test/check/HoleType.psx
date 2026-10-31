@@ -2,12 +2,12 @@ module Examples.CheckHoleType where
 
 import Prelude
 
-import Portico.Psx (Markup)
+import Halogen.Psx (Markup)
 
 data Msg = Increment
 
 -- A child hole takes a string, a node or markup, not an Int.
-counter :: Int -> Markup Msg
+counter :: Int -> Markup Unit Msg
 counter count =
   <main>
     <p>Count: {count}</p>

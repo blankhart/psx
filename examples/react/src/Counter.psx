@@ -1,0 +1,24 @@
+module React.Examples.Counter (main) where
+
+import Prelude
+import Effect (Effect)
+import React.Basic.DOM (css)
+import React.Basic.Hooks.Psx (Markup, root)
+import Suite.React as React
+
+view :: (Unit -> Effect Unit) -> Int -> Markup (Effect Unit)
+view dispatch count =
+  <section style={css { color: "darkslategray" }}>
+    <h1>React with PSX</h1>
+    <p data-testid="count">{show count}</p>
+    <button data-testid="increment" onclick={dispatch unit}>Increment</button>
+    <input data-testid="controlled" value={show count} readonly>
+    <ul>
+      {map (\name -> <li key={name} data-testid={"row-" <> name}>{name}</li>)
+        (if mod count 2 == 0 then [ "a", "b" ] else [ "b", "a" ])}
+    </ul>
+    <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"></circle></svg>
+  </section>
+
+main :: Effect Unit
+main = React.mount 0 (\count _ -> count + 1) (\dispatch count -> root (view dispatch count))

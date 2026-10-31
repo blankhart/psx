@@ -1,0 +1,49 @@
+-- | The counter scenario on React, in PSX: `App.Counter` from the design
+-- | doc, with its scoped `<style>`.
+module App.Counter.React.Psx (main) where
+
+import Prelude
+
+import Data.Array ((..))
+import Effect (Effect)
+import Suite.React as React
+import React.Basic.Hooks.Psx (Markup, root)
+
+type Props = { label :: String, max :: Int }
+
+data Msg = Increment | Decrement | Reset
+
+update :: Int -> Msg -> Int
+update n = case _ of
+  Increment -> n + 1
+  Decrement -> n - 1
+  Reset -> 0
+
+view :: (Msg -> Effect Unit) -> Props -> Int -> Markup (Effect Unit)
+view dispatch props n =
+  <section class="counter" data-testid="counter">
+    <h2 data-testid="label">{props.label}: {show n}</h2>
+    <button data-testid="decrement" onclick={dispatch (Decrement)} disabled={n <= 0}>-</button>
+    <button data-testid="increment" onclick={dispatch (Increment)} disabled={n >= props.max}>+</button>
+    {
+      if n == 0 then
+        <></>
+      else
+        <button data-testid="reset" onclick={dispatch (Reset)}>Reset</button>
+    }
+    <ol class="pips">
+      {
+        map
+          (\i -> <li key={i} class={if i <= n then "pip filled" else "pip"}></li>)
+          (1 .. props.max)
+      }
+    </ol>
+    <style>
+      .counter { display: grid; gap: 0.75rem; }
+      .pip { width: 1rem; height: 0.25rem; background: silver; }
+      .pip.filled { background: seagreen; }
+    </style>
+  </section>
+
+main :: Props -> Effect Unit
+main fixture = React.mount (0) update (\dispatch model -> root (view dispatch fixture model))

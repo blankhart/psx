@@ -120,6 +120,7 @@ parseOptions = go { accept: false, runs: Nothing, control: false, buildTime: fal
 
 type Env =
   { root :: String
+  , contracts :: String
   , options :: Options
   , browser :: Browser
   -- | The contracts `--accept` has written in this run.
@@ -132,6 +133,7 @@ main :: Effect Unit
 main = do
   args <- Array.drop 2 <$> Process.argv
   root <- Process.cwd
+  contracts <- fromMaybe root <$> Process.lookupEnv "PSX_SUITE_CONTRACT_ROOT"
   chrome <- fromMaybe "" <$> Process.lookupEnv "CHROME_PATH"
   case parseOptions args of
     Left problem -> do
@@ -152,7 +154,7 @@ main = do
           log (indent built.output)
         launchAff_ do
           browser <- Driver.launch chrome
-          let env = { root, options, browser, written, es: built.ok }
+          let env = { root, contracts, options, browser, written, es: built.ok }
           results <- Array.concat <<< Array.concat <$> for chosen \scenario ->
             liftEffect (frameworks root scenario) >>= traverse (runFramework env scenario)
           Driver.close browser
@@ -396,7 +398,7 @@ snapshot :: Running -> Aff String
 snapshot r = Dom.print <<< Dom.normalise <$> Driver.snapshot r.page
 
 contractFile :: Env -> App -> String -> String
-contractFile env app name = Path.concat [ env.root, "test/suite/scenarios", app.scenario.name, name <> ".html" ]
+contractFile env app name = Path.concat [ env.contracts, "test/suite/scenarios", app.scenario.name, name <> ".html" ]
 
 readContract :: Env -> App -> String -> Effect (Maybe String)
 readContract env app name = do
