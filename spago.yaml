@@ -1,18 +1,3 @@
-# One workspace for the toolchain, the backends and the tests.
-# purs is pinned in package.json to the compiler of this package set.
 workspace:
   packageSet:
     registry: 81.5.0
-  extraPackages:
-    # Frameworks not in the registry, pinned to commits. Both repositories are
-    # private: CI reads them with the PSX_DEPS_TOKEN secret (see ci.yml).
-    portico:
-      git: https://github.com/blankhart/purescript-portico.git
-      ref: 734f177437f77a22616028b4cf38c5065348ac90
-    # The Portico examples' router (examples/portico).
-    windrose-router:
-      git: https://github.com/blankhart/purescript-windrose-router.git
-      ref: 6199237cf42d35b8ca3d89ceaba40efb83966ac3
-    screamer:
-      git: https://github.com/blankhart/purescript-screamer.git
-      ref: 103ce5c3b395a19f8221c28af25dde67dec7bba2

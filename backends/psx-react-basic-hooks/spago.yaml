@@ -1,0 +1,17 @@
+package:
+  name: psx-react-basic-hooks
+  dependencies:
+    - arrays
+    - effect
+    - maybe
+    - prelude
+    - react-basic
+    - react-basic-dom
+    - react-basic-hooks
+    - tuples
+  test:
+    main: Test.React.Psx
+    dependencies:
+      - console
+      - exceptions
+      - refs

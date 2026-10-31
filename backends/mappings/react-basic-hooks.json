@@ -1,0 +1,156 @@
+{
+  "module": "React.Basic.Hooks.Psx",
+  "directory": "backends/psx-react-basic-hooks/src",
+  "core": "React.Basic.Hooks.Psx.Core",
+  "coreExports": [
+    "class Children",
+    "class Content",
+    "class ToKey",
+    "Attr",
+    "Key",
+    "Markup",
+    "Node",
+    "attribute",
+    "children",
+    "element",
+    "keyed",
+    "none",
+    "root",
+    "text",
+    "toKey"
+  ],
+  "doc": [
+    "-- | PSX rendering with React JSX. Use hooks in ordinary PureScript component setup."
+  ],
+  "imports": [
+    "Prelude (Unit, show, (<<<))",
+    "Effect (Effect)",
+    "React.Basic.Hooks.Psx.Core (class Content, Attr, Node)",
+    "React.Basic.Hooks.Psx.Core as Impl",
+    "Data.Maybe (Maybe(..))",
+    "React.Basic.DOM (CSS)"
+  ],
+  "templates": {
+    "element": {
+      "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
+      "code": "Impl.element {name}"
+    },
+    "voidElement": {
+      "type": "forall c a. Content c a => Array (Attr a) -> c -> Node a",
+      "code": "Impl.element {name}"
+    },
+    "boolean": {
+      "type": "forall a. Boolean -> Attr a",
+      "code": "Impl.booleanAttribute {name}"
+    },
+    "string": {
+      "type": "forall a. String -> Attr a",
+      "code": "Core.attribute {name}"
+    },
+    "integer": {
+      "type": "forall a. Int -> Attr a",
+      "code": "Impl.integerAttribute {name}"
+    },
+    "number": {
+      "type": "forall a. Number -> Attr a",
+      "code": "Impl.numberAttribute {name}"
+    },
+    "event": {
+      "type": "Effect Unit -> Attr (Effect Unit)",
+      "code": "Impl.handler {name}"
+    }
+  },
+  "names": {
+    "onInput": {
+      "type": "(String -> Effect Unit) -> Attr (Effect Unit)",
+      "code": "Impl.onValueInput",
+      "sample": "\\_ -> msg"
+    },
+    "onKeyDown": {
+      "type": "(String -> Maybe (Effect Unit)) -> Attr (Effect Unit)",
+      "code": "Impl.onKey \"keydown\"",
+      "sample": "\\_ -> Just msg"
+    },
+    "onKeyUp": {
+      "type": "(String -> Maybe (Effect Unit)) -> Attr (Effect Unit)",
+      "code": "Impl.onKey \"keyup\"",
+      "sample": "\\_ -> Just msg"
+    },
+    "styleAttr": {
+      "type": "forall a. CSS -> Attr a",
+      "code": "Impl.styleAttribute",
+      "sample": "(css {})"
+    }
+  },
+  "conformance": {
+    "imports": [
+      "Prelude (Unit, (<>))",
+      "Data.Maybe (Maybe(..))",
+      "Data.Tuple (Tuple)",
+      "React.Basic.Hooks.Psx (class Children, class Content, class ToKey)",
+      "Effect (Effect)",
+      "React.Basic.DOM (css)"
+    ],
+    "core": [
+      [
+        "text",
+        "forall a. String -> B.Node a"
+      ],
+      [
+        "element",
+        "forall c a. Content c a => String -> Array (B.Attr a) -> c -> B.Node a"
+      ],
+      [
+        "none",
+        "forall a. B.Markup a"
+      ],
+      [
+        "keyed",
+        "forall k a. ToKey k => k -> B.Node a -> Tuple B.Key (B.Node a)"
+      ],
+      [
+        "attribute",
+        "forall a. String -> String -> B.Attr a"
+      ],
+      [
+        "children",
+        "forall c r. Children c r => c -> r"
+      ],
+      [
+        "root",
+        "forall a. B.Markup a -> B.Node a"
+      ]
+    ],
+    "extra": [
+      "-- | What a child hole takes: a string, a node, markup, and arrays and",
+      "-- | `Maybe`s of those.",
+      "childHoles :: forall a. B.Node a -> B.Markup a",
+      "childHoles node =",
+      "  B.children \"text\"",
+      "    <> B.children node",
+      "    <> B.children [ node ]",
+      "    <> B.children [ [ node ] ]",
+      "    <> B.children (Just node)",
+      "    <> B.children (Nothing :: Maybe String)",
+      "",
+      "-- | What a child hole takes to make keyed children: keyed literals and",
+      "-- | arrays of them, keyed by strings or by integers.",
+      "keyedChildHoles :: forall a. B.Node a -> Array (Tuple B.Key (B.Node a))",
+      "keyedChildHoles node =",
+      "  B.children (B.keyed \"a\" node)",
+      "    <> B.children [ B.keyed 1 node ]",
+      "    <> B.children [ [ B.keyed 2 node ] ]",
+      "    <> B.children (Just (B.keyed 3.0 node))",
+      "",
+      "-- | An element takes keyed children as it takes plain ones.",
+      "keyedContent :: forall a. B.Node a -> Array (B.Node a)",
+      "keyedContent node =",
+      "  [ B.ul [] [ B.keyed \"a\" node, B.keyed \"b\" node ]",
+      "  , B.element \"x-list\" [] (B.children [ B.keyed 1 node ])",
+      "  , B.g [] [ B.keyed \"c\" node ]",
+      "  ]"
+    ],
+    "nodes": "forall a. Array (B.Node a)",
+    "handlers": "Effect Unit -> Array (B.Node (Effect Unit))"
+  }
+}

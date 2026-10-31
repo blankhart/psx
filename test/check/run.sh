@@ -2,16 +2,16 @@
 # `psx check` reports compiler errors in holes at their .psx positions.
 #
 # Compiles each test/check/<Name>.psx, which has a type error in a hole, as
-# module Examples.Check<Name> of the Portico examples, and compares the
+# module Examples.Check<Name> of the React examples, and compares the
 # positions psx check reports with test/check/expected.txt. Run from the
 # workspace root after `spago build`.
 set -u
 for f in test/check/*.psx; do
-  cp "$f" "examples/portico/src/Check$(basename "$f")"
+  cp "$f" "examples/react/src/Check$(basename "$f")"
 done
-node packages/psx-cli/bin/psx.mjs check examples/portico/src -- -p psx-examples-portico > test/check/actual.txt 2>&1
+node packages/psx-cli/bin/psx.mjs check examples/react/src -- -p psx-examples-react > test/check/actual.txt 2>&1
 status=$?
-rm -f examples/portico/src/Check*.psx examples/portico/src/Check*.purs
+rm -f examples/react/src/Check*.psx examples/react/src/Check*.purs
 grep -E '^[^ ].*: (error|warning)' test/check/actual.txt | sed 's/:$//' | sort > test/check/positions.txt
 if [ "$status" -eq 0 ]; then
   echo "psx check passed modules with type errors"

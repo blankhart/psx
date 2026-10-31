@@ -1,0 +1,17 @@
+<script type="text/purescript">
+module React.Examples.HelloWorld (main) where
+
+import Prelude
+import Effect (Effect)
+import React.Basic.Hooks.Psx (Markup, root)
+import Suite.React as React
+
+foreign import view :: Int -> Markup (Effect Unit)
+
+main :: Effect Unit
+main = React.mount 0 (\count _ -> count + 1) (\_ count -> root (view count))
+</script>
+<template head="view count">
+  <h1>Hello, React!</h1>
+  <p>{show count}</p>
+</template>
