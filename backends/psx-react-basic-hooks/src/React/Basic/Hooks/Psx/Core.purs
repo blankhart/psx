@@ -27,7 +27,7 @@ module React.Basic.Hooks.Psx.Core
 
 import Prelude
 import Data.Array as Array
-import Data.Maybe (Maybe, maybe)
+import Data.Maybe (Maybe, fromMaybe, maybe)
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import React.Basic (JSX)
@@ -92,7 +92,11 @@ foreign import numberAttribute :: forall a. String -> Number -> Attr a
 foreign import styleAttribute :: forall a. CSS -> Attr a
 foreign import handler :: String -> Effect Unit -> Attr (Effect Unit)
 foreign import onValueInput :: (String -> Effect Unit) -> Attr (Effect Unit)
-foreign import onKey :: String -> (String -> Maybe (Effect Unit)) -> Attr (Effect Unit)
+foreign import onKeyImpl :: String -> (String -> Effect Unit) -> Attr (Effect Unit)
+
+-- | A key handler that runs the effect `f` gives for the event's key, if any.
+onKey :: String -> (String -> Maybe (Effect Unit)) -> Attr (Effect Unit)
+onKey name f = onKeyImpl name (fromMaybe (pure unit) <<< f)
 foreign import createElement :: forall a. String -> Array (Attr a) -> Array JSX -> JSX
 
 -- | What a child hole may hold, and the children it makes: nodes from a
