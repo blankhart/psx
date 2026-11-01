@@ -888,9 +888,7 @@ import Data.MediaType (MediaType)
 import DOM.HTML.Indexed as I
 import DOM.HTML.Indexed.AutocompleteType (AutocompleteType) as T
 import DOM.HTML.Indexed.FormMethod (FormMethod) as T
-import DOM.HTML.Indexed.InputAcceptType (InputAcceptType) as T
 import DOM.HTML.Indexed.PreloadValue (PreloadValue) as T
-import DOM.HTML.Indexed.ScopeValue (ScopeValue) as T
 import DOM.HTML.Indexed.StepValue (StepValue) as T
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
