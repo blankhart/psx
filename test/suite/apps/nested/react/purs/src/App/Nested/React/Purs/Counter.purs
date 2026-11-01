@@ -11,7 +11,6 @@ import Prelude
 import Effect (Effect)
 
 import Suite.React.Native as P
-import Suite.React.Native as S
 
 type Model = Int
 

@@ -875,11 +875,11 @@ module React.Basic.Hooks.Psx
   , onWheel
   ) where
 
-import Prelude (Unit, show, (<<<))
+import Prelude (Unit)
 import Effect (Effect)
 import React.Basic.Hooks.Psx.Core (class Content, Attr, Node)
 import React.Basic.Hooks.Psx.Core as Impl
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe)
 import React.Basic.DOM (CSS)
 import React.Basic.Hooks.Psx.Core (class Children, class Content, class ToKey, Attr, Key, Markup, Node, attribute, children, element, keyed, none, root, text, toKey) as Core
 
