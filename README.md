@@ -42,3 +42,5 @@ Consumers can compile `psx-cli`, `psx-suite`, and `psx-suite-shared` from pinned
 Git dependencies. Invoke the compiled CLI with `node scripts/psx.mjs`; run the
 compiled suite main with `PSX_SUITE_CONTRACT_ROOT` pointing at the PSX checkout.
 Apps and reports stay relative to the consumer workspace.
+
+Run `npm run examples:react` to build and check the examples, then `npm run serve:examples` to bundle and serve their index at http://127.0.0.1:3000/. Set `PORT` to choose another port. Stop with Ctrl+C.

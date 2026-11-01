@@ -50,3 +50,5 @@ One Spago workspace. Toolchain packages live in `packages/`; bundled backends in
 - Before pushing: `spago build` and `spago test` for every package you touched.
 - Implementation language is PureScript on Node. Editor grammars and the VS Code client are the only exceptions.
 - If you find the design wrong or ambiguous, comment on the issue rather than inventing a rule.
+
+`npm run serve:examples` bundles compiled React examples and serves their index on loopback with Node (`PORT`, default 3000). Build with `npm run examples:react` first.
