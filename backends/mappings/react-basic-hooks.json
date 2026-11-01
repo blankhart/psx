@@ -23,11 +23,11 @@
     "-- | PSX rendering with React JSX. Use hooks in ordinary PureScript component setup."
   ],
   "imports": [
-    "Prelude (Unit, show, (<<<))",
+    "Prelude (Unit)",
     "Effect (Effect)",
     "React.Basic.Hooks.Psx.Core (class Content, Attr, Node)",
     "React.Basic.Hooks.Psx.Core as Impl",
-    "Data.Maybe (Maybe(..))",
+    "Data.Maybe (Maybe)",
     "React.Basic.DOM (CSS)"
   ],
   "templates": {

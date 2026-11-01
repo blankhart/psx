@@ -27,18 +27,18 @@ update model = case _ of
     Just i -> model { values = fromMaybe model.values (Array.modifyAt i (\v -> min model.max (v + 1)) model.values) }
     Nothing -> model
 
--- | A bar's left edge and top, in the chart's coordinates.
+-- | A bar's left edge and barTop, in the chart's coordinates.
 left :: Int -> Int
 left i = 10 + 20 * i
 
-top :: Int -> Int
-top v = 55 - 4 * v
+barTop :: Int -> Int
+barTop v = 55 - 4 * v
 
 -- | The line through the tops of the bars.
 trend :: Array Int -> String
 trend values = String.joinWith " " (Array.mapWithIndex point values)
   where
-  point i v = (if i == 0 then "M " else "L ") <> show (left i + 8) <> " " <> show (top v)
+  point i v = (if i == 0 then "M " else "L ") <> show (left i + 8) <> " " <> show (barTop v)
 
 view :: (Msg -> Effect Unit) -> Model -> P.Html
 view dispatch model =
@@ -51,7 +51,7 @@ view dispatch model =
                         [ P.key (show i)
                         , testId ("bar-" <> show i)
                         , S.x (show (left i))
-                        , S.y (show (top v))
+                        , S.y (show (barTop v))
                         , S.width "16"
                         , S.height (show (4 * v))
                         , S.fill (if model.selected == Just i then "orange" else "steelblue")
@@ -65,7 +65,7 @@ view dispatch model =
           , S.line [ S.x1 "5", S.y1 "55", S.x2 "115", S.y2 "55", S.stroke "black" ] []
           ]
             <> case model.selected of
-              Just i -> [ S.circle [ S.cx (show (left i + 8)), S.cy (show (top (value i))), S.r "2", S.fill "orange" ] [] ]
+              Just i -> [ S.circle [ S.cx (show (left i + 8)), S.cy (show (barTop (value i))), S.r "2", S.fill "orange" ] [] ]
               Nothing -> []
             <> [ S.svgText [ S.x "5", S.y "8" ] [ P.text "Values" ] ]
         )
