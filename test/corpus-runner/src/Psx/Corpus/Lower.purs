@@ -4,7 +4,7 @@
 -- | `expected.same`, which records whether it lowers to the same code as the
 -- | case it names. Corpus cases under `parse/` are left to the parse stage,
 -- | and those under `fmt/` to the format stage.
-module Psx.Corpus.Lower (lower, positionMap, css, same, lowerCase) where
+module Psx.Corpus.Lower (lower, positionMap, css, same, warnings, lowerCase) where
 
 import Prelude
 
@@ -119,3 +119,15 @@ tokens text = go [] (lexModule text)
     TokLayoutSep _ -> ";"
     TokLayoutEnd _ -> "}"
     t -> printToken t
+
+warnings :: Stage
+warnings =
+  { name: "warnings"
+  , golden: "expected.warnings"
+  , applies: \c -> applies c && case lowered c of
+      Right result -> not (Array.null result.warnings)
+      Left _ -> false
+  , run: \c -> pure case lowered c of
+      Right result -> foldMap (\w -> show (w.range.start.line + 1) <> ":" <> show (w.range.start.column + 1) <> ": " <> w.message <> "\n") result.warnings
+      Left _ -> ""
+  }
