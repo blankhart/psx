@@ -1,0 +1,2 @@
+6:8: Unknown attribute `styleAttr`; passed through as a string attribute; did you mean `style`?
+6:31: Unknown attribute `clas`; passed through as a string attribute; did you mean `class`?

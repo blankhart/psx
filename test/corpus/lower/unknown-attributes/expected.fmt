@@ -1,0 +1,9 @@
+module Lower.UnknownAttributes where
+
+import Psx.Static as B
+
+view =
+  <div styleAttr="color: red" clas="card" data-value="ok" aria-label="ok">
+    <x-card arbitrary="ok"/>
+    <svg viewBox="0 0 1 1"/>
+  </div>

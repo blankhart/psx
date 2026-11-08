@@ -81,6 +81,7 @@ import PureScript.CST.Types (Binder, Comment(..), Declaration, Expr(..), ImportD
 type Lowered =
   { purs :: String
   , positionMap :: PositionMap
+  , warnings :: Array PsxError
   -- | The module's scoped styles, if it has any: the stylesheet and the
   -- | companion module the lowered code imports (see `Psx.Lower.Css`).
   , style :: Maybe Style
@@ -225,6 +226,7 @@ lowerModule names src m@(Module { header: ModuleHeader h, body: ModuleBody body 
               , generated: names.generatedName
               , segments: Array.reverse (List.toUnfoldable st.segments)
               }
+          , warnings: st.warnings
           , style: style
           }
         errors -> Left errors
@@ -437,12 +439,13 @@ type St =
   , column :: Int
   , segments :: List Segment
   , errors :: Array PsxError
+  , warnings :: Array PsxError
   }
 
 type M = State St
 
 initial :: St
-initial = { chunks: Nil, line: 0, column: 0, segments: Nil, errors: [] }
+initial = { chunks: Nil, line: 0, column: 0, segments: Nil, errors: [], warnings: [] }
 
 position :: M SourcePos
 position = gets \st -> { line: st.line, column: st.column }
@@ -836,6 +839,17 @@ emitAttr src ctx ns tag a = do
           NumberValue -> failAt range ("`" <> name <> "` needs a number: " <> name <> "=\"1\" or " <> name <> "={...}")
           _ -> emitFor range ("B." <> attr.purescript <> " \"\"")
       Nothing -> do
+        when (isJust tag && not (isJust (String.stripPrefix (String.Pattern "data-") name) || isJust (String.stripPrefix (String.Pattern "aria-") name))) do
+          let
+            candidates = HtmlData.attributeNames ns <> Array.mapMaybe (map _.attribute <<< HtmlData.event) HtmlData.eventNames
+            nearest = Array.head (Array.sortWith _.score (map (\known -> { known, score: distance (String.toLower name) (String.toLower known) }) candidates))
+            suggestion = case nearest of
+              Just { known, score } | score <= 4 -> "; did you mean `" <> known <> "`?"
+              _ -> ""
+          modify_ \st -> st
+            { warnings = Array.snoc st.warnings
+                { range: a.name.range, message: "Unknown attribute `" <> name <> "`; passed through as a string attribute" <> suggestion, fix: Nothing }
+            }
         let fn = "B.attribute " <> stringLiteral name
         case a.value of
           Just { value: AttrHole h } -> withHole range fn h
@@ -898,3 +912,15 @@ stringLiteral s = "\"" <> String.joinWith "" (map char (String.toCodePointArray 
     other
       | fromEnum c < 0x20 -> "\\x" <> Int.toStringAs Int.hexadecimal (fromEnum c)
       | otherwise -> other
+
+-- Levenshtein distance, with one row of storage per character.
+distance :: String -> String -> Int
+distance a b = fromMaybe 0 (Array.last (Array.foldl step (Array.range 0 (SCU.length b)) (SCU.toCharArray a)))
+  where
+  step previous char = Array.foldl cell [ fromMaybe 0 (Array.head previous) + 1 ] (Array.mapWithIndex Tuple (SCU.toCharArray b))
+    where
+    cell row (Tuple i other) = Array.snoc row
+      ( min
+          (fromMaybe 0 (Array.index previous (i + 1)) + 1)
+          (min (fromMaybe 0 (Array.last row) + 1) (fromMaybe 0 (Array.index previous i) + if char == other then 0 else 1))
+      )

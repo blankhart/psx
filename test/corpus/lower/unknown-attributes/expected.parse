@@ -1,0 +1,15 @@
+print: identical
+errors: none
+markup:
+  6:3 <div>
+    @styleAttr="color: red"
+    @clas="card"
+    @data-value="ok"
+    @aria-label="ok"
+    text "\n    "
+    7:5 <x-card> (self-closing)
+      @arbitrary="ok"
+    text "\n    "
+    8:5 <svg> (self-closing)
+      @viewBox="0 0 1 1"
+    text "\n  "
