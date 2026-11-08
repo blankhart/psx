@@ -11,7 +11,7 @@
 -- | - `psx check [dir...] [--json] [-- <spago build arguments>]` builds, then
 -- |   compiles with `spago build --json-errors` and reports the compiler's
 -- |   errors and warnings at their `.psx` positions.
--- | - `psx fmt [--check] [path...]` formats every `.psx` and `.psxt` file
+-- | - `psx fmt [--purs] [--check] [path...]` formats every `.psx` and `.psxt` file
 -- |   at the paths (default `src`) in place. With `--check` it writes
 -- |   nothing, and fails if a file is not formatted.
 -- |
@@ -22,7 +22,7 @@
 -- |   element: its attributes with their types and identifiers, and its
 -- |   events.
 -- |
--- | Compiling stays spago's job: a project runs `psx build && spago build`.
+-- | Compiling stays spago's job: a project runs `psx check`.
 module Psx.Cli
   ( main
   , run
@@ -69,7 +69,7 @@ usage = String.joinWith "\n"
   [ "usage: psx build [dir...]"
   , "       psx lower <file.psx|file.psxt> [-o <out.purs>] [--map <out.map.json>]"
   , "       psx check [dir...] [--json] [-- <spago build arguments>]"
-  , "       psx fmt [--check] [path...]"
+  , "       psx fmt [--purs] [--check] [path...]"
   , "       psx gen-backend [mapping.json...]"
   , "       psx explain <element>"
   ]
@@ -84,7 +84,11 @@ run args = case Array.uncons args of
       { before, after } = splitDashes tail
       json = Array.elem "--json" before
     check (dirs (Array.filter (_ /= "--json") before)) json after
-  Just { head: "fmt", tail } -> fmt (dirs (Array.filter (_ /= "--check") tail)) (Array.elem "--check" tail)
+  Just { head: "fmt", tail } -> do
+    let roots = dirs (Array.filter (\arg -> arg /= "--check" && arg /= "--purs") tail)
+    status <- fmt roots (Array.elem "--check" tail)
+    pursStatus <- if Array.elem "--purs" tail then fmtPurs roots (Array.elem "--check" tail) else pure 0
+    pure (max status pursStatus)
   Just { head: "gen-backend", tail } -> genBackend tail
   Just { head: "explain", tail: [ tag ] } -> case explain tag of
     Right text -> do
@@ -137,7 +141,10 @@ printErrors file errors = for_ errors \e ->
 -- | Every `.psx` and `.psxt` file under the directories, skipping
 -- | dependencies, build output and hidden directories.
 findSources :: Array FilePath -> Effect (Array FilePath)
-findSources roots = Array.sort <<< Array.concat <$> traverse walk roots
+findSources = findFiles isSource
+
+findFiles :: (FilePath -> Boolean) -> Array FilePath -> Effect (Array FilePath)
+findFiles keepFile roots = Array.nub <<< Array.sort <<< Array.concat <$> traverse walk roots
   where
   walk path = do
     exists <- FS.exists path
@@ -148,12 +155,15 @@ findSources roots = Array.sort <<< Array.concat <$> traverse walk roots
         names <- FS.readdir path
         let keep n = not (String.take 1 n == "." || Array.elem n [ "node_modules", "output", ".spago" ])
         Array.concat <$> for (Array.filter keep names) \n -> walk (Path.concat [ path, n ])
-      else pure (if isSource path then [ path ] else [])
+      else pure (if keepFile path then [ path ] else [])
 
 -- | Lowers the sources under the directories and writes what changed.
 -- | Returns the number of files that failed.
 build :: Array FilePath -> Effect Int
-build roots = do
+build = buildReporting true
+
+buildReporting :: Boolean -> Array FilePath -> Effect Int
+buildReporting reportWarnings roots = do
   sources <- findSources roots
   failures <- for sources \file -> do
     result <- lowerFile file
@@ -162,6 +172,7 @@ build roots = do
         printErrors file errors
         pure 1
       Right lowered -> do
+        when reportWarnings (for_ lowered.warnings (error <<< printDiagnostic <<< attributeDiagnostic file))
         outputs <- generatedFiles file lowered
         -- Nothing is written if a file psx did not write is in the way.
         blocked <- Array.filterA (inTheWay file) outputs
@@ -286,7 +297,7 @@ lowerCommand args = case args of
 
 check :: Array FilePath -> Boolean -> Array String -> Effect Int
 check roots json spagoArgs = do
-  built <- build roots
+  built <- buildReporting (not json) roots
   if built /= 0 then pure built
   else do
     spago <- fromMaybe "npx spago" <$> Process.lookupEnv "PSX_SPAGO"
@@ -296,7 +307,15 @@ check roots json spagoArgs = do
     result <- runSync exe (Array.drop 1 command <> [ "build", "--json-errors" ] <> spagoArgs)
     let diagnostics = parseCompilerOutput result.stdout <> parseCompilerOutput result.stderr
     remapped <- traverse remapDiagnostic diagnostics
-    if json then log (stringify (fromArray (map diagnosticJson remapped)))
+    sources <- if json then findSources roots else pure []
+    attributeWarnings <- Array.concat <$> for sources
+      ( \file -> do
+          loweredFile <- lowerFile file
+          pure case loweredFile of
+            Right lowered -> map (attributeDiagnostic file) lowered.warnings
+            Left _ -> []
+      )
+    if json then log (stringify (fromArray (map diagnosticJson (attributeWarnings <> remapped))))
     else for_ remapped (error <<< printDiagnostic)
     let errors = Array.filter (\d -> d.severity == Error) remapped
     when (result.status /= 0 && Array.null errors) do
@@ -374,3 +393,19 @@ genBackend args = do
           (writeGenerated file)
         pure 0
   pure (if Array.foldl (+) 0 failures > 0 then 1 else 0)
+
+-- purs-tidy receives explicit handwritten files, never generated modules.
+fmtPurs :: Array FilePath -> Boolean -> Effect Int
+fmtPurs roots checkOnly = do
+  files <- findFiles (\path -> Path.extname path == ".purs") roots
+  handwritten <- Array.filterA (\file -> not <<< isGenerated <$> FS.readTextFile UTF8 file) files
+  if Array.null handwritten then pure 0
+  else do
+    result <- runSync "purs-tidy" ([ if checkOnly then "check" else "format-in-place" ] <> handwritten)
+    unless (result.stdout == "") (log result.stdout)
+    unless (result.stderr == "") (error result.stderr)
+    pure result.status
+
+attributeDiagnostic :: FilePath -> PsxError -> Diagnostic
+attributeDiagnostic file warning =
+  { severity: Warning, code: "UnknownAttribute", message: warning.message, file: Just file, range: Just warning.range }
