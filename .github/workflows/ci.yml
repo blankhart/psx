@@ -35,6 +35,11 @@ jobs:
       - name: Test every package
         run: npx spago test
 
+      - name: Language server stdio protocol and mapping
+        run: |
+          npm run test:language-server
+          PSX_LSP_REAL=1 npm run test:language-server
+
       - name: Backends regenerate unchanged
         run: |
           node packages/psx-cli/bin/psx.mjs gen-backend

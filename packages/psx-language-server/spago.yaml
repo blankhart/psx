@@ -2,8 +2,23 @@ package:
   name: psx-language-server
   dependencies:
     - prelude
+    - argonaut-core
+    - argonaut-codecs
+    - arrays
+    - foldable-traversable
+    - either
+    - maybe
+    - strings
+    - effect
+    - language-cst-parser
+    - psx-cst
+    - psx-lower
+    - psx-fmt
+    - psx-html-data
+  run:
+    main: Psx.LanguageServer
   test:
     main: Test.Psx.LanguageServer
     dependencies:
       - console
-      - effect
+      - exceptions
