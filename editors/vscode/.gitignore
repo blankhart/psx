@@ -1,0 +1,8 @@
+dist/
+syntaxes/
+*-language-configuration.json
+*.vsix
+.vscode-test/
+test/workspace with spaces/
+test/test.code-workspace
+test/grammar-dependency/

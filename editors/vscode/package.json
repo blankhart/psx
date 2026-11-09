@@ -1,0 +1,157 @@
+{
+  "name": "psx-vscode",
+  "displayName": "PSX",
+  "description": "PSX and PSXT syntax highlighting and language server client",
+  "version": "0.1.0",
+  "publisher": "psx",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blankhart/psx.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./dist/extension.cjs",
+  "activationEvents": [
+    "onLanguage:psx",
+    "onLanguage:psxt"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    },
+    "virtualWorkspaces": {
+      "supported": false
+    }
+  },
+  "scripts": {
+    "build": "node build.cjs",
+    "vscode:prepublish": "npm run build",
+    "package": "vsce package --no-dependencies --allow-missing-repository --out psx-vscode.vsix",
+    "test": "node test/prepare.cjs && node test/run.cjs"
+  },
+  "dependencies": {
+    "vscode-languageclient": "9.0.1"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "3.6.2",
+    "@vscode/test-electron": "2.5.2"
+  },
+  "extensionDependencies": [
+    "nwolverson.language-purescript"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "psx",
+        "aliases": [
+          "PSX"
+        ],
+        "extensions": [
+          ".psx"
+        ],
+        "configuration": "./psx-language-configuration.json"
+      },
+      {
+        "id": "psxt",
+        "aliases": [
+          "PSXT"
+        ],
+        "extensions": [
+          ".psxt"
+        ],
+        "configuration": "./psxt-language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "psx",
+        "scopeName": "source.psx",
+        "path": "./syntaxes/psx.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.expression.psx": "purescript",
+          "meta.embedded.block.css.psx": "css"
+        },
+        "tokenTypes": {
+          "meta.embedded.expression.psx": "other"
+        }
+      },
+      {
+        "language": "psxt",
+        "scopeName": "text.html.psxt",
+        "path": "./syntaxes/psxt.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.purescript.psxt": "purescript",
+          "meta.embedded.inline.purescript.psxt": "purescript",
+          "meta.embedded.expression.psx": "purescript",
+          "meta.embedded.block.css.psx": "css"
+        },
+        "tokenTypes": {
+          "meta.embedded.inline.purescript.psxt": "other",
+          "meta.embedded.expression.psx": "other"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "psx.restartServer",
+        "title": "PSX: Restart Language Servers"
+      },
+      {
+        "command": "psx.showOutput",
+        "title": "PSX: Show Output"
+      }
+    ],
+    "configuration": {
+      "title": "PSX",
+      "properties": {
+        "psx.server.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Start a PSX server when a PSX file is opened. Disable for highlighting only.",
+          "scope": "resource"
+        },
+        "psx.server.command": {
+          "type": "string",
+          "default": "",
+          "description": "Executable for the PSX stdio server, such as node. No shell expansion is performed.",
+          "scope": "resource"
+        },
+        "psx.server.args": {
+          "type": "array",
+          "default": [],
+          "description": "Argument array, for example [\"/absolute/path/psx-language-server.mjs\", \"--stdio\"]. Paths with spaces are single entries.",
+          "scope": "resource",
+          "items": {
+            "type": "string"
+          }
+        },
+        "psx.projectRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute consumer project root. Empty uses the workspace folder; the server discovers spago.yaml.",
+          "scope": "resource"
+        },
+        "psx.purescriptLanguageServer": {
+          "type": "string",
+          "default": "",
+          "description": "Optional child purescript-language-server executable. Empty uses the server checkout\u2019s bundled dependency.",
+          "scope": "resource"
+        },
+        "psx.purescript": {
+          "type": "object",
+          "default": {},
+          "description": "Settings forwarded to purescript-language-server, such as pursExe and outputDirectory.",
+          "scope": "resource"
+        }
+      }
+    }
+  },
+  "extensionKind": [
+    "workspace"
+  ]
+}
