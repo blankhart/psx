@@ -17,7 +17,9 @@
     "examples:react": "node packages/psx-cli/bin/psx.mjs build examples/react/src && spago build -p psx-examples-react && node examples/react/scripts/build-examples.mjs && node examples/react/scripts/smoke-test.mjs",
     "serve:examples": "node examples/react/scripts/build-examples.mjs && node examples/serve.mjs",
     "test:language-server": "node test/language-server/stdio.mjs",
-    "test:textmate": "npm test -w @psx/textmate"
+    "test:textmate": "npm test -w @psx/textmate",
+    "test:vscode": "npm run build -w psx-vscode && npm test -w psx-vscode",
+    "package:vscode": "npm run package -w psx-vscode"
   },
   "devDependencies": {
     "@webref/events": "1.27.1",

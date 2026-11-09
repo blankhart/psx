@@ -77,11 +77,22 @@ export const serve = analyze => format => completionData => stylesAt => () => {
         v.compiler = p.diagnostics.flatMap(d => { const range = mapRange(v,d.range); return range ? [{...d,range,source:'purescript'}] : []; });
         publish(v);
       });
+      // VS Code advertises progress support; relay the child server's progress
+      // contract rather than letting initialization fail with MethodNotFound.
+      proxy.onRequest('window/workDoneProgress/create', p => connection.sendRequest('window/workDoneProgress/create', p));
+      proxy.onNotification('$/progress', p => connection.sendNotification('$/progress', p));
       proxy.onRequest('window/showMessageRequest', p => {log(p.message);return null;});
       proxy.onNotification('window/logMessage', p => log(p.message));
       proxy.onNotification('window/showMessage', p => log(p.message));
       proxy.listen();
-      proxy.sendRequest('initialize',{...params,rootUri:pathToFileURL(root).href,processId:process.pid,initializationOptions:options.purescript || {}}).then(() => {
+      // The child must only see capabilities this proxy implements. Forwarding
+      // VS Code's full set invites refresh/registration requests for features
+      // (such as code lenses) that PSX does not expose.
+      const capabilities = {workspace:{configuration:true},window:{workDoneProgress:!!params.capabilities?.window?.workDoneProgress},textDocument:{}};
+      for (const feature of ['completion','hover','definition','publishDiagnostics']) {
+        if (params.capabilities?.textDocument?.[feature]) capabilities.textDocument[feature] = {...params.capabilities.textDocument[feature],dynamicRegistration:false};
+      }
+      proxy.sendRequest('initialize',{...params,capabilities,rootUri:pathToFileURL(root).href,processId:process.pid,initializationOptions:options.purescript || {}}).then(() => {
         proxy.sendNotification('initialized',{});
         proxy.sendNotification('workspace/didChangeConfiguration',{settings:{purescript:settings}}); done(true);
       }, error => {log(`PureScript initialization failed: ${error.message}`);done(false);});
