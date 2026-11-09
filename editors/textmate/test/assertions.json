@@ -1,0 +1,766 @@
+[
+  {
+    "file": "nested-holes.psx",
+    "checks": [
+      {
+        "text": "module",
+        "has": [
+          "keyword.other"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "<ul>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "<li>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "{i}",
+        "has": [
+          "punctuation.section.embedded.begin"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "title=",
+        "has": [
+          "entity.other.attribute-name"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "<b>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      }
+    ]
+  },
+  {
+    "file": "trait-holes.psx",
+    "checks": [
+      {
+        "text": "{P.transitionGroup",
+        "has": [
+          "meta.embedded.expression.psx"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "\"bounce\"",
+        "has": [
+          "string.quoted.double"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "capture: true",
+        "has": [
+          "meta.braces.psx"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "<p>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "checked=",
+        "has": [
+          "entity.other.attribute-name"
+        ],
+        "offset": 0,
+        "lacks": []
+      }
+    ]
+  },
+  {
+    "file": "raw-text.psx",
+    "checks": [
+      {
+        "text": ".counter {",
+        "has": [
+          "source.css"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "display:",
+        "has": [
+          "support.type.property-name"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "if (a < b)",
+        "has": [
+          "meta.embedded.block.raw.psx"
+        ],
+        "offset": 0,
+        "lacks": [
+          "meta.embedded.expression.psx"
+        ]
+      },
+      {
+        "text": "hello",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "offset": 0,
+        "lacks": []
+      }
+    ]
+  },
+  {
+    "file": "equations.psxt",
+    "checks": [
+      {
+        "text": "module",
+        "has": [
+          "keyword.other"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "foreign import",
+        "has": [
+          "keyword.other"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "status (Failed reason)",
+        "has": [
+          "meta.embedded.inline.purescript.psxt"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "badge n | n > 99",
+        "has": [
+          "meta.embedded.inline.purescript.psxt"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "badge n | n > 0, n < 10",
+        "has": [
+          "meta.embedded.inline.purescript.psxt"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "<ul>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "<li>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "\"many\"",
+        "has": [
+          "string.quoted.double"
+        ],
+        "offset": 0,
+        "lacks": []
+      }
+    ]
+  },
+  {
+    "file": "styles.psxt",
+    "checks": [
+      {
+        "text": "card title",
+        "has": [
+          "meta.embedded.inline.purescript.psxt"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "Aside",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "p { margin",
+        "has": [
+          "source.css"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": ".card, .badge",
+        "has": [
+          "source.css"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "padding:",
+        "has": [
+          "support.type.property-name"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "content: \"# \"",
+        "has": [
+          "source.css"
+        ],
+        "offset": 0,
+        "lacks": []
+      }
+    ]
+  },
+  {
+    "file": "boundaries.psx",
+    "checks": [
+      {
+        "text": "a < b",
+        "has": [],
+        "offset": 2,
+        "lacks": [
+          "meta.markup.psx"
+        ]
+      },
+      {
+        "text": "a<b",
+        "has": [],
+        "offset": 1,
+        "lacks": [
+          "meta.markup.psx"
+        ]
+      },
+      {
+        "text": "a <> b",
+        "has": [],
+        "offset": 2,
+        "lacks": [
+          "meta.markup.psx"
+        ]
+      },
+      {
+        "text": "<><div",
+        "has": [
+          "punctuation.definition.tag.begin"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "label: \"}\"",
+        "has": [
+          "meta.braces.psx"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "nested: { value",
+        "has": [
+          "meta.braces.psx"
+        ],
+        "offset": 10,
+        "lacks": []
+      },
+      {
+        "text": "&amp;",
+        "has": [
+          "constant.character.entity"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "{trait",
+        "has": [
+          "punctuation.section.embedded.begin"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "<b>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "ignored",
+        "has": [
+          "comment.block"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "<br>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "viewBox",
+        "has": [
+          "entity.other.attribute-name"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "d=\"M0",
+        "has": [
+          "entity.other.attribute-name"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "notMarkup",
+        "has": [
+          "string.quoted.double"
+        ],
+        "offset": 0,
+        "lacks": [
+          "meta.markup.psx"
+        ]
+      },
+      {
+        "text": "{raw}",
+        "has": [
+          "string.quoted.triple"
+        ],
+        "offset": 0,
+        "lacks": [
+          "meta.markup.psx"
+        ]
+      },
+      {
+        "text": "'}'",
+        "has": [
+          "string.quoted.single"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "nested -}",
+        "has": [
+          "comment.block"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "value --",
+        "has": [
+          "meta.embedded.expression.psx"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "then <p",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 6,
+        "lacks": []
+      },
+      {
+        "text": "else <span",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 6,
+        "lacks": []
+      },
+      {
+        "text": "<div/>",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 1,
+        "lacks": []
+      },
+      {
+        "text": "[<b",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 2,
+        "lacks": []
+      },
+      {
+        "text": ", <i",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 3,
+        "lacks": []
+      },
+      {
+        "text": "(<p",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 2,
+        "lacks": []
+      },
+      {
+        "text": "$ <p",
+        "has": [
+          "entity.name.tag"
+        ],
+        "offset": 3,
+        "lacks": []
+      },
+      {
+        "text": "adjacent=<p",
+        "offset": 10,
+        "has": [
+          "entity.name.tag"
+        ]
+      },
+      {
+        "text": "Just _ -><p",
+        "offset": 10,
+        "has": [
+          "entity.name.tag"
+        ]
+      },
+      {
+        "text": "x <-<p",
+        "offset": 5,
+        "has": [
+          "entity.name.tag"
+        ]
+      },
+      {
+        "text": "+ 123",
+        "has": [
+          "keyword.operator"
+        ],
+        "lacks": [
+          "meta.markup.psx"
+        ]
+      },
+      {
+        "text": "plain words",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "lacks": [
+          "entity.other.attribute-name"
+        ]
+      },
+      {
+        "text": "nested same name",
+        "has": [
+          "meta.element.psx"
+        ],
+        "lacks": [
+          "entity.other.attribute-name"
+        ]
+      },
+      {
+        "text": "tail text",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "lacks": [
+          "entity.other.attribute-name"
+        ]
+      },
+      {
+        "text": " }\"}",
+        "has": [
+          "string.quoted.double"
+        ],
+        "offset": 1
+      },
+      {
+        "text": "<fake>",
+        "has": [
+          "string.quoted.triple"
+        ],
+        "lacks": [
+          "entity.name.tag"
+        ]
+      },
+      {
+        "text": "\\after",
+        "has": [
+          "string.quoted.double"
+        ]
+      },
+      {
+        "text": "x_widget.part",
+        "has": [
+          "entity.name.tag"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "incomplete.psx",
+    "checks": [
+      {
+        "text": "next =",
+        "has": [],
+        "offset": 0,
+        "lacks": [
+          "string",
+          "comment",
+          "meta.markup.psx"
+        ]
+      },
+      {
+        "text": "recovered</p>",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "after</span>",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "comment recovered",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "offset": 0,
+        "lacks": [
+          "comment"
+        ]
+      },
+      {
+        "text": "html comment recovered",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "offset": 0,
+        "lacks": [
+          "comment"
+        ]
+      },
+      {
+        "text": "<sect",
+        "offset": 1,
+        "has": [
+          "entity.name.tag"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "incomplete.psxt",
+    "checks": [
+      {
+        "text": "row { id, label } | id > 0",
+        "has": [
+          "meta.embedded.inline.purescript.psxt"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "{label}",
+        "has": [
+          "punctuation.section.embedded.begin"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": ".card {",
+        "has": [
+          "source.css"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "last x",
+        "has": [
+          "meta.embedded.inline.purescript.psxt"
+        ],
+        "offset": 0,
+        "lacks": []
+      },
+      {
+        "text": "{x}",
+        "has": [
+          "punctuation.section.embedded.begin"
+        ],
+        "offset": 0,
+        "lacks": []
+      }
+    ]
+  },
+  {
+    "file": "comments.psx",
+    "checks": [
+      {
+        "text": "A module comment",
+        "has": [
+          "comment"
+        ],
+        "lacks": []
+      },
+      {
+        "text": "a multi-line",
+        "has": [
+          "comment.block.html"
+        ],
+        "lacks": []
+      },
+      {
+        "text": "show n",
+        "has": [
+          "meta.embedded.expression.psx"
+        ],
+        "lacks": []
+      },
+      {
+        "text": "-- not a comment",
+        "has": [
+          "meta.markup.psx"
+        ],
+        "lacks": [
+          "comment"
+        ]
+      },
+      {
+        "text": "a comment after markup",
+        "has": [
+          "comment.line"
+        ],
+        "lacks": []
+      }
+    ]
+  },
+  {
+    "file": "void-elements.psx",
+    "checks": [
+      {
+        "text": "<input",
+        "offset": 1,
+        "has": [
+          "entity.name.tag",
+          "meta.tag.void.psx"
+        ]
+      },
+      {
+        "text": "<br",
+        "offset": 1,
+        "has": [
+          "entity.name.tag",
+          "meta.tag.void.psx"
+        ]
+      },
+      {
+        "text": "<img",
+        "offset": 1,
+        "has": [
+          "entity.name.tag",
+          "meta.tag.void.psx"
+        ]
+      },
+      {
+        "text": "<hr",
+        "offset": 1,
+        "has": [
+          "entity.name.tag",
+          "meta.tag.void.psx"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "svg.psx",
+    "checks": [
+      {
+        "text": "linearGradient",
+        "has": [
+          "entity.name.tag"
+        ]
+      },
+      {
+        "text": "foreignObject",
+        "has": [
+          "entity.name.tag"
+        ]
+      },
+      {
+        "text": "stroke-width",
+        "has": [
+          "entity.other.attribute-name"
+        ]
+      },
+      {
+        "text": "offset",
+        "has": [
+          "entity.other.attribute-name"
+        ]
+      }
+    ]
+  }
+]

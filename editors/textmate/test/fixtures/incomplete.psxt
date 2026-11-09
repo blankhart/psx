@@ -1,0 +1,12 @@
+<script type='text/purescript'>
+module Incomplete where
+value = "unterminated
+</script>
+<template head="row { id, label } | id > 0">
+  <div title="unterminated
+    >{label}</div
+</template>
+<style>
+  .card { color: red; }
+</style>
+<template head="last x"><p>{x}</p></template>
