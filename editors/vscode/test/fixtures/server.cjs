@@ -10,5 +10,8 @@ connection.onInitialize(params => {
 connection.onDidOpenTextDocument(params => log('open', params));
 connection.onDocumentFormatting(() => []);
 connection.onShutdown(() => log('shutdown'));
-connection.onExit(() => {log('exit'); process.exit(0);});
+// The client closes stdin after sending exit. The server library can handle
+// EOF before dispatching that notification, so observe the actual process exit.
+process.once('exit', code => log('exit', {code}));
+connection.onExit(() => process.exit(0));
 connection.listen();
