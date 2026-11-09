@@ -1,0 +1,21 @@
+-- | A module comment.
+module Parse.Comments where
+
+import Portico.Psx
+
+{- A block comment before a declaration. -}
+view n = -- a line comment after `=`
+  <div>
+    <!-- a markup comment -->
+    <p>text</p>
+    <!--
+      a multi-line
+      markup comment
+    -->
+    { -- a comment in a hole
+      show n {- and a block comment -}
+    }
+    <p>-- not a comment, just text</p>
+  </div> -- a comment after markup
+
+after = 1 -- trailing

@@ -1,0 +1,7 @@
+{
+  "name": "@psx/textmate",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": { "test": "node --test test/tokenize.test.mjs" },
+  "devDependencies": { "vscode-oniguruma": "2.0.1", "vscode-textmate": "9.2.0" }
+}

@@ -16,7 +16,8 @@
     "suite:accept": "spago run -p psx-suite -- --accept",
     "examples:react": "node packages/psx-cli/bin/psx.mjs build examples/react/src && spago build -p psx-examples-react && node examples/react/scripts/build-examples.mjs && node examples/react/scripts/smoke-test.mjs",
     "serve:examples": "node examples/react/scripts/build-examples.mjs && node examples/serve.mjs",
-    "test:language-server": "node test/language-server/stdio.mjs"
+    "test:language-server": "node test/language-server/stdio.mjs",
+    "test:textmate": "npm test -w @psx/textmate"
   },
   "devDependencies": {
     "@webref/events": "1.27.1",

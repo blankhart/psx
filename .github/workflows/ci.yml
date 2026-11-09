@@ -21,6 +21,9 @@ jobs:
 
       - run: npm ci
 
+      - name: TextMate scope assertions
+        run: npm run test:textmate
+
       - uses: actions/cache@v4
         with:
           path: |
