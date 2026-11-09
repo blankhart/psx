@@ -1,0 +1,35 @@
+module Boundaries where
+import Prelude
+import Portico.Psx
+less a b = a < b
+compact a b = a<b
+operator a b = a <> b
+view = <><div title={show { label: "}", nested: { value: 1 } }} {trait "x"}>hi &amp; {if ok then <b>{"\\\"}"}</b> else <i/>}<!-- {ignored} --><br><svg viewBox="0 0 1 1"><path d="M0 0"/></svg></div></>
+words = "<div>{notMarkup}</div>"
+raw = """<span>{raw}</span>"""
+character = '}'
+commented = <div>{ {- } {- nested -} -} value -- }
+  }</div>
+choices = if ok then <p/> else <span/>
+layout =
+  <div/>
+more = [<b/>, <i/>]
+app = f (<p/>)
+ops = f $ <p/>
+adjacent=<p/>
+arrow x = case x of
+  Just _ -><p/>
+  _ -> <i/>
+bound = do
+  x <-<p/>
+  pure x
+trailing = (<div/>) + 123
+multiline = <div>
+  plain words
+  <div>nested same name</div>
+  tail text
+</div>
+strings = <div>{"escaped \" }"} {'}'} {""" } <fake> """}</div>
+gaps = <p>{"before\
+  \after"}</p>
+names = <x_widget.part data-name="x"/>

@@ -1,0 +1,137 @@
+{
+  "name": "PSXT",
+  "scopeName": "text.html.psxt",
+  "fileTypes": [
+    "psxt"
+  ],
+  "patterns": [
+    {
+      "include": "#script"
+    },
+    {
+      "include": "#template"
+    },
+    {
+      "include": "source.psx#markup"
+    }
+  ],
+  "injections": {
+    "L:meta.embedded.block.purescript.psxt - comment - string - meta.markup.psx": {
+      "patterns": [
+        {
+          "include": "source.psx#lexical"
+        },
+        {
+          "include": "source.psx#expression-markup"
+        }
+      ]
+    }
+  },
+  "repository": {
+    "script": {
+      "name": "meta.script.psxt",
+      "begin": "(<)(script)\\b(?=[^>]*\\btype\\s*=\\s*([\"'])text/purescript\\3)[^>]*(>)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "4": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "end": "(</)(script)\\s*(>)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "3": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "contentName": "meta.embedded.block.purescript.psxt source.purescript",
+      "patterns": [
+        {
+          "include": "source.psx#code"
+        }
+      ]
+    },
+    "template": {
+      "name": "meta.markup.psx",
+      "begin": "(<)(template)\\b",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        }
+      },
+      "end": "(</)(template)\\s*(>)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "3": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#template-attributes"
+        },
+        {
+          "include": "source.psx#markup"
+        }
+      ]
+    },
+    "template-attributes": {
+      "begin": "\\G",
+      "end": ">|(?=</template>)",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "patterns": [
+        {
+          "begin": "\\b(head)\\s*(=)\\s*([\"'])",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name.html"
+            },
+            "2": {
+              "name": "punctuation.separator.key-value.html"
+            },
+            "3": {
+              "name": "punctuation.definition.string.begin.html"
+            }
+          },
+          "end": "\\3|$",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.html"
+            }
+          },
+          "contentName": "meta.embedded.inline.purescript.psxt",
+          "patterns": [
+            {
+              "include": "source.purescript"
+            }
+          ]
+        },
+        {
+          "include": "source.psx#attributes"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+<script type="text/purescript">
+module App.Card where
+
+import Prelude
+import Portico.Psx (Markup)
+
+foreign import card :: String -> Markup Unit
+foreign import badge :: Int -> Markup Unit
+</script>
+
+<template head="card title">
+  <article class="card">
+    <h2>{title}</h2>
+    {badge 3}
+    <aside class="note">
+      Aside
+      <style>
+        p { margin: 0; }
+      </style>
+    </aside>
+  </article>
+</template>
+
+<template head="badge n">
+  <span class="badge">{show n}</span>
+</template>
+
+<style>
+  @import url("fonts.css");
+
+  /* Scoped to each template's top-level elements. */
+  .card, .badge { padding: 1rem; }
+  .card h2::before { content: "# "; }
+  :scope > h2 { margin-top: 0; }
+
+  @media (min-width: 40rem) {
+    .card { display: flex; }
+  }
+
+  @keyframes pulse {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+  }
+  .badge:hover { animation: pulse 1s; }
+</style>

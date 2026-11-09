@@ -1,0 +1,13 @@
+module Incomplete where
+view = <div title="unfinished
+  {if ready then <span>{"}"}</span> else <b/>}
+</div
+next = <p>recovered</p>
+broken = <div>{"unfinished
+  }</div>
+after = <span>after</span>
+unclosed = <p>{ {- unfinished
+recovered = <b>comment recovered</b>
+html = <div><!-- unfinished
+final = <i>html comment recovered</i>
+partial = <sect

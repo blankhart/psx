@@ -1,0 +1,36 @@
+{
+  "extensionDependencies": ["nwolverson.language-purescript"],
+  "contributes": {
+    "languages": [
+      { "id": "psx", "aliases": ["PSX"], "extensions": [".psx"], "configuration": "./psx-language-configuration.json" },
+      { "id": "psxt", "aliases": ["PSXT"], "extensions": [".psxt"], "configuration": "./psxt-language-configuration.json" }
+    ],
+    "grammars": [
+      {
+        "language": "psx",
+        "scopeName": "source.psx",
+        "path": "./syntaxes/psx.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.expression.psx": "purescript",
+          "meta.embedded.block.css.psx": "css"
+        },
+        "tokenTypes": { "meta.embedded.expression.psx": "other" }
+      },
+      {
+        "language": "psxt",
+        "scopeName": "text.html.psxt",
+        "path": "./syntaxes/psxt.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.purescript.psxt": "purescript",
+          "meta.embedded.inline.purescript.psxt": "purescript",
+          "meta.embedded.expression.psx": "purescript",
+          "meta.embedded.block.css.psx": "css"
+        },
+        "tokenTypes": {
+          "meta.embedded.inline.purescript.psxt": "other",
+          "meta.embedded.expression.psx": "other"
+        }
+      }
+    ]
+  }
+}
