@@ -53,6 +53,12 @@ exports.run = async () => {
     await vscode.commands.executeCommand('psx.showOutput');
     await extension.exports.stop();
     await wait(()=>events().filter(e=>e.event==='exit').length===4);
+    for(const event of events().filter(e=>e.event==='exit')) {
+      assert.equal(event.data.code,0,'server exits cleanly');
+      const own=events().filter(e=>e.pid===event.pid);
+      assert.ok(own.findIndex(e=>e.event==='shutdown')>=0,'server received shutdown');
+      assert.ok(own.findIndex(e=>e.event==='shutdown')<own.findIndex(e=>e.event==='exit'),'shutdown precedes process exit');
+    }
     console.log('VS Code language activation, multi-root forwarding, restart and shutdown passed');
   } catch(error) {
     console.log(JSON.stringify(events().map(e=>({event:e.event,pid:e.pid}))));
