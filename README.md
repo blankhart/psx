@@ -191,3 +191,9 @@ Build this checkout, then launch `node packages/psx-language-server/bin/psx-lang
 using the existing PureScript and CSS grammars. Run `npm run test:textmate` for
 the pinned tokenization tests; the editor manifest fragment documents integration
 with the VS Code extension.
+
+## VS Code
+
+Build and install the local PSX VSIX using [the VS Code extension guide](editors/vscode/README.md).
+It includes both TextMate grammars and a configurable stdio language client for
+single- and multi-root consumer workspaces. No marketplace publication is required.

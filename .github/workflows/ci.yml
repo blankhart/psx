@@ -21,6 +21,17 @@ jobs:
 
       - run: npm ci
 
+      - name: VS Code extension activation and lifecycle
+        run: xvfb-run -a npm run test:vscode
+
+      - name: Package local VSIX
+        run: npm run package:vscode
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: psx-vscode
+          path: editors/vscode/psx-vscode.vsix
+
       - name: TextMate scope assertions
         run: npm run test:textmate
 
@@ -37,6 +48,9 @@ jobs:
 
       - name: Test every package
         run: npx spago test
+
+      - name: VS Code real server features
+        run: xvfb-run -a env PSX_VSCODE_REAL=1 npm run test:vscode
 
       - name: Language server stdio protocol and mapping
         run: |
