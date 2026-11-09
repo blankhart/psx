@@ -15,7 +15,8 @@
     "suite": "spago run -p psx-suite --",
     "suite:accept": "spago run -p psx-suite -- --accept",
     "examples:react": "node packages/psx-cli/bin/psx.mjs build examples/react/src && spago build -p psx-examples-react && node examples/react/scripts/build-examples.mjs && node examples/react/scripts/smoke-test.mjs",
-    "serve:examples": "node examples/react/scripts/build-examples.mjs && node examples/serve.mjs"
+    "serve:examples": "node examples/react/scripts/build-examples.mjs && node examples/serve.mjs",
+    "test:language-server": "node test/language-server/stdio.mjs"
   },
   "devDependencies": {
     "@webref/events": "1.27.1",
@@ -27,12 +28,16 @@
     "playwright-core": "^1.64.1",
     "property-information": "7.2.0",
     "purescript": "0.15.15",
+    "purescript-language-server": "0.18.5",
     "purs-backend-es": "1.4.3",
     "purs-tidy": "0.11.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "spago": "1.0.5",
     "svg-element-attributes": "2.2.0",
-    "svg-tag-names": "3.0.1"
+    "svg-tag-names": "3.0.1",
+    "vscode-jsonrpc": "8.2.0",
+    "vscode-languageserver": "9.0.1",
+    "vscode-languageserver-textdocument": "1.0.12"
   }
 }
