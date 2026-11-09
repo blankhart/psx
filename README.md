@@ -182,3 +182,7 @@ The app also needs its chosen backend dependency (`psx-halogen`,
 package isolates bootstrapping from app modules that have not been generated
 yet. Commit `spago.lock` and update all PSX refs together. This recipe uses Git
 source dependencies; it does not require an npm CLI package or a release tag.
+
+The [PSX language server](packages/psx-language-server/README.md) provides stdio LSP
+for `.psx` and `.psxt`, reusing purescript-language-server for compiler features.
+Build this checkout, then launch `node packages/psx-language-server/bin/psx-language-server.mjs --stdio`.

@@ -238,13 +238,26 @@
         "path": "packages/psx-language-server",
         "core": {
           "dependencies": [
-            "prelude"
+            "argonaut-codecs",
+            "argonaut-core",
+            "arrays",
+            "effect",
+            "either",
+            "foldable-traversable",
+            "language-cst-parser",
+            "maybe",
+            "prelude",
+            "psx-cst",
+            "psx-fmt",
+            "psx-html-data",
+            "psx-lower",
+            "strings"
           ]
         },
         "test": {
           "dependencies": [
             "console",
-            "effect"
+            "exceptions"
           ]
         }
       },
@@ -1628,6 +1641,29 @@
         "foldable-traversable",
         "lists",
         "prelude"
+      ]
+    },
+    "argonaut-codecs": {
+      "type": "registry",
+      "version": "9.1.0",
+      "integrity": "sha256-K910SBrmYallESsm8pxJYThs7lig6hxX3M4PW33Cgew=",
+      "dependencies": [
+        "argonaut-core",
+        "arrays",
+        "bifunctors",
+        "either",
+        "foldable-traversable",
+        "foreign-object",
+        "identity",
+        "integers",
+        "lists",
+        "maybe",
+        "nonempty",
+        "ordered-collections",
+        "prelude",
+        "record",
+        "strings",
+        "tuples"
       ]
     },
     "argonaut-core": {
