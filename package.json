@@ -21,6 +21,7 @@
     "test:vscode": "npm run build -w psx-vscode && npm test -w psx-vscode",
     "package:vscode": "npm run package -w psx-vscode",
     "generate:tree-sitter": "node editors/tree-sitter-psx/generate.mjs",
+    "test:zed": "python3 editors/zed/test/test.py",
     "test:tree-sitter": "python3 editors/tree-sitter-psx/test/test.py"
   },
   "devDependencies": {

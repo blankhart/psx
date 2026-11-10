@@ -1,0 +1,15 @@
+{
+  "lsp": {
+    "psx-language-server": {
+      "binary": {
+        "path": "/opt/node/bin/node",
+        "arguments": ["/workspace/PSX checkout/packages/psx-language-server/bin/psx-language-server.mjs", "--stdio"]
+      },
+      "initialization_options": {
+        "projectRoot": "/workspace/consumer with spaces",
+        "purescriptLanguageServer": "/workspace/PSX checkout/node_modules/.bin/purescript-language-server",
+        "purescript": { "pursExe": "/workspace/PSX checkout/node_modules/.bin/purs", "outputDirectory": "output" }
+      }
+    }
+  }
+}

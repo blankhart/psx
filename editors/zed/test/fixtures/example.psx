@@ -1,0 +1,16 @@
+module Parse.NestedHoles where
+
+import Portico.Psx
+
+list items =
+  <ul>{map (\i -> <li>{i}</li>) items}</ul>
+
+deep xs =
+  <div>
+    {map (\x -> <p>{map (\y -> <b>{y}</b>) x}</p>) xs}
+  </div>
+
+attrMarkup = <div title={label (<b>x</b>)}>y</div>
+
+styled = <div class="card"><style>.card { color: red; }</style>{if true then <b>yes</b> else <i>no</i>}</div>
+less x y = x < y

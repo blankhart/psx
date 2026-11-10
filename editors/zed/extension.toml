@@ -1,0 +1,18 @@
+id = "psx"
+name = "PSX"
+version = "0.1.0"
+schema_version = 1
+authors = ["PSX contributors"]
+description = "PureScript and markup in PSX and PSXT, with the local PSX language server"
+repository = "https://github.com/blankhart/psx"
+languages = ["languages/psx", "languages/psxt"]
+
+[grammars.psx]
+repository = "https://github.com/blankhart/psx"
+rev = "3aed701a3d3c603329db397865e2a3b2c0e35d30"
+path = "editors/tree-sitter-psx"
+
+[grammars.psxt]
+repository = "https://github.com/blankhart/psx"
+rev = "3aed701a3d3c603329db397865e2a3b2c0e35d30"
+path = "editors/tree-sitter-psx/psxt"
