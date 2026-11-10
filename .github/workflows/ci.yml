@@ -32,6 +32,17 @@ jobs:
           name: psx-vscode
           path: editors/vscode/psx-vscode.vsix
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Tree-sitter generation, corpus, queries and incremental edits
+        run: |
+          python3 -m pip install -r editors/tree-sitter-psx/test/requirements.txt
+          npm run generate:tree-sitter
+          git diff --exit-code -- editors/tree-sitter-psx
+          npm run test:tree-sitter
+
       - name: TextMate scope assertions
         run: npm run test:textmate
 

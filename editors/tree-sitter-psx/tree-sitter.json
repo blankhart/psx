@@ -1,0 +1,49 @@
+{
+  "grammars": [
+    {
+      "name": "psx",
+      "camelcase": "Psx",
+      "scope": "source.psx",
+      "path": ".",
+      "file-types": [
+        "psx"
+      ],
+      "injection-regex": "^psx$",
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm"
+    },
+    {
+      "name": "psxt",
+      "camelcase": "Psxt",
+      "scope": "source.psxt",
+      "path": "psxt",
+      "file-types": [
+        "psxt"
+      ],
+      "injection-regex": "^psxt$",
+      "highlights": "psxt/queries/highlights.scm",
+      "injections": "psxt/queries/injections.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "PSX and PSXT structural grammars",
+    "authors": [
+      {
+        "name": "PSX contributors"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/blankhart/psx"
+    }
+  },
+  "bindings": {
+    "c": false,
+    "go": false,
+    "node": false,
+    "python": false,
+    "rust": false,
+    "swift": false
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "psx": [
+    "module Empty where\nx = <div><style></style><script></script><p>after</p></div>\n",
+    "module Empty where\nx = <div><style/><script/><p>after</p></div>\n",
+    "module Raw where\nx = <div><style>p::before { content: '<x>'; }</style><script>if (a < b) { run(); }</script></div>\n"
+  ],
+  "psxt": [
+    "<script type='text/purescript'>module M where\nx = 1\n</script><template head='row { id, label } | id > 0'><p>{label}</p></template>",
+    "<template head='literal \"yes\"'><p>yes</p></template>",
+    "<template head=\"letter 'a'\"><p>a</p></template>",
+    "<template head=\"empty\"><style></style><script></script><p>after</p></template>"
+  ]
+}
