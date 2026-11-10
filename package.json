@@ -19,7 +19,9 @@
     "test:language-server": "node test/language-server/stdio.mjs",
     "test:textmate": "npm test -w @psx/textmate",
     "test:vscode": "npm run build -w psx-vscode && npm test -w psx-vscode",
-    "package:vscode": "npm run package -w psx-vscode"
+    "package:vscode": "npm run package -w psx-vscode",
+    "generate:tree-sitter": "node editors/tree-sitter-psx/generate.mjs",
+    "test:tree-sitter": "python3 editors/tree-sitter-psx/test/test.py"
   },
   "devDependencies": {
     "@webref/events": "1.27.1",
@@ -39,6 +41,7 @@
     "spago": "1.0.5",
     "svg-element-attributes": "2.2.0",
     "svg-tag-names": "3.0.1",
+    "tree-sitter-cli": "0.25.10",
     "vscode-jsonrpc": "8.2.0",
     "vscode-languageserver": "9.0.1",
     "vscode-languageserver-textdocument": "1.0.12"
