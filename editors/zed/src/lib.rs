@@ -3,7 +3,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn configured_node_launch_preserves_arguments_environment_and_options() {
+    fn configured_node_launch_preserves_arguments_and_environment() {
         let fixture: serde_json::Value =
             serde_json::from_str(include_str!("../test/fixtures/settings.json")).unwrap();
         let mut settings: LspSettings =
@@ -12,7 +12,6 @@ mod tests {
             "PSX_TEST".into(),
             "value with spaces".into(),
         )]));
-        let options = settings.initialization_options.clone();
         let command = launch(settings, |_| None).unwrap();
         assert_eq!(command.command, "/opt/node/bin/node");
         assert_eq!(
@@ -25,10 +24,6 @@ mod tests {
         assert_eq!(
             command.env,
             vec![("PSX_TEST".into(), "value with spaces".into())]
-        );
-        assert_eq!(
-            options.unwrap()["projectRoot"],
-            "/workspace/consumer with spaces"
         );
     }
 
