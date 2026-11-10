@@ -1,0 +1,17 @@
+name = "PSXT"
+grammar = "psxt"
+path_suffixes = ["psxt"]
+code_fence_block_name = "psxt"
+tab_size = 2
+hard_tabs = false
+block_comment = { start = "<!--", end = "-->", prefix = "", tab_size = 0 }
+brackets = [
+  { start = "(", end = ")", close = true, newline = true, not_in = ["string", "comment"] },
+  { start = "[", end = "]", close = true, newline = true, not_in = ["string", "comment"] },
+  { start = "{", end = "}", close = true, newline = true, not_in = ["string", "comment"] },
+  { start = "\"", end = "\"", close = true, newline = false, not_in = ["string", "comment"] }
+]
+
+[overrides.purescript]
+line_comments = ["-- "]
+block_comment = { start = "{-", end = "-}", prefix = "", tab_size = 0 }

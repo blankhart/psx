@@ -43,6 +43,14 @@ jobs:
           git diff --exit-code -- editors/tree-sitter-psx
           npm run test:tree-sitter
 
+      - name: Zed manifest, pinned grammars, Wasm build, queries and injections
+        run: |
+          mkdir -p work
+          curl -fsSL https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-34/wasi-sdk-34.0-x86_64-linux.tar.gz -o work/wasi-sdk.tar.gz
+          echo 'b761e3a0721dbae9c09a0059e5fdb2bf917d1b4a8a7b430fb3b5aafb0984b2c4  work/wasi-sdk.tar.gz' | sha256sum -c -
+          tar -xzf work/wasi-sdk.tar.gz -C work
+          WASI_SDK_PATH="$PWD/work/wasi-sdk-34.0-x86_64-linux" npm run test:zed
+
       - name: TextMate scope assertions
         run: npm run test:textmate
 

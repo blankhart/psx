@@ -1,0 +1,6 @@
+("(" @open ")" @close)
+("[" @open "]" @close)
+("{" @open "}" @close)
+(element (start_tag) @open (end_tag) @close)
+(fragment (fragment_start) @open (fragment_end) @close)
+(template "<template" @open "</template>" @close)
