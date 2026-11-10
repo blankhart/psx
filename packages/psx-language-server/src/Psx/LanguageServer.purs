@@ -15,7 +15,8 @@ import PureScript.CST.Types (SourcePos)
 import Effect (Effect)
 import Psx.Cst (PsxError, Markup(..), Child(..), parseModule, foldMapMarkupRoots)
 import Psx.Cst.Psxt (parsePsxt)
-import Psx.Format (formatPsx, formatPsxt)
+import Psx.Format (formatPsxWith, formatPsxtWith)
+import Psx.Format.Config (loadConfig)
 import Psx.HtmlData as Html
 import Psx.Lower (lower, lowerPsxt)
 import Psx.Lower.PositionMap (PositionMap, SegmentKind(..), before)
@@ -66,10 +67,12 @@ analyze uri text = case (if isJust (String.stripSuffix (String.Pattern ".psxt") 
   Left errors -> { valid: false, purs: "", diagnostics: errors, forward: unmapped, backward: unmapped }
   Right result -> { valid: true, purs: result.purs, diagnostics: result.warnings, forward: mapPoint text result.purs result.positionMap false, backward: mapPoint text result.purs result.positionMap true }
 
-format :: String -> String -> String
-format uri text = case (if isJust (String.stripSuffix (String.Pattern ".psxt") uri) then formatPsxt else formatPsx) text of
-  Left _ -> ""
-  Right formatted -> formatted
+format :: String -> String -> Effect String
+format path text = do
+  config <- loadConfig path
+  pure case (if isJust (String.stripSuffix (String.Pattern ".psxt") path) then formatPsxtWith config else formatPsxWith config) text of
+    Left _ -> ""
+    Right formatted -> formatted
 
 -- | The same HTML/SVG data as lowering, including event attributes.
 completionData :: String
@@ -121,7 +124,7 @@ stylesAt uri text position = do
     maybe "" (\file -> foldMap css file.styles <> moduleStyles file.script.module <> foldMap (walk <<< MarkupElement <<< _.element) file.templates) (parsePsxt text).file
   else maybe "" moduleStyles (parseModule text).module
 
-foreign import serve :: (String -> String -> Analysis) -> (String -> String -> String) -> String -> (String -> String -> Position -> String) -> Effect Unit
+foreign import serve :: (String -> String -> Analysis) -> (String -> String -> Effect String) -> String -> (String -> String -> Position -> String) -> Effect Unit
 
 main :: Effect Unit
 main = serve analyze format completionData stylesAt
