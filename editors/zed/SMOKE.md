@@ -42,7 +42,10 @@ any PR completing #68. Keep GUI results separate from the automated gate.
   and `wasm32-wasip2`; component header and Zed interface checked.
 - Shared stdio harness: passed with both mocked and real compiler integration
   from the PSX checkout (diagnostics, completion, hover, definition, formatting
-  and clean shutdown).
+  and clean shutdown). The real compiler harness also passed from
+  `/workspace/psx/work/consumer with spaces`, using actual copied workspace
+  sources and shared build dependencies. This is a protocol smoke, not a Zed
+  GUI result.
 - Editor feature smoke: unverified; no GUI result is claimed.
 - GUI smoke blocked: `zed-editor --system-specs` reports `OS: Linux Headless
   debian 13`, no Vulkan information is available, and this executor exposes no

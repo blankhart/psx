@@ -7,8 +7,8 @@ is Rust `Extension::language_server_command`, compiled to Wasm. User `lsp` setti
 can override a registered adapter's binary but do not supply an extension adapter.
 
 References inspected on 2026-11-10:
-- https://github.com/zed-industries/zed/blob/main/docs/src/extensions/languages.md#language-servers
-- https://github.com/zed-industries/zed/blob/main/crates/extension/src/extension_manifest.rs
+- https://github.com/zed-industries/zed/blob/v1.27.0/docs/src/extensions/languages.md#language-servers
+- https://github.com/zed-industries/zed/blob/v1.27.0/crates/extension/src/extension_manifest.rs
 
 ## Approved exception
 
