@@ -17,6 +17,10 @@ GRAMMAR = REPO / 'editors/tree-sitter-psx'
 manifest = tomllib.loads((ROOT / 'extension.toml').read_text())
 assert manifest['schema_version'] == 1 and manifest['id'] == 'psx'
 assert manifest['languages'] == ['languages/psx', 'languages/psxt']
+server = manifest['language_servers']['psx-language-server']
+assert server['languages'] == ['PSX', 'PSXT']
+assert server['language_ids'] == {'PSX': 'psx', 'PSXT': 'psxt'}
+assert tomllib.loads((ROOT / 'rust-toolchain.toml').read_text())['toolchain']['targets'] == ['wasm32-wasip2']
 # Resolve the exact pinned source locally, independent of the current checkout.
 for name, entry in manifest['grammars'].items():
     assert entry['repository'] == 'https://github.com/blankhart/psx'

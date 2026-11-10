@@ -48,7 +48,7 @@ One Spago workspace. Toolchain packages live in `packages/`; bundled backends in
 - One issue, one PR. The issue's gate is a check in CI; the PR is done when it passes.
 - Add corpus cases (`test/corpus/<area>/<case>/input.psx` plus `expected.*`) before the code that makes them pass. `spago run -p psx-corpus -- --accept` rewrites goldens; review the diff.
 - Before pushing: `spago build` and `spago test` for every package you touched.
-- Implementation language is PureScript on Node. Editor grammars and the VS Code client are the only exceptions.
+- Implementation language is PureScript on Node. Editor grammars, the VS Code client, and the thin Zed Rust/Wasm launch adapter (`editors/zed/src/lib.rs` and Cargo/toolchain metadata, approved for #68) are the only exceptions. Zed server logic remains in PureScript on Node.
 - If you find the design wrong or ambiguous, comment on the issue rather than inventing a rule.
 
 `npm run serve:examples` bundles compiled React examples and serves their index on loopback with Node (`PORT`, default 3000). Build with `npm run examples:react` first.

@@ -9,7 +9,7 @@ any PR completing #68. Keep GUI results separate from the automated gate.
    fixtures with language servers disabled. Verify the language picker, markup,
    PureScript and CSS highlights, nested holes, brackets, indentation, and
    comment toggling in each scope.
-2. Once the launch adapter is available, enable only `psx-language-server` for
+2. Enable only `psx-language-server` for
    PSX and PSXT. Configure Node and its script as separate argument-vector
    entries. Use a PSX checkout and a separate consumer workspace with spaces in
    their paths. Build the consumer with the same purs as the server.
@@ -34,10 +34,19 @@ any PR completing #68. Keep GUI results separate from the automated gate.
 - Zed 1.27.0 (`c84af5b99cbc366d675064e52b23664a015b6e35`) downloaded and
   `--version` verified. GUI startup results are recorded below when available.
 - Both grammar Wasm builds: passed with WASI SDK 34.0 and the Zed build flags.
-- LSP adapter and editor feature smoke: pending the explicit Rust adapter
-  exception. These are not claimed as passing.
+- Thin adapter exception: approved by the user on 2026-11-10 and recorded on
+  #68 and in CLAUDE.md.
+- Adapter unit tests: passed (configured launch, environment, paths with spaces,
+  PATH fallback, empty arguments and missing-command guidance).
+- Adapter component build: passed with Rust 1.90.0, Zed extension API 0.7.0
+  and `wasm32-wasip2`; component header and Zed interface checked.
+- Shared stdio harness: passed with both mocked and real compiler integration
+  from the PSX checkout (diagnostics, completion, hover, definition, formatting
+  and clean shutdown).
+- Editor feature smoke: unverified; no GUI result is claimed.
 - GUI smoke blocked: `zed-editor --system-specs` reports `OS: Linux Headless
   debian 13`, no Vulkan information is available, and this executor exposes no
-  desktop JavaScript/control tool. Starting the editor did not provide an
+  desktop JavaScript/control tool. `cloud-agent-desktop --help` reports
+  “Orbit desktop is unavailable.” Starting the editor did not provide an
   inspectable window. Recognition, colours and editor actions remain unverified
   in Zed itself; the native automated checks above are the evidence available.

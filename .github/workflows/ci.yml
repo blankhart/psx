@@ -13,6 +13,8 @@ jobs:
         with:
           # The checkout token would shadow PSX_DEPS_TOKEN for other github.com repositories.
           persist-credentials: false
+          # The Zed gate compares grammar files against their pinned source commit.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -50,6 +52,14 @@ jobs:
           echo 'b761e3a0721dbae9c09a0059e5fdb2bf917d1b4a8a7b430fb3b5aafb0984b2c4  work/wasi-sdk.tar.gz' | sha256sum -c -
           tar -xzf work/wasi-sdk.tar.gz -C work
           WASI_SDK_PATH="$PWD/work/wasi-sdk-34.0-x86_64-linux" npm run test:zed
+
+      - name: Zed Rust adapter tests and Wasm component build
+        working-directory: editors/zed
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal --component rustfmt --target wasm32-wasip2
+          cargo fmt --check
+          cargo test --locked
+          cargo build --release --target wasm32-wasip2 --locked
 
       - name: TextMate scope assertions
         run: npm run test:textmate
