@@ -1,6 +1,15 @@
 package:
   name: psx-fmt
   dependencies:
+    - argonaut-codecs
+    - argonaut-core
+    - control
+    - effect
+    - exceptions
+    - node-fs
+    - node-path
+    - node-buffer
+    - transformers
     - arrays
     - dodo-printer
     - either

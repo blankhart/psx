@@ -197,3 +197,22 @@ with the VS Code extension.
 Build and install the local PSX VSIX using [the VS Code extension guide](editors/vscode/README.md).
 It includes both TextMate grammars and a configurable stdio language client for
 single- and multi-root consumer workspaces. No marketplace publication is required.
+
+`psx fmt` and editor document formatting discover the nearest `.tidyrc.json`
+by searching from the source file's directory up to the filesystem root. The
+nearest file supplies all settings; parent configurations are not merged. Both
+`.psx` PureScript and the PureScript `<script>` in `.psxt` use these settings:
+`width`, `ribbon`, `indent`, `unicode` (`source`, `always`, `never`),
+`typeArrowPlacement` (`first`, `last`), `importSort` (`source`, `ide`),
+`importWrap` (`source`, `auto`), and `operatorsFile`. Operator-table paths resolve
+relative to the configuration directory. Omitted settings in an existing
+configuration use purs-tidy defaults. Width is a layout target; unbreakable
+content may exceed it. Markup keeps its 80-column target.
+
+Without a configuration, PSX preserves its previous layout: two spaces, no
+PureScript width limit, ASCII punctuation, IDE import sorting, source import
+wrapping, and arrows first. Invalid JSON, invalid option types or values, and
+unreadable configuration or operator files fail formatting without changing the
+source: the CLI reports an error and exits unsuccessfully, and the editor
+receives a formatting request error. Configuration is read for each formatting
+request, so edits to it take effect without restarting the editor.
