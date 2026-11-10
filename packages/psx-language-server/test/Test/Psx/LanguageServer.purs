@@ -12,7 +12,8 @@ main = do
   let input = "module Test where\n\nimport Psx.Static\n\nview = <div>{\"é😀\"}</div>\n"
   unless (analyze "test.psx" input).valid (throw "valid buffer did not lower")
   when (analyze "test.psx" "x = <div>").valid (throw "invalid buffer accepted")
-  when (format "test.psx" input == "") (throw "valid buffer did not format")
+  formatted <- format "test.psx" input
+  when (formatted == "") (throw "valid buffer did not format")
   let
     scoped = "module Test where\n\nimport Psx.Static\n\nview = <div><style>.here { color: red }</style><i class=\"here\"/></div>\nother = <div><style>.elsewhere { color: blue }</style></div>\n"
     css = stylesAt "test.psx" scoped { line: 4, character: 55 }

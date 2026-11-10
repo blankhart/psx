@@ -1,5 +1,6 @@
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
@@ -86,6 +87,55 @@ try {
     send('textDocument/didSave',{textDocument:{uri}});
     send('textDocument/didClose',{textDocument:{uri}});
   }
+  // The server runs from tmpdir; discovery must follow the document, not cwd.
+  const configRoot = fs.mkdtempSync(path.join(tmpdir(), 'psx tidy-'));
+  try {
+    const nested = path.join(configRoot, 'src'); fs.mkdirSync(nested);
+    const file = path.join(nested, 'Configured.psxt'), uri = pathToFileURL(file).href;
+    const script = 'module Configured where\n\nidentity :: forall a. a -> a\nidentity value = value\n\nvalues = [ firstLongValue, secondLongValue, thirdLongValue, fourthLongValue, fifthLongValue ]\n';
+    const text = '<script type="text/purescript">\n' + script + '</script>\n';
+    const cli = path.resolve('packages/psx-cli/bin/psx.mjs');
+    const runCli = () => spawnSync(process.execPath, [cli, 'fmt', file], {encoding:'utf8'});
+    const config = path.join(configRoot, '.tidyrc.json');
+    const editor = async (version, content) => {
+      if (version === 1) send('textDocument/didOpen',{textDocument:{uri,languageId:'psxt',version,text:content}});
+      else send('textDocument/didChange',{textDocument:{uri,version},contentChanges:[{text:content}]});
+      return (await request('textDocument/formatting',{textDocument:{uri},options:{tabSize:2,insertSpaces:true}}))[0].newText;
+    };
+    fs.writeFileSync(path.join(configRoot, 'operators'), 'Prelude.(<>) 5\n');
+    let version = 0;
+    for (const settings of [null, {width:80,unicode:'always',indent:4}, {width:40,unicode:'never',indent:2,ribbon:0.8,typeArrowPlacement:'last',importSort:'ide',importWrap:'auto',operatorsFile:'operators'}]) {
+      if (settings) fs.writeFileSync(config, JSON.stringify(settings));
+      fs.writeFileSync(file, text);
+      const result = runCli(); assert.equal(result.status, 0, result.stderr);
+      const formatted = fs.readFileSync(file, 'utf8');
+      assert.equal(await editor(++version, text), formatted, 'CLI/editor configuration agrees');
+      assert.equal(await editor(++version, formatted), formatted, 'editor second pass stable');
+      assert.equal(runCli().status, 0); assert.equal(fs.readFileSync(file,'utf8'), formatted, 'CLI second pass stable');
+      if (settings) {
+        assert.ok(!formatted.includes('values = ['), 'configured width wraps the array');
+        assert.equal(formatted.includes('∀'), settings.unicode === 'always', 'unicode option honored');
+      } else assert.ok(formatted.includes('values = ['), 'no-config width is unlimited');
+      // Compare the embedded script directly with purs-tidy using the same config.
+      if (settings) {
+        const purs = path.join(nested, 'Configured.purs'); fs.writeFileSync(purs,script);
+        const tidy = spawnSync(process.execPath,[path.resolve('node_modules/purs-tidy/bin/index.js'),'format-in-place',purs],{cwd:configRoot,encoding:'utf8'});
+        assert.equal(tidy.status,0,tidy.stderr);
+        assert.equal(formatted.match(/^<script[^>]*>\n([\s\S]*)<\/script>\n$/)[1], fs.readFileSync(purs,'utf8'));
+      }
+    }
+    // Nearest config overrides the parent, and changes are read on each request.
+    fs.writeFileSync(path.join(nested,'.tidyrc.json'), '{"unicode":"always"}');
+    assert.ok((await editor(++version,text)).includes('∀'));
+    for (const invalid of ['{', '{"width":"eighty"}', '{"unicode":"invalid"}', '{"operatorsFile":"missing"}']) {
+      fs.writeFileSync(path.join(nested,'.tidyrc.json'),invalid);
+      fs.writeFileSync(file,text);
+      assert.notEqual(runCli().status,0);
+      assert.equal(fs.readFileSync(file,'utf8'),text,'configuration failure leaves source unchanged');
+      await assert.rejects(editor(++version,text));
+    }
+    send('textDocument/didClose',{textDocument:{uri}});
+  } finally { fs.rmSync(configRoot,{recursive:true,force:true}); }
   await request('shutdown',null); send('exit');
   const code = await new Promise(resolve => child.on('exit',resolve)); assert.equal(code,0);
   console.log('language-server stdio integration passed');

@@ -53,7 +53,9 @@ import Psx.Cli.Explain (explain)
 import Psx.Cli.GenBackend (decodeMapping, generate)
 import Psx.Cli.Process (runSync)
 import Psx.Cst (PsxError)
-import Psx.Format (formatPsx, formatPsxt)
+import Psx.Format (formatPsxWith, formatPsxtWith)
+import Psx.Format.Config (loadConfig)
+import Effect.Exception as Exception
 import Psx.Lower (Lowered, isGenerated, lower, lowerPsxt)
 import Psx.Lower.Css as Css
 import Psx.Lower.PositionMap (printJson)
@@ -353,19 +355,25 @@ fmt roots checkOnly = do
   sources <- findSources roots
   failures <- for sources \file -> do
     text <- FS.readTextFile UTF8 file
-    case (if Path.extname file == ".psxt" then formatPsxt else formatPsx) text of
-      Left errors -> do
-        printErrors file errors
+    loaded <- Exception.try (loadConfig file)
+    case loaded of
+      Left err -> do
+        error (Exception.message err)
         pure 1
-      Right formatted
-        | formatted == text -> pure 0
-        | checkOnly -> do
-            error $ file <> ": not formatted (run psx fmt)"
+      Right config -> do
+        case (if Path.extname file == ".psxt" then formatPsxtWith config else formatPsxWith config) text of
+          Left errors -> do
+            printErrors file errors
             pure 1
-        | otherwise -> do
-            FS.writeTextFile UTF8 file formatted
-            log $ "formatted " <> file
-            pure 0
+          Right formatted
+            | formatted == text -> pure 0
+            | checkOnly -> do
+                error $ file <> ": not formatted (run psx fmt)"
+                pure 1
+            | otherwise -> do
+                FS.writeTextFile UTF8 file formatted
+                log $ "formatted " <> file
+                pure 0
   pure (if Array.foldl (+) 0 failures > 0 then 1 else 0)
 
 -- Generating backends -------------------------------------------------------------

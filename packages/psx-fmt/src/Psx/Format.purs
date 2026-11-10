@@ -1,9 +1,5 @@
--- | psx fmt: one canonical, option-free layout for `.psx` and `.psxt`
--- | files.
+-- | Formats mixed markup and PureScript, with configurable purs-tidy layout.
 -- |
--- | The PureScript is laid out by purs-tidy's engine, with the settings of
--- | Portico's `.tidyrc.json`: no page width (so lines break where the
--- | source's do), imports sorted as purs ide sorts them, and ASCII syntax.
 -- | Markup is purs-tidy's error payload, so purs-tidy places a literal as it
 -- | places any expression, and this module lays out the literal itself on
 -- | an 80-column page, holes included:
@@ -23,13 +19,15 @@
 -- |   does not fit on the line, the expression goes on lines of its own,
 -- |   indented, between the braces.
 -- | - `<style>`'s stylesheet is reindented under its element; `<script>`'s
--- |   content and comments keep their text.
+-- |   non-PureScript content and comments keep their text.
 -- | - Markup used as a function argument gets the parentheses it needs.
 -- |
 -- | A file with any other error is not formatted.
 module Psx.Format
   ( formatPsx
   , formatPsxt
+  , formatPsxWith
+  , formatPsxtWith
   , pageWidth
   ) where
 
@@ -44,6 +42,7 @@ import Data.String.CodeUnits as SCU
 import Data.Tuple (Tuple(..))
 import Dodo (Doc)
 import Dodo as Dodo
+import Psx.Format.Config as Config
 import Psx.Cst (Attr(..), AttrValue(..), NamedAttr, Child(..), Element, Hole, Markup(..), Psx(..), PsxError, parseModule)
 import Psx.Cst.Psxt (TopItem(..), parsePsxt)
 import Psx.Cst.Source (offsetOf, source)
@@ -52,7 +51,7 @@ import PureScript.CST.Range (tokensOf)
 import PureScript.CST.Range.TokenList as TokenList
 import PureScript.CST.Types (Comment(..), LineFeed, Module, Token(..))
 import PureScript.CST.Types as CST
-import Tidy (FormatOptions, ImportSortOption(..), ImportWrapOption(..), TypeArrowOption(..), UnicodeOption(..), formatExpr, formatModule)
+import Tidy (FormatOptions, ImportSortOption(..), UnicodeOption(..), formatExpr, formatModule)
 import Tidy as Tidy
 import Tidy.Doc (FormatDoc(..))
 import Tidy.Doc as TDoc
@@ -65,9 +64,15 @@ pageWidth = 80
 
 -- | Formats a `.psx` module, or gives the errors that stop it.
 formatPsx :: String -> Either (Array PsxError) String
-formatPsx input = do
+formatPsx = formatPsxWith fallback
+
+fallback :: ConfigData
+fallback = { settings: Config.defaults { importSort = ImportSortIde, unicode = UnicodeNever }, operators: defaultOperators }
+
+formatPsxWith :: ConfigData -> String -> Either (Array PsxError) String
+formatPsxWith config input = do
   m <- parsed (parseModule input) (parseModule <<< applyFixes input)
-  pure (printModuleText m <> "\n")
+  pure (printModuleText config m <> "\n")
   where
   parsed result reparse = case result.module of
     Just m | Array.null result.errors -> Right m
@@ -79,18 +84,21 @@ formatPsx input = do
       | otherwise -> Left result.errors
 
 -- | The module laid out by purs-tidy, without blank lines around it.
-printModuleText :: Module Psx -> String
-printModuleText m = trimLines (print (TDoc.toDoc (formatModule (options (operatorsFor m)) m)))
+printModuleText :: ConfigData -> Module Psx -> String
+printModuleText config m = trimLines (printWith config (TDoc.toDoc (formatModule (optionsWith config (remapOperators (parseOperatorTable config.operators) m)) m)))
 
 -- | Formats a `.psxt` file, or gives the errors that stop it.
 formatPsxt :: String -> Either (Array PsxError) String
-formatPsxt input0 = do
+formatPsxt = formatPsxtWith fallback
+
+formatPsxtWith :: ConfigData -> String -> Either (Array PsxError) String
+formatPsxtWith config input0 = do
   input <- fixed
   let result = parsePsxt input
   case result.file of
     Just file -> do
       let
-        conf = options (operatorsFor file.script.module)
+        conf = optionsWith config (remapOperators (parseOperatorTable config.operators) file.script.module)
         items = Array.mapMaybe (topItem conf file.script.module) result.items
       pure (joinTop items <> "\n")
     Nothing -> Left result.errors
@@ -107,7 +115,7 @@ formatPsxt input0 = do
   topItem conf m = case _ of
     TopElement el
       | el.name.text == "script" ->
-          Just { text: print (onPage (openTag conf el).doc) <> "\n" <> printModuleText m <> "\n</script>", comment: false, breaks: 0 }
+          Just { text: print (onPage (openTag conf el).doc) <> "\n" <> printModuleText config m <> "\n</script>", comment: false, breaks: 0 }
       | otherwise ->
           Just { text: print (onPage (markup conf (MarkupElement el)).doc), comment: false, breaks: 0 }
     TopComment t ->
@@ -156,20 +164,27 @@ applyFixes input errors = do
 
 -- purs-tidy -------------------------------------------------------------------
 
-operatorsFor :: Module Psx -> PrecedenceMap
-operatorsFor = remapOperators (parseOperatorTable defaultOperators)
-
-options :: forall a. PrecedenceMap -> FormatOptions Psx a
-options operators =
-  { formatError: \e -> formatPayload (options operators) e
-  , unicode: UnicodeNever
-  , typeArrowPlacement: TypeArrowFirst
+optionsWith :: forall a. ConfigData -> PrecedenceMap -> FormatOptions Psx a
+optionsWith config operators =
+  { formatError: \e -> formatPayload (optionsWith config operators) e
+  , unicode: config.settings.unicode
+  , typeArrowPlacement: config.settings.typeArrowPlacement
   , operators
-  , importSort: ImportSortIde
-  , importWrap: ImportWrapSource
+  , importSort: config.settings.importSort
+  , importWrap: config.settings.importWrap
   }
 
--- | PureScript has no page width; markup sets its own.
+type ConfigData = { settings :: Config.FormatOptions, operators :: Array String }
+
+printWith :: forall a. ConfigData -> Doc a -> String
+printWith config = Dodo.print Dodo.plainText
+  { pageWidth: fromMaybe top config.settings.width
+  , ribbonRatio: config.settings.ribbon
+  , indentWidth: config.settings.indent
+  , indentUnit: String.joinWith "" (Array.replicate config.settings.indent " ")
+  }
+
+-- | Markup sets its own width.
 print :: forall a. Doc a -> String
 print = Dodo.print Dodo.plainText (Dodo.twoSpaces { pageWidth = top, ribbonRatio = 1.0 })
 
