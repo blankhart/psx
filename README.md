@@ -246,3 +246,8 @@ unreadable configuration or operator files fail formatting without changing the
 source: the CLI reports an error and exits unsuccessfully, and the editor
 receives a formatting request error. Configuration is read for each formatting
 request, so edits to it take effect without restarting the editor.
+
+### Tree-sitter
+
+Structural grammars for `.psx` and `.psxt`, editor queries, pinned generation and
+local integration instructions are in [editors/tree-sitter-psx](editors/tree-sitter-psx/README.md).
