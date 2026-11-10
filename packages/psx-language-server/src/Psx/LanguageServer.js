@@ -128,7 +128,9 @@ export const serve = analyze => format => completionData => stylesAt => () => {
   });
   connection.onDocumentFormatting(p => {
     const doc = documents.get(p.textDocument.uri); if (!doc) return [];
-    const newText = format(doc.uri)(doc.getText());
+    let newText;
+    try { newText = format(uriPath(doc.uri))(doc.getText())(); }
+    catch (error) { throw new ResponseError(-32603, error.message); }
     return newText ? [{range:{start:{line:0,character:0},end:doc.positionAt(doc.getText().length)},newText}] : [];
   });
   function mapLocation(location) {
