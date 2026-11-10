@@ -16,3 +16,11 @@ path = "editors/tree-sitter-psx"
 repository = "https://github.com/blankhart/psx"
 rev = "3aed701a3d3c603329db397865e2a3b2c0e35d30"
 path = "editors/tree-sitter-psx/psxt"
+
+[language_servers.psx-language-server]
+name = "PSX Language Server"
+languages = ["PSX", "PSXT"]
+
+[language_servers.psx-language-server.language_ids]
+PSX = "psx"
+PSXT = "psxt"

@@ -252,5 +252,5 @@ request, so edits to it take effect without restarting the editor.
 Structural grammars for `.psx` and `.psxt`, editor queries, pinned generation and
 local integration instructions are in [editors/tree-sitter-psx](editors/tree-sitter-psx/README.md).
 
-Local Zed syntax support: see [editors/zed](editors/zed/README.md) for the
+Local Zed extension: see [editors/zed](editors/zed/README.md) for the
 development-extension installation and validation status for PSX and PSXT.

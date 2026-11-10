@@ -11,7 +11,11 @@ pinned source repository at `editors/tree-sitter-psx/vendor/purescript/LICENSE`.
 
 1. Clone this repository. Open Zed's Extensions view (`zed: extensions`).
 2. Choose **Install Dev Extension** and select this checkout's **editors/zed**
-   directory, not the repository root. Zed fetches the exact grammar commits and
+   directory, not the repository root. Install Rust with `rustup` first and make
+   `cargo` available to Zed (restart Zed after changing PATH). The checked-in
+   toolchain selects Rust 1.90.0 and `wasm32-wasip2`; the adapter pins Zed API
+   0.7.0 and commits Cargo.lock. Target Zed 1.27.0 or a compatible newer release.
+   Zed fetches the exact grammar commits and
    compiles both grammars with its WASI SDK. Network access to GitHub is needed
    on first installation. No extension-store publication is involved.
 3. Open `test/fixtures/example.psx` and `test/fixtures/example.psxt` below this
@@ -66,12 +70,64 @@ node /absolute/path/to/psx/packages/psx-cli/bin/psx.mjs build src
 spago build
 ```
 
-Launch-adapter work is subject to the explicit implementation-language exception
-requested in [ADAPTER.md](ADAPTER.md) and on #68. Grammar registration is usable
-independently. The checked-in [settings fixture](test/fixtures/settings.json)
-records the intended standard Zed binary and initialization-options shape,
-including a separate consumer workspace and a PSX checkout with spaces in its
-path. It is a fixture, not a completed LSP integration claim.
+## Language server settings
+
+Remove the highlighting-only `enable_language_server: false` settings when ready.
+Add the following to the consumer workspace's `.zed/settings.json`. For editing
+this PSX checkout, omit `projectRoot` (or point it at this checkout); for a separate
+consumer, it must point at the consumer, while the server script remains in the
+built PSX checkout. Replace every example path with an existing absolute path.
+
+```json
+{
+  "languages": {
+    "PSX": { "language_servers": ["psx-language-server"] },
+    "PSXT": { "language_servers": ["psx-language-server"] }
+  },
+  "lsp": {
+    "psx-language-server": {
+      "binary": {
+        "path": "/opt/node/bin/node",
+        "arguments": [
+          "/workspace/PSX checkout/packages/psx-language-server/bin/psx-language-server.mjs",
+          "--stdio"
+        ]
+      },
+      "initialization_options": {
+        "projectRoot": "/workspace/consumer with spaces",
+        "purescriptLanguageServer": "/workspace/PSX checkout/node_modules/.bin/purescript-language-server",
+        "purescript": {
+          "pursExe": "/workspace/PSX checkout/node_modules/.bin/purs",
+          "outputDirectory": "output"
+        }
+      }
+    }
+  }
+}
+```
+
+`binary.arguments` is an argument vector: paths containing spaces are one JSON
+string, with no extra shell quotes. `binary.env` optionally supplies environment
+variables. With no configured binary path, the adapter looks for a local
+`psx-language-server` wrapper on the worktree's PATH and defaults to `--stdio`.
+The extension does not download a server. Missing configuration gives an error
+with the exact settings keys and build command. Explicit empty arguments remain
+empty, allowing a wrapper that handles its own transport arguments.
+
+The same server ID handles both file kinds, using `psx`/`psxt` LSP language IDs.
+No `.purs` suffix or PureScript language registration is changed. PSXT scripts
+inject PSX for syntax support; do not add the separate PureScript server to PSX
+or PSXT. Its compiler integration is already owned by the PSX server. A separate
+PureScript extension may continue to handle ordinary `.purs` files.
+
+Use `dev: open language server logs` to inspect PSX's stderr and protocol traffic,
+`zed: open log` for extension/build/startup failures, and
+`editor: restart language server` after changing command or compiler settings.
+Zed owns process startup/restart/shutdown. PSX owns its compiler child and removes
+its temporary files on exit; the adapter creates no additional processes.
+
+The approved implementation-language exception and its limits are recorded in
+[ADAPTER.md](ADAPTER.md) and `CLAUDE.md`.
 
 ## Validation
 
@@ -87,7 +143,7 @@ npm run test:tree-sitter
 ```
 
 The automated gate parses the manifest/configurations, resolves pinned grammar
-sources with Git, compiles both grammars with the same include path Zed uses,
+sources with Git (a full clone, or fetch the pinned revision explicitly), compiles both grammars with the same include path Zed uses,
 compiles every shipped query, and checks highlights, brackets, indentation,
 comment scopes and nested PSX/CSS injections on both file kinds without a server.
 CI additionally downloads SHA-256-verified **WASI SDK 34.0**, then builds both
@@ -101,6 +157,19 @@ framing, mapped diagnostics, completion, hover, definition, formatting and
 shutdown independently of any editor. Editor-specific smoke results belong in
 [SMOKE.md](SMOKE.md).
 
+The launch adapter has an additional automated gate:
+
+```sh
+cd editors/zed
+cargo fmt --check
+cargo test --locked
+cargo build --release --target wasm32-wasip2 --locked
+```
+
+It checks configured commands, space-containing argument vectors, environment
+variables, PATH fallback, explicit empty arguments and actionable missing-command
+errors. The component build uses Zed's actual `wasm32-wasip2` target.
+
 ## Troubleshooting
 
 - Wrong language: remove conflicting custom `file_types` settings, select PSX or
@@ -111,6 +180,10 @@ shutdown independently of any editor. Editor-specific smoke results belong in
   this extension's PSX language, not a separate PureScript extension.
 - Comment toggling: PureScript uses `--`/`{- -}`, markup uses `<!-- -->`, and CSS
   uses its injected language's comments. Test inside content, not on boundaries.
+- Server startup fails: check Node exists and that the script path and built
+  `output/Psx.LanguageServer` exist in the PSX checkout. Inspect both logs above;
+  a missing executable is a Zed process error, while a missing server build is
+  reported on stderr. Restore settings and restart the language server.
 - No compiler features: verify the server build, consumer `spago.yaml`, backend
   dependencies, lowered sources, compiler executable and matching output files.
   PSX parse diagnostics and markup completion can work when compiler tools fail;
