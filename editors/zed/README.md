@@ -18,6 +18,20 @@ pinned source repository at `editors/tree-sitter-psx/vendor/purescript/LICENSE`.
    Zed fetches the exact grammar commits and
    compiles both grammars with its WASI SDK. Network access to GitHub is needed
    on first installation. No extension-store publication is involved.
+   The current public grammar pin predates the Wasm `strcpy` fix. After the
+   installation finishes, build the corrected checkout grammars into the local
+   dev-extension cache, then restart Zed:
+
+   ```sh
+   # Linux: SDK downloaded by Zed during installation
+   WASI_SDK_PATH="$HOME/.local/share/zed/extensions/build/wasi-sdk" \
+     python3 editors/zed/build-grammars.py
+   ```
+
+   Run this command from the repository root. On other platforms, set
+   `WASI_SDK_PATH` to your WASI SDK 34.0 directory. Repeat after reinstalling
+   the extension; this workaround can be removed once the public pins include
+   the scanner fix. Zed's dev build reuses the newer cached Wasm files.
 3. Open `test/fixtures/example.psx` and `test/fixtures/example.psxt` below this
    directory. The status bar must identify PSX and PSXT respectively. Check
    PureScript keywords, tags, holes, template heads and CSS colours. Bracket
@@ -151,6 +165,10 @@ Wasm grammars using Zed’s compiler flags. Set `WASI_SDK_PATH` to the extracted
 SDK directory to include that check locally. These checks do not substitute for
 a Zed GUI smoke test.
 
+The Wasm check also inspects module imports against the functions supported by
+Zed's Tree-sitter runtime. A successful Wasm link alone does not prove the
+grammar can load: unsupported libc functions can remain unresolved imports.
+
 The shared server CI gate (`npm run test:language-server` and
 `PSX_LSP_REAL=1 npm run test:language-server` after `npx spago build`) covers stdio
 framing, mapped diagnostics, completion, hover, definition, formatting and
@@ -176,6 +194,9 @@ errors. The component build uses Zed's actual `wasm32-wasip2` target.
   PSXT in the language picker, and verify the development extension is installed.
 - No highlighting: inspect `zed: open log` for grammar download/build failures;
   verify GitHub access and the full pinned revision, then reinstall the extension.
+- `Failed to instantiate Wasm module: invalid import 'strcpy'`: rebuild the
+  checkout grammars with the command above and restart Zed. This load failure
+  affects both languages even though extension installation succeeds.
 - Missing CSS: check that CSS support is enabled. PSXT script injections target
   this extension's PSX language, not a separate PureScript extension.
 - Comment toggling: PureScript uses `--`/`{- -}`, markup uses `<!-- -->`, and CSS

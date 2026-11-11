@@ -7,6 +7,7 @@ import re
 import subprocess
 import tempfile
 import tomllib
+import runpy
 
 from tree_sitter import Language, Parser, Query, QueryCursor
 import tree_sitter_css
@@ -14,6 +15,7 @@ import tree_sitter_css
 ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT.parents[1]
 GRAMMAR = REPO / 'editors/tree-sitter-psx'
+build_wasm = runpy.run_path(str(ROOT / 'build-grammars.py'))['build']
 manifest = tomllib.loads((ROOT / 'extension.toml').read_text())
 assert manifest['schema_version'] == 1 and manifest['id'] == 'psx'
 assert manifest['languages'] == ['languages/psx', 'languages/psxt']
@@ -42,10 +44,7 @@ with tempfile.TemporaryDirectory(prefix='psx zed ') as temp:
         sdk = os.environ.get('WASI_SDK_PATH')
         if sdk:
             wasm = Path(temp) / f'{name}.wasm'
-            subprocess.run([str(Path(sdk) / 'bin/clang'), '-fPIC', '-shared', '-Os',
-                            f'-Wl,--export=tree_sitter_{name}', '-Wl,--max-memory=4294967296',
-                            '-o', str(wasm), '-I', str(source / 'src'),
-                            str(source / 'src/parser.c'), str(source / 'src/scanner.c')], check=True)
+            build_wasm(name, source, wasm, sdk)
             assert wasm.read_bytes()[:8] == b'\x00asm\x01\x00\x00\x00'
             print(f'Built Zed {name}.wasm with WASI SDK {Path(sdk).name}')
         library = Path(temp) / f'{name}.so'

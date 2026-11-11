@@ -164,7 +164,12 @@ static bool psx_scan(void *p, TSLexer *l, const bool *v) {
       }
       unsigned sym = is_void(name) ? VOID_START : !strcmp(name,"style") ? STYLE_START : !strcmp(name,"script") ? SCRIPT_START : TAG_START;
       if (!v[sym]) return false;
-      if (sym != VOID_START) { if (s->depth == TAG_LIMIT) return false; strcpy(s->tags[s->depth++], name); }
+      if (sym != VOID_START) {
+        if (s->depth == TAG_LIMIT) return false;
+        // Tree-sitter's Wasm runtime provides memcpy, but not strcpy.
+        // n is bounded by NAME_LIMIT above; include the terminating NUL.
+        memcpy(s->tags[s->depth++], name, n + 1);
+      }
       return emit(l, sym);
     }
     // Whitespace may have been skipped; PureScript scanner still sees the token.

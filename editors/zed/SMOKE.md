@@ -29,6 +29,16 @@ any PR completing #68. Keep GUI results separate from the automated gate.
 
 ## Results in this environment
 
+- Local installation failure diagnosed on 2026-11-10: Zed 1.27.0 successfully
+  built and registered both languages, then logged `Failed to instantiate Wasm
+  module: invalid import 'strcpy'` for both. Replaced the scanner's tag copy
+  with bounded `memcpy` and rebuilt both dev-extension cache files with Zed's
+  installed WASI SDK. The import gate rejects the original pinned Wasm and
+  accepts both corrected builds; the native corpus/query and Zed gates pass.
+  A Zed restart and visual recognition check remain pending. Public grammar
+  pins still require updating after the scanner fix is published; README.md
+  documents the local rebuild needed until then.
+
 - Automated native grammar/query gate: passed on Linux with Python 3.12.14,
   tree-sitter 0.25.2 and tree-sitter-css 0.25.0; no server process involved.
 - Zed 1.27.0 (`c84af5b99cbc366d675064e52b23664a015b6e35`) downloaded and
